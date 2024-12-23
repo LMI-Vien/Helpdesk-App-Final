@@ -1,0 +1,40 @@
+.large-popup {
+    font-size: 1.2rem; /* Overall font size for content */
+    max-width: 700px; /* Maximum width of the popup */
+    border-radius: 10px; /* Optional: Rounded corners for styling */
+}
+
+/* Custom class for SweetAlert title */
+.large-popup-title {
+    font-size: 2rem; /* Larger title font size */
+    font-weight: bold; /* Optional: Bold title */
+}
+
+/* Custom class for SweetAlert content */
+.large-popup-content {
+    font-size: 5.5rem; /* Larger content text */
+    line-height: 2.6; /* Better line spacing */
+    color: #333; /* Optional: Content text color */
+}
+
+/* Custom class for buttons */
+.large-popup-button {
+    font-size: 1.3rem; /* Larger button text */
+    padding: 10px 20px; /* Larger button size */
+    border-radius: 5px; /* Rounded button edges */
+}
+
+/* Larger title for success popup */
+.large-done-title {
+    font-size: 2.5rem; /* Big title */
+    font-weight: bold;
+    color: #28a745; /* Optional: Green for success */
+    text-align: center;
+}
+
+/* Custom class for larger "OK" button */
+.large-button {
+    font-size: 1.5rem; /* Increase button text size */
+    padding: 1rem 2rem; /* Larger button size */
+    border-radius: 10px; /* Optional: Rounded corners */
+}
