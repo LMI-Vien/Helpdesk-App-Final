@@ -16,10 +16,26 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="<?= ($active_menu == 'admin_list_msrf') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/list/ticket/msrf"><i class="fa fa-circle-o"></i> MSRF Form List</a></li>
-                   
+                    
                     <li class="<?= ($active_menu == 'admin_list_tracc_concern') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/list/ticket/tracc_concern"><i class="fa fa-circle-o"></i> TRACC Concern List</a></li>
-      
+                    
                     <li class="<?= ($active_menu == 'admin_list_tracc_request') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/list/ticket/tracc_request"><i class="fa fa-circle-o"></i> TRACC Request List</a></li>
+                </ul>
+            </li>
+
+            <li class="treeview <?= ($active_menu == 'closed_tickets_list' || $active_menu == 'open_tickets' || $active_menu == 'other_menu' || $active_menu == 'admin_list_tickets' || $active_menu == 'admin_list_tracc_concern' || $active_menu == 'admin_list_tracc_request' || $active_menu == 'approved_tickets') ? 'active' : ''; ?>">
+                <a href="#">
+                    <i class="fa fa-ticket"></i> <span>Closed Tickets</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="<?= ($active_menu == 'admin_list_msrf') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/list/ticket/msrf_closed"><i class="fa fa-circle-o"></i> MSRF Form List</a></li>
+                    
+                    <li class="<?= ($active_menu == 'admin_list_tracc_concern') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/list/ticket/tracc_concerns_closed"><i class="fa fa-circle-o"></i> TRACC Concern List</a></li>
+                    
+                    <li class="<?= ($active_menu == 'admin_list_tracc_request') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/list/ticket/tracc_request_closed"><i class="fa fa-circle-o"></i> TRACC Request List</a></li>
                 </ul>
             </li>
 

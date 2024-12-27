@@ -1,39 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Registration</title>
+<?php $this->load->view('header'); ?>
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/fontawesome-free/css/all.min.css">
-    <!-- icheck bootstrap -->
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="<?= base_url(); ?>assets/dist/login-design/css/adminlte.min.css">
-    <!-- jQuery -->
-    <script src="<?= base_url(); ?>/assets/dist/dist/js/external/jquery/jquery.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script href="<?php echo site_url();?>/assets/toast/jqm.js"></script>
-	<script href="<?php echo site_url();?>/assets/toast/toast.js"></script>
-
-    <!-- SweetAlert CSS -->
-	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"> -->
-	<link rel="stylesheet" href="<?= base_url(); ?>/assets/dist/dist/css/sweetalert2.min.css">
-
-    <!-- SweetAlert JS -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script> -->
-    <link rel="stylesheet" href="<?= base_url(); ?>/assets/dist/dist/js/sweetalert2.all.min.js">
-    
-</head>
 <style>
     .yellow-shadow {
         box-shadow: 0 4px 10px rgba(236,159,35,255); /* Adjust spread and opacity as needed */
     }
 </style>
-<body>
+
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -72,7 +44,7 @@
                                 <div class="form-group">
                                     <label>Department</label>
                                     <!--<select name="department" class="form-control" required>-->
-                                    <select name="dept_name" id="dept_name" class="form-control" required>
+                                    <select name="dept_name" id="dept_name" class="form-control">
                                         <option value="">Select Dept</option>
                                         <?php 
                                         if (!empty($get_departments)) {
@@ -111,7 +83,7 @@
                         <div class="row">
                             <div class="col-12 text-center">
                                 <div class="col-md-8 mx-auto">
-                                    <button type="submit" class="btn btn-warning btn-block mt-3">Register</button>
+                                    <button type="submit" class="btn btn-warning btn-block mt-3" id="submitBtn">Register</button>
                                 </div>
                             </div>
                         </div>
@@ -129,45 +101,80 @@
     </div>
 </div>
 
+<?php $this->load->view('footer'); ?>
 <script>
-     $('#registrationForm').on('submit', function(e) {
-            e.preventDefault(); // Prevent default form submission
+    $(document).ready(function () {
+        $('#registrationForm').on('submit', function (e) {
+            e.preventDefault(); 
+
+            const username = $('#username').val().trim();
+            const password = $('#password').val().trim();
+            const deptName = $('#dept_name').val();
+
+            // Client-side validation for username
+            if (username.length < 6) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Username',
+                    text: 'Username must be at least 6 characters long.',
+                });
+                return; 
+            }
+
+            // Client-side validation for password
+            if (password.length < 6) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Invalid Password',
+                    text: 'Password must be at least 6 characters long.',
+                });
+                return; 
+            }
+
+            if (!deptName) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Department Required',
+                    text: 'Please select a department.',
+                });
+                return; 
+            }
 
             $.ajax({
                 type: 'POST',
-                url: $(this).attr('action'), // Form action URL
+                url: $(this).attr('action'),
                 data: $(this).serialize(), // Serialize form data
                 dataType: 'json',
-                success: function(response) {
+                success: function (response) {
                     if (response.status === 'success') {
-                        // Show success message with SweetAlert
                         Swal.fire({
                             icon: 'success',
                             title: 'Registration Successful',
-                            text: response.message
-                        }).then(function() {
-                            // Optionally, you can redirect the user after the alert
+                            text: response.message,
+                        }).then(function () {
                             window.location.href = '<?= base_url(); ?>sys/registration';
                         });
                     } else {
-                        // Show error message with SweetAlert
                         Swal.fire({
                             icon: 'error',
                             title: 'Registration Failed',
-                            text: response.message
+                            text: response.message,
                         });
                     }
                 },
-                error: function() {
-                    // Handle error case
+                error: function () {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
-                        text: 'Something went wrong. Please try again.'
+                        text: 'Something went wrong. Please try again.',
                     });
                 }
             });
         });
+
+        $('#submitBtn').click(function () {
+            $('#registrationForm').submit(); 
+        });
+});
+
 </script>
-</body>
-</html>

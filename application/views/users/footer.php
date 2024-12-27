@@ -333,20 +333,7 @@
 				}]
 			});
 
-			$('#filterMsrf').click(function() {
-				status = $('#msrfStatus').val();
-				$('#tblMsrf').DataTable().ajax.reload();
-			});
-
-			$('#filterConcern').click(function() {
-				status = $('#concernStatus').val();
-				$('#tblConcerns').DataTable().ajax.reload();
-			});
-
-			$('#filterRequest').click(function() {
-				status = $('#requestStatus').val();
-				$('#tblRequests').DataTable().ajax.reload();
-			})
+			
 			
 			$('#tblMsrf').DataTable({
 				"destroy": true,
@@ -417,11 +404,11 @@
 				"pageLength": 5,
 			});
 
-			$('#tblTR').DataTable({
+			$('#tblTRRF').DataTable({
 				"serverSide": true,
 				"processing": true,
 				"ajax": {
-					"url": "<?= base_url(); ?>DataTables/get_customer_request_form",
+					"url": "<?= base_url(); ?>DataTables/get_customer_request_form_rf",
 					"type": "POST",
 					"data": function(d) {
 						d.status = $('#trStatus').val();
@@ -436,6 +423,171 @@
 				"lengthChange": false,
 				"dom": 'rltp',
 				"pageLength": 5,
+			});
+
+			$('#rf').show();
+			$('#rfbutton').hide();
+
+			$('#rfbutton').click(function() {
+				$('#rf').show();
+				$('#ss').hide();
+				$('#ir').hide();
+				$('#er').hide();
+				$('#sr').hide();
+
+				$('#rfbutton').hide();
+				$('#ssbutton').show();
+				$('#irbutton').show();
+				$('#erbutton').show();
+				$('#srbutton').show();
+			});
+
+			$('#tblTRSS').DataTable({
+				"serverSide": true,
+				"processing": true,
+				"ajax": {
+					"url": "<?= base_url(); ?>DataTables/get_customer_request_form_ss",
+					"type": "POST",
+					"data": function(d) {
+						d.status = $('#trStatus').val();
+					}
+				},
+				"columns": [
+					{ "data": "ticket_id" },
+					{ "data": "remarks" }
+				],
+				"responsive": true,
+				"autoWidth": false,
+				"lengthChange": false,
+				"dom": 'rltp',
+				"pageLength": 5,
+			});
+
+			$('#ss').hide();
+
+			$('#ssbutton').click(function() {
+				$('#rf').hide();
+				$('#ss').show();
+				$('#ir').hide();
+				$('#er').hide();
+				$('#sr').hide();
+
+				$('#rfbutton').show();
+				$('#ssbutton').hide();
+				$('#irbutton').show();
+				$('#erbutton').show();
+				$('#srbutton').show();
+			});
+
+			$('#tblTRIR').DataTable({
+				"serverSide": true,
+				"processing": true,
+				"ajax": {
+					"url": "<?= base_url(); ?>DataTables/get_customer_request_form_ir",
+					"type": "POST",
+					"data": function(d) {
+						d.status = $('#trStatus').val();
+					}
+				},
+				"columns": [
+					{ "data": "ticket_id" },
+					{ "data": "remarks" }
+				],
+				"responsive": true,
+				"autoWidth": false,
+				"lengthChange": false,
+				"dom": 'rltp',
+				"pageLength": 5,
+			});
+
+			$('#ir').hide();
+
+			$('#irbutton').click(function() {
+				$('#rf').hide();
+				$('#ss').hide();
+				$('#ir').show();
+				$('#er').hide();
+				$('#sr').hide();
+
+				$('#rfbutton').show();
+				$('#ssbutton').show();
+				$('#irbutton').hide();
+				$('#erbutton').show();
+				$('#srbutton').show();
+			});
+
+			$('#tblTRER').DataTable({
+				"serverSide": true,
+				"processing": true,
+				"ajax": {
+					"url": "<?= base_url(); ?>DataTables/get_customer_request_form_er",
+					"type": "POST",
+					"data": function(d) {
+						d.status = $('#trStatus').val();
+					}
+				},
+				"columns": [
+					{ "data": "ticket_id" },
+					{ "data": "remarks" }
+				],
+				"responsive": true,
+				"autoWidth": false,
+				"lengthChange": false,
+				"dom": 'rltp',
+				"pageLength": 5,
+			});
+
+			$('#er').hide();
+
+			$('#erbutton').click(function() {
+				$('#rf').hide();
+				$('#ss').hide();
+				$('#ir').hide();
+				$('#er').show();
+				$('#sr').hide();
+
+				$('#rfbutton').show();
+				$('#ssbutton').show();
+				$('#irbutton').show();
+				$('#erbutton').hide();
+				$('#srbutton').show();
+			});
+
+			$('#tblTRSR').DataTable({
+				"serverSide": true,
+				"processing": true,
+				"ajax": {
+					"url": "<?= base_url(); ?>DataTables/get_customer_request_form_sr",
+					"type": "POST",
+					"data": function(d) {
+						d.status = $('#trStatus').val();
+					}
+				},
+				"columns": [
+					{ "data": "ticket_id" },
+					{ "data": "remarks" }
+				],
+				"responsive": true,
+				"autoWidth": false,
+				"lengthChange": false,
+				"dom": 'rltp',
+				"pageLength": 5,
+			});
+
+			$('#sr').hide();
+
+			$('#srbutton').click(function() {
+				$('#rf').hide();
+				$('#ss').hide();
+				$('#ir').hide();
+				$('#er').hide();
+				$('#sr').show();
+
+				$('#rfbutton').show();
+				$('#ssbutton').show();
+				$('#irbutton').show();
+				$('#erbutton').show();
+				$('#srbutton').hide();
 			});
 			
 			$('#form-alert').delay(1000 * 60 * 5).hide(500);
