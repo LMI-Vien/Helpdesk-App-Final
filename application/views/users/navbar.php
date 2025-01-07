@@ -1,27 +1,3 @@
-<style>
-	/* Custom CSS for nested dropdown */
-	.dropdown-submenu {
-		position: relative;
-	}
-
-	.dropdown-submenu .dropdown-menu {
-		display: none; /* Hidden by default */
-		position: absolute;
-		top: 0;
-		left: 100%;
-		margin-top: -1px;
-	}
-
-	.dropdown-submenu:hover .dropdown-menu {
-		display: block; /* Show submenu on hover */
-	}
-
-	.right-caret {
-		transform: rotate(270deg); /* Rotate the caret to point left */
-		display: inline-block;
-	}
-</style>
-
 <nav class="navbar navbar-static-top">
 	<div class="container">
 		<div class="navbar-header">
@@ -54,8 +30,8 @@
 							<li><a href="<?= base_url(); ?>sys/users/list/tickets/tracc_concern">TRACC Concern Creation</a></li>
 							<li><a href="<?= base_url(); ?>sys/users/list/tickets/tracc_request">TRACC Request Creation</a></li>
 							<li class="dropdown-submenu">
-								<a href="<?= base_url(); ?>sys/users/list/tickets/tracc_request" class="dropdown-toggle" data-toggle="dropdown">TR Forms Creation <span class="caret right-caret"></span></a>
-								<ul class="dropdown-menu">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">TR Forms Creation <span class="caret right-caret"></span></a>
+								<ul class="dropdown-menu" role="menu">
 									<li><a href="<?= base_url(); ?>sys/users/create/tickets/trf_customer_request_form_tms">Customer Request Form TMS</a></li>
 									<li><a href="<?= base_url(); ?>sys/users/create/tickets/trf_customer_shipping_setup">Customer Shipping Setup</a></li>
 									<li><a href="<?= base_url(); ?>sys/users/create/tickets/trf_employee_request_form">Employee Request Form</a></li>

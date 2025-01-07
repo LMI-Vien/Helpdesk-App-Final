@@ -124,9 +124,6 @@ $route['sys/users/details/concern/customer_req_shipping_setup/update/(:any)'] = 
 //--- System LOGOUT
 $route['sys/logout'] = 'main/logout';
 
-
-$route['sys/users/details/concern/customer_req/(:any)'] = 'main/customer_request_form_details/$1';
-
 $route['default_controller'] = 'main/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

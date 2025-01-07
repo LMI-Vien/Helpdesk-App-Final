@@ -14,21 +14,23 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-body">
-                        <table id="tblTicketsTraccRequest" class="table table-bordered table-striped">
-                            <thead>
-								<tr>
-                                    <th>Ticket Number</th>
-                                    <th>Date Requested</th>
-                                    <th>Requested By</th>
-                                    <th>Subject</th>
-                                    <th>Priority</th>
-                                    <th>Status</th>
-                                    <th>Dept. Head Approval Status</th>
-                                    <th>ICT Approval Status</th>
-                                    <th>Action</th>
-								</tr>
-							</thead>
-                        </table>
+                        <div class="table-responsive">
+                            <table id="tblTicketsTraccRequest" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket Number</th>
+                                        <th>Date Requested</th>
+                                        <th>Requested By</th>
+                                        <th>Subject</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>Dept. Head Approval Status</th>
+                                        <th>ICT Approval Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

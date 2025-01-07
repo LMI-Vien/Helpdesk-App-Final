@@ -73,7 +73,7 @@
                     <div class="icon">
                         <i class="fa fa-building"></i>
                     </div>
-                    <a href="<?= base_url(); ?>sys/admin/team" class="small-box-footer">More info<i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="<?= base_url(); ?>sys/admin/team" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>

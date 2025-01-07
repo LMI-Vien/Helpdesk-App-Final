@@ -43,7 +43,7 @@
         <div class="alert">
             <?php
             $data = $this->session->userdata('data');
-            if($data['to_fill_up'] > 0 && time() < $data['expires_at']) : ?>
+            if($data['checkbox_data'] > 0 && time() < $data['expires_at']) : ?>
             <div class="alert-content" id="form-alert">
                 <h1>Please fill up the following forms:</h1>
                 <ul>
@@ -63,20 +63,22 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-body">
-                            <table id="tblTraccRequest" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Ticket Number</th>
-                                        <th>Requested By</th>
-                                        <th>Subject</th>
-                                        <th>Priority</th>
-                                        <th>Status</th>
-                                        <th>Dept. Head Approval Status</th>
-                                        <th>ICT Approval Status</th>
-                                    </tr>
-                                </thead>
-                                
-                            </table>
+                            <div class="table-responsive">
+                                <table id="tblTraccRequest" class="table table-sm table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Ticket Number</th>
+                                            <th>Requested By</th>
+                                            <th>Subject</th>
+                                            <th>Priority</th>
+                                            <th>Status</th>
+                                            <th>Dept. Head Approval Status</th>
+                                            <th>ICT Approval Status</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

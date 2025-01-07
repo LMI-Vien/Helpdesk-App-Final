@@ -19,6 +19,13 @@ class AdminDashboard_controller extends CI_Controller {
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
 
+				$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
+				$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
+				$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
+				$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
+
 				// Fetch total users count
 				$data['total_users'] = $this->AdminDashboard_model->get_total_users();
 				// Fetch total msrf ticket count

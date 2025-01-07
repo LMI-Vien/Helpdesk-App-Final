@@ -20,6 +20,7 @@
     .login-box {
         position: fixed;
         top: 120px;
+        width: 450px;
         z-index: 1;                  /* Ensure it stays above background */
     }
 
@@ -34,6 +35,17 @@
         border-color: #ffc107; 
         box-shadow: 0 0 5px #ffc107; 
     }
+
+    .card {
+        padding: 15px;
+        padding-top: 25px;
+        height: 420px;
+    }
+
+    .card-body {
+        padding-top: 50px;
+    }
+    
 </style>
 
 <div class="login-box">

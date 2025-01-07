@@ -11,7 +11,7 @@ class AdminTraccCon_model extends CI_Model {
 		$control_number = $this->input->post('control_number', true);
 		$received_by = $this->input->post('received_by', true);
 		$noted_by = $this->input->post('noted_by', true);
-		$priority = $this->input->post('priority', true);
+		// $priority = $this->input->post('priority', true);
 		$approval_stat = $this->input->post('app_stat', true);
 		$it_approval_stat = $this->input->post('it_app_stat', true);
 		$reject_ticket_traccCon = $this->input->post('reason_rejected', true);
@@ -54,13 +54,13 @@ class AdminTraccCon_model extends CI_Model {
 				$this->db->set('status', 'In Progress');
 			}
 
-			if ($priority == 'Low') {
-				$this->db->set('priority', 'Low');
-			} else if ($priority == 'Medium') {
-				$this->db->set('priority', 'Medium');
-			} else if ($priority == 'High') {
-				$this->db->set('priority', 'High');
-			}
+			// if ($priority == 'Low') {
+			// 	$this->db->set('priority', 'Low');
+			// } else if ($priority == 'Medium') {
+			// 	$this->db->set('priority', 'Medium');
+			// } else if ($priority == 'High') {
+			// 	$this->db->set('priority', 'High');
+			// }
 
 			if (!empty($received_by)) {
 				$this->db->set('received_by', $received_by);

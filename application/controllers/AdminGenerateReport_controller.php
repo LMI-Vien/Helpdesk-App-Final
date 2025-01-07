@@ -19,6 +19,13 @@ class AdminGenerateReport_controller extends CI_Controller {
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
 
+				$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
+				$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
+				$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
+				$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
+
 				$allowed_menus = ['print', 'system_administration', 'other_menus'];
 				if(!in_array($active_menu, $allowed_menus)) {
 					$active_menu = 'dashboard';

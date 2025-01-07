@@ -18,19 +18,21 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-body">
-                        <table id="closed_req" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Ticket ID</th>
-                                    <th>Requested By</th>
-                                    <th>Subject</th>
-                                    <th>Priority</th>
-                                    <th>Status</th>
-                                    <th>ICT Approval Status</th>
-                                    <th>Accomplished Date</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="table-responsive">
+                            <table id="closed_req" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket ID</th>
+                                        <th>Requested By</th>
+                                        <th>Subject</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>ICT Approval Status</th>
+                                        <th>Accomplished Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -69,28 +69,61 @@ class Main extends CI_Controller {
 	public function registration() {
 		$this->load->helper('form');
 		$this->load->library('session');
-	
-		$page_data['get_departments'] = $this->Main_model->get_departments();
-	
+		$this->load->library('form_validation');
+		
+		// Fetch departments from the model
+		$page_data['get_departments'] = $this->Main_model->get_departments() ?: [];
+		
 		if ($this->input->server('REQUEST_METHOD') == 'POST') {
-			$process = $this->Main_model->user_registration();
+			// Form validation rules
+			$this->form_validation->set_rules('employee_id', 'Employee ID', 'required');
+			$this->form_validation->set_rules('username', 'Username', 'required|min_length[6]');
+			$this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+			$this->form_validation->set_rules('conpassword', 'Confirm Password', 'required|matches[password]');
 	
-			if ($process[0] == 1) {
+			if ($this->form_validation->run() == FALSE) {
+				$response = array(
+					'status' => 'error',
+					'message' => validation_errors()
+				);
+				echo json_encode($response);
+				exit;
+			}
+	
+			// Sanitize input using htmlentities to prevent XSS
+			$employee_id = htmlentities($this->input->post('employee_id', TRUE));
+			$username = htmlentities($this->input->post('username', TRUE));
+			$password = $this->input->post('password');
+			$conpassword = $this->input->post('conpassword');
+			$dept_id = $this->input->post('dept_name');
+			$firstname = htmlentities($this->input->post('firstname', TRUE));
+			$middlename = htmlentities($this->input->post('middlename', TRUE));
+			$lastname = htmlentities($this->input->post('lastname', TRUE));
+			$email = htmlentities($this->input->post('email', TRUE));
+			$position = htmlentities($this->input->post('position', TRUE));
+	
+			// Process the registration through the model
+			$process = $this->Main_model->user_registration($employee_id, $username, $password, $conpassword, $dept_id, $firstname, $middlename, $lastname, $email, $position);
+	
+			if ($process['status'] === 'success') {
 				$response = array(
 					'status' => 'success',
-					'message' => $process[1]
+					'message' => $process['message']
 				);
 			} else {
 				$response = array(
 					'status' => 'error',
-					'message' => $process[1]
+					'message' => $process['message']
 				);
 			}
+	
 			echo json_encode($response);
-			exit; 
+			exit;
 		}
+	
 		$this->load->view('registration', $page_data);
 	}
+	
 
 	// Locking of Users
 	public function lock_users() {
@@ -157,6 +190,27 @@ class Main extends CI_Controller {
 	// ADMIN APPROVAL for ALL TICKETS
 	public function admin_approval_list($subject, $id) {
 		if ($this->session->userdata('login_data')) {
+			switch($subject) {
+				case "MSRF": {
+					$this->Main_model->open_msrf_ticket($id);
+				} break;
+
+				case "TRACC_CONCERN": {
+					$this->Main_model->open_tracc_concern($id);
+				} break;
+
+				case "TRACC_REQUEST": {
+					$this->Main_model->open_tracc_request($id);
+				} break;
+			}
+
+			$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
+			$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
+			$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
+			$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
+			$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
+			$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
+
 			$user_id = $this->session->userdata('login_data')['user_id'];
 			$user_role = $this->session->userdata('login_data')['role'];
 			$user_dept = $this->session->userdata('login_data')['sup_id'];
@@ -168,9 +222,10 @@ class Main extends CI_Controller {
 			$checkbox_newadd = $this->Main_model->getCheckboxDataNewAdd($id);
 			$checkbox_update = $this->Main_model->getCheckboxDataUpdate($id);
 			$checkbox_account = $this->Main_model->getCheckboxDataAccount($id);
-	
+			
 			$ict = $this->Main_model->GetICTSupervisor();
-	
+			
+			
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
@@ -582,6 +637,13 @@ class Main extends CI_Controller {
 
 			if($user_details[0] == "ok") {
 				$data['user_details'] = $user_details[1];
+
+				$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
+				$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
+				$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
+				$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
 				
 				$allowed_menus = ['dashboard', 'closed_tickets_list', 'open_tickets', 'other_menu'];
 				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'closed_tickets_list';

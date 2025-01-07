@@ -86,7 +86,7 @@
 			                                    <div class="form-group">
 			                                        <label>Date Needed</label>
 			                                        <input type="date" name="date_need" class="form-control select2" value="<?= $msrf['date_needed']; ?>" style="width: 100%;" 
-                                                    <?php if ($msrf['approval_status'] == 'Approved' || $msrf['approval_status'] == 'Rejected'); ?> <?=$readonly?>>
+                                                    <?php if ($msrf['approval_status'] == 'Approved' || $msrf['approval_status'] == 'Rejected'); ?> <?=$readonly?> min="<?= date('Y-m-d'); ?>">
 			                                    </div>
 			                                </div>
 

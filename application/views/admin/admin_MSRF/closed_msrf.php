@@ -18,18 +18,20 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-body">
-                        <table id="closed_msrf" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Ticket ID</th>
-                                    <th>Requestor Name</th>
-                                    <th>Subject</th>
-                                    <th>Priority</th>
-                                    <th>Status</th>
-                                    <th>ICT Approval Status</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="table-responsive">
+                            <table id="closed_msrf" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket ID</th>
+                                        <th>Requestor Name</th>
+                                        <th>Subject</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>ICT Approval Status</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

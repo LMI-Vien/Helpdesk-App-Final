@@ -29,15 +29,35 @@ class Main_model extends CI_Model {
 				$department_description = '';
 			}
 
-			$employee_id = $this->input->post('employee_id');
+			$employee_id = $this->input->post('employee_id', TRUE);
+			$username = $this->input->post('username', TRUE);
 
 			$this->db->where('emp_id', $employee_id);
+			$this->db->or_where('username', $username);
 			$existing_user = $this->db->get('users')->row();
 
+			// if ($existing_user) {
+			// 	$response = array (
+			// 		'status' => 'error',
+			// 		'message' => 'Employee ID is already taken!'
+			// 	);
+			// 	echo json_encode($response);
+			// 	exit;
+			// }
+
 			if ($existing_user) {
-				$response = array (
+				$message = '';
+				if ($existing_user->emp_id === $employee_id) {
+					$message .= 'Employee ID is already taken! ';
+				}
+				if ($existing_user->username === $username) {
+					$message .= 'Username is already taken!';
+				}
+			
+				// Send response
+				$response = array(
 					'status' => 'error',
-					'message' => 'Employee ID is already taken!'
+					'message' => trim($message)
 				);
 				echo json_encode($response);
 				exit;
@@ -722,7 +742,44 @@ class Main_model extends CI_Model {
 		return $query->result_array();
 	}
 
-	
+	public function get_unopened_msrf_tickets() {
+		$this->db->select('COUNT(*)');
+		$this->db->where('opened', 0);
+		$this->db->where('status !=', 'Closed');
+		return $this->db->get('service_request_msrf')->result_array();
+	}
+
+	public function open_msrf_ticket($recid) {
+		$this->db->where('ticket_id', $recid);
+		$this->db->set('opened', 1);
+		$this->db->update('service_request_msrf');
+	}
+
+	public function get_unopened_tracc_concerns() {
+		$this->db->select('COUNT(*)');
+		$this->db->where('opened', 0);
+		$this->db->where('status !=', 'Closed');
+		return $this->db->get('service_request_tracc_concern')->result_array();
+	}
+
+	public function open_tracc_concern($recid) {
+		$this->db->where('control_number', $recid);
+		$this->db->set('opened', 1);
+		$this->db->update('service_request_tracc_concern');
+	}
+
+	public function get_unopened_tracc_request() {
+		$this->db->select('COUNT(*)');
+		$this->db->where('opened', 0);
+		$this->db->where('status !=', 'Closed');
+		return $this->db->get('service_request_tracc_request')->result_array();
+	}
+
+	public function open_tracc_request($recid) {
+		$this->db->where('ticket_id', $recid);
+		$this->db->set('opened', 1);
+		$this->db->update('service_request_tracc_request');
+	}
 
 }
 ?>

@@ -19,36 +19,40 @@
                             <!-- Left Column -->
                             <div class="col-md-6">
                                 <div class="mb-3">
-                                    <label for="employee_id" class="form-label">Employee ID</label>
+                                    <label for="employee_id" class="form-label">Employee ID &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
                                     <input type="text" class="form-control" id="employee_id" name="employee_id" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="firstname" class="form-label">First Name</label>
-                                    <input type="text" class="form-control" id="firstname" name="firstname" required>
+                                    <label for="firstname" class="form-label">First Name &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
+                                    <input type="text" class="form-control letters-only" id="firstname" name="firstname" pattern="^[A-Za-z]+$" required>
+                                    
                                 </div>
                                 <div class="mb-3">
-                                    <label for="middlename" class="form-label">Middle Name</label>
-                                    <input type="text" class="form-control" id="middlename" name="middlename">
+                                    <label for="middlename" class="form-label">Middle Name &nbsp;<span style="font-size: smaller; color: red;">(Optional)</span></label>
+                                    <input type="text" class="form-control letters-only" id="middlename" name="middlename">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="lastname" class="form-label">Last Name</label>
-                                    <input type="text" class="form-control" id="lastname" name="lastname" required>
+                                    <label for="lastname" class="form-label">Last Name &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
+                                    <input type="text" class="form-control letters-only" id="lastname" name="lastname" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email">
+                                    <label for="email" class="form-label">Email &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
                             </div>
                             <!-- Right Column -->
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Department</label>
+                                    <label>Department &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
                                     <!--<select name="department" class="form-control" required>-->
-                                    <select name="dept_name" id="dept_name" class="form-control">
+                                    <select name="dept_name" id="dept_name" class="form-control" required>
                                         <option value="">Select Dept</option>
                                         <?php 
                                         if (!empty($get_departments)) {
                                             foreach($get_departments as $stuu) {
+                                                if($stuu['dept_desc'] == 'Information Communication Technology') {
+                                                    continue;
+                                                }
                                                 echo '<option value="' . htmlspecialchars($stuu['recid']) . '">' . htmlspecialchars($stuu['dept_desc']) . '</option>';
                                             }
                                         } else {
@@ -59,22 +63,22 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="position" class="form-label">Position</label>
-                                    <input type="text" class="form-control" id="position" name="position" required>
+                                    <label for="position" class="form-label">Position &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
+                                    <input type="text" class="form-control letters-only" id="position" name="position" required>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="username" class="form-label">Username</label>
-                                    <input type="text" class="form-control" id="username" name="username" required>
+                                    <label for="username" class="form-label">Username &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
+                                    <input type="text" class="form-control" id="username" name="username" minlength="6" required>
                                 </div>
 
                                 <div class="mb-3">
-                                    <label for="password" class="form-label">Password</label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    <label for="password" class="form-label">Password &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
+                                    <input type="password" class="form-control" id="password" name="password" minlength="6" required>
                                 </div>
                                 
                                 <div class="mb-3">
-                                    <label for="confirm-password" class="form-label">Confirm Password</label>
+                                    <label for="confirm-password" class="form-label">Confirm Password &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
                                     <input type="password" class="form-control" id="conpassword" name="conpassword" required>
                                 </div>
                                 
@@ -102,7 +106,7 @@
 </div>
 
 <?php $this->load->view('footer'); ?>
-<script>
+<!-- <script>
     $(document).ready(function () {
         $('#registrationForm').on('submit', function (e) {
             e.preventDefault(); 
@@ -119,17 +123,24 @@
                     text: 'Username must be at least 6 characters long.',
                 });
                 return; 
-            }
-
-            // Client-side validation for password
-            if (password.length < 6) {
+            } else if (password.length < 6){
                 Swal.fire({
                     icon: 'error',
                     title: 'Invalid Password',
                     text: 'Password must be at least 6 characters long.',
                 });
-                return; 
+                return;
             }
+
+            // Client-side validation for password
+            // if (password.length < 6) {
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: 'Invalid Password',
+            //         text: 'Password must be at least 6 characters long.',
+            //     });
+            //     return; 
+            // }
 
             if (!deptName) {
                 Swal.fire({
@@ -151,6 +162,9 @@
                             icon: 'success',
                             title: 'Registration Successful',
                             text: response.message,
+                            timer: 5000, 
+                            timerProgressBar: true, 
+                            allowOutsideClick: false,
                         }).then(function () {
                             window.location.href = '<?= base_url(); ?>sys/registration';
                         });
@@ -177,4 +191,70 @@
         });
 });
 
+</script> -->
+
+<script>
+    $(document).ready(function () {
+        $('#registrationForm').on('submit', function(e) {
+            e.preventDefault(); 
+
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'), 
+                data: $(this).serialize(), 
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status === 'success') {
+                        // Show success message with SweetAlert
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Registration Successful',
+                            text: response.message
+                        }).then(function() {
+                            window.location.href = '<?= base_url(); ?>sys/registration';
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Registration Failed',
+                            text: response.message
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Something went wrong. Please try again.'
+                    });
+                }
+            });
+        });
+
+        $('.letters-only').on('keydown', function (e) {
+            // Prevent numbers
+            if (e.key >= '0' && e.key <= '9') {
+                e.preventDefault();
+            }
+
+            // Prevent special characters
+            const regex = /^[A-Za-z\s]+$/;
+            if (!regex.test(e.key) && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                e.preventDefault();
+            }
+        });
+
+        $('#employee_id').on('keydown', function (e) {
+        if (
+            !(e.key >= '0' && e.key <= '9') && 
+            e.key !== '-' &&          
+            e.key !== 'Backspace' &&     
+            e.key !== 'Shift' &&       
+            e.key !== '*'
+        ) {
+            e.preventDefault();
+        }
+    });
+
+    });
 </script>

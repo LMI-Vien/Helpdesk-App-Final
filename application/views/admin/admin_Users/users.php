@@ -14,19 +14,21 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-body">
-						<table id="tblUsers" class="table table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>Employee ID</th>
-                                    <th>Employee Name</th>
-                                    <th>Email</th>
-                                    <th>Position</th>
-                                    <th>Username</th>
-									<th>Role</th>
-                                    <th>Action</th>
-								</tr>
-							</thead>
-						</table>
+						<div class="table-responsive">
+							<table id="tblUsers" class="table table-bordered table-striped">
+								<thead>
+									<tr>
+										<th>Employee ID</th>
+										<th>Employee Name</th>
+										<th>Email</th>
+										<th>Position</th>
+										<th>Username</th>
+										<th>Role</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -147,11 +149,7 @@ $(document).ready(function() {
     $('#UsersDeleteModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         var recid = button.data('id');
-<<<<<<< HEAD
-        var deleteUrl = "<?= base_url('AdminUsersController/employee_delete/'); ?>" + recid;
-=======
         var deleteUrl = "<?= base_url('AdminUsers_controller/employee_delete/'); ?>" + recid;
->>>>>>> 9f9f7935d5608a2f4cea6e42711a51044c142247
 
         var confirmBtn = $(this).find('#confirmDeleteBtn');
         confirmBtn.off('click').on('click', function(e) {

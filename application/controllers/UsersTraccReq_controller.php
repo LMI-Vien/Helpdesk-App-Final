@@ -8,6 +8,7 @@ class UsersTraccReq_controller extends CI_Controller {
     	$this->load->helper('form'); // Load form helper
 		$this->load->library('session');
         $this->load->model('UsersTraccReq_model');
+		$this->load->model('AdminTraccReq_model');
 	}
 
     //Generate TRF Number
@@ -302,7 +303,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['get_department'] = $get_department;
 	
 			$this->load->view('users/header', $data);
-			$this->load->view('users/users_TRF/trf_customer_request_form_creation', $data);
+			$this->load->view('users/users_TRF_pdf/trf_customer_request_form_creation', $data);
 			$this->load->view('users/footer');
 		} else {
 			return;
@@ -362,7 +363,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['get_department'] = $get_department;
 	
 			$this->load->view('users/header', $data);
-			$this->load->view('users/users_TRF/trf_customer_shipping_setup', $data);
+			$this->load->view('users/users_TRF_pdf/trf_customer_shipping_setup_creation', $data);
 			$this->load->view('users/footer');
 		} else {
 			return;
@@ -423,7 +424,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['selected_department'] = $users_department;
 	
 			$this->load->view('users/header', $data);
-			$this->load->view('users/users_TRF/trf_employee_request_form', $data);
+			$this->load->view('users/users_TRF_pdf/trf_employee_request_form_creation', $data);
 			$this->load->view('users/footer');
 		} else {
 			return;
@@ -470,7 +471,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['selected_department'] = $users_department;
 	
 			$this->load->view('users/header', $data);
-			$this->load->view('users/users_TRF/trf_item_request_form', $data);
+			$this->load->view('users/users_TRF_pdf/trf_item_request_form_creation', $data);
 			$this->load->view('users/footer');
 		} else {
 			return;
@@ -492,10 +493,8 @@ class UsersTraccReq_controller extends CI_Controller {
 			'checkbox_other_accounts'       => isset($_POST['checkbox_other_accounts']) ? 1 : 0,
 			'checkbox_online'               => isset($_POST['checkbox_online']) ? 1 : 0,
 			'checkbox_all_accounts'         => isset($_POST['checkbox_all_accounts']) ? 1 : 0,
-			'checkbox_trade'                => isset($_POST['checkbox_trade']) ? 1 : 0,
-			'checkbox_non_trade'            => isset($_POST['checkbox_non_trade']) ? 1 : 0,
-			'checkbox_batch_required_yes'   => isset($_POST['checkbox_batch_required_yes']) ? 1 : 0,
-			'checkbox_batch_required_no'    => isset($_POST['checkbox_batch_required_no']) ? 1 : 0,
+			'radio_trade_type'              => isset($_POST['radio_trade_type']) ? $_POST['radio_trade_type'] : '',
+			'radio_batch_required'          => isset($_POST['radio_batch_required']) ? $_POST['radio_batch_required'] : '',
  
 		];
 
@@ -589,7 +588,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['selected_department'] = $users_department;
 	
 			$this->load->view('users/header', $data);
-			$this->load->view('users/users_TRF/trf_supplier_request_form', $data);
+			$this->load->view('users/users_TRF_pdf/trf_supplier_request_form_creation', $data);
 			$this->load->view('users/footer');
 		} else {
 			return;
@@ -644,7 +643,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$getdepartment = $this->Main_model->GetDepartmentID();
 			$customerReqForm = $this->UsersTraccReq_model->get_customer_req_form_rf_details($id);
 			$ticket_numbers = $this->UsersTraccReq_model->get_customer_from_tracc_req_details();
-			$form_del_days = $this->Main_model->get_ticket_checkbox_customer_req($id);
+			$form_del_days = $this->AdminTraccReq_model->get_ticket_checkbox_customer_req($id);
 			// print_r($ticket_numbers);
 			// die();
 			
@@ -663,7 +662,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				// die();
 
 				$this->load->view('users/header', $data);
-				$this->load->view('users/users_TRF/trf_customer_request_form_details', $data);
+				$this->load->view('users/users_TRF_pdf/trf_customer_request_form_details', $data);
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
@@ -693,7 +692,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$data['companies'] = explode(',', $customerReqForm[0]['company']);
 
 				$this->load->view('users/header', $data);
-				$this->load->view('users/users_TRF/trf_customer_shipping_setup_details', $data);
+				$this->load->view('users/users_TRF_pdf/trf_customer_shipping_setup_details', $data);
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
@@ -743,9 +742,9 @@ class UsersTraccReq_controller extends CI_Controller {
 			$user_details = $this->Main_model->user_details();
 			$getdepartment = $this->Main_model->GetDepartmentID();
 			$customerReqForm = $this->UsersTraccReq_model->get_customer_req_form_ir_details($id);
-			$checkboxes = $this->Main_model->get_ticket_checkbox1_item_req_form($id);
-			$checkboxes2 = $this->Main_model->get_ticket_checkbox2_item_req_form($customerReqForm[0]['ticket_id']);
-			$checkboxes3 = $this->Main_model->get_ticket_checkbox3_item_req_form($customerReqForm[0]['ticket_id']);
+			$checkboxes = $this->AdminTraccReq_model->get_ticket_checkbox1_item_req_form($id);
+			$checkboxes2 = $this->AdminTraccReq_model->get_ticket_checkbox2_item_req_form($customerReqForm[0]['ticket_id']);
+			$checkboxes3 = $this->AdminTraccReq_model->get_ticket_checkbox3_item_req_form($customerReqForm[0]['ticket_id']);
 			
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
@@ -758,7 +757,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$data['checkboxes3'] = $checkboxes3;	
 
 				$this->load->view('users/header', $data);
-				$this->load->view('users/users_TRF/trf_item_request_details', $data);
+				$this->load->view('users/users_TRF_pdf/trf_item_request_details', $data);
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
@@ -788,7 +787,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$data['departments'] = $departments;
 
 				$this->load->view('users/header', $data);
-				$this->load->view('users/users_TRF/trf_employee_request_details', $data);
+				$this->load->view('users/users_TRF_pdf/trf_employee_request_details', $data);
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
@@ -842,7 +841,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$user_details = $this->Main_model->user_details();
 			$getdepartment = $this->Main_model->GetDepartmentID();
 			$customerReqForm = $this->UsersTraccReq_model->get_customer_req_form_sr_details($id);
-			$checkboxes = $this->Main_model->get_ticket_checkbox_supplier_req_by_ticket_id($customerReqForm[0]['ticket_id']);
+			$checkboxes = $this->AdminTraccReq_model->get_ticket_checkbox_supplier_req_by_ticket_id($customerReqForm[0]['ticket_id']);
 			
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
@@ -853,7 +852,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$data['checkboxes'] = $checkboxes[0];
 
 				$this->load->view('users/header', $data);
-				$this->load->view('users/users_TRF/trf_supplier_request_form_details', $data);
+				$this->load->view('users/users_TRF_pdf/trf_supplier_request_form_details', $data);
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
@@ -911,160 +910,5 @@ class UsersTraccReq_controller extends CI_Controller {
 			redirect("sys/authentication");
 		}
 	}
-
-	// Update Customer Request Form (Users)
-	// public function user_edit_customer_request_form_pdf($id) {
-	// 	$trf_number = $this->input->post('trf_number', true);
-	// 	$selected_companies = $this->input->post('trf_comp_checkbox_value', true);
-	// 	$date = $this->input->post('date', true);
-	// 	$customer_code = $this->input->post('customer_code', true);
-	// 	$tin_no = $this->input->post('tin_no', true);
-	// 	$customer_name = $this->input->post('customer_name', true);
-	// 	$terms = $this->input->post('terms', true);
-	// 	$customer_address = $this->input->post('customer_address', true);
-	// 	$contact_person = $this->input->post('contact_person', true);
-	// 	$pricelist 	= $this->input->post('pricelist', true);
-	// 	$office_tel_no = $this->input->post('office_tel_no', true);
-	// 	$payment_group = $this->input->post('payment_grp', true);
-	// 	$contact_no = $this->input->post('contact_no', true);
-	// 	$territory = $this->input->post('territory', true);
-	// 	$salesman = $this->input->post('salesman', true);
-	// 	$business_style = $this->input->post('business_style', true);
-	// 	$email = $this->input->post('email', true);
-	// 	$shipping_code = $this->input->post('shipping_code', true);
-	// 	$route_code = $this->input->post('route_code', true);
-	// 	$customer_shipping_address = $this->input->post('customer_shipping_address', true);
-	// 	$landmark = $this->input->post('landmark', true);
-	// 	$window_time_start = $this->input->post('window_time_start', true);
-	// 	$window_time_end = $this->input->post('window_time_end', true);
-	// 	$special_instruction = $this->input->post('special_instruction', true);
-
-	// 	$del_days = [
-	// 		'outright'   						=> $this->input->post('checkbox_outright', true) ? 1 : 0,
-	// 		'consignment'						=> $this->input->post('checkbox_consignment', true) ? 1 : 0,
-	// 		'customer_is_also_a_supplier'		=> $this->input->post('checkbox_cus_a_supplier', true) ? 1 : 0,
-	// 		'online'							=> $this->input->post('checkbox_online', true) ? 1 : 0,
-	// 		'walk_in'							=> $this->input->post('checkbox_walkIn', true) ? 1 : 0,
-	// 		'monday'							=> $this->input->post('checkbox_monday', true) ? 1 : 0,
-	// 		'tuesday'							=> $this->input->post('checkbox_tuesday', true) ? 1 : 0,
-	// 		'wednesday'							=> $this->input->post('checkbox_wednesday', true) ? 1 : 0,
-	// 		'thursday'							=> $this->input->post('checkbox_thursday', true) ? 1 : 0,
-	// 		'friday'							=> $this->input->post('checkbox_friday', true) ? 1 : 0,
-	// 		'saturday'							=> $this->input->post('checkbox_saturday', true) ? 1 : 0,
-	// 		'sunday'							=> $this->input->post('checkbox_sunday', true) ? 1 : 0,
-	// 	];
-
-	// 	$process = $this->UsersTraccReq_model->edit_customer_request_form_pdf($id, $selected_companies, $date, $customer_code, $tin_no, $customer_name, $terms, $customer_address, $contact_person, $pricelist, $office_tel_no, $payment_group, $contact_no, $territory, $salesman, $business_style, $email, $shipping_code, $route_code, $customer_shipping_address, $landmark, $window_time_start, $window_time_end, $special_instruction);
-	// 	// print_r($selected_companies);
-	// 	// die();
-	// 	$process1 = $this->UsersTraccReq_model->edit_customer_request_form_pdf_del_days($id, $del_days);
-
-	// 	if ($process[0] == 1 || $process1[0] == 1) {
-	// 		$this->session->set_flashdata('success', $process[1]);
-	// 		redirect(base_url()."sys/users/dashboard");
-	// 	} else {
-	// 		$this->session->set_flashdata('error', $process[0]);
-	// 		redirect(base_url()."sys/users/dashboard");
-	// 	}
-	// }
-
-	public function user_edit_customer_request_form_pdf($id) {
-		// Fetch and sanitize input
-		$trf_number = $this->input->post('trf_number', true);
-		$customer_code = $this->input->post('customer_code', true);
-		$selected_companies = $this->input->post('trf_comp_checkbox_value', true);
-	
-		// Validate essential fields
-		if (empty($trf_number) || empty($customer_code)) {
-			$this->session->set_flashdata('error', 'Transaction number and customer code are required.');
-			redirect(base_url() . "sys/users/dashboard");
-			return;
-		}
-	
-		// Gather data for updating the main customer request form
-		$main_data = [
-			'trf_number' => $trf_number,
-			'date' => $this->input->post('date', true),
-			'customer_code' => $customer_code,
-			'tin_no' => $this->input->post('tin_no', true),
-			'customer_name' => $this->input->post('customer_name', true),
-			'terms' => $this->input->post('terms', true),
-			'customer_address' => $this->input->post('customer_address', true),
-			'contact_person' => $this->input->post('contact_person', true),
-			'pricelist' => $this->input->post('pricelist', true),
-			'office_tel_no' => $this->input->post('office_tel_no', true),
-			'payment_group' => $this->input->post('payment_grp', true),
-			'contact_no' => $this->input->post('contact_no', true),
-			'territory' => $this->input->post('territory', true),
-			'salesman' => $this->input->post('salesman', true),
-			'business_style' => $this->input->post('business_style', true),
-			'email' => $this->input->post('email', true),
-			'shipping_code' => $this->input->post('shipping_code', true),
-			'route_code' => $this->input->post('route_code', true),
-			'customer_shipping_address' => $this->input->post('customer_shipping_address', true),
-			'landmark' => $this->input->post('landmark', true),
-			'window_time_start' => $this->input->post('window_time_start', true),
-			'window_time_end' => $this->input->post('window_time_end', true),
-			'special_instruction' => $this->input->post('special_instruction', true),
-		];
-	
-		// Gather data for updating the delivery days
-		$del_days = [
-			'outright'   						=> $this->input->post('checkbox_outright', true) ? 1 : 0,
-			'consignment'						=> $this->input->post('checkbox_consignment', true) ? 1 : 0,
-			'customer_is_also_a_supplier'		=> $this->input->post('checkbox_cus_a_supplier', true) ? 1 : 0,
-			'online'							=> $this->input->post('checkbox_online', true) ? 1 : 0,
-			'walk_in'							=> $this->input->post('checkbox_walkIn', true) ? 1 : 0,
-			'monday'							=> $this->input->post('checkbox_monday', true) ? 1 : 0,
-			'tuesday'							=> $this->input->post('checkbox_tuesday', true) ? 1 : 0,
-			'wednesday'							=> $this->input->post('checkbox_wednesday', true) ? 1 : 0,
-			'thursday'							=> $this->input->post('checkbox_thursday', true) ? 1 : 0,
-			'friday'							=> $this->input->post('checkbox_friday', true) ? 1 : 0,
-			'saturday'							=> $this->input->post('checkbox_saturday', true) ? 1 : 0,
-			'sunday'							=> $this->input->post('checkbox_sunday', true) ? 1 : 0,
-		];
-	
-		// Call model functions
-		$process = $this->UsersTraccReq_model->edit_customer_request_form_pdf(
-			$id, 
-			$selected_companies, 
-			$main_data['date'],
-			$main_data['customer_code'],
-			$main_data['tin_no'],
-			$main_data['customer_name'],
-			$main_data['terms'],
-			$main_data['customer_address'],
-			$main_data['contact_person'],
-			$main_data['pricelist'],
-			$main_data['office_tel_no'],
-			$main_data['payment_group'],
-			$main_data['contact_no'],
-			$main_data['territory'],
-			$main_data['salesman'],
-			$main_data['business_style'],
-			$main_data['email'],
-			$main_data['shipping_code'],
-			$main_data['route_code'],
-			$main_data['customer_shipping_address'],
-			$main_data['landmark'],
-			$main_data['window_time_start'],
-			$main_data['window_time_end'],
-			$main_data['special_instruction'],
-			$del_days
-		);
-	
-		// Handle success or error
-		if ($process[0] == 1) {
-			$this->session->set_flashdata('success', 'Ticket successfully updated.');
-		} else {
-			$this->session->set_flashdata('error', 'Error updating the ticket. Please try again.');
-		}
-	
-		// Redirect to dashboard
-		redirect(base_url() . "sys/users/dashboard");
-	}
-	
-
-	
 }
 ?>

@@ -1,3 +1,9 @@
+<?php
+	$user_role = $this->session->userdata('user_role'); // Fetch user role from session
+	$is_disabled = ($user_role == 'L3') ? 'disabled' : ''; // Set disabled attribute if role is l3
+	$is_disable = ($user_role == 'L2') ? 'disabled' : '';
+?> 
+
 <div class="content-wrapper">
     <section class="content-header">
 		<h1>
@@ -100,16 +106,10 @@
                                         </div>
                                     </div>                          
 
-									<?php
-										$user_role = $this->session->userdata('user_role'); // Fetch user role from session
-										$is_disabled = ($user_role == 'L3') ? 'disabled' : ''; // Set disabled attribute if role is l3
-										$is_disable = ($user_role == 'L2') ? 'disabled' : '';
-									?>   
-
 									<div class="col-md-12">
 			                            <div class="form-group">
 			                                <label>Dept. Head Approval Status</label>											
-											<select class="form-control select2" name="approval_stat" id="approval_stat" style="width: 100%;" <?php if ($msrf['approval_status'] == 'Approved' || $msrf['approval_status'] == 'Rejected') echo 'disabled'; ?> <?= $is_disable ?>>
+											<select class="form-control select2" name="approval_stat" id="approval_stat" style="width: 100%;" <?php if ($msrf['approval_status'] == 'Approved' || $msrf['approval_status'] == 'Rejected') echo 'disabled'; ?> <?= $is_disabled ?>>
 												<option value="" disabled selected>Select Approval</option>
 												<option value="Approved"<?php if ($msrf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
 												<option value="Pending"<?php if ($msrf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
@@ -125,7 +125,7 @@
 									<div class="col-md-12">
 										<div class="form-group">
 											<label>ICT Approval Status</label>
-											<select class="form-control select2" name="it_approval_stat" id="it_approval_stat" style="width: 100%;" <?php if ($msrf['it_approval_status'] == 'Approved'); ?> <?= $is_disabled ?>>
+											<select class="form-control select2" name="it_approval_stat" id="it_approval_stat" style="width: 100%;" <?php if ($msrf['it_approval_status'] == 'Approved'); ?> <?= $is_disable ?>>
 												<option value="" disabled selected>Select ICT Approval</option>
 												<option value="Approved" <?php if ($msrf['it_approval_status'] == 'Approved') echo 'selected'; ?>>Approved</option>
 												<option value="Rejected" <?php if ($msrf['it_approval_status'] == 'Rejected') echo 'selected'; ?>>Rejected</option>
@@ -137,7 +137,7 @@
 									<div class="col-md-12" id="ictassign" style="display:none;">
 										<div class="form-group">
 											<label>ICT Assign To</label>
-											<select name="assign_to" id="assign_to" class="form-control select2" <?= $is_disabled ?>>
+											<select name="assign_to" id="assign_to" class="form-control select2" <?= $is_disable ?>>
 												<option value="" disabled selected>Select ICT</option>
 												<option value="ChristianJ" <?php if ($msrf['assigned_it_staff'] == 'ChristianJ') echo ' selected'; ?>>Sir Chinchan</option>
 												<option value="Michael" <?php if ($msrf['assigned_it_staff'] == 'Michael') echo ' selected'; ?>>Sir Michael</option>

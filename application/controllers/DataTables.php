@@ -231,7 +231,7 @@ class DataTables extends CI_Controller {
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved') AND assigned_it_staff = " . $string_emp . ") 
             OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Approved') AND requester_id = " . $user_id . ") " 
             . $search_query . 
-            " ORDER BY recid " . $dir . " LIMIT " . $start . ", " . $length
+            " ORDER BY recid DESC LIMIT " . $start . ", " . $length
         );
 
         if ($strQry->num_rows() > 0) {
@@ -390,18 +390,32 @@ class DataTables extends CI_Controller {
         $count_array = $this->db->query($count_query);
         $length_count = $count_array->num_rows();
     
-        $strQry = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') AND (sup_id = " . $user_id . " OR it_sup_id = '23-0001' OR assigned_it_staff = '" . $emp_id . "') " . $search_query . " ORDER BY recid " . $dir . " LIMIT " . $start . ", " . $length;
+        $strQry = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') AND (sup_id = " . $user_id . " OR it_sup_id = '23-0001' OR assigned_it_staff = '" . $emp_id . "') " . $search_query . " ORDER BY recid DESC LIMIT " . $start . ", " . $length;
         $data_query = $this->db->query($strQry);
         $data = array();
 
         if ($data_query->num_rows() > 0) {
             foreach ($data_query->result() as $rows) {
+                if($rows->opened == 0) {
+                    $date_requested[] = "<b>" . date('M-d-Y', strtotime($rows->date_requested)) . "</b>";
+                    $name[] = "<b>" . $rows->requestor_name . "</b>";
+                    $subject[] = "<b>" . $rows->subject . "</b>";
+                    $status[] = "<b>" . $rows->status . "</b>";
+                    
+                    // Generate a clickable link for the ticket ID.
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'><b>" . $rows->ticket_id . "</b></a>";
+                } else {
+                    $date_requested[] = date('M-d-Y', strtotime($rows->date_requested));
+                    $name[] = $rows->requestor_name;
+                    $subject[] = $rows->subject;
+                    $status[] = $rows->status; 
+                    
+                    // Generate a clickable link for the ticket ID.
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
+                }
+
                 $bid[] = $rows->recid;
                 $ticket[] = $rows->ticket_id;
-                $date_requested[] = date('M-d-Y', strtotime($rows->date_requested));
-                $name[] = $rows->requestor_name;
-                $subject[] = $rows->subject;
-                $status[] = $rows->status; 
                 $prio[] = $rows->priority;
                 $app_stat[] = $rows->approval_status;
                 $it_status[] = $rows->it_approval_status;
@@ -480,9 +494,6 @@ class DataTables extends CI_Controller {
                         break;
                 }
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
-    
-                // Generate a clickable link for the ticket ID.
-                $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
 
                 if($rows->approval_status === "Pending" || $rows->approval_status === "Returned"){
                     $action[] = '<span class="label">' . '<a class="approve-ticket" data-id="'.$rows->recid.'" data-requestor="'.$rows->requestor_name.'" data-department="'.$rows->department.'" data-concern="'.$rows->details_concern.'" data-date-needed="'.$rows->date_needed.'"><i class="fa fa-check"></i></a>' . '</span>';
@@ -575,7 +586,7 @@ class DataTables extends CI_Controller {
         $strQry = $this->db->query("
             SELECT * FROM service_request_tracc_concern
             WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned')
-            AND reported_by_id = " . $user_id . " " . $search_query . " ORDER BY recid " . $dir . " LIMIT " . $start . ", " . $length);
+            AND reported_by_id = " . $user_id . " " . $search_query . " ORDER BY recid DESC LIMIT " . $start . ", " . $length);
 
 
         if ($strQry->num_rows() > 0) {
@@ -767,7 +778,7 @@ class DataTables extends CI_Controller {
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved', 'Returned') AND reported_by = " . $user_id . ") 
             OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned')) 
             " . $search_query . " 
-            ORDER BY recid " . $dir . " LIMIT " . $start . ", " . $length
+            ORDER BY recid DESC LIMIT " . $start . ", " . $length
         );
 
 
@@ -879,10 +890,17 @@ class DataTables extends CI_Controller {
                 }
                 $priority_label[] = '<span class="label ' . $priority_class . '">' . $rows->priority . '</span>';
     
-                $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
-                $name[] = $rows->reported_by;
-                $subject[] = $rows->subject;
-                $reported_date[] = date('M-d-Y', strtotime($rows->reported_date));
+                if($rows->opened == 0) {
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->control_number . "'><b>" . $rows->control_number . "</b></a>";
+                    $name[] = "<b>" . $rows->reported_by . "</b>";
+                    $subject[] = "<b>" . $rows->subject . "</b>";
+                    $reported_date[] = "<b>" . date('M-d-Y', strtotime($rows->reported_date)) . "</b>";
+                } else {
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
+                    $name[] = $rows->reported_by;
+                    $subject[] = $rows->subject;
+                    $reported_date[] = date('M-d-Y', strtotime($rows->reported_date));
+                }
 
                 if($rows->approval_status === "Pending" || $rows->approval_status === "Returned"){
                     $action[] = '<span class="label">' . '<a class="approve-ticket" data-id="'.$rows->recid.'" data-reported-by="'.$rows->reported_by.'" data-concern="'.$rows->tcr_details.'"><i class="fa fa-check"></i></a>' . '</span>';
@@ -977,7 +995,7 @@ class DataTables extends CI_Controller {
         $strQry = $this->db->query("
             SELECT * FROM service_request_tracc_request
             WHERE status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Approved', 'Returned')
-            AND requested_by_id = " . $user_id . " " . $search_query . " ORDER BY recid " . $dir . " LIMIT " . $start . ", " . $length);
+            AND requested_by_id = " . $user_id . " " . $search_query . " ORDER BY recid DESC LIMIT " . $start . ", " . $length);
 
 
         if ($strQry->num_rows() > 0) {
@@ -1149,7 +1167,7 @@ class DataTables extends CI_Controller {
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Returned', 'Approved') AND requested_by = " . $user_id . ") 
             OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Returned', 'Approved')) 
             " . $search_query . " 
-            ORDER BY recid " . $dir . " LIMIT " . $start . ", " . $length
+            ORDER BY recid DESC LIMIT " . $start . ", " . $length
         );
 
         if ($strQry->num_rows() > 0){
@@ -1235,10 +1253,17 @@ class DataTables extends CI_Controller {
                 }
                 $priority_label[] = '<span class="label ' . $priority_class . '">' . $rows->priority . '</span>';
 
-                $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'>" . $rows->ticket_id ."</a>";
-                $name[] = $rows->requested_by;
-                $subject[] = $rows->subject;
-                $date_requested[] = date('M-d-Y', strtotime($rows->date_requested));
+                if($rows->opened == 0) {
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'><b>" . $rows->ticket_id ."</b></a>";
+                    $name[] = "<b>" . $rows->requested_by . "</b>";
+                    $subject[] = "<b>" . $rows->subject . "</b>";
+                    $date_requested[] = "<b>" . date('M-d-Y', strtotime($rows->date_requested)) . "</b>";
+                } else {
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'>" . $rows->ticket_id ."</a>";
+                    $name[] = $rows->requested_by;
+                    $subject[] = $rows->subject;
+                    $date_requested[] = date('M-d-Y', strtotime($rows->date_requested));
+                }
 
                 if($rows->approval_status === "Pending" || $rows->approval_status === "Returned"){
                     $action[] = '<span class="label">' . '<a class="approve-ticket" data-id="'.$rows->recid.'" data-requestor="'.$rows->requested_by.'" data-department="'.$rows->department.'" data-concern="'.$rows->complete_details.'"><i class="fa fa-check"></i></a>' . '</span>';

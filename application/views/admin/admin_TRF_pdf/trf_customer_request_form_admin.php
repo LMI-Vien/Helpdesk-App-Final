@@ -1,3 +1,7 @@
+<?php 
+$role = $this->session->userdata('login_data')['role'];
+?>
+
 <style>
     .custom-checkbox {
         display: inline-flex;
@@ -215,7 +219,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="d-flex flex-wrap">
                                             <div class="form-check me-3">  
                                                 <input class="form-check-input" type="checkbox" id="checkbox_outright" name="checkbox_outright" value="1"
@@ -243,6 +247,56 @@
                                                 <label class="form-check-label" for="checkbox_walkIn">WALK-IN</label>
                                             </div>
                                         </div>
+                                    </div> -->
+
+                                    <div class="col-md-12">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <td colspan="2" class="text-center" style="width: 100px"></td>
+                                                    <td colspan="2" class="text-center" style="width: 100px"></td>
+                                                    <td colspan="2" class="text-center" style="width: 100px"></td>
+                                                    <td colspan="2" class="text-center" style="width: 100px"></td>
+                                                    <td colspan="2" class="text-center" style="width: 100px"></td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="2" class="text-start" style="font-weight: bold">Outright</td>
+                                                    <td colspan="2" class="text-center">
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_outright" name="checkbox_outright" value="1"
+                                                        <?= isset($checkbox_data['outright']) && $checkbox_data['outright'] == 1 ? 'checked' : ''; ?>>
+                                                    </td>
+                                                    <td colspan="2" class="text-center"></td>
+                                                    <td colspan="2" class="text-start" style="font-weight: bold">Online</td>
+                                                    <td colspan="2" class="text-center">
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_online" name="checkbox_online" value="1"
+                                                        <?= isset($checkbox_data['online']) && $checkbox_data['online'] == 1 ? 'checked' : ''; ?>>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2" class="text-start" style="font-weight: bold">Consignment</td>
+                                                    <td colspan="2" class="text-center">
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_consignment" name="checkbox_consignment" value="1"
+                                                        <?= isset($checkbox_data['consignment']) && $checkbox_data['consignment'] == 1 ? 'checked' : ''; ?>>
+                                                    </td>
+                                                    <td colspan="2" class="text-center"></td>
+                                                    <td colspan="2" class="text-start" style="font-weight: bold">Walk-In</td>
+                                                    <td colspan="2" class="text-center">
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_walkIn" name="checkbox_walkIn" value="1"
+                                                        <?= isset($checkbox_data['walk_in']) && $checkbox_data['walk_in'] == 1 ? 'checked' : ''; ?>>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="2" class="text-start" style="font-weight: bold">Customer is Also a Supplier</td>
+                                                    <td colspan="2" class="text-center">
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_cus_a_supplier" name="checkbox_cus_a_supplier" value="1"
+                                                        <?= isset($checkbox_data['customer_is_also_a_supplier']) && $checkbox_data['customer_is_also_a_supplier'] == 1 ? 'checked' : ''; ?>>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
 
                                     <hr class="divider"> 
@@ -368,21 +422,17 @@
                                         </div>
                                     </div>
 
-                                    <?php 
-                                    $role = $this->session->userdata('login_data')['role'];
-                                    ?>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Approved By</label>
-                                            <input type="text" name="approved_by" id="approved_by" value="<?php echo $approved_by ?>" class="form-control select2" <?php echo ($role === 'L2') ? 'readonly' : ''; ?> required> 
+                                            <input type="text" name="approved_by" id="approved_by" value="<?php echo $approved_by ?>" class="form-control select2" <?php echo ($role === 'L3') ? 'readonly' : ''; ?> required> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="box-body pad">
-                                                <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?php echo ($role === 'L2') ? 'disabled' : ''; ?>>Approved</button>
+                                                <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?php echo ($role === 'L3') ? 'disabled' : ''; ?>>Approved</button>
                                             </div>
                                         </div>
                                     </div>

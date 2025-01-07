@@ -1,3 +1,7 @@
+<?php 
+$role = $this->session->userdata('login_data')['role'];
+?>
+
 <style>
     .custom-checkbox {
         display: inline-flex;
@@ -211,22 +215,18 @@
                                             <input type="text" name="requested_by" id="requested_by" value="<?php echo $requested_by; ?>" class="form-control select2" required readonly> 
                                         </div>
                                     </div>
-
-                                    <?php 
-                                    $role = $this->session->userdata('login_data')['role'];
-                                    ?>
                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Approved By</label>
-                                            <input type="text" name="approved_by" id="approved_by" value="<?php echo $approved_by; ?>" class="form-control select2" <?php echo ($role === 'L2') ? 'readonly' : ''; ?> required> 
+                                            <input type="text" name="approved_by" id="approved_by" value="<?php echo $approved_by; ?>" class="form-control select2" <?php echo ($role === 'L3') ? 'readonly' : ''; ?> required> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <div class="box-body pad">
-                                                <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?php echo ($role === 'L2') ? 'disabled' : ''; ?>>Approved</button>
+                                                <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?php echo ($role === 'L3') ? 'disabled' : ''; ?>>Approved</button>
                                             </div>
                                         </div>
                                     </div>

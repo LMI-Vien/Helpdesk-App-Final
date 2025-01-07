@@ -19,20 +19,22 @@
                 <div class="col-xs-12">
                     <div class="box">
                         <div class="box-body">
-                            <table id="tblTraccConcern" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>Control Number</th>
-                                        <th>Reported By</th>
-                                        <th>Subject</th>
-                                        <th>Priority</th>
-                                        <th>Company</th>
-                                        <th>Status</th>
-                                        <th>Dept. Head Approval Status</th>
-                                        <th>ICT Approval Status</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            <div class="table-responsive">
+                                <table id="tblTraccConcern" class="table table-sm table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Control Number</th>
+                                            <th>Reported By</th>
+                                            <th>Subject</th>
+                                            <th>Priority</th>
+                                            <th>Company</th>
+                                            <th>Status</th>
+                                            <th>Dept. Head Approval Status</th>
+                                            <th>ICT Approval Status</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

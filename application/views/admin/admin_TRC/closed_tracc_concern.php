@@ -18,19 +18,21 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-body">
-                        <table id="closed_concern" class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>Control Number</th>
-                                    <th>Reported By</th>
-                                    <th>Subject</th>
-                                    <th>Priority</th>
-                                    <th>Status</th>
-                                    <th>ICT Approval Status</th>
-                                    <th>Resolved Date</th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <div class="table-responsive">
+                            <table id="closed_concern" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Control Number</th>
+                                        <th>Reported By</th>
+                                        <th>Subject</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>ICT Approval Status</th>
+                                        <th>Resolved Date</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

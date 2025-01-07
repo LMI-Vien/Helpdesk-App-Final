@@ -123,7 +123,7 @@
                             <div class="tab-pane active" id="msrf">
                                 <section id="new">
                                     <div class="row">
-                                        <form action="<?= site_url('UsersTraccReq_controller/user_creation_tickets_tracc_request'); ?>" method="POST" enctype="multipart/form-data">
+                                        <form id="TRF_form" action="<?= site_url('UsersTraccReq_controller/user_creation_tickets_tracc_request'); ?>" method="POST" enctype="multipart/form-data">
                                             <div class="col-md-12">
 			                    				<div class="form-group">
                                                     <!-- -->
@@ -159,7 +159,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
 			                                        <label>Date Needed</label>
-			                                        <input type="date" name="date_needed" id="date_needed" class="form-control select2" style="width: 100%;" required>
+			                                        <input type="date" name="date_needed" id="date_needed" class="form-control select2" style="width: 100%;" min="<?= date('Y-m-d'); ?>" required>
 			                                    </div>
                                             </div>
 
@@ -194,7 +194,7 @@
                                             <hr class="divider"> 
                                             
                                             <div class="row">
-                                                <div class="col-md-6 text-left">
+                                                <div class="col-md-4 text-left">
                                                     <div class="form-group d-flex flex-column align-items-center" style="margin-left: 80px;">
                                                         <label for="" style="font-size: 21px;">New/Add</label>
                                                         <div class="circle-checkbox mb-2">
@@ -234,8 +234,8 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-6 text-left" style="margin-left: -150px;">
-                                                    <div class="form-group d-flex flex-column align-items-center">
+                                                <div class="col-md-4 text-left"">
+                                                    <div class="form-group d-flex flex-column align-items-center" style="margin-left: 80px;">
                                                         <label for="" style="font-size: 21px;">Update</label>
                                                         <div class="circle-checkbox mb-2">
                                                             <input type="checkbox" name="checkbox_system_date_lock" id="checkbox_system_date_lock" value="1">
@@ -270,8 +270,8 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4 text-left" style="margin-left: -250px;">
-                                                    <div class="form-group d-flex flex-column align-items-start">
+                                                <div class="col-md-4 text-left">
+                                                    <div class="form-group d-flex flex-column align-items-start" style="margin-left: 80px;">
                                                         <div class="circle-checkbox mb-2">
                                                             <input type="checkbox" name="checkbox_tracc_orien" id="checkbox_tracc_orien" value="1">
                                                             <label for="checkbox_tracc_orien">Tracc Orientation</label>
@@ -325,7 +325,7 @@
                                                 <div class="form-group position-relative">
                                                     <label>Indicate all the details needed</label>
                                                     <div class="textarea-wrapper">
-                                                        <textarea class="form-control" name="complete_details" id="complete_details" placeholder=" " style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;"></textarea>
+                                                        <textarea class="form-control" name="complete_details" id="complete_details" placeholder=" " style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" required></textarea>
                                                         <span class="placeholder-text">Please attach file if needed</span>
                                                     </div>
                                                 </div>
@@ -355,7 +355,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary">Submit Tickets</button>
+                                                        <button id="submitBtn" type="submit" class="btn btn-primary">Submit Tickets</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -371,17 +371,20 @@
     </div>
 </div>
 
+
+<style>
+    .swal-wide {
+        width: 400px !important;
+        font-size: 1.4rem; 
+    }
+</style>
+
 <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 <script>
-
     $(document).ready(function() {
         // Set the current date in YYYY-MM-DD format
-        var today = new Date().toISOString().split('T')[0];
-        $('#date_req').val(today);
-    });
+        $('#date_req').val(new Date().toISOString().split('T')[0]);
 
-
-    $(document).ready(function() {
         function autoResizeTextarea() {
             $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
             $(this).height(this.scrollHeight); // Set height based on content
@@ -392,46 +395,12 @@
         
         // Trigger the resize on page load if there's existing content in the textarea
         $('#complete_details').each(autoResizeTextarea);
-        
-    });
 
-    function resizeInput(input) {
-        input.style.width = 'auto';
-        input.style.width = (input.value.length + 1) + 'ch'; // Adjusting based on character length
-    }
+        function resizeInput(input) {
+            input.style.width = 'auto';
+            input.style.width = (input.value.length + 1) + 'ch'; // Adjusting based on character length
+        }
 
-    // $(document).ready(function() {
-    //     // Initially hide the input field if the checkbox is unchecked
-    //     if ($('#checkbox_others_newadd').prop('checked') === false) {
-    //         $('#others_text_newadd').hide();
-    //     }
-
-    //     // When the checkbox state changes
-    //     $('#checkbox_others_newadd').change(function() {
-    //         if (this.checked) {
-    //             $('#others_text_newadd').show(); 
-    //         } else {
-    //             $('#others_text_newadd').hide(); 
-    //         }
-    //     });
-    // });
-
-    // $(document).ready(function() {
-    //     if ($('#checkbox_others_update').prop('checked') === false) {
-    //         $('#others_text_update').hide();
-    //     }
-
-    //     $('#checkbox_others_update').change(function () {
-    //         if (this.checked) {
-    //             $('#others_text_update').show();
-    //         } else {
-    //             $('#others_text_update').hide();
-    //         }
-    //     })
-    // })
-
-    $(document).ready(function() {
-        // Function to toggle visibility based on checkbox state
         function toggleText(checkbox, textField) {
             if ($(checkbox).prop('checked') === false) {
                 $(textField).hide();
@@ -450,6 +419,33 @@
         toggleText('#checkbox_others_newadd', '#others_text_newadd');
         toggleText('#checkbox_others_update', '#others_text_update');
         toggleText('#checkbox_others_account', '#others_text_account');
+
+        $('#submitBtn').click(function (e) {
+            e.preventDefault();
+
+            var form = document.getElementById('TRF_form');
+            if (!form.checkValidity()) {
+                form.reportValidity(); 
+                return;
+            }
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, submit it!',
+                customClass: {
+                    popup: 'swal-wide' 
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#TRF_form').submit(); 
+                }
+            });
+        });
     });
 
 </script>

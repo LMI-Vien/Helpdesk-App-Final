@@ -14,17 +14,19 @@
 			<div class="col-xs-12">
 				<div class="box">
 					<div class="box-body">
-						<table id="tblDepartment" class="table table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>Department ID</th>
-									<th>Department</th>
-									<th>Manager ID</th>
-									<th>Support ID</th>
-									<th>Action</th>
-								</tr>
-							</thead>
-						</table>
+                        <div class="table-responsive">
+                            <table id="tblDepartment" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Department ID</th>
+                                        <th>Department</th>
+                                        <th>Manager ID</th>
+                                        <th>Support ID</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
 					</div>
 				</div>
 			</div>

@@ -1,3 +1,9 @@
+<?php
+    $user_role = $this->session->userdata('user_role'); // Fetch user role from session
+    $is_disabled = ($user_role == 'L3') ? 'disabled' : ''; // Set disabled attribute if role is l3
+    $is_disable = ($user_role == 'L2') ? 'disabled' : '';
+?>
+
 <style>
     .custom-checkbox {
         display: inline-flex;
@@ -381,7 +387,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-12">
+                                            <!-- <div class="col-md-12">
                                                 <div class="form-group">
 			                    					<label>Priority</label>
                                                     <select class="form-control select2" name="priority" id="priority">
@@ -391,18 +397,12 @@
                                                         <option value="High"<?php if ($trf['priority'] == 'High') echo ' selected'; ?>>High</option>
                                                     </select>                    
 			                    				</div>                                              
-			                                </div>
-
-                                            <?php
-                                            $user_role = $this->session->userdata('user_role'); // Fetch user role from session
-                                            $is_disabled = ($user_role == 'L3') ? 'disabled' : ''; // Set disabled attribute if role is l3
-                                            $is_disable = ($user_role == 'L2') ? 'disabled' : '';
-                                            ?>
+			                                </div> -->
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Approval Status <span style = "color:red;">*</span></label>
-                                                    <select class="form-control select2" name="app_stat" id="app_stat" <?= $is_disable?>>
+                                                    <select class="form-control select2" name="app_stat" id="app_stat" <?= $is_disabled?>>
                                                         <option value=""disabled selected>Approval Status</option>
                                                         <option value="Approved"<?php if ($trf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
                                                         <option value="Pending"<?php if ($trf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
@@ -415,7 +415,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>ICT Approval Status <span style = "color:red;">*</span></label>
-                                                    <select class="form-control select2" name="it_app_stat" id="it_app_stat" <?= $is_disabled?>>
+                                                    <select class="form-control select2" name="it_app_stat" id="it_app_stat" <?= $is_disable?>>
                                                         <option value=""disabled selected>ICT Approval Status</option>
                                                         <option value="Approved"<?php if ($trf['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
                                                         <option value="Pending"<?php if ($trf['it_approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
@@ -435,7 +435,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Accomplished by<span style = "color:red;">*</span></label>
-                                                    <select class="form-control select2" name="accomplished_by" id="accomplished_by" <?= $is_disabled?>>
+                                                    <select class="form-control select2" name="accomplished_by" id="accomplished_by" <?= $is_disable?>>
                                                         <option value=""disabled selected>Accomplished by</option>
                                                         <option value="HANNA" <?php if ($trf['accomplished_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
                                                         <option value="DAN" <?php if ($trf['accomplished_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>
@@ -449,7 +449,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Accomplished by Date <span style = "color:red;">*</span></label>
-                                                    <input type="date" name="accomplished_by_date" id="accomplished_by_date" class="form-control select2" value="<?= $trf['accomplished_by_date']; ?>" style="width: 100%;" <?= $is_disabled?>>
+                                                    <input type="date" name="accomplished_by_date" id="accomplished_by_date" class="form-control select2" value="<?= $trf['accomplished_by_date']; ?>" style="width: 100%;" <?= $is_disable?>>
                                                 </div>
                                             </div>
 

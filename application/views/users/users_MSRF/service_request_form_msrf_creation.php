@@ -22,7 +22,7 @@
                             <div class="tab-pane active" id="msrf">
                                 <section id="new">
                                     <div class="row">
-                                        <form action="<?= site_url('UsersMSRF_controller/users_creation_tickets_msrf'); ?>" method="POST" enctype="multipart/form-data">
+                                        <form id="MSRF_form" action="<?= site_url('UsersMSRF_controller/users_creation_tickets_msrf'); ?>" method="POST" enctype="multipart/form-data">
                                             <div class="col-md-12">
 			                    				<div class="form-group">
 			                    					<label>MSR#</label>
@@ -56,7 +56,7 @@
                                                 </div>
 			                                    <div class="form-group">
 			                                        <label>Date Needed</label>
-			                                        <input type="date" name="date_need" id="date_need" class="form-control select2" style="width: 100%;" required>
+			                                        <input type="date" name="date_need" id="date_need" class="form-control select2" style="width: 100%;" min="<?= date('Y-m-d'); ?>" required>
 			                                    </div>
 			                                </div>
                                             <div class="col-md-12">
@@ -92,7 +92,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Details Concern</label>
-                                                        <textarea class="form-control" name="msrf_concern" id="msrf_concern" placeholder="Place the details concern here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;"></textarea>
+                                                        <textarea class="form-control" name="msrf_concern" id="msrf_concern" placeholder="Place the details concern here" style="width: 100%; height: 100px; resize: vertical;" required></textarea>
                                                 </div>
                                             </div>
 
@@ -106,7 +106,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary">Submit Tickets</button>
+                                                        <button id="submitBtn" type="submit" class="btn btn-primary">Submit Tickets</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -122,55 +122,59 @@
     </div>
 </div>
 
+<style>
+    .swal-wide {
+        width: 400px !important;
+        font-size: 1.4rem; 
+    }
+</style>
+
 <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#categorySelect').change(function() {
-            var selectedValue = $(this).val();
-            console.log("Selected value: " + selectedValue);
-
-            if (selectedValue === 'others') {
+        $('#category').change(function () {
+            if ($(this).val() === 'others') {
                 $('#specifyDiv').show();
-                console.log("Showing Specify");
             } else {
                 $('#specifyDiv').hide();
-                console.log("Hiding Specify");
             }
-        });
-    });
+        }).trigger('change');
 
-    $(document).ready(function() {
-        // Set the current date in YYYY-MM-DD format
-        var today = new Date().toISOString().split('T')[0];
-        $('#date_req').val(today);
-    });
+        $('#date_req').val(new Date().toISOString().split('T')[0]);
 
-    $(document).ready(function() {
         function autoResizeTextarea() {
             $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
             $(this).height(this.scrollHeight); // Set height based on content
         }
         
-        // Apply the resize function to the textarea on input
         $('#msrf_concern').on('input', autoResizeTextarea);
-        
-        // Trigger the resize on page load if there's existing content in the textarea
         $('#msrf_concern').each(autoResizeTextarea);
-        
-    }); 
 
-    $(document).ready(function() {
-        $('#category').change(function() {
-        var status = $(this).val();
-        
-        if (status === 'others') {  
-            $('#specifyDiv').show();
-        } else {
-            $('#specifyDiv').hide();
-        }
+        $('#submitBtn').click(function (e) {
+            e.preventDefault();
+
+            var form = document.getElementById('MSRF_form');
+            if (!form.checkValidity()) {
+                form.reportValidity(); 
+                return;
+            }
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, submit it!',
+                customClass: {
+                    popup: 'swal-wide' 
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#MSRF_form').submit(); 
+                }
+            });
+        });
     });
-    
-    $('#category').trigger('change');
-    })
-    
 </script>

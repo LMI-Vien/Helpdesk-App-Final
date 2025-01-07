@@ -61,7 +61,7 @@
                             <li data-recid="${ticket.recid}">
                                 <a href="#tabs-${ticket.recid}">${ticket.ticket_id} (${ticket.recid})</a>
                                 ${
-                                    userRole !== "L3"
+                                    userRole !== "L2"
                                         ? `<span class="ui-icon ui-icon-close close-tab-btn" role="presentation" title="Close Tab"></span>`
                                         : ""
                                 }

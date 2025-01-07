@@ -194,7 +194,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
 			                                        <label>Date Needed</label>
-			                                        <input type="date" name="date_need" id="date_need" value="<?= $trf['date_needed']; ?>" class="form-control select2" style="width: 100%;" <?=$readonly?>>
+			                                        <input type="date" name="date_need" id="date_need" value="<?= $trf['date_needed']; ?>" class="form-control select2" style="width: 100%;" min="<?= date('Y-m-d'); ?>" <?=$readonly?>>
 			                                    </div>
                                             </div>
 
