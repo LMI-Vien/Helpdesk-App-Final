@@ -23,12 +23,9 @@ class AdminTraccReq_controller extends CI_Controller {
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
 
-				$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
-				$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
-				$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
-				$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
-				$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
-				$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 				$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu'];
 				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'system_tickets_list';
@@ -69,12 +66,9 @@ class AdminTraccReq_controller extends CI_Controller {
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
 
-				$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
-				$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
-				$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
-				$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
-				$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
-				$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 				$allowed_menus = ['dashboard', 'closed_tickets_list', 'open_tickets', 'other_menu'];
 				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'closed_tickets_list';

@@ -204,12 +204,9 @@ class Main extends CI_Controller {
 				} break;
 			}
 
-			$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
-			$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
-			$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
-			$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
-			$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
-			$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
+			$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+			$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+			$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 			$user_id = $this->session->userdata('login_data')['user_id'];
 			$user_role = $this->session->userdata('login_data')['role'];

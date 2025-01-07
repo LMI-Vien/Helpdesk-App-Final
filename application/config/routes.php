@@ -62,7 +62,7 @@ $route['sys/users/details/concern/customer_req_supplier_req/(:any)'] = 'UsersTra
 
 //--- ADMIN ROUTES ---//
 //--- DATATABLE of ADMIN for MSRF
-$route['sys/admin/list/ticket/msrf'] = 'AdminMSRF_controller/admin_list_tickets'; 
+$route['sys/admin/list/ticket/msrf'] = 'AdminMSRF_controller/admin_list_tickets';
 //--- DATATABLE of ADMIN TRACC CONCERN
 $route['sys/admin/list/ticket/tracc_concern'] = 'AdminTraccCon_controller/admin_list_tracc_concern';
 //--- DATATABLE of ADMIN for TRACC REQUEST

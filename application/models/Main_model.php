@@ -743,42 +743,170 @@ class Main_model extends CI_Model {
 	}
 
 	public function get_unopened_msrf_tickets() {
-		$this->db->select('COUNT(*)');
-		$this->db->where('opened', 0);
+		$user = $this->Main_model->user_details();
+
+		if($user[1]['role'] != "L3") {
+			$this->db->where('dept_id', $user[1]['dept_id']);
+		}
+		
 		$this->db->where('status !=', 'Closed');
-		return $this->db->get('service_request_msrf')->result_array();
+		$data = $this->db->get('service_request_msrf')->result_array();
+
+		$table = array();
+		$count = 0;
+		foreach($data as $row) {
+			$opened = explode(',', $row['opened']);
+
+			if(in_array($user[1]['recid'], $opened)) {
+				$count += 1;
+			}
+		}
+
+		$this->db->select('COUNT(*) AS count');
+		$this->db->where('status !=', 'Closed');
+		if($user[1]['role'] != "L3") {
+			$this->db->where('dept_id', $user[1]['dept_id']);
+		}
+		$all_count = $this->db->get('service_request_msrf')->row()->count;
+
+		return $all_count - $count;
 	}
 
 	public function open_msrf_ticket($recid) {
+		$user_id = $this->Main_model->user_details();
 		$this->db->where('ticket_id', $recid);
-		$this->db->set('opened', 1);
-		$this->db->update('service_request_msrf');
+		$table = $this->db->get('service_request_msrf')->row();
+
+		if($table != null) {
+			$data = explode(',', $table->opened);
+
+			if(!in_array($user_id[1]['recid'], $data)) {
+				$data[] = $user_id[1]['recid'];
+				$opened = implode(',', $data);
+
+				$this->db->where('ticket_id', $recid);
+				$this->db->set('opened', $opened);
+				$this->db->update('service_request_msrf');
+			}
+		} else {
+			$opened = $user_id;
+
+			$this->db->where('ticket_id', $recid);
+			$this->db->set('opened', $opened);
+			$this->db->update('service_request_msrf');
+		}
 	}
 
 	public function get_unopened_tracc_concerns() {
-		$this->db->select('COUNT(*)');
-		$this->db->where('opened', 0);
+		$user = $this->Main_model->user_details();
+
+		if($user[1]['role'] != "L3") {
+			$this->db->where('dept_id', $user[1]['dept_id']);
+		}
+		
 		$this->db->where('status !=', 'Closed');
-		return $this->db->get('service_request_tracc_concern')->result_array();
+		$data = $this->db->get('service_request_tracc_concern')->result_array();
+
+		$table = array();
+		$count = 0;
+		foreach($data as $row) {
+			$opened = explode(',', $row['opened']);
+
+			if(in_array($user[1]['recid'], $opened)) {
+				$count += 1;
+			}
+		}
+
+		$this->db->select('COUNT(*) AS count');
+		$this->db->where('status !=', 'Closed');
+		if($user[1]['role'] != "L3") {
+			$this->db->where('dept_id', $user[1]['dept_id']);
+		}
+		$all_count = $this->db->get('service_request_msrf')->row()->count;
+
+		return $all_count - $count;
 	}
 
 	public function open_tracc_concern($recid) {
+		$user_id = $this->Main_model->user_details()[1]['recid'];
 		$this->db->where('control_number', $recid);
-		$this->db->set('opened', 1);
-		$this->db->update('service_request_tracc_concern');
+		$table = $this->db->get('service_request_tracc_concern')->row();
+
+		if($table != null) {
+			$data = explode(',', $table->opened);
+
+			if(!in_array($user_id, $data)) {
+				$data[] = $user_id;
+				$opened = implode(',', $data);
+
+				$this->db->where('control_number', $recid);
+				$this->db->set('opened', $opened);
+				$this->db->update('service_request_tracc_concern');
+			}
+		} else {
+			$opened = $user_id;
+
+			$this->db->where('control_number', $recid);
+			$this->db->set('opened', $opened);
+			$this->db->update('service_request_tracc_concern');
+		}
+
 	}
 
 	public function get_unopened_tracc_request() {
-		$this->db->select('COUNT(*)');
-		$this->db->where('opened', 0);
+		$user = $this->Main_model->user_details()[1];
+
+		if($user['role'] != "L3") {
+			$this->db->where('dept_id', $user['dept_id']);
+		}
+
 		$this->db->where('status !=', 'Closed');
-		return $this->db->get('service_request_tracc_request')->result_array();
+		$data = $this->db->get('service_request_tracc_request')->result_array();
+
+		$table = array();
+		$count = 0;
+		foreach($data as $row) {
+			$opened = explode(',', $row['opened']);
+
+			if(in_array($user['recid'], $opened)) {
+				$count += 1;
+			}
+		}
+
+		$this->db->select('COUNT(*) AS count');
+		$this->db->where('status !=', 'Closed');
+		
+		if($user['role'] != 'L3') {
+			$this->db->where('dept_id', $user['dept_id']);
+		}
+		$all_count = $this->db->get('service_request_tracc_request')->row()->count;
+
+		return $all_count - $count;
 	}
 
 	public function open_tracc_request($recid) {
+		$user_id = $this->Main_model->user_details()[1]['recid'];
 		$this->db->where('ticket_id', $recid);
-		$this->db->set('opened', 1);
-		$this->db->update('service_request_tracc_request');
+		$table = $this->db->get('service_request_tracc_request')->row();
+
+		if($table != null) {
+			$data = explode(',', $table->opened);
+
+			if(!in_array($user_id, $data)) {
+				$data[] = $user_id;
+				$opened = implode(',', $data);
+
+				$this->db->where('ticket_id', $recid);
+				$this->db->set('opened', $opened);
+				$this->db->update('service_request_tracc_request');
+			}
+		} else {
+			$opened = $user_id;
+
+			$this->db->where('ticket_id', $recid);
+			$this->db->set('opened', $opened);
+			$this->db->update('service_request_tracc_request');
+		}
 	}
 
 	public function Acknolwedge_as_resolved($trf_number){

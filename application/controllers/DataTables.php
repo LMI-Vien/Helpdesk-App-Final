@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class DataTables extends CI_Controller { 
     public function __construct() {
         parent::__construct();
+        $this->load->database();
     }
 
     //DATATABLE for ADMIN EMPLOYEE MODULE
@@ -345,8 +346,9 @@ class DataTables extends CI_Controller {
 
     // DATATABLE for ADMIN (MSRF)
     public function all_tickets_msrf() {
+        $user_details = $this->Main_model->user_details();
         $user_id = $this->session->userdata('login_data')['user_id'];
-        $emp_id = $this->session->userdata('login_data')['emp_id'];   
+        $emp_id = $this->session->userdata('login_data')['emp_id'];
     
         $draw = intval($this->input->post("draw")); 
         $start = intval($this->input->post("start")); 
@@ -360,7 +362,12 @@ class DataTables extends CI_Controller {
         $statusFilter = $this->input->post('statusFilter');
 
         $col = 0; 
-        $dir = "asc"; 
+        $dir = "asc";
+        $dept = "";
+
+        if ($user_details[1]['role'] != "L3") {
+            $dept = " AND dept_id = '" . $user_details[1]['dept_id'] . "'";
+        }
     
         if (!empty($order)) {
             foreach ($order as $o) {
@@ -390,13 +397,15 @@ class DataTables extends CI_Controller {
         $count_array = $this->db->query($count_query);
         $length_count = $count_array->num_rows();
     
-        $strQry = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') AND (sup_id = " . $user_id . " OR it_sup_id = '23-0001' OR assigned_it_staff = '" . $emp_id . "') " . $search_query . " ORDER BY recid DESC LIMIT " . $start . ", " . $length;
+        $strQry = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') AND (sup_id = " . $user_id . " OR it_sup_id = '23-0001' OR assigned_it_staff = '" . $emp_id . "') " . $search_query . $dept . " ORDER BY recid DESC LIMIT " . $start . ", " . $length;
         $data_query = $this->db->query($strQry);
         $data = array();
 
         if ($data_query->num_rows() > 0) {
             foreach ($data_query->result() as $rows) {
-                if($rows->opened == 0) {
+                $opened = explode(',', $rows->opened);
+
+                if(!in_array($user_id, $opened)) {
                     $date_requested[] = "<b>" . date('M-d-Y', strtotime($rows->date_requested)) . "</b>";
                     $name[] = "<b>" . $rows->requestor_name . "</b>";
                     $subject[] = "<b>" . $rows->subject . "</b>";
@@ -721,6 +730,7 @@ class DataTables extends CI_Controller {
 
     // DATATABLE for ADMIN (TRACC CONCERN)
     public function all_tickets_tracc_concern() {
+        $user_details = $this->Main_model->user_details();
         $user_id = $this->session->userdata('login_data')['user_id'];  
         $emp_id = $this->session->userdata('login_data')['emp_id'];  
         $string_emp = $this->db->escape($emp_id);  
@@ -733,7 +743,12 @@ class DataTables extends CI_Controller {
         $search = $this->db->escape_str($search['value']); 
     
         $col = 0; 
-        $dir = "";  
+        $dir = "";
+        $dept = "";
+
+        if ($user_details[1]['role'] != "L3") {
+            $dept = " AND dept_id = '" . $user_details[1]['dept_id'] . "'";
+        }
 
         if (!empty($order)) {
             foreach ($order as $o) {
@@ -777,7 +792,7 @@ class DataTables extends CI_Controller {
             SELECT * FROM service_request_tracc_concern 
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved', 'Returned') AND reported_by = " . $user_id . ") 
             OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned')) 
-            " . $search_query . " 
+            " . $search_query . $dept . " 
             ORDER BY recid DESC LIMIT " . $start . ", " . $length
         );
 
@@ -890,7 +905,9 @@ class DataTables extends CI_Controller {
                 }
                 $priority_label[] = '<span class="label ' . $priority_class . '">' . $rows->priority . '</span>';
     
-                if($rows->opened == 0) {
+                $opened = explode(',', $rows->opened);
+
+                if(!in_array($user_id, $opened)) {
                     $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->control_number . "'><b>" . $rows->control_number . "</b></a>";
                     $name[] = "<b>" . $rows->reported_by . "</b>";
                     $subject[] = "<b>" . $rows->subject . "</b>";
@@ -1111,6 +1128,7 @@ class DataTables extends CI_Controller {
 
     //DATATABLE for ADMIN (TRACC REQUEST)
     public function all_tickets_tracc_request() {
+        $user_details = $this->Main_model->user_details();
         $user_id = $this->session->userdata('login_data')['user_id'];
         $emp_id = $this->session->userdata('login_data')['emp_id'];
         $string_emp = $this->db->escape($emp_id);
@@ -1124,6 +1142,11 @@ class DataTables extends CI_Controller {
 
         $col = 0;
         $dir = "";
+        $dept = "";
+
+        if($user_details[1]['role'] != "L3") {
+            $dept = " AND dept = '" . $user_details[1]['dept_id'] . "'";
+        }
 
         if (!empty($order)){
             foreach ($order as $o) {
@@ -1166,7 +1189,7 @@ class DataTables extends CI_Controller {
             SELECT * FROM service_request_tracc_request 
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Returned', 'Approved') AND requested_by = " . $user_id . ") 
             OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Returned', 'Approved')) 
-            " . $search_query . " 
+            " . $search_query . $dept . " 
             ORDER BY recid DESC LIMIT " . $start . ", " . $length
         );
 
@@ -1253,7 +1276,9 @@ class DataTables extends CI_Controller {
                 }
                 $priority_label[] = '<span class="label ' . $priority_class . '">' . $rows->priority . '</span>';
 
-                if($rows->opened == 0) {
+                $opened = explode(',', $rows->opened);
+
+                if(!in_array($user_id, $opened)) {
                     $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'><b>" . $rows->ticket_id ."</b></a>";
                     $name[] = "<b>" . $rows->requested_by . "</b>";
                     $subject[] = "<b>" . $rows->subject . "</b>";

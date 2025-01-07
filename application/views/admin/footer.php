@@ -345,13 +345,14 @@
                 "serverSide": true,
                 "processing": true,
                 "ajax": {
-                    "url": "<?= base_url(); ?>DataTables/all_tickets_msrf",
+                    "url": "<?= base_url(); ?>DataTables/all_tickets_msrf/",
                     "type": "POST",
                     "data": function(d) {
                         // Add additional filter parameters to the DataTables request
                         d.startDate = $('#startDate').val();
                         d.endDate = $('#endDate').val();
                         d.statusFilter = $('#statusFilter').val();
+                        d.dept_id = "<?= $user_details['dept_id']; ?>";
                     }
                 },
                 "responsive": true,
