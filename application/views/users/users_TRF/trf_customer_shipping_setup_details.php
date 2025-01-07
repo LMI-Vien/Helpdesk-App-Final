@@ -1,3 +1,28 @@
+<?php 
+    $sess_login_data = $this->session->userdata('login_data');
+    $role = $sess_login_data['role'];
+
+    $reqForm['approved_by'];
+    // print_r($reqForm['approved_by']);
+    // die();
+   
+    $disabled = "";
+    $readonly = "";
+    $btn_label = "Update  Ticket";
+    
+    $approved_by = isset($reqForm['approved_by']) ? $reqForm['approved_by'] : null;
+
+    if ($role === "L1") {
+        if(!empty($approved_by)) {
+            $disabled = "disabled";
+            $readonly = "readonly";
+            $btn_label = "Submit Ticket";
+        } else {
+            $disabled = "";
+            $readonly = "";
+        }
+    } 
+?>
 <style>
     .custom-checkbox {
         display: inline-flex;
@@ -84,9 +109,9 @@
                             <div class="tab-pane active" id="msrf">
                                 <section id="new">
                                     <div class="row">
-                                        <form action="<?= site_url(''); ?>" method="POST">
+                                        <form action="<?= site_url('sys/users/details/concern/customer_req_shipping_setup/update/' . $reqForm['recid']); ?>" method="POST">
                                             <div class="col-md-12">
-                                                <input type="text" value=<?= $reqForm['ticket_id']; ?> name="ticket_id" class="form-control" readonly>
+                                                <input type="text" value="<?= $reqForm['ticket_id']; ?>" name="trf_number" class="form-control" readonly>
                                             </div>
 
                                             <!-- <div class="col-md-6">
@@ -101,19 +126,19 @@
                                                 <div class="col-md-12 text-center" style="margin-top: 15px;">
                                                     <div class="form-group d-flex justify-content-center">
                                                         <div class="checkbox-inline custom-checkbox">
-                                                            <input type="checkbox" name="css_comp_checkbox_value[]" value="LMI" id="checkbox_lmi" <?= in_array("LMI", $companies) ? 'checked' : '' ?>>
+                                                            <input type="checkbox" name="css_comp_checkbox_value[]" value="LMI" id="checkbox_lmi" <?= in_array("LMI", $companies) ? 'checked' : '' ?> <?= $disabled; ?>>
                                                             <label for="checkbox_lmi" class="checkbox-label">LMI</label>
                                                         </div>
                                                         <div class="checkbox-inline custom-checkbox">
-                                                            <input type="checkbox" name="css_comp_checkbox_value[]" value="RGDI" id="checkbox_rgdi" <?= in_array("RGDI", $companies) ? 'checked' : '' ?>>
+                                                            <input type="checkbox" name="css_comp_checkbox_value[]" value="RGDI" id="checkbox_rgdi" <?= in_array("RGDI", $companies) ? 'checked' : '' ?> <?= $disabled; ?>>
                                                             <label for="checkbox_rgdi" class="checkbox-label">RGDI</label>
                                                         </div>
                                                         <div class="checkbox-inline custom-checkbox">
-                                                            <input type="checkbox" name="css_comp_checkbox_value[]" value="LPI" id="checkbox_lpi" <?= in_array("LPI", $companies) ? 'checked' : '' ?>>
+                                                            <input type="checkbox" name="css_comp_checkbox_value[]" value="LPI" id="checkbox_lpi" <?= in_array("LPI", $companies) ? 'checked' : '' ?> <?= $disabled; ?>>
                                                             <label for="checkbox_lpi" class="checkbox-label">LPI</label>
                                                         </div>
                                                         <div class="checkbox-inline custom-checkbox">
-                                                            <input type="checkbox" name="css_comp_checkbox_value[]" value="SVI" id="checkbox_sv" <?= in_array("SVI", $companies) ? 'checked' : '' ?>>
+                                                            <input type="checkbox" name="css_comp_checkbox_value[]" value="SVI" id="checkbox_sv" <?= in_array("SVI", $companies) ? 'checked' : '' ?> <?= $disabled; ?>>
                                                             <label for="checkbox_sv" class="checkbox-label">SVI</label>
                                                         </div>
                                                     </div>
@@ -123,21 +148,21 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Shipping Code</label>
-                                                    <input type="text" name="shipping_code" id="shipping_code" value="<?= $reqForm['shipping_code']; ?>" class="form-control select2" required> 
+                                                    <input type="text" name="shipping_code" id="shipping_code" value="<?= $reqForm['shipping_code']; ?>" class="form-control select2" <?= $readonly; ?> required> 
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Route Code</label>
-                                                    <input type="text" name="route_code" id="route_code" value="<?= $reqForm['route_code']; ?>" class="form-control select2" required> 
+                                                    <input type="text" name="route_code" id="route_code" value="<?= $reqForm['route_code']; ?>" class="form-control select2" <?= $readonly; ?> required> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Customer Address</label>
-                                                    <input type="text" name="customer_address" id="customer_address" value="<?= $reqForm['customer_address']; ?>" class="form-control select2" required>
+                                                    <input type="text" name="customer_address" id="customer_address" value="<?= $reqForm['customer_address']; ?>" class="form-control select2" <?= $readonly; ?> required>
                                                     <small class="form-text text-muted">
                                                         <table class="table table-borderless mb-0">
                                                             <tr>
@@ -157,28 +182,28 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Landmark</label>
-                                                    <input type="text" name="landmark" id="landmark" value="<?= $reqForm['landmark']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="landmark" id="landmark" value="<?= $reqForm['landmark']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Window Time Start</label>
-                                                    <input type="time" name="window_time_start" id="window_time_start" value="<?= $reqForm['window_time_start'] ?>" class="form-control select2" required>
+                                                    <input type="time" name="window_time_start" id="window_time_start" value="<?= $reqForm['window_time_start'] ?>" class="form-control select2" <?= $readonly; ?> required>
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Window Time End</label>
-                                                    <input type="time" name="window_time_end" id="window_time_end" value="<?= $reqForm['window_time_end']; ?>" class="form-control select2" required>
+                                                    <input type="time" name="window_time_end" id="window_time_end" value="<?= $reqForm['window_time_end']; ?>" class="form-control select2" <?= $readonly; ?> required>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Special Instruction</label>
-                                                    <input type="text" name="special_instruction" id="special_instruction" value="<?= $reqForm['special_instruction']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="special_instruction" id="special_instruction" value="<?= $reqForm['special_instruction']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
@@ -186,30 +211,30 @@
                                                 <label style="font-size:20px;">Delivery Days</label> 
                                                 <div class="d-flex flex-wrap"> 
                                                     <div class="form-check form-check-inline-custom"> 
-                                                        <input class="form-check-input" type="checkbox" id="checkbox_monday" name="checkbox_monday" value="1" <?= $reqForm['monday'] ? 'checked' : ''; ?>> 
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_monday" name="checkbox_monday" value="1" <?= $reqForm['monday'] ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                         <label class="form-check-label" for="checkbox_monday">Monday</label> 
                                                     </div> 
                                                     <div class="form-check form-check-inline-custom"> 
-                                                        <input class="form-check-input" type="checkbox" id="checkbox_tuesday" name="checkbox_tuesday" value="1" <?= $reqForm['tuesday'] ? 'checked' : ''; ?>> 
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_tuesday" name="checkbox_tuesday" value="1" <?= $reqForm['tuesday'] ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                         <label class="form-check-label" for="checkbox_tuesday">Tuesday</label> 
                                                     </div> <div class="form-check form-check-inline-custom"> 
-                                                        <input class="form-check-input" type="checkbox" id="checkbox_wednesday" name="checkbox_wednesday" value="1" <?= $reqForm['wednesday'] ? 'checked' : ''; ?>>
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_wednesday" name="checkbox_wednesday" value="1" <?= $reqForm['wednesday'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                         <label class="form-check-label" for="checkbox_wednesday">Wednesday</label> 
                                                     </div> <div class="form-check form-check-inline-custom"> 
-                                                        <input class="form-check-input" type="checkbox" id="checkbox_thursday" name="checkbox_thursday" value="1" <?= $reqForm['thursday'] ? 'checked' : ''; ?>> 
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_thursday" name="checkbox_thursday" value="1" <?= $reqForm['thursday'] ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                         <label class="form-check-label" for="checkbox_thursday">Thursday</label> 
                                                     </div> 
                                                     <div class="form-check form-check-inline-custom"> 
-                                                        <input class="form-check-input" type="checkbox" id="checkbox_friday" name="checkbox_friday" value="1" <?= $reqForm['friday'] ? 'checked' : ''; ?>> 
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_friday" name="checkbox_friday" value="1" <?= $reqForm['friday'] ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                         <label class="form-check-label" for="checkbox_friday">Friday</label> 
                                                     </div> 
                                                     <div class="form-check form-check-inline-custom"> 
-                                                        <input class="form-check-input" type="checkbox" id="checkbox_saturday" name="checkbox_saturday" value="1" <?= $reqForm['saturday'] ? 'checked' : ''; ?>>
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_saturday" name="checkbox_saturday" value="1" <?= $reqForm['saturday'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                         <label class="form-check-label" for="checkbox_saturday">Saturday</label> 
                                                     </div> 
                                                     <div class="form-check form-check-inline-custom"> 
-                                                        <input class="form-check-input" type="checkbox" id="checkbox_sunday" name="checkbox_sunday" value="1" <?= $reqForm['sunday'] ? 'checked' : ''; ?>>
-                                                        <label class="form-check-label" for="checkbox_sunday">Sunday</label> 
+                                                        <input class="form-check-input" type="checkbox" id="checkbox_sunday" name="checkbox_sunday" value="1" <?= $reqForm['sunday'] ? 'checked' : ''; ?> <?= $disabled; ?>>
+                                                        <label class="form-check-label" for="checkbox_sunday">Sunday</label>
                                                     </div> 
                                                 </div> 
                                             </div>
@@ -224,7 +249,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary">Submit Tickets</button>
+                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?= $disabled; ?>>Submit Tickets</button>
                                                     </div>
                                                 </div>
                                             </div>

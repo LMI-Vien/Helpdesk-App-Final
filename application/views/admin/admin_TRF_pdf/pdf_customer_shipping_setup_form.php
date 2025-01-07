@@ -26,7 +26,7 @@
 <script>
      $(document).ready(function() {
         $.ajax({
-            url: base_url + 'main/cus_ship_setup_JTtabs',
+            url: base_url + 'AdminTraccReq_controller/cus_ship_setup_JTtabs',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -153,7 +153,7 @@
                 $('#tabs').tabs('refresh'); // Refresh the tabs widget
 
                 $.ajax({
-                    url: base_url + 'main/update_css_ticket_remarks',
+                    url: base_url + 'AdminTraccReq_controller/update_css_ticket_remarks',
                     type: 'POST',
                     data: { recid: recid },
                     success: function (response) {

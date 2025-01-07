@@ -70,7 +70,7 @@
                     <div class="tab-pane active" id="msrf">
                         <section id="new">
                             <div class="row">
-                                <form action="<?= site_url('Main/approve_crf'); ?>" method="POST">
+                                <form action="<?= site_url('AdminTraccReq_controller/approve_crf'); ?>" method="POST">
                                     <input type="hidden" name="recid" id="recid" value="<?php echo $recid; ?>">
                                     <div class="row">
                                         <div class="col-md-7 text-center" style="margin-top: 15px;">

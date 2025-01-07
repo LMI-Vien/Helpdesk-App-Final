@@ -1,3 +1,28 @@
+<?php 
+    $sess_login_data = $this->session->userdata('login_data');
+    $role = $sess_login_data['role'];
+
+    $reqForm['approved_by'];
+    // print_r($reqForm['approved_by']);
+    // die();
+   
+    $disabled = "";
+    $readonly = "";
+    $btn_label = "Update  Ticket";
+    
+    $approved_by = isset($reqForm['approved_by']) ? $reqForm['approved_by'] : null;
+
+    if ($role === "L1") {
+        if(!empty($approved_by)) {
+            $disabled = "disabled";
+            $readonly = "readonly";
+            $btn_label = "Submit Ticket";
+        } else {
+            $disabled = "";
+            $readonly = "";
+        }
+    } 
+?>
 <style>
     .custom-checkbox {
         display: inline-flex;
@@ -96,8 +121,11 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="msrf">
                                 <section id="new">
+                                    <?php if($this->session->flashdata('message')) : ?>
+                                        <?= $this->session->flashdata('message') ?>
+                                    <?php endif; ?>
                                     <div class="row">
-                                        <form action="<?= site_url('Main/user_creation_supplier_request_form_pdf'); ?>" method="POST">
+                                        <form action="<?= site_url('sys/users/details/concern/customer_req_supplier_req/update/' . $reqForm['recid']); ?>" method="POST">
                                             <div class="col-md-12">
                                                 <input type="text" name="trf_number" id="trf_number" class="form-control" value="<?= $reqForm['ticket_id']; ?>" readonly>
                                             </div>
@@ -107,19 +135,19 @@
                                                 <div class="col-md-7 text-center" style="margin-top: 15px;">
                                                     <div class="form-group d-flex justify-content-center">
                                                         <div class="checkbox-inline custom-checkbox">
-                                                            <input type="checkbox" name="trf_comp_checkbox_value[]" value="LMI" id="checkbox_lmi" <?= in_array("LMI", $companies) ? 'checked' : ''; ?>>
+                                                            <input type="checkbox" name="trf_comp_checkbox_value[]" value="LMI" id="checkbox_lmi" <?= in_array("LMI", $companies) ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_lmi" class="checkbox-label">LMI</label>
                                                         </div>
                                                         <div class="checkbox-inline custom-checkbox">
-                                                            <input type="checkbox" name="trf_comp_checkbox_value[]" value="RGDI" id="checkbox_rgdi" <?= in_array("RGDI", $companies) ? 'checked' : ''; ?>>
+                                                            <input type="checkbox" name="trf_comp_checkbox_value[]" value="RGDI" id="checkbox_rgdi" <?= in_array("RGDI", $companies) ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_rgdi" class="checkbox-label">RGDI</label>
                                                         </div>
                                                         <div class="checkbox-inline custom-checkbox">
-                                                            <input type="checkbox" name="trf_comp_checkbox_value[]" value="LPI" id="checkbox_lpi" <?= in_array("LPI", $companies) ? 'checked' : ''; ?>>
+                                                            <input type="checkbox" name="trf_comp_checkbox_value[]" value="LPI" id="checkbox_lpi" <?= in_array("LPI", $companies) ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_lpi" class="checkbox-label">LPI</label>
                                                         </div>
                                                         <div class="checkbox-inline custom-checkbox">
-                                                            <input type="checkbox" name="trf_comp_checkbox_value[]" value="SV" id="checkbox_sv" <?= in_array("SV", $companies) ? 'checked' : ''; ?>>
+                                                            <input type="checkbox" name="trf_comp_checkbox_value[]" value="SV" id="checkbox_sv" <?= in_array("SV", $companies) ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_sv" class="checkbox-label">SVI</label>
                                                         </div>
                                                     </div>
@@ -129,7 +157,7 @@
                                                 <div class="col-md-3" style="margin-top: 15px;">
                                                     <div class="form-group d-flex align-items-center custom-form-group">
                                                         <label for="date" class="mr-2">Date</label>
-                                                        <input type="date" name="date" id="date" value="<?= $reqForm['date']; ?>" class="form-control" required>
+                                                        <input type="date" name="date" id="date" value="<?= $reqForm['date']; ?>" class="form-control"  <?= $readonly; ?> required>
                                                     </div>
                                                 </div>
                                             </div>       
@@ -151,24 +179,24 @@
                                                         <tr>
                                                             <td colspan="2" class="text-start">01 - Local</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" name="local_supplier_grp" id="local_supplier_grp" value="1" <?= $checkboxes['supplier_group_local'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" name="local_supplier_grp" id="local_supplier_grp" value="1" <?= $checkboxes['supplier_group_local'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">001 - Local Trade Vendors</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_local_trade_ven" id="major_grp_local_trade_ven" value="1" <?= $checkboxes['supplier_trade'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_local_trade_ven" id="major_grp_local_trade_ven" value="1" <?= $checkboxes['supplier_trade'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td colspan="2" class="text-start">02 - Foreign</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" name="foreign_supplier_grp" id="foreign_supplier_grp" value="1" <?= $checkboxes['supplier_group_foreign'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" name="foreign_supplier_grp" id="foreign_supplier_grp" value="1" <?= $checkboxes['supplier_group_foreign'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">002 - Local Non-Trade Vendors</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_local_nontrade_ven" id="major_grp_local_nontrade_ven" value="1" <?= $checkboxes['major_grp_local_non_trade_vendor'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_local_nontrade_ven" id="major_grp_local_nontrade_ven" value="1" <?= $checkboxes['major_grp_local_non_trade_vendor'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
@@ -178,7 +206,7 @@
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">003 - Foreign Trade Vendors</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_foreign_trade_ven" id="major_grp_foreign_trade_ven" value="1" <?= $checkboxes['major_grp_foreign_trade_vendors'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_foreign_trade_ven" id="major_grp_foreign_trade_ven" value="1" <?= $checkboxes['major_grp_foreign_trade_vendors'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
@@ -188,31 +216,31 @@
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">004 - Foreign Non-Trade Vendors</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_foreign_nontrade_ven" id="major_grp_foreign_nontrade_ven" value="1" <?= $checkboxes['major_grp_foreign_non_trade_vendors'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_foreign_nontrade_ven" id="major_grp_foreign_nontrade_ven" value="1" <?= $checkboxes['major_grp_foreign_non_trade_vendors'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td colspan="2" class="text-start">01 - Trade</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" name="supplier_trade" id="supplier_trade" value="1" <?= $checkboxes['supplier_trade'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" name="supplier_trade" id="supplier_trade" value="1" <?= $checkboxes['supplier_trade'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">005 - Local-Broker/Forwarder</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_local_broker_forwarder" id="major_grp_local_broker_forwarder" value="1" <?= $checkboxes['major_grp_local_broker_forwarder'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_local_broker_forwarder" id="major_grp_local_broker_forwarder" value="1" <?= $checkboxes['major_grp_local_broker_forwarder'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td colspan="2" class="text-start">02 - Non-Trade</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" name="supplier_non_trade" id="supplier_non_trade" value="1" <?= $checkboxes['supplier_non_trade'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" name="supplier_non_trade" id="supplier_non_trade" value="1" <?= $checkboxes['supplier_non_trade'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">006 - Rental</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_rental" id="major_grp_rental" value="1" <?= $checkboxes['major_grp_rental'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_rental" id="major_grp_rental" value="1" <?= $checkboxes['major_grp_rental'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
                                                         
@@ -222,7 +250,7 @@
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">007 - Bank</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_bank" id="major_grp_bank" value="1" <?= $checkboxes['major_grp_bank'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_bank" id="major_grp_bank" value="1" <?= $checkboxes['major_grp_bank'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
@@ -232,43 +260,43 @@
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">008 - One Time Supplier</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_one_time_supplier" id="major_grp_one_time_supplier" value="1" <?= $checkboxes['major_grp_ot_supplier'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_one_time_supplier" id="major_grp_one_time_supplier" value="1" <?= $checkboxes['major_grp_ot_supplier'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td colspan="2" class="text-start">01 - Goods</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" name="trade_type_goods" id="trade_type_goods" value="1" <?= $checkboxes['trade_type_goods'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" name="trade_type_goods" id="trade_type_goods" value="1" <?= $checkboxes['trade_type_goods'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">009 - Government Offices</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_government_offices" id="major_grp_government_offices" value="1" <?= $checkboxes['major_grp_government_offices'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_government_offices" id="major_grp_government_offices" value="1" <?= $checkboxes['major_grp_government_offices'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td colspan="2" class="text-start">02 - Services</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" name="trade_type_services" id="trade_type_services" value="1" <?= $checkboxes['trade_type_services'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" name="trade_type_services" id="trade_type_services" value="1" <?= $checkboxes['trade_type_services'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">010 - Insurance</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_insurance" id="major_grp_insurance" value="1" <?= $checkboxes['major_grp_insurance'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_insurance" id="major_grp_insurance" value="1" <?= $checkboxes['major_grp_insurance'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td colspan="2" class="text-start">03 - Goods/Services</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" name="trade_type_GoodsServices" id="trade_type_GoodsServices" value="1" <?= $checkboxes['trade_type_goods_services'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" name="trade_type_GoodsServices" id="trade_type_GoodsServices" value="1" <?= $checkboxes['trade_type_goods_services'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">011 - Employees</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_employees" id="major_grp_employees" value="1" <?= $checkboxes['major_grp_employees'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_employees" id="major_grp_employees" value="1" <?= $checkboxes['major_grp_employees'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
@@ -278,7 +306,7 @@
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">012 - Sub/Affiliates/Intercompany</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_subs_affiliates" id="major_grp_subs_affiliates" value="1" <?= $checkboxes['major_grp_sub_aff_intercompany'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_subs_affiliates" id="major_grp_subs_affiliates" value="1" <?= $checkboxes['major_grp_sub_aff_intercompany'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
@@ -288,7 +316,7 @@
                                                             <td colspan="2" class="text-center"></td>
                                                             <td colspan="2" class="text-start">013 - Utilities</td>
                                                             <td colspan="2" class="text-center">
-                                                                <input type="checkbox" class="ms-auto" name="major_grp_utilities" id="major_grp_utilities" value="1" <?= $checkboxes['major_grp_utilities'] ? 'checked' : ''; ?>>
+                                                                <input type="checkbox" class="ms-auto" name="major_grp_utilities" id="major_grp_utilities" value="1" <?= $checkboxes['major_grp_utilities'] ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             </td>
                                                         </tr>
 
@@ -412,98 +440,98 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Supplier Code</label>
-                                                    <input type="text" name="supplier_code" id="supplier_code" value="<?= $reqForm['supplier_code']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="supplier_code" id="supplier_code" value="<?= $reqForm['supplier_code']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Supplier Account Group</label>
-                                                    <input type="text" name="supplier_account_group" id="supplier_account_group" value="<?= $reqForm['supplier_account_group']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="supplier_account_group" id="supplier_account_group" value="<?= $reqForm['supplier_account_group']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Supplier Name</label>
-                                                    <input type="text" name="supplier_name" id="supplier_name" value="<?= $reqForm['supplier_name']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="supplier_name" id="supplier_name" value="<?= $reqForm['supplier_name']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Country Origin</label>
-                                                    <input type="text" name="country_origin" id="country_origin" value="<?= $reqForm['country_origin']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="country_origin" id="country_origin" value="<?= $reqForm['country_origin']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Supplier Address</label>
-                                                    <input type="text" name="supplier_address" id="supplier_address" value="<?= $reqForm['supplier_address']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="supplier_address" id="supplier_address" value="<?= $reqForm['supplier_address']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Office Tel. No:</label>
-                                                    <input type="text" name="office_tel_no" id="office_tel_no" value="<?= $reqForm['office_tel']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="office_tel_no" id="office_tel_no" value="<?= $reqForm['office_tel']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Zip Code:</label>
-                                                    <input type="number" name="zip_code" id="zip_code" value="<?= $reqForm['zip_code']; ?>" class="form-control select2"> 
+                                                    <input type="number" name="zip_code" id="zip_code" value="<?= $reqForm['zip_code']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Contact Person:</label>
-                                                    <input type="text" name="contact_person" id="contact_person" value="<?= $reqForm['contact_person']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="contact_person" id="contact_person" value="<?= $reqForm['contact_person']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Terms:</label>
-                                                    <input type="text" name="terms" id="terms" value="<?= $reqForm['terms']; ?>" class="form-control select2">
+                                                    <input type="text" name="terms" id="terms" value="<?= $reqForm['terms']; ?>" class="form-control select2" <?= $readonly; ?>>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Tin No:</label>
-                                                    <input type="number" name="tin_no" id="tin_no" value="<?= $reqForm['tin_no']; ?>" class="form-control select2"> 
+                                                    <input type="number" name="tin_no" id="tin_no" value="<?= $reqForm['tin_no']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Pricelist:</label>
-                                                    <input type="number" name="pricelist" id="pricelist" value="<?= $reqForm['pricelist']; ?>" class="form-control select2">  
+                                                    <input type="number" name="pricelist" id="pricelist" value="<?= $reqForm['pricelist']; ?>" class="form-control select2" <?= $readonly; ?>>  
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>A/P Account:</label>
-                                                    <input type="text" name="ap_account" id="ap_account" value="<?= $reqForm['ap_account']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="ap_account" id="ap_account" value="<?= $reqForm['ap_account']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>EWT:</label>
-                                                    <input type="text" name="ewt" id="ewt" value="<?= $reqForm['ewt']; ?>" class="form-control select2">  
+                                                    <input type="text" name="ewt" id="ewt" value="<?= $reqForm['ewt']; ?>" class="form-control select2" <?= $readonly; ?>>  
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Advance Account:</label>
-                                                    <input type="text" name="advance_acc" id="advance_acc" value="<?= $reqForm['advance_account']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="advance_acc" id="advance_acc" value="<?= $reqForm['advance_account']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
@@ -512,11 +540,11 @@
                                                     <label for="item_classification">VAT:</label>
                                                     <div class="d-flex align-items-center">
                                                         <!-- Textbox -->
-                                                        <input type="number" name="vat" id="vat" class="form-control" style="flex: 1;" value="<?= $reqForm['vat']; ?>">
+                                                        <input type="number" name="vat" id="vat" class="form-control" style="flex: 1;" value="<?= $reqForm['vat']; ?>" <?= $readonly; ?>>
                                                         <!-- Checkbox -->
                                                         <div class="form-check ms-auto d-flex align-items-center" style="margin-left: auto; margin-top: 10px;">
                                                             <label for="non_vat" class="form-check-label me-2" style="font-size: 20px; line-height: 1.5;">Non-VAT</label>
-                                                            <input type="checkbox" name="checkbox_non_vat" id="checkbox_non_vat" class="form-check-input" style="width: 40px; height: 19px;">
+                                                            <input type="checkbox" name="checkbox_non_vat" id="checkbox_non_vat" class="form-check-input" style="width: 40px; height: 19px;" <?= $disabled; ?>>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -525,21 +553,21 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Payee 1</label>
-                                                    <input type="text" name="payee1" id="payee1" value="<?= $reqForm['payee_1']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="payee1" id="payee1" value="<?= $reqForm['payee_1']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Payee 2</label>
-                                                    <input type="text" name="payee2" id="payee2" value="<?= $reqForm['payee_2']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="payee2" id="payee2" value="<?= $reqForm['payee_2']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Payee 3</label>
-                                                    <input type="text" name="payee3" id="payee3" value="<? $reqForm['payee_3']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="payee3" id="payee3" value="<?= $reqForm['payee_3']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
@@ -560,28 +588,28 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Name</label>
-                                                    <input type="text" name="driver_name" id="driver_name" value="<?= $reqForm['driver_name']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="driver_name" id="driver_name" value="<?= $reqForm['driver_name']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Contact No:</label>
-                                                    <input type="text" name="driver_contact_no" id="driver_contact_no" value="<?= $reqForm['driver_contact_no']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="driver_contact_no" id="driver_contact_no" value="<?= $reqForm['driver_contact_no']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Fleet:</label>
-                                                    <input type="text" name="driver_fleet" id="driver_fleet" value="<?= $reqForm['driver_fleet']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="driver_fleet" id="driver_fleet" value="<?= $reqForm['driver_fleet']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Plate No:</label>
-                                                    <input type="text" name="driver_plate_no" id="driver_plate_no" value="<?= $reqForm['driver_plate_no']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="driver_plate_no" id="driver_plate_no" value="<?= $reqForm['driver_plate_no']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
@@ -592,21 +620,21 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Name</label>
-                                                    <input type="text" name="helper_name" id="helper_name" value="<?= $reqForm['helper_name']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="helper_name" id="helper_name" value="<?= $reqForm['helper_name']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Contact No:</label>
-                                                    <input type="text" name="helper_contact_no" id="helper_contact_no" value="<?= $reqForm['helper_contact_no']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="helper_contact_no" id="helper_contact_no" value="<?= $reqForm['helper_contact_no']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Rate Card:</label>
-                                                    <input type="text" name="helper_rate_card" id="helper_rate_card" value="<?= $reqForm['helper_rate_card']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="helper_rate_card" id="helper_rate_card" value="<?= $reqForm['helper_rate_card']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
@@ -620,7 +648,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary">Submit Tickets</button>
+                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?= $disabled; ?>>Submit Tickets</button>
                                                         <!-- <button id="add-form-button" type="button" class="btn btn-primary">Create Another Form</button> -->
                                                     </div>
                                                 </div>

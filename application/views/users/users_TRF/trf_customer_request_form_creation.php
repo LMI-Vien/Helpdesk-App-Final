@@ -361,7 +361,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Landmark</label>
-                                                    <input type="text" name="landmark" id="landmark" value="" class="form-control select2" required>
+                                                    <input type="text" name="landmark" id="landmark" value="" class="form-control select2">
                                                 </div>
                                             </div>
 

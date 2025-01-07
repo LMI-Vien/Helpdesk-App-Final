@@ -10,7 +10,7 @@ $route['sys/registration'] = 'main/registration';
 //ADMIN Dashboard
 $route['sys/admin/dashboard'] = 'AdminDashboard_controller/admin_dashboard';
 //USER Dashboard
-$route['sys/users/dashboard'] = 'main/users_dashboard';
+$route['sys/users/dashboard'] = 'UsersDashboard_controller/users_dashboard';
 
 
 //--- USER ROUTES ---//
@@ -83,11 +83,11 @@ $route['sys/admin/print'] = 'AdminGenerateReport_controller/admin_print_report';
 
 
 //--- PDF REPORTS VIEWING ADMIN ---//
-$route['sys/admin/customer_request_form_pdf'] = 'main/customer_request_form_pdf_view';
-$route['sys/admin/customer_shipping_setup_pdf'] = 'main/customer_shipping_setup_pdf_view';
-$route['sys/admin/employee_request_form_pdf'] = 'main/employee_request_form_pdf_view';
-$route['sys/admin/item_request_form_pdf'] = 'main/item_request_form_pdf_view';
-$route['sys/admin/supplier_request_form_pdf'] = 'main/supplier_request_form_pdf_view';
+$route['sys/admin/customer_request_form_pdf'] = 'AdminTraccReq_controller/customer_request_form_pdf_view';
+$route['sys/admin/customer_shipping_setup_pdf'] = 'AdminTraccReq_controller/customer_shipping_setup_pdf_view';
+$route['sys/admin/employee_request_form_pdf'] = 'AdminTraccReq_controller/employee_request_form_pdf_view';
+$route['sys/admin/item_request_form_pdf'] = 'AdminTraccReq_controller/item_request_form_pdf_view';
+$route['sys/admin/supplier_request_form_pdf'] = 'AdminTraccReq_controller/supplier_request_form_pdf_view';
 
 
 //--- TICKET APPROVAL for MSRF and TRACC CONCERN and TRACC REQUEST
@@ -115,7 +115,11 @@ $route['sys/admin/delete/department/(:any)'] = 'AdminDept_controller/department_
 $route['Main/download_file/(:any)'] = 'Main/download_file/$1';
 
 //
-$route['sys/users/details/concern/customer_req_employee_req/5/update/(:any)'] = 'UsersTraccReq_controller/update_employee_request/$1';
+$route['sys/users/details/concern/customer_req_employee_req/update/(:any)'] = 'UsersTraccReq_controller/update_employee_request/$1';
+
+$route['sys/users/details/concern/customer_req_supplier_req/update/(:any)'] = 'UsersTraccReq_controller/update_supplier_request/$1';
+
+$route['sys/users/details/concern/customer_req_shipping_setup/update/(:any)'] = 'UsersTraccReq_controller/update_shipping_setup/$1';
 
 //--- System LOGOUT
 $route['sys/logout'] = 'main/logout';

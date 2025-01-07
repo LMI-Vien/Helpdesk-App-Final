@@ -82,7 +82,7 @@
                     <div class="tab-pane active" id="msrf">
                         <section id="new">
                             <div class="row">
-                                <form action="<?= site_url('Main/approve_erf'); ?>" method="POST">
+                                <form action="<?= site_url('AdminTraccReq_controller/approve_erf'); ?>" method="POST">
                                 <input type="hidden" name="recid" id="recid" value="<?php echo $recid; ?>">
                                     <div class="col-md-12" style="margin-top: 20px;">
                                         <div class="form-group">

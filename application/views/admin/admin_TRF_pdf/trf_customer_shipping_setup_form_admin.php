@@ -70,7 +70,7 @@
                     <div class="tab-pane active" id="msrf">
                         <section id="new">
                             <div class="row">
-                                <form action="<?= site_url('Main/approve_css'); ?>" method="POST">      
+                                <form action="<?= site_url('AdminTraccReq_controller/approve_css'); ?>" method="POST">      
                                     <input type="hidden" name="recid" id="recid" value="<?php echo $recid; ?>">                                  
                                     <div class="row">
                                         <!-- Checkboxes Section -->

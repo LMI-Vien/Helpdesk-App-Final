@@ -1,3 +1,28 @@
+<?php 
+    $sess_login_data = $this->session->userdata('login_data');
+    $role = $sess_login_data['role'];
+
+    $reqForm['approved_by'];
+    // print_r($reqForm['approved_by']);
+    // die();
+   
+    $disabled = "";
+    $readonly = "";
+    $btn_label = "Update  Ticket";
+    
+    $approved_by = isset($reqForm['approved_by']) ? $reqForm['approved_by'] : null;
+
+    if ($role === "L1") {
+        if(!empty($approved_by)) {
+            $disabled = "disabled";
+            $readonly = "readonly";
+            $btn_label = "Submit Ticket";
+        } else {
+            $disabled = "";
+            $readonly = "";
+        }
+    } 
+?>
 <style>
     .custom-checkbox {
         display: inline-flex;
@@ -83,11 +108,9 @@
                         <div class="tab-content">
                             <div class="tab-pane active" id="msrf">
                                 <section id="new">
-                                    <?php if($this->session->flashdata('message')) : ?>
-                                        <?= $this->session->flashdata('message') ?>
-                                    <?php endif; ?>
+                                    
                                     <div class="row">
-                                        <form action="<?= site_url('sys/users/details/concern/customer_req_employee_req/5/update/' . $reqForm['recid']); ?>" method="POST">
+                                        <form action="<?= site_url('sys/users/details/concern/customer_req_employee_req/update/' . $reqForm['recid']); ?>" method="POST">
                                             <div class="col-md-12">
                                                 <input type="text" name="trf_number" id="trf_number" class="form-control" value="<?= $reqForm['ticket_id']; ?>" readonly>
                                             </div>
@@ -95,14 +118,14 @@
                                             <div class="col-md-12" style="margin-top: 20px;">
                                                 <div class="form-group">
                                                     <label>Name</label>
-                                                    <input type="text" name="employee_name" id="employee_name" value="<?= $reqForm['name']; ?>" class="form-control select2" required> 
+                                                    <input type="text" name="employee_name" id="employee_name" value="<?= $reqForm['name']; ?>" class="form-control select2" <?= $readonly; ?> required> 
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Department</label>
-                                                    <select name="department" id="department" class="form-control select2" required>
+                                                    <select name="department" id="department" class="form-control select2" <?= $disabled; ?> required>
                                                         <option value="" disabled selected>Select Department</option>
                                                         <?php if (!empty($departments)): ?>
                                                             <?php foreach ($departments as $dept): ?>
@@ -121,7 +144,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Position</label>
-                                                    <input type="text" name="position" id="position" value="<?= $reqForm['position'] ?>" class="form-control select2"> 
+                                                    <input type="text" name="position" id="position" value="<?= $reqForm['position'] ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
@@ -129,28 +152,28 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Address</label>
-                                                    <input type="text" name="address" id="address" value="<?= $reqForm['address']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="address" id="address" value="<?= $reqForm['address']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
                                             
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Tel No. / Mobile No.</label>
-                                                    <input type="text" name="tel_mobile_no" id="tel_mobile_no" value="<?= $reqForm['tel_no_mob_no']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="tel_mobile_no" id="tel_mobile_no" value="<?= $reqForm['tel_no_mob_no']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>TIN No.</label>
-                                                    <input type="text" name="tin_no" id="tin_no" value="<?= $reqForm['tin_no']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="tin_no" id="tin_no" value="<?= $reqForm['tin_no']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Contact Person</label>
-                                                    <input type="text" name="contact_person" id="contact_person" value="<?= $reqForm['contact_person']; ?>" class="form-control select2"> 
+                                                    <input type="text" name="contact_person" id="contact_person" value="<?= $reqForm['contact_person']; ?>" class="form-control select2" <?= $readonly; ?>> 
                                                 </div>
                                             </div>
 
@@ -164,7 +187,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary">Submit Tickets</button>
+                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?= $disabled; ?>>Submit Tickets</button>
                                                     </div>
                                                 </div>
                                             </div>
