@@ -18,11 +18,12 @@
             // die();
             $disabled = "disabled";
             $readonly = "readonly";
-            $btn_label = "Update Ticket";
         } else {
             $disabled = "";
             $readonly = "";
+            $btn_label = "Update Ticket";
         }
+        $open_disabled = ($status_trf === "Open") ? "disabled" : "";
     }
     // if($role === "L1" && $department_id === "1"){
     //     $department_status = $msrf['approval_status'];
@@ -382,20 +383,6 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Acknowledge By</label>
-                                                    <input type="text" name="acknowledge_by" id="acknowledge_by" class="form-control" value="<?= $trf['acknowledge_by']; ?>" style="width: 100%;" required <?=$readonly?>>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Acknowledge By/Date</label>
-                                                    <input type="date" name="acknowledge_by_date" id="acknowledge_by_date" class="form-control select2" value="<?= $trf['acknowledge_by_date']; ?>" style="width: 100%;" required <?=$readonly?>>
-                                                </div>
-                                            </div>
-
                                             <div class="col-md-12" style="display: none;">
                                                 <div class="form-group">
 			                    					<label>Priority</label>
@@ -461,11 +448,28 @@
                                                     <input type="date" name="accomplished_by_date" id="accomplished_by_date" class="form-control select2" value="<?= $trf['accomplished_by_date']; ?>" style="width: 100%;" readonly>
                                                 </div>
                                             </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Acknowledge By</label>
+                                                    <input type="text" name="acknowledge_by" id="acknowledge_by" class="form-control" value="<?= $trf['acknowledge_by']; ?>" style="width: 100%;" required <?=$open_disabled?>>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Acknowledge By/Date</label>
+                                                    <input type="date" name="acknowledge_by_date" id="acknowledge_by_date" class="form-control select2" value="<?= $trf['acknowledge_by_date']; ?>" style="width: 100%;" required <?=$open_disabled?>>
+                                                </div>
+                                            </div>
                                             
+                                            <input type="hidden" name="action" value="edit">
+
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?=$disabled?>>Submit Tickets</button>
+                                                        <button type="submit" class="btn btn-primary" name="edit" <?=$disabled?>><?=$btn_label?></button>
+                                                        <button type="submit" class="btn btn-success" name="acknowledge" onclick="setAcknowledgeFieldsRequired(); document.querySelector('[name=action]').value='acknowledge';" <?= ($status_trf === 'Open' || $status_trf === 'Rejected') ? 'disabled' : '' ?>>Acknowledge as Resolved</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -483,105 +487,77 @@
 
 <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 <script>
-    $(document).ready(function() {
-        function autoResizeTextarea() {
-            $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
-            $(this).height(this.scrollHeight); // Set height based on content
-        }
-        
-        // Apply the resize function to the textarea on input
-        $('#complete_details').on('input', autoResizeTextarea);
-        
-        // Trigger the resize on page load if there's existing content in the textarea
-        $('#complete_details').each(autoResizeTextarea);
-        
-    });
+$(document).ready(function() {
+    function autoResizeTextarea() {
+        $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
+        $(this).height(this.scrollHeight); // Set height based on content
+    }
+    
+    // Apply the resize function to the textarea on input
+    $('#complete_details').on('input', autoResizeTextarea);
+    
+    // Trigger the resize on page load if there's existing content in the textarea
+    $('#complete_details').each(autoResizeTextarea);
+    
 
     function resizeInput(input) {
         input.style.width = 'auto';
         input.style.width = (input.value.length + 1) + 'ch'; // Adjusting based on character length
     }
 
-    $(document).ready(function() {
-        $("#reason_rejected_ticket").hide();
-        
-        function checkApprovalStatus() {
-            var itApprovalStatus = $('#it_app_stat').val();
-            var appStatus = $('#app_stat').val();
 
-            if (itApprovalStatus === 'Rejected' || appStatus === 'Rejected'){
-                $("#reason_rejected_ticket").show();
-            } else {
-                $("#reason_rejected_ticket").hide();
-            }
+    $("#reason_rejected_ticket").hide();
+    
+    function checkApprovalStatus() {
+        var itApprovalStatus = $('#it_app_stat').val();
+        var appStatus = $('#app_stat').val();
+
+        if (itApprovalStatus === 'Rejected' || appStatus === 'Rejected'){
+            $("#reason_rejected_ticket").show();
+        } else {
+            $("#reason_rejected_ticket").hide();
         }
+    }
 
-        $('#it_app_stat, #app_stat').on('change', checkApprovalStatus);
+    $('#it_app_stat, #app_stat').on('change', checkApprovalStatus);
 
-        checkApprovalStatus();
-        
+    checkApprovalStatus();
+
+    // Function to toggle visibility of related input fields
+    function toggleInputField(checkbox, inputField) {
+        if ($(checkbox).is(':checked')) {
+            $(inputField).show();
+        } else {
+            $(inputField).hide();
+        }
+    }
+
+    // Initially toggle visibility based on checkbox states
+    toggleInputField('#checkbox_others_newadd', '#others_text_newadd');
+    toggleInputField('#checkbox_others_update', '#others_text_update');
+    toggleInputField('#checkbox_others', '#others_text_acc');
+
+    // Event listeners for each checkbox
+    $('#checkbox_others_newadd').change(function () {
+        toggleInputField(this, '#others_text_newadd');
     });
 
-    $(document).ready(function () {
-        // Function to toggle visibility of related input fields
-        function toggleInputField(checkbox, inputField) {
-            if ($(checkbox).is(':checked')) {
-                $(inputField).show();
-            } else {
-                $(inputField).hide();
-            }
-        }
-
-        // Initially toggle visibility based on checkbox states
-        toggleInputField('#checkbox_others_newadd', '#others_text_newadd');
-        toggleInputField('#checkbox_others_update', '#others_text_update');
-        toggleInputField('#checkbox_others', '#others_text_acc');
-
-        // Event listeners for each checkbox
-        $('#checkbox_others_newadd').change(function () {
-            toggleInputField(this, '#others_text_newadd');
-        });
-
-        $('#checkbox_others_update').change(function () {
-            toggleInputField(this, '#others_text_update');
-        });
-
-        $('#checkbox_others').change(function () {
-            toggleInputField(this, '#others_text_acc');
-        });
+    $('#checkbox_others_update').change(function () {
+        toggleInputField(this, '#others_text_update');
     });
 
+    $('#checkbox_others').change(function () {
+        toggleInputField(this, '#others_text_acc');
+    });
 
-    // $(document).on('click', '#form-add-submit-button', function(e) {
-    //     e.preventDefault();
-    //     var ticket_id = '<?= $this->uri->segment(6)?>';
-    //     ticket_id = ticket_id.trim();
-    //     var ict_approval = $('#it_app_stat').val();
-    //     var reason_rejected = $('#reason_rejected').val();
+    function setAcknowledgeFieldsRequired() {
+        // Get the acknowledge fields
+        var ackBy = document.getElementById('acknowledge_by');
+        var ackByDate = document.getElementById('acknowledge_by_date');
 
-    //     var data = {
-    //         ict_approval: ict_approval,
-    //         reason_rejected: reason_rejected,
-    //         data_id: ticket_id,
-    //         module:"tracc-request"
-    //     };
-
-    //     $.ajax({
-    //         url: base_url + "Main/update_ticket",
-    //         type: "POST",
-    //         data: data,
-    //         success: function(response) {
-    //             var response = JSON.parse(response);
-    //             if (response.message === "success") {
-    //                 location.href = '<?=base_url("sys/users/list/tickets/tracc_request") ?>';
-    //             } else {
-    //                 //change this and add error message or redirect to main listing page
-    //                 location.href = '<?=base_url("sys/users/list/tickets/tracc_request") ?>';
-    //             }
-    //         },
-    //         error: function(xhr, status, error) {
-    //             //console.error("AJAX Error: " + error);
-    //         }
-    //     });
-    // });
+        // Set both fields as required
+        ackBy.setAttribute('required', 'required');
+        ackByDate.setAttribute('required', 'required');
+    }
+});
 </script>

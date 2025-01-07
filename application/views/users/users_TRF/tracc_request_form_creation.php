@@ -338,7 +338,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Acknowledge By</label>
                                                     <input type="text" name="acknowledge_by" id="acknowledge_by" class="form-control" value="" style="width: 100%;" required>
@@ -350,7 +350,7 @@
                                                     <label>Acknowledge By/Date</label>
                                                     <input type="date" name="acknowledge_by_date" id="acknowledge_by_date" class="form-control select2" value="" style="width: 100%;" required>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             
                                             <div class="col-md-12">
                                                 <div class="form-group">

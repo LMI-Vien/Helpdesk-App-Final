@@ -189,60 +189,151 @@ class UsersTraccReq_controller extends CI_Controller {
     public function update_status_tracc_request(){
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+
 		$trf_number = $this->input->post('trf_number', true);
-		$date_need = $this->input->post('date_need', true);
-		$complete_details = $this->input->post('complete_details', true);
-		$selected_companies = $this->input->post('comp_checkbox_value', true);
+		$action = $this->input->post('action', true); // Get the action (edit or acknowledge)
 
-		$new_add_data = [
-			'item' 							=> $this->input->post('checkbox_item', true) ? 1 : 0,
-			'customer' 						=> $this->input->post('checkbox_customer', true) ? 1 : 0,
-			'supplier' 						=> $this->input->post('checkbox_supplier', true) ? 1 : 0,
-			'warehouse' 					=> $this->input->post('checkbox_whs', true) ? 1 : 0,
-			'bin_number' 					=> $this->input->post('checkbox_bin', true) ? 1 : 0,
-			'customer_shipping_setup' 		=> $this->input->post('checkbox_cus_ship_setup', true) ? 1 : 0,
-			'employee_request_form' 		=> $this->input->post('checkbox_employee_req_form', true) ? 1 : 0,
-			'others' 						=> $this->input->post('checkbox_others_newadd', true) ? 1 : 0,
-			'others_description_add' 		=> $this->input->post('others_text_newadd', true),
-		];
+		if ($this->session->userdata('login_data')) {
+			$user_id = $this->session->userdata('login_data')['user_id'];
+			$user_details = $this->Main_model->user_details();
 
-		$data_update = [
-			'system_date_lock'				=> $this->input->post('checkbox_system_date_lock', true) ? 1 : 0,
-			'user_file_access'				=> $this->input->post('checkbox_user_file_access', true) ? 1 : 0,
-			'item_details'					=> $this->input->post('checkbox_item_dets', true) ? 1 : 0,
-			'customer_details'				=> $this->input->post('checkbox_customer_dets', true) ? 1 : 0,
-			'supplier_details'				=> $this->input->post('checkbox_supplier_dets', true) ? 1 : 0,
-			'employee_details'				=> $this->input->post('checkbox_employee_dets', true) ? 1 : 0,
-			'others'						=> $this->input->post('checkbox_others_update', true) ? 1 : 0,
-			'others_description_update'		=> $this->input->post('others_text_update', true),
-		];
+			if ($user_details[0] == "ok") {
+				$sid = $this->session->session_id;
 
-		$data_account = [
-			'tracc_orientation'				=> $this->input->post('checkbox_tracc_orien', true) ? 1 : 0,
-			'lmi'							=> $this->input->post('checkbox_create_lmi', true) ? 1 : 0,
-			'rgdi'							=> $this->input->post('checkbox_create_rgdi', true) ? 1 : 0,
-			'lpi'							=> $this->input->post('checkbox_create_lpi', true) ? 1 : 0,
-			'sv'							=> $this->input->post('checkbox_create_sv', true) ? 1 : 0,
-			'gps_account'					=> $this->input->post('checkbox_gps_account', true) ? 1 : 0,
-			'others'						=> $this->input->post('checkbox_others', true) ? 1 : 0,
-			'others_description_acc'		=> $this->input->post('others_text_acc', true),
+				if ($action == 'edit') {
+					$date_need = $this->input->post('date_need', true);
+					$complete_details = $this->input->post('complete_details', true);
+					$selected_companies = $this->input->post('comp_checkbox_value', true);
+
+					$new_add_data = [
+						'item' 							=> $this->input->post('checkbox_item', true) ? 1 : 0,
+						'customer' 						=> $this->input->post('checkbox_customer', true) ? 1 : 0,
+						'supplier' 						=> $this->input->post('checkbox_supplier', true) ? 1 : 0,
+						'warehouse' 					=> $this->input->post('checkbox_whs', true) ? 1 : 0,
+						'bin_number' 					=> $this->input->post('checkbox_bin', true) ? 1 : 0,
+						'customer_shipping_setup' 		=> $this->input->post('checkbox_cus_ship_setup', true) ? 1 : 0,
+						'employee_request_form' 		=> $this->input->post('checkbox_employee_req_form', true) ? 1 : 0,
+						'others' 						=> $this->input->post('checkbox_others_newadd', true) ? 1 : 0,
+						'others_description_add' 		=> $this->input->post('others_text_newadd', true),
+					];
 			
-		];
+					$data_update = [
+						'system_date_lock'				=> $this->input->post('checkbox_system_date_lock', true) ? 1 : 0,
+						'user_file_access'				=> $this->input->post('checkbox_user_file_access', true) ? 1 : 0,
+						'item_details'					=> $this->input->post('checkbox_item_dets', true) ? 1 : 0,
+						'customer_details'				=> $this->input->post('checkbox_customer_dets', true) ? 1 : 0,
+						'supplier_details'				=> $this->input->post('checkbox_supplier_dets', true) ? 1 : 0,
+						'employee_details'				=> $this->input->post('checkbox_employee_dets', true) ? 1 : 0,
+						'others'						=> $this->input->post('checkbox_others_update', true) ? 1 : 0,
+						'others_description_update'		=> $this->input->post('others_text_update', true),
+					];
+			
+					$data_account = [
+						'tracc_orientation'				=> $this->input->post('checkbox_tracc_orien', true) ? 1 : 0,
+						'lmi'							=> $this->input->post('checkbox_create_lmi', true) ? 1 : 0,
+						'rgdi'							=> $this->input->post('checkbox_create_rgdi', true) ? 1 : 0,
+						'lpi'							=> $this->input->post('checkbox_create_lpi', true) ? 1 : 0,
+						'sv'							=> $this->input->post('checkbox_create_sv', true) ? 1 : 0,
+						'gps_account'					=> $this->input->post('checkbox_gps_account', true) ? 1 : 0,
+						'others'						=> $this->input->post('checkbox_others', true) ? 1 : 0,
+						'others_description_acc'		=> $this->input->post('others_text_acc', true),
+						
+					];
+			
+					$process = $this->Main_model->UpdateTraccReq($trf_number, $date_need, $complete_details, $selected_companies);
+					$process1 = $this->Main_model->UpdateTRNewAdd($trf_number, $new_add_data);
+					$process2 = $this->Main_model->UpdateTRUpdate($trf_number, $data_update);
+					$process3 = $this->Main_model->UpdateTRAccount($trf_number, $data_account);
 
-		$process = $this->Main_model->UpdateTraccReq($trf_number, $date_need, $complete_details, $selected_companies);
-		$process1 = $this->Main_model->UpdateTRNewAdd($trf_number, $new_add_data);
-		$process2 = $this->Main_model->UpdateTRUpdate($trf_number, $data_update);
-		$process3 = $this->Main_model->UpdateTRAccount($trf_number, $data_account);
+					if ($process[0] == 1 || $process1[0] == 1 || $process2[0] == 1 || $process3[0] == 1) {
+						$this->session->set_flashdata('success', $process[1]);
+						redirect(base_url()."sys/users/list/tickets/tracc_request");
+					} else {
+						$this->session->set_flashdata('error', $process[0]);
+						redirect(base_url()."sys/users/list/tickets/tracc_request");
+					}
+
+				}  elseif ($action == 'acknowledge') {
+					$data_update_status = [
+						'acknowledge_by' => $this->input->post('acknowledge_by', true),
+						'acknowledge_by_date' => $this->input->post('acknowledge_by_date', true),
+					];
+
+					$acknowledge_process = $this->Main_model->Acknolwedge_as_resolved($trf_number, $data_update_status);
+
+					print_r($acknowledge_process);
+					die();
+
+					if ($acknowledge_process[0] == 1) {
+						$this->session->set_flashdata('success', 'Ticket successfully acknowledged as resolved.');
+					} else {
+						$this->session->set_flashdata('error', 'Failed to acknowledge ticket as resolved.');
+					}
+	
+					redirect(base_url() . "sys/users/list/tickets/tracc_request");
+				}
+			} else {
+				$this->session->set_flashdata('error', 'Error fetching user information.');
+				redirect("sys/authentication");
+			}
+		} else {
+			$this->session->set_flashdata('error', 'Error fetching user information');
+			redirect(base_url() . "admin/login");
+		}
+
+		// $date_need = $this->input->post('date_need', true);
+		// $complete_details = $this->input->post('complete_details', true);
+		// $selected_companies = $this->input->post('comp_checkbox_value', true);
+
+		// $new_add_data = [
+		// 	'item' 							=> $this->input->post('checkbox_item', true) ? 1 : 0,
+		// 	'customer' 						=> $this->input->post('checkbox_customer', true) ? 1 : 0,
+		// 	'supplier' 						=> $this->input->post('checkbox_supplier', true) ? 1 : 0,
+		// 	'warehouse' 					=> $this->input->post('checkbox_whs', true) ? 1 : 0,
+		// 	'bin_number' 					=> $this->input->post('checkbox_bin', true) ? 1 : 0,
+		// 	'customer_shipping_setup' 		=> $this->input->post('checkbox_cus_ship_setup', true) ? 1 : 0,
+		// 	'employee_request_form' 		=> $this->input->post('checkbox_employee_req_form', true) ? 1 : 0,
+		// 	'others' 						=> $this->input->post('checkbox_others_newadd', true) ? 1 : 0,
+		// 	'others_description_add' 		=> $this->input->post('others_text_newadd', true),
+		// ];
+
+		// $data_update = [
+		// 	'system_date_lock'				=> $this->input->post('checkbox_system_date_lock', true) ? 1 : 0,
+		// 	'user_file_access'				=> $this->input->post('checkbox_user_file_access', true) ? 1 : 0,
+		// 	'item_details'					=> $this->input->post('checkbox_item_dets', true) ? 1 : 0,
+		// 	'customer_details'				=> $this->input->post('checkbox_customer_dets', true) ? 1 : 0,
+		// 	'supplier_details'				=> $this->input->post('checkbox_supplier_dets', true) ? 1 : 0,
+		// 	'employee_details'				=> $this->input->post('checkbox_employee_dets', true) ? 1 : 0,
+		// 	'others'						=> $this->input->post('checkbox_others_update', true) ? 1 : 0,
+		// 	'others_description_update'		=> $this->input->post('others_text_update', true),
+		// ];
+
+		// $data_account = [
+		// 	'tracc_orientation'				=> $this->input->post('checkbox_tracc_orien', true) ? 1 : 0,
+		// 	'lmi'							=> $this->input->post('checkbox_create_lmi', true) ? 1 : 0,
+		// 	'rgdi'							=> $this->input->post('checkbox_create_rgdi', true) ? 1 : 0,
+		// 	'lpi'							=> $this->input->post('checkbox_create_lpi', true) ? 1 : 0,
+		// 	'sv'							=> $this->input->post('checkbox_create_sv', true) ? 1 : 0,
+		// 	'gps_account'					=> $this->input->post('checkbox_gps_account', true) ? 1 : 0,
+		// 	'others'						=> $this->input->post('checkbox_others', true) ? 1 : 0,
+		// 	'others_description_acc'		=> $this->input->post('others_text_acc', true),
+			
+		// ];
+
+		// $process = $this->Main_model->UpdateTraccReq($trf_number, $date_need, $complete_details, $selected_companies);
+		// $process1 = $this->Main_model->UpdateTRNewAdd($trf_number, $new_add_data);
+		// $process2 = $this->Main_model->UpdateTRUpdate($trf_number, $data_update);
+		// $process3 = $this->Main_model->UpdateTRAccount($trf_number, $data_account);
 		// print_r($process1);
 		// die();
 
-		if ($process[0] == 1 || $process1[0] == 1 || $process2[0] == 1 || $process3[0] == 1) {
-			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url()."sys/users/list/tickets/tracc_request");
-		} else {
-			$this->session->set_flashdata('error', $process[0]);
-			redirect(base_url()."sys/users/list/tickets/tracc_request");
-		}
+		// if ($process[0] == 1 || $process1[0] == 1 || $process2[0] == 1 || $process3[0] == 1) {
+		// 	$this->session->set_flashdata('success', $process[1]);
+		// 	redirect(base_url()."sys/users/list/tickets/tracc_request");
+		// } else {
+		// 	$this->session->set_flashdata('error', $process[0]);
+		// 	redirect(base_url()."sys/users/list/tickets/tracc_request");
+		// }
 	}
 
     //Tracc Request details USERS

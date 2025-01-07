@@ -12,16 +12,17 @@
         // print_r($status_tcf);
         // die();
 
-        if(($status_tcf === "In Progress" || $status_tcf === 'Approved' || $status_tcf === 'Done' || $status_tcf === 'Open' || $status_tcf === 'Rejected')) {
+        if(($status_tcf === "In Progress" || $status_tcf === 'Approved' || $status_tcf === 'Done' || $status_tcf === 'Rejected')) {
             // echo "try";
             // die();
             $disabled = "disabled";
             $readonly = "readonly";
-            $btn_label = "Update Ticket";
         } else {
             $disabled = "";
             $readonly = "";
+            $btn_label = "Update Ticket";
         }
+        $open_disabled = ($status_tcf === "Open") ? "disabled" : "";
     }
     // if($role === "L1" && $department_id === "1"){
     //     $department_status = $msrf['approval_status'];
@@ -225,14 +226,14 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
 			                    					<label>Acknowledge as resolved by</label>
-                                                    <input type="text" name="ack_as_res_by" id="ack_as_res_by" class="form-control" value="<?= $tracc_con['ack_as_resolved']; ?>">
+                                                    <input type="text" name="ack_as_res_by" id="ack_as_res_by" class="form-control" value="<?= $tracc_con['ack_as_resolved']; ?>" <?=$open_disabled?>>
 			                    				</div>                                                
 			                                </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Acknowledge as Resolved Date</label>
-                                                    <input type="date" name="ack_as_res_date" id="ack_as_res_date" class="form-control select2" value="<?= $tracc_con['ack_as_resolved_date']; ?>" style="width: 100%;">
+                                                    <input type="date" name="ack_as_res_date" id="ack_as_res_date" class="form-control select2" value="<?= $tracc_con['ack_as_resolved_date']; ?>" style="width: 100%;" <?=$open_disabled?>>
                                                 </div>
                                             </div>
 
@@ -305,7 +306,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button type="submit" class="btn btn-primary" name="edit" <?=$disabled?>>Update Changes</button>
+                                                        <button type="submit" class="btn btn-primary" name="edit" <?=$disabled?>><?=$btn_label?></button>
                                                         <button type="submit" class="btn btn-success" name="acknowledge" onclick="setAcknowledgeFieldsRequired(); document.querySelector('[name=action]').value='acknowledge';" <?= ($status_tcf === 'Open' || $status_tcf === 'Rejected') ? 'disabled' : '' ?>>Acknowledge as Resolved</button>
                                                     </div>
                                                 </div>
