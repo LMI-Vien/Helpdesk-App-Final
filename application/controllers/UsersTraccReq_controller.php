@@ -95,6 +95,10 @@ class UsersTraccReq_controller extends CI_Controller {
 	
 		if ($this->form_validation->run() == FALSE) {
 			$trf = $this->GenerateTRFNo();
+			$cutoff = $this->Main_model->get_cutoff();
+			$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
+			$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
+			$timecomparison = $cutofftime < $currenttime;
 	
 			$data['trf'] = $trf;
 			$data['user_details'] = $user_details[1];
@@ -105,9 +109,14 @@ class UsersTraccReq_controller extends CI_Controller {
 			$get_department = $this->Main_model->UsersDepartment($users_department);
 			$data['get_department'] = $get_department;
 	
-			$this->load->view('users/header', $data);
-			$this->load->view('users/users_TRF/tracc_request_form_creation', $data);
-			$this->load->view('users/footer');
+			if($timecomparison && $cutoff->bypass == 0) {
+				$this->session->set_flashdata('error', 'Cutoff na po');
+				redirect('sys/users/list/tickets/tracc_request');
+			} else {
+				$this->load->view('users/header', $data);
+				$this->load->view('users/users_TRF/tracc_request_form_creation', $data);
+				$this->load->view('users/footer');
+			}
 		} else {
 			$file_path = null;
 			if (!empty($_FILES['uploaded_files']['name'])) {

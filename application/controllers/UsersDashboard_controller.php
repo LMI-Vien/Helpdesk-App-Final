@@ -19,6 +19,7 @@ class UsersDashboard_controller extends CI_Controller {
 			$traccConcerns = $this->Main_model->get_tracc_concerns($user_details[1]['recid']);
 			$traccRequests = $this->Main_model->get_tracc_requests($user_details[1]['recid']);
 			$name = $user_details[1]['fname'] . ' ' . $user_details[1]['mname'] . ' ' . $user_details[1]['lname'];
+			$cutofftime = new DateTime($this->Main_model->get_cutoff()->time);
 
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
@@ -27,6 +28,7 @@ class UsersDashboard_controller extends CI_Controller {
 				$data['msrf'] = $msrfTickets;
 				$data['concerns'] = $traccConcerns;
 				$data['requests'] = $traccRequests;
+				$data['cutofftime'] = $cutofftime;
 
 				$this->load->view('users/header', $data);
 				$this->load->view('users/dashboard', $data);

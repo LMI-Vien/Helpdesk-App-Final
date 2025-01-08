@@ -21,7 +21,7 @@
 		<section class="content">
 			<!-- Notification Bar -->
 			<div class="notification-bar" id="notificationBar" style="display: none; position: absolute !important;">
-				<span>⚠️ The cut-off time for submitting tickets is today at 5:00 PM.</span>
+				<span>⚠️ The cut-off time for submitting tickets is today at <?= $cutofftime->format('h:i'); ?>.</span>
 				<button id="dismissNotification">Dismiss</button>
 			</div>
 			<div class="row">
@@ -334,10 +334,11 @@
     var currentHour = parseInt(timeParts[0], 10); // Get the current hour
     var currentMinute = parseInt(timeParts[1], 10); // Get the current minute
 
-	console.log(currentHour);
-	console.log(currentMinute);
+	// console.log(currentHour);
+	// console.log(currentMinute);
 
-	if (currentHour === 16) {
+	if (currentHour >= <?= $cutofftime->sub(new DateInterval('PT2H'))->format('H'); ?>) {
+		console.log("cutoff");
 		$("#notificationBar").fadeIn();
 	} else if (currentHour === 0) {
 		$("#notificationBar").fadeOut();
