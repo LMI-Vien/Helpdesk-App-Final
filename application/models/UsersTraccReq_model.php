@@ -290,12 +290,13 @@ class UsersTraccReq_model extends CI_Model {
 		}
 	}
 
-    public function add_item_request_form_pdf($irf_comp_checkbox_value = null, $checkbox_item_req_form) {
+    public function add_item_request_form_pdf($irf_comp_checkbox_value = null, $checkbox_item_req_form, $id) {
 		$trf_number = $this->input->post('trf_number', true);
 
 		$data = array(
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
+			'requested_by_id'							=> $id,
 			'date'                                      => $this->input->post('date', true),
 			// 'lmi_item_code'                             => $this->input->post('lmi_item_code', true),
 			'long_description'                          => $this->input->post('long_description', true),

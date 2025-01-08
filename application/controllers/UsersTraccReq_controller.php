@@ -532,6 +532,7 @@ class UsersTraccReq_controller extends CI_Controller {
 
     // USER CREATION {FUCNTION} of ITEM REQUEST FORM (pdf ni mam hanna)
 	public function user_creation_item_request_form_pdf() {
+		$id = $this->session->userdata('login_data')['user_id'];
 		$trf_number = $this->input->post('trf_number', true);
 		$irf_comp_checkbox_value = isset($_POST['irf_comp_checkbox_value']) ? $_POST['irf_comp_checkbox_value'] : [];
 		$imploded_values = implode(',', $irf_comp_checkbox_value);
@@ -550,7 +551,7 @@ class UsersTraccReq_controller extends CI_Controller {
  
 		];
 
-		$process = $this->UsersTraccReq_model->add_item_request_form_pdf($imploded_values, $checkbox_item_req_form);
+		$process = $this->UsersTraccReq_model->add_item_request_form_pdf($imploded_values, $checkbox_item_req_form, $id);
 
 		$rows_data = $this->input->post('rows_gl', true);
 
@@ -560,6 +561,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			foreach ($rows_data as $row) {
 				if (!empty($row['uom']) && !empty($row['barcode'])) { // Basic validation
 					$insert_data_gl_setup[] = [
+						'requested_by_id'	=> $id,
 						'ticket_id'         => $trf_number,
 						'uom'               => $row['uom'],
 						'barcode'           => $row['barcode'],
@@ -583,6 +585,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			foreach ($rows_data as $row){
 				if(!empty($row['warehouse']) && !empty($row['warehouse_no'])) {
 					$insert_data_wh_setup[] = [
+						'requested_by_id'	=> $id,
 						'ticket_id'         => $trf_number,
 						'warehouse'         => $row['warehouse'],
 						'warehouse_no'      => $row['warehouse_no'],
