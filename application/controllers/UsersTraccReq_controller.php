@@ -484,7 +484,8 @@ class UsersTraccReq_controller extends CI_Controller {
 
     // USER CREATION {FUCNTION} of EMPLOYEE REQUEST FORM (pdf ni mam hanna)
 	public function user_creation_employee_request_form_pdf() {
-		$process = $this->UsersTraccReq_model->add_employee_request_form_pdf();
+		$id = $this->session->userdata('login_data')['user_id'];
+		$process = $this->UsersTraccReq_model->add_employee_request_form_pdf($id);
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);

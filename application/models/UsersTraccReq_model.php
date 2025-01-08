@@ -246,7 +246,7 @@ class UsersTraccReq_model extends CI_Model {
 		}
 	}
 
-    public function add_employee_request_form_pdf() {
+    public function add_employee_request_form_pdf($id) {
 		$trf_number = $this->input->post('trf_number', true);
 
 		$department_id = $this->input->post('department', true);
@@ -265,6 +265,7 @@ class UsersTraccReq_model extends CI_Model {
 		$data = array(
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
+			'requested_by_id'							=> $id,
 			'name'                                      => $this->input->post('employee_name', true),
 			'department'                                => $department_id, 
         	'department_desc'                           => $department_desc,
