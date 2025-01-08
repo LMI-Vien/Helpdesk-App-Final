@@ -1145,7 +1145,7 @@ class DataTables extends CI_Controller {
         $dept = "";
 
         if($user_details[1]['role'] != "L3") {
-            $dept = " AND dept = '" . $user_details[1]['dept_id'] . "'";
+            $dept = " AND department_id = '" . $user_details[1]['dept_id'] . "'";
         }
 
         if (!empty($order)){

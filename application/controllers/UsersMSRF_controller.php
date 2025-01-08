@@ -92,7 +92,7 @@ class UsersMSRF_controller extends CI_Controller {
 
 		$user_details = $this->Main_model->user_details();        
 		$getdepartment = $this->Main_model->GetDepartmentID();     
-		$users_det = $this->Main_model->users_details_put($id);      
+		$users_det = $this->Main_model->users_details_put($id); 
 	
 		if ($this->form_validation->run() == FALSE) {
 			$msrf = $this->GenerateMSRFNo();
@@ -100,7 +100,8 @@ class UsersMSRF_controller extends CI_Controller {
 			$data['msrf'] = $msrf;                             
 			$data['user_details'] = $user_details[1];                
 			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array(); 
-			$data['getdept'] = isset($getdepartment[1]) ? $getdepartment[1] : array();  
+			$data['getdept'] = isset($getdepartment[1]) ? $getdepartment[1] : array();
+			$data['cutoff'] = $this->Main_model->get_cutoff();
 	
 			$users_department = $users_det[1]['dept_id'];            
 			$get_department = $this->Main_model->UsersDepartment($users_department); 
