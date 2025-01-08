@@ -13,7 +13,7 @@
         // print_r($status_trf);
         // die();
 
-        if(($status_trf === "In Progress" || $status_trf === 'Approved')) {
+        if(($status_trf === "In Progress" || $status_trf === 'Approved' || $status_trf === 'Resolved')) {
             // echo "try";
             // die();
             $disabled = "disabled";
@@ -469,7 +469,7 @@
                                                 <div class="form-group">
                                                     <div class="box-body pad">
                                                         <button type="submit" class="btn btn-primary" name="edit" <?=$disabled?>><?=$btn_label?></button>
-                                                        <button type="submit" class="btn btn-success" name="acknowledge" onclick="setAcknowledgeFieldsRequired(); document.querySelector('[name=action]').value='acknowledge';" <?= ($status_trf === 'Open' || $status_trf === 'Rejected') ? 'disabled' : '' ?>>Acknowledge as Resolved</button>
+                                                        <button type="submit" class="btn btn-success" name="acknowledge" onclick="document.querySelector('[name=action]').value='acknowledge';" <?= ($status_trf === 'Open' || $status_trf === 'Rejected') ? 'disabled' : '' ?>>Acknowledge as Resolved</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -550,12 +550,12 @@ $(document).ready(function() {
         toggleInputField(this, '#others_text_acc');
     });
 
-    function setAcknowledgeFieldsRequired() {
+    function setAcknowledge() {
         // Get the acknowledge fields
         var ackBy = document.getElementById('acknowledge_by');
         var ackByDate = document.getElementById('acknowledge_by_date');
 
-        // Set both fields as required
+        // Ensure both fields are required before submission
         ackBy.setAttribute('required', 'required');
         ackByDate.setAttribute('required', 'required');
     }
