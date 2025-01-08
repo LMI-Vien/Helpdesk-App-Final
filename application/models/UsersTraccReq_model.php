@@ -372,12 +372,13 @@ class UsersTraccReq_model extends CI_Model {
 		}
 	}
 
-    public function add_supplier_request_form_pdf($trf_comp_checkbox_value = null, $checkbox_non_vat = 0, $checkbox_supplier_req_form) {
+    public function add_supplier_request_form_pdf($trf_comp_checkbox_value = null, $checkbox_non_vat = 0, $checkbox_supplier_req_form, $id) {
 		$trf_number = $this->input->post('trf_number', true);
 
 		$data = array(
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
+			'requested_by_id'							=> $id,
 			'date'                                      => $this->input->post('date', true),
 			'supplier_code'                             => $this->input->post('supplier_code', true),
 			'supplier_account_group'                    => $this->input->post('supplier_account_group', true),
@@ -417,6 +418,7 @@ class UsersTraccReq_model extends CI_Model {
 	
 		if ($this->db->affected_rows() > 0) {
 			$checkboxes_sup_req_form = [
+				'requested_by_id'						=> $id,
 				'ticket_id'                             => $trf_number,
 				'supplier_group_local'                  => isset($checkbox_supplier_req_form['local_supplier_grp']) ? $checkbox_supplier_req_form['local_supplier_grp'] : 0,
 				'supplier_group_foreign'                => isset($checkbox_supplier_req_form['foreign_supplier_grp']) ? $checkbox_supplier_req_form['foreign_supplier_grp'] : 0,

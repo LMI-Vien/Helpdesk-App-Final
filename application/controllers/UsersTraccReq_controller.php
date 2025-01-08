@@ -652,6 +652,7 @@ class UsersTraccReq_controller extends CI_Controller {
 
     // USER CREATION {FUCNTION} of SUPPLIER REQUEST FORM (pdf ni mam hanna)
 	public function user_creation_supplier_request_form_pdf() {
+		$id = $this->session->userdata('login_data')['user_id'];
 		$trf_comp_checkbox_value = isset($_POST['trf_comp_checkbox_value']) ? $_POST['trf_comp_checkbox_value'] : [];
 		$imploded_values = implode(',', $trf_comp_checkbox_value);
 
@@ -680,7 +681,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			'major_grp_utilities'               => isset($_POST['major_grp_utilities']) ? 1 : 0,
 		];
 	
-		$process = $this->UsersTraccReq_model->add_supplier_request_form_pdf($imploded_values, $checkbox_non_vat, $checkbox_supplier_req_form);
+		$process = $this->UsersTraccReq_model->add_supplier_request_form_pdf($imploded_values, $checkbox_non_vat, $checkbox_supplier_req_form, $id);
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
