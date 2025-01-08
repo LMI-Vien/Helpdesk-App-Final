@@ -576,6 +576,33 @@ class Main_model extends CI_Model {
 			return [0, "No existing 'New/Add' data found for ticket: " . $trf_number];
 		}
 	}
+
+	public function Acknowledge_as_resolved($trf_number){
+		$user_id = $this->session->userdata('login_data')['user_id'];
+		$acknowledge_by = $this->input->post('acknowledge_by', true);
+		$acknowledge_by_date = $this->input->post('acknowledge_by_date', true);
+
+		$data = array(
+			'acknowledge_by' => $acknowledge_by,
+			'acknowledge_by_date' => $acknowledge_by_date,
+			'status' => 'Resolved'
+		);
+
+		$this->db->where('ticket_id', $trf_number);
+		$this->db->update('service_request_tracc_request', $data);
+
+		// $affected_rows = $this->db->affected_rows();
+		// // print_r($affected_rows);
+		// // die();
+
+		// if ($this->db->affected_rows() >= 0) {
+		// 	$this->session->set_flashdata('success', 'Ticket acknolwedge as resolved.');
+		// } else {
+		// 	$this->session->set_flashdata('error', 'Error acknowledging ticket as resolved.');
+		// }
+
+		return $this->db->affected_rows() > 0;
+	}
 	
 
 	//kinukuha yung name ng it assigned keysa id ang dinidisplay hindi tapos
@@ -907,32 +934,6 @@ class Main_model extends CI_Model {
 			$this->db->set('opened', $opened);
 			$this->db->update('service_request_tracc_request');
 		}
-	}
-
-	public function Acknolwedge_as_resolved($trf_number){
-		$user_id = $this->session->userdata('login_data')['user_id'];
-		$acknowledge_by = $this->input->post('acknowledge_by', true);
-		$acknowledge_by_date = $this->input->post('acknowledge_by_date', true);
-
-		$data = array(
-			'acknowledge_by' => $acknowledge_by,
-			'acknowledge_by_date' => $acknowledge_by_date,
-			'status' => 'Resolved'
-		);
-
-		print_r($data);
-		die();
-
-		$this->db->where('ticket_id', $trf_number);
-		$this->db->update('service_request_tracc_request', $data);
-
-		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('success', 'Ticket acknolwedge as resolved.');
-		} else {
-			$this->session->set_flashdata('error', 'Error acknowledging ticket as resolved.');
-		}
-
-		redirect(base_url(). "sys/users/list/tickets/tracc_request");
 	}
 
 }
