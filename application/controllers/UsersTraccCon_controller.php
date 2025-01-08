@@ -78,6 +78,11 @@ class UsersTraccCon_controller extends CI_Controller {
 		$users_det = $this->Main_model->users_details_put($id);         
 
 		if ($this->form_validation->run() == FALSE) {
+			$cutoff = $this->Main_model->get_cutoff();
+			$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
+			$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
+			$timecomparison = $cutofftime < $currenttime;
+
 			$data['user_details'] = $user_details[1];                   
 			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array();  
 			$data['getdept'] = isset($getdepartment[1]) ? $getdepartment[1] : array();  
@@ -86,9 +91,14 @@ class UsersTraccCon_controller extends CI_Controller {
 			$get_department = $this->Main_model->UsersDepartment($users_department);   
 			$data['get_department'] = $get_department;  
 
-			$this->load->view('users/header', $data);  
-			$this->load->view('users/users_TRC/tracc_concern_form_creation', $data);  
-			$this->load->view('users/footer');  
+			if($timecomparison && $cutoff->bypass == 0) {
+				$this->session->set_flashdata('error', 'Cutoff na');
+				redirect('sys/users/list/tickets/tracc_concern');
+			} else {
+				$this->load->view('users/header', $data);  
+				$this->load->view('users/users_TRC/tracc_concern_form_creation', $data);  
+				$this->load->view('users/footer');  
+			}
 		} else {
 			// Check if file is uploaded
 			$file_path = null; // Initialize file path

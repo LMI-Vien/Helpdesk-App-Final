@@ -221,39 +221,24 @@
 				'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
 				
 				// Define buttonsConfig and apply conditional logic for dept_id
-				"buttons": (function() {
+				"buttons": (function(){
 					var buttonsConfig = [];
-					var currentDate = new Date();
-					var currentHour = currentDate.getHours();
-					var currentMinute = currentDate.getMinutes();
-
-					if (currentHour > 8 || (currentHour === 8 && currentMinute >= 30)) {
-						if (currentHour < 17 || (currentHour === 16 && currentMinute === 59)) {
-							// Allow creating tickets until exactly 5:00 PM
-							buttonsConfig.push({
-								text: 'Create Tickets',
-								action: function (e, dt, node, config) {
-									window.location.href = '<?= base_url(); ?>' + 'sys/users/create/tickets/msrf';
-								},
-								attr: {
+					if (dept_id == 1){
+						console.log(dept_id);
+					}else{
+						buttonsConfig.push({
+							text: 'Create Tickets',
+							className: 'btn btn-primary',
+							action: function (e, dt, node, config){
+								window.location.href = '<?= base_url(); ?>sys/users/create/tickets/tracc_concern';
+							},
+							attr: {
 									style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
-								}
-							});
-						} else {
-							buttonsConfig.push({
-								text: 'Create Tickets',
-								action: function (e, dt, node, config) {
-									alert('The cutoff time for creating tickets has passed.');
-								},
-								attr: {
-									style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px; cursor: not-allowed;',
-									disabled: 'disabled'
-								}
-							});
-						}
+							}
+						});
 					}
-					return buttonsConfig; // Return the final buttons configuration
-				})(), // Immediately invoked function to execute the conditional logic
+					return buttonsConfig;
+				})(),
 
 				"columnDefs": [{
 					'target': 4,
@@ -278,34 +263,19 @@
 				
 				"buttons": (function(){
 					var buttonsConfig = [];
-					var currentDate = new Date();
-					var currentHour = currentDate.getHours();
-					var currentMinute = currentDate.getMinutes();
-
-					if (currentHour > 8 || (currentHour === 8 && currentMinute >= 30)) {
-						if (currentHour < 17 || (currentHour === 16 && currentMinute === 59)) {
-							buttonsConfig.push({
-								text: 'Create Tickets',
-								// className: 'btn btn-primary',
-								action: function (e, dt, node, config){
-									window.location.href = '<?= base_url(); ?>sys/users/create/tickets/tracc_concern';
-								},
-								attr: {
+					if (dept_id == 1){
+						console.log(dept_id);
+					}else{
+						buttonsConfig.push({
+							text: 'Create Tickets',
+							className: 'btn btn-primary',
+							action: function (e, dt, node, config){
+								window.location.href = '<?= base_url(); ?>sys/users/create/tickets/tracc_concern';
+							},
+							attr: {
 									style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
-								}
-							});
-						} else {
-							buttonsConfig.push({
-								text: 'Create Tickets',
-								action: function (e, dt, node, config) {
-									alert('The cutoff time for creating tickets has passed.');
-								},
-								attr: {
-									style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px; cursor: not-allowed;',
-									disabled: 'disabled'
-								}
-							});
-						}
+							}
+						});
 					}
 					return buttonsConfig;
 				})(),
@@ -329,37 +299,22 @@
 				"lengthChange": false,
 				'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
 
-				"buttons": (function() {
+				"buttons": (function(){
 					var buttonsConfig = [];
-					var currentDate = new Date();
-					var currentHour = currentDate.getHours();
-					var currentMinute = currentDate.getMinutes();
-
-					if (currentHour > 8 || (currentHour === 8 && currentMinute >= 30)) {
-						if (currentHour < 17 || (currentHour === 16 && currentMinute === 59)) {
-							buttonsConfig.push({
-								text: 'Create Tickets',
-								// className: 'btn btn-primary', 
-								action: function (e, dt, node, config){
-									window.location.href = '<?= base_url(); ?>' + 'sys/users/create/tickets/tracc_request';
-								},
-								attr: {
+					if (dept_id == 1){
+						console.log(dept_id);
+					}else{
+						buttonsConfig.push({
+							text: 'Create Tickets',
+							className: 'btn btn-primary',
+							action: function (e, dt, node, config){
+								window.location.href = '<?= base_url(); ?>sys/users/create/tickets/tracc_request';
+							},
+							attr: {
 									style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
-								}
-							});
-						} else {
-							buttonsConfig.push({
-								text: 'Create Tickets',
-								action: function (e, dt, node, config) {
-									alert('The cutoff time for creating tickets has passed.');
-								},
-								attr: {
-									style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px; cursor: not-allowed;',
-									disabled: 'disabled'
-								}
-							});
-						}
-					}		
+							}
+						});
+					}
 					return buttonsConfig;
 				})(),
 

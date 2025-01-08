@@ -96,20 +96,37 @@ class UsersMSRF_controller extends CI_Controller {
 	
 		if ($this->form_validation->run() == FALSE) {
 			$msrf = $this->GenerateMSRFNo();
+			$cutoff = $this->Main_model->get_cutoff();
+			$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
+			$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
+			$timecomparison = $cutofftime < $currenttime;
 			
-			$data['msrf'] = $msrf;                             
-			$data['user_details'] = $user_details[1];                
-			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array(); 
+			$data['msrf'] = $msrf;
+			$data['user_details'] = $user_details[1];
+			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array();
 			$data['getdept'] = isset($getdepartment[1]) ? $getdepartment[1] : array();
-			$data['cutoff'] = $this->Main_model->get_cutoff();
-	
-			$users_department = $users_det[1]['dept_id'];            
+			
+			$users_department = $users_det[1]['dept_id'];       
 			$get_department = $this->Main_model->UsersDepartment($users_department); 
-			$data['get_department'] = $get_department;              
+			$data['get_department'] = $get_department;
+			$data['timecomparison'] = $timecomparison;
 
-			$this->load->view('users/header', $data);
-			$this->load->view('users/users_MSRF/service_request_form_msrf_creation', $data);
-			$this->load->view('users/footer');
+			if ($timecomparison && $cutoff->bypass == 0) {
+				$users_department = $users_det[1]['dept_id'];       
+				$get_department = $this->Main_model->UsersDepartment($users_department); 
+				$data['get_department'] = $get_department;
+				
+				$this->session->set_flashdata('error', 'Cutoff na');
+				redirect('sys/users/list/tickets/msrf');
+			} else {
+				$users_department = $users_det[1]['dept_id'];       
+				$get_department = $this->Main_model->UsersDepartment($users_department); 
+				$data['get_department'] = $get_department;
+				
+				$this->load->view('users/header', $data);
+				$this->load->view('users/users_MSRF/service_request_form_msrf_creation', $data);
+				$this->load->view('users/footer');
+			}
 	
 		} else {
 			$file_path = null; // Initialize file path
