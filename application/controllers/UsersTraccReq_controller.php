@@ -422,6 +422,7 @@ class UsersTraccReq_controller extends CI_Controller {
 
     // USER CREATION {FUCNTION} of CUSTOMER SHIPPING SETUP (pdf ni mam hanna)
 	public function user_creation_customer_shipping_setup_pdf() {
+		$id = $this->session->userdata('login_data')['user_id'];
 		$css_comp_checkbox_value = isset($_POST['css_comp_checkbox_value']) ? $_POST['css_comp_checkbox_value'] : [];
 		$imploded_values = implode(',', $css_comp_checkbox_value);
 
@@ -435,7 +436,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			'checkbox_sunday'           => isset($_POST['checkbox_sunday']) ? 1 : 0,
 		];
 
-		$process = $this->UsersTraccReq_model->add_customer_shipping_setup_pdf($imploded_values, $checkbox_cus_ship_setup);
+		$process = $this->UsersTraccReq_model->add_customer_shipping_setup_pdf($imploded_values, $checkbox_cus_ship_setup, $id);
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);

@@ -204,12 +204,13 @@ class UsersTraccReq_model extends CI_Model {
 
 	}
 
-    public function add_customer_shipping_setup_pdf($css_comp_checkbox_values = null, $checkbox_cus_ship_setup) {
+    public function add_customer_shipping_setup_pdf($css_comp_checkbox_values = null, $checkbox_cus_ship_setup, $id) {
 		$trf_number = $this->input->post('trf_number', true);
 	
 		$data = array(
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
+			'requested_by_id'							=> $id,
 			'shipping_code'                             => $this->input->post('shipping_code', true),
 			'route_code'                                => $this->input->post('route_code', true),
 			'customer_address'                          => $this->input->post('customer_address', true),
@@ -233,7 +234,7 @@ class UsersTraccReq_model extends CI_Model {
 		$data['sunday'] = isset($checkbox_cus_ship_setup['checkbox_sunday']) ? $checkbox_cus_ship_setup['checkbox_sunday'] : 0;
 	
 		$this->db->trans_begin();
-	
+
 		$this->db->insert('tracc_req_customer_ship_setup', $data);
 	
 		if ($this->db->affected_rows() > 0) {
