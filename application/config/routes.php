@@ -12,7 +12,6 @@ $route['sys/admin/dashboard'] = 'AdminDashboard_controller/admin_dashboard';
 //USER Dashboard
 $route['sys/users/dashboard'] = 'UsersDashboard_controller/users_dashboard';
 
-
 //--- USER ROUTES ---//
 //--- DATATABLE of USER in MSRF
 $route['sys/users/list/tickets/msrf'] = 'UsersMSRF_controller/service_form_msrf_list';
@@ -81,6 +80,12 @@ $route['sys/admin/list/ticket/tracc_request_closed'] = 'AdminTraccReq_controller
 //--- ADMIN for PRINT REPORTS
 $route['sys/admin/print'] = 'AdminGenerateReport_controller/admin_print_report';
 
+//
+$route['sys/admin/cutoff'] = 'AdminCutoff_controller/admin_cutoff';
+
+$route['sys/admin/set_cutoff'] = 'AdminCutoff_controller/set_cutoff';
+
+$route['sys/admin/bypass'] = 'AdminCutoff_controller/bypass';
 
 //--- PDF REPORTS VIEWING ADMIN ---//
 $route['sys/admin/customer_request_form_pdf'] = 'AdminTraccReq_controller/customer_request_form_pdf_view';

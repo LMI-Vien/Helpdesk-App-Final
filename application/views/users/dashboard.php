@@ -20,7 +20,7 @@
         </section>
 		<section class="content">
 			<!-- Notification Bar -->
-			<div class="notification-bar" id="notificationBar" style="display: none;">
+			<div class="notification-bar" id="notificationBar" style="display: none; position: absolute !important;">
 				<span>⚠️ The cut-off time for submitting tickets is today at 5:00 PM.</span>
 				<button id="dismissNotification">Dismiss</button>
 			</div>

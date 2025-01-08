@@ -123,7 +123,7 @@
 }
 
 .notification-bar {
-    position: fixed; /* Keeps it on top during scrolling */
+    position: absolute !important; /* Keeps it on top during scrolling */
     top: 50px; /* Adjust to match your navbar height */
     left: 0;
     width: 100%;
