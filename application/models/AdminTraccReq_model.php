@@ -141,7 +141,8 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// IRF 
-	public function update_irf_ticket_remarks($recid, $remarks){
+	public function update_irf_ticket_remarks($recid, $lmi_item_code, $remarks){
+		$this->db->set('lmi_item_code', $lmi_item_code);
 		$this->db->set('remarks', $remarks);
 		$this->db->where('recid', $recid);
 		return $this->db->update('tracc_req_item_request_form');

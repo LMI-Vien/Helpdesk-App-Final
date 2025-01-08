@@ -97,6 +97,65 @@
                 }
             }
         });
+        
+        $('#tabs').on('click', '.close-tab-btn', function () {
+            const $tab = $(this).closest('li'); // Get the tab element
+            const recid = $tab.data('recid'); // Fetch the unique recid
+
+                Swal.fire({
+                    title: 'Are you Done?',
+                    text: "You won't be able to undo this action!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, I\'m done!',
+                    cancelButtonText: 'Cancel',
+                    width: '500px', 
+                    padding: '2rem', 
+                    customClass: {
+                        popup: 'large-popup', 
+                        title: 'large-popup-title', 
+                        content: 'large-popup-content', 
+                        confirmButton: 'large-popup-button', 
+                        cancelButton: 'large-popup-button'
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const panelId = $tab.remove().attr('aria-controls'); // Remove the tab
+                    $(`#${panelId}`).remove(); // Remove the corresponding content
+                    $('#tabs').tabs('refresh'); // Refresh the tabs widget
+
+                    $.ajax({
+                        url: base_url + 'AdminTraccReq_controller/update_css_ticket_remarks',
+                        type: 'POST',
+                        data: { recid: recid },
+                        success: function (response) {
+                            const res = JSON.parse(response);
+                            if (res.message === 'success') {
+                                Swal.fire({
+                                    title: 'Done!',
+                                    text: `Form with recid ${recid} has been marked as "Done".`,
+                                    icon: 'success',
+                                    width: '500px', 
+                                    padding: '2.5rem', 
+                                    customClass: {
+                                        title: 'large-done-title',    
+                                        confirmButton: 'large-button' 
+                                    }
+                                });
+                                console.log(`Form with recid ${recid} marked as "Done".`);
+                            } else {
+                                Swal.fire('Error', `Failed to update form: ${res.error}`, 'error');
+                            }
+                        },
+                        error: function () {
+                            Swal.fire('Error', 'An error occurred while updating the form.', 'error');
+                        }
+                    });
+                }
+            });
+        });
     });
 
     // $('#tabs').on('click', '.close-tab-btn', function () {
@@ -124,62 +183,5 @@
     //     });
     // });
 
-    $('#tabs').on('click', '.close-tab-btn', function () {
-        const $tab = $(this).closest('li'); // Get the tab element
-        const recid = $tab.data('recid'); // Fetch the unique recid
-
-            Swal.fire({
-                title: 'Are you Done?',
-                text: "You won't be able to undo this action!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, I\'m done!',
-                cancelButtonText: 'Cancel',
-                width: '500px', 
-                padding: '2rem', 
-                customClass: {
-                    popup: 'large-popup', 
-                    title: 'large-popup-title', 
-                    content: 'large-popup-content', 
-                    confirmButton: 'large-popup-button', 
-                    cancelButton: 'large-popup-button'
-            }
-        }).then((result) => {
-            if (result.isConfirmed) {
-                const panelId = $tab.remove().attr('aria-controls'); // Remove the tab
-                $(`#${panelId}`).remove(); // Remove the corresponding content
-                $('#tabs').tabs('refresh'); // Refresh the tabs widget
-
-                $.ajax({
-                    url: base_url + 'AdminTraccReq_controller/update_css_ticket_remarks',
-                    type: 'POST',
-                    data: { recid: recid },
-                    success: function (response) {
-                        const res = JSON.parse(response);
-                        if (res.message === 'success') {
-                            Swal.fire({
-                                title: 'Done!',
-                                text: `Form with recid ${recid} has been marked as "Done".`,
-                                icon: 'success',
-                                width: '500px', 
-                                padding: '2.5rem', 
-                                customClass: {
-                                    title: 'large-done-title',    
-                                    confirmButton: 'large-button' 
-                                }
-                            });
-                            console.log(`Form with recid ${recid} marked as "Done".`);
-                        } else {
-                            Swal.fire('Error', `Failed to update form: ${res.error}`, 'error');
-                        }
-                    },
-                    error: function () {
-                        Swal.fire('Error', 'An error occurred while updating the form.', 'error');
-                    }
-                });
-            }
-        });
-    });
+    
 </script>

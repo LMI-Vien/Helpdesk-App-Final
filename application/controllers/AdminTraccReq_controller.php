@@ -481,9 +481,12 @@ class AdminTraccReq_controller extends CI_Controller {
 
 	public function update_irf_ticket_remarks() {
 		$recid = $this->input->post('recid'); 
+		$lmi_item_code = $this->input->post('lmi_item_code'); 
+		// print_r($lmi_item_code);
+		// die();
 
-		$result = $this->AdminTraccReq_model->update_irf_ticket_remarks($recid, 'Done'); 
-	
+		$result = $this->AdminTraccReq_model->update_irf_ticket_remarks($recid, $lmi_item_code, 'Done'); 
+
 		if ($result) {
 			echo json_encode(['message' => 'success']);
 		} else {

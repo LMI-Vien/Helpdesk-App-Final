@@ -1,5 +1,17 @@
 <?php 
-$role = $this->session->userdata('login_data')['role'];
+$sess_login_data = $this->session->userdata('login_data');
+$role = $sess_login_data['role'];
+
+    $disabled = "";
+    $readonly = "";
+    $btn_label = "Submit Ticket";
+    if ($role === "L2") {
+        $disabled = "disabled";
+        $readonly = "readonly";
+    } else {
+        $disabled = "";
+        $readonly = "";
+    }
 ?>
 
 <style>
@@ -173,7 +185,7 @@ $role = $this->session->userdata('login_data')['role'];
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>LMI Item Code</label>
-                                            <input type="text" name="lmi_item_code" id="lmi_item_code" value="<?php echo $lmi_item_code; ?>" class="form-control select2" required pattern=".*-.*" title="Control number must contain a hyphen (-)" oninput="this.value = this.value.toUpperCase();" readonly> 
+                                            <input type="text" name="lmi_item_code" id="lmi_item_code" value="<?php echo $lmi_item_code; ?>" class="form-control select2" required oninput="this.value = this.value.toUpperCase();" <?=$readonly?>> 
                                         </div>
                                     </div>
 

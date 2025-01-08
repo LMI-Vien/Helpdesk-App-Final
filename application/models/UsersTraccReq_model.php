@@ -293,7 +293,7 @@ class UsersTraccReq_model extends CI_Model {
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
 			'date'                                      => $this->input->post('date', true),
-			'lmi_item_code'                             => $this->input->post('lmi_item_code', true),
+			// 'lmi_item_code'                             => $this->input->post('lmi_item_code', true),
 			'long_description'                          => $this->input->post('long_description', true),
 			'short_description'                         => $this->input->post('short_description', true),
 			'item_classification'                       => $this->input->post('item_classification', true),

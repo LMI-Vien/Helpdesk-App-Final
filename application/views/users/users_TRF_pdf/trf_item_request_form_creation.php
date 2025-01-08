@@ -216,12 +216,12 @@
                                             </div>
                         
                                             
-                                            <div class="col-md-12">
+                                            <!-- <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>LMI Item Code</label>
                                                     <input type="text" name="lmi_item_code" id="lmi_item_code" value="" class="form-control select2" oninput="this.value = this.value.toUpperCase();"> 
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
