@@ -352,6 +352,7 @@ class UsersTraccReq_controller extends CI_Controller {
 
     // USER CREATION {FUNCTION} of CUSTOMER REQUEST FORM TMS (pdf ni mam hanna)
 	public function user_creation_customer_request_form_pdf() {
+		$id = $this->session->userdata('login_data')['user_id'];
 		$crf_comp_checkbox_values = isset($_POST['crf_comp_checkbox_value']) ? $_POST['crf_comp_checkbox_value'] : [];
 		$imploded_values = implode(',', $crf_comp_checkbox_values);
 
@@ -370,7 +371,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			'checkbox_sunday'               => isset($_POST['checkbox_sunday']) ? 1 : 0,
 		];
 	
-		$process = $this->UsersTraccReq_model->add_customer_request_form_pdf($imploded_values, $checkbox_cus_req_form_del);
+		$process = $this->UsersTraccReq_model->add_customer_request_form_pdf($imploded_values, $checkbox_cus_req_form_del, $id);
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);

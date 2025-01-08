@@ -129,12 +129,13 @@ class UsersTraccReq_model extends CI_Model {
 		}
 	}
 
-    public function add_customer_request_form_pdf($crf_comp_checkbox_values = null, $checkbox_cus_req_form_del) {
+    public function add_customer_request_form_pdf($crf_comp_checkbox_values = null, $checkbox_cus_req_form_del, $id) {
 		$trf_number = $this->input->post('trf_number', true);
 		
 		$data = array(
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
+			'requested_by_id'							=> $id,
 			'date'                                      => $this->input->post('date', true),
 			'customer_code'                             => $this->input->post('customer_code', true),
 			'customer_name'                             => $this->input->post('customer_name', true),
@@ -171,6 +172,7 @@ class UsersTraccReq_model extends CI_Model {
 		
 		if ($this->db->affected_rows() > 0) {
 			$checkbox_cus_req_form_del_days = [
+				'requested_by_id'						=> $id,
 				'ticket_id'                             => $trf_number,
 				'outright'                              => isset($checkbox_cus_req_form_del['checkbox_outright']) ? $checkbox_cus_req_form_del['checkbox_outright'] : 0,
 				'consignment'                           => isset($checkbox_cus_req_form_del['checkbox_consignment']) ? $checkbox_cus_req_form_del['checkbox_consignment'] : 0,
