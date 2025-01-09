@@ -24,29 +24,6 @@ class AdminUsers_model extends CI_Model {
 		if (!empty($password) && $password !== $cpassword) {
 			return array(0, "Password and Confirm Password do not match.");
 		}
-
-		$this->db->where('emp_id', $emp_id);
-		$this->db->or_where('username', $username);
-		$existing_user = $this->db->get('users')->row();
-
-		if ($existing_user) {
-			$message = '';
-			if ($existing_user->emp_id === $emp_id) {
-				$message .= 'Employee ID is already taken! ';
-			}
-			if ($existing_user->username === $username) {
-				$message .= 'Username is already taken!';
-			}
-		
-			// Send response
-			$response = array(
-				'status' => 'error',
-				'message' => trim($message)
-			);
-			echo json_encode($response);
-			exit;
-		}
-
 	
 		$new_password = password_hash($password, PASSWORD_DEFAULT);
 	
