@@ -80,8 +80,10 @@ class UsersTraccCon_controller extends CI_Controller {
 		if ($this->form_validation->run() == FALSE) {
 			$cutoff = $this->Main_model->get_cutoff();
 			$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
+			$ticketopen = new DateTime($cutoff->open_time, new DateTimeZone('Asia/Manila'));
 			$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
-			$timecomparison = $cutofftime < $currenttime;
+			$timecomparison1 = $cutofftime < $currenttime;
+			$timecomparison2 = $currenttime < $ticketopen;
 
 			$data['user_details'] = $user_details[1];                   
 			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array();  
@@ -91,8 +93,8 @@ class UsersTraccCon_controller extends CI_Controller {
 			$get_department = $this->Main_model->UsersDepartment($users_department);   
 			$data['get_department'] = $get_department;  
 
-			if($timecomparison && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+				$this->session->set_flashdata('error', 'Cutoff na');
 				redirect('sys/users/list/tickets/tracc_concern');
 			} else {
 				$this->load->view('users/header', $data);  

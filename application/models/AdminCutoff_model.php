@@ -8,8 +8,13 @@ class AdminCutoff_model extends CI_Model {
 	}
 
     public function set_cutoff() {
+        $query = $this->db->get('cutoff')->row();
+
         $time = $this->input->post('cutoff');
+        $open = $this->input->post('open_ticket');
+
         $this->db->set('time', $time);
+        $this->db->set('open_time', $open);
         $this->db->update('cutoff');
     }
 
@@ -23,9 +28,9 @@ class AdminCutoff_model extends CI_Model {
         $this->db->update('cutoff');
     }
 
-    public function get_bypass() {
-        $this->db->select('bypass');
+    public function get_cutoff_bypass() {
+        $this->db->select('*');
         $query = $this->db->get('cutoff')->row();
-        return $query->bypass;
+        return $query;
     }
 }

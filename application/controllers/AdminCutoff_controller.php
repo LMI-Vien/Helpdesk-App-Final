@@ -17,7 +17,7 @@ class AdminCutoff_controller extends CI_Controller {
             if ($user_details[0] == "ok") {
                 $sid = $this->session->session_id;
                 $data['user_details'] = $user_details[1];
-                $data['bypass'] = $this->AdminCutoff_model->get_bypass();
+                $data['bypass'] = $this->AdminCutoff_model->get_cutoff_bypass();
 
                 $data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
 				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();

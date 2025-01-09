@@ -98,8 +98,10 @@ class UsersMSRF_controller extends CI_Controller {
 			$msrf = $this->GenerateMSRFNo();
 			$cutoff = $this->Main_model->get_cutoff();
 			$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
+			$ticketopen = new DateTime($cutoff->open_time, new DateTimeZone('Asia/Manila'));
 			$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
-			$timecomparison = $cutofftime < $currenttime;
+			$timecomparison1 = $cutofftime < $currenttime;
+			$timecomparison2 = $currenttime < $ticketopen;
 			
 			$data['msrf'] = $msrf;
 			$data['user_details'] = $user_details[1];
@@ -109,9 +111,8 @@ class UsersMSRF_controller extends CI_Controller {
 			$users_department = $users_det[1]['dept_id'];       
 			$get_department = $this->Main_model->UsersDepartment($users_department); 
 			$data['get_department'] = $get_department;
-			$data['timecomparison'] = $timecomparison;
 
-			if ($timecomparison && $cutoff->bypass == 0) {
+			if ($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
 				$users_department = $users_det[1]['dept_id'];       
 				$get_department = $this->Main_model->UsersDepartment($users_department); 
 				$data['get_department'] = $get_department;

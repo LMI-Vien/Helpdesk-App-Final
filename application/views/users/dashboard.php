@@ -337,7 +337,7 @@
 	// console.log(currentHour);
 	// console.log(currentMinute);
 
-	if (currentHour >= <?= $cutofftime->sub(new DateInterval('PT2H'))->format('H'); ?>) {
+	if (currentHour >= <?= $cutofftime->sub(new DateInterval('PT2H'))->format('H'); ?> && <? $ticketopen->format("H:i"); ?> >= <? $current_time; ?>) {
 		console.log("cutoff");
 		$("#notificationBar").fadeIn();
 	} else if (currentHour === 0) {
