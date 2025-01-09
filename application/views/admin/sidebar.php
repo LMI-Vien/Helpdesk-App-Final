@@ -69,9 +69,11 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="<?= ($active_menu == 'users') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/users"><i class="fa fa-users"></i> Users</a></li>
-                    <li class="<?= ($active_menu == 'team') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/team"><i class="fa solid fa-user-plus"></i> Departments</a></li>
-                    <li class="<?= ($active_menu == 'cutoff') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/cutoff"><i class="fa-solid fa-ban"></i>  Cutoff</a></li>
+                    <?php if ($this->session->userdata('login_data')['role'] !== 'L2'): ?>
+                        <li class="<?= ($active_menu == 'users') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/users"><i class="fa fa-users"></i> Users</a></li>
+                        <li class="<?= ($active_menu == 'team') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/team"><i class="fa solid fa-user-plus"></i> Departments</a></li>
+                        <li class="<?= ($active_menu == 'cutoff') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/cutoff"><i class="fa-solid fa-ban"></i>  Cutoff</a></li>
+                    <?php endif; ?>
                 </ul>
             </li>
             <li class="<?= ($active_menu == 'print') ? 'active' : ''; ?>">
