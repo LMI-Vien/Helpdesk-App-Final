@@ -675,7 +675,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$user_details = $this->Main_model->user_details();
 		$getdepartment = $this->Main_model->GetDepartmentID();
 		$users_det = $this->Main_model->users_details_put($id);
-		$ticket_numbers = $this->UsersTraccReq_model->get_supplier_from_tracc_req_mf_new_add();
+		$ticket_numbers = $this->UsersTraccReq_model->get_supplier_from_tracc_req_mf_new_add($id);
 
 		$departments_result = $this->Main_model->getDepartment();
 		$departments = ($departments_result[0] == "ok") ? $departments_result[1] : [];
