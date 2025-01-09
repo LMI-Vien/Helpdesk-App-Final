@@ -111,7 +111,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['get_department'] = $get_department;
 	
 			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', 'Cutoff na po');
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
 				redirect('sys/users/dashboard');
 			} else {
 				$this->load->view('users/header', $data);
@@ -360,7 +360,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['get_department'] = $get_department;
 			
 			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', 'cutoff na');
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
 				redirect('sys/users/dashboard');
 			} else {
 				$this->load->view('users/header', $data);
@@ -433,7 +433,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['get_department'] = $get_department;
 			
 			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', 'Cutoff na po');
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
 				redirect('sys/users/dashboard');
 			} else {
 				$this->load->view('users/header', $data);
@@ -507,7 +507,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['selected_department'] = $users_department;
 			
 			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', 'Cutoff na po');
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
 				redirect('sys/users/dashboard');
 			} else {
 				$this->load->view('users/header', $data);
@@ -567,7 +567,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['selected_department'] = $users_department;
 
 			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', 'Cutoff na po');
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
 				redirect('sys/users/dashboard');
 			} else {
 				$this->load->view('users/header', $data);
@@ -699,7 +699,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$data['selected_department'] = $users_department;
 			
 			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', 'Cutoff na po');
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
 				redirect('sys/users/dashboard');
 			} else {
 				$this->load->view('users/header', $data);
