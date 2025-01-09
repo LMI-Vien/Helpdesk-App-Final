@@ -92,7 +92,7 @@ class UsersTraccCon_controller extends CI_Controller {
 			$data['get_department'] = $get_department;  
 
 			if($timecomparison && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', 'Cutoff na');
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
 				redirect('sys/users/list/tickets/tracc_concern');
 			} else {
 				$this->load->view('users/header', $data);  

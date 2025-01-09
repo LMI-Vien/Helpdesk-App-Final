@@ -230,7 +230,7 @@
 							text: 'Create Tickets',
 							className: 'btn btn-primary',
 							action: function (e, dt, node, config){
-								window.location.href = '<?= base_url(); ?>sys/users/create/tickets/tracc_concern';
+								window.location.href = '<?= base_url(); ?>sys/users/create/tickets/msrf';
 							},
 							attr: {
 									style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
