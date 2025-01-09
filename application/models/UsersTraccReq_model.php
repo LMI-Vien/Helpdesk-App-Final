@@ -481,7 +481,7 @@ class UsersTraccReq_model extends CI_Model {
 	// 	return $query->result_array();
 	// }
 
-    public function get_customer_shipping_setup_from_tracc_req_mf_new_add() {
+    public function get_customer_shipping_setup_from_tracc_req_mf_new_add($user_id) {
         $this->db->select('tracc_req_mf_new_add.ticket_id');
         $this->db->from('tracc_req_mf_new_add');
         $this->db->join(
@@ -490,6 +490,7 @@ class UsersTraccReq_model extends CI_Model {
         );
         $this->db->where('tracc_req_mf_new_add.customer_shipping_setup', '1');
         $this->db->where('service_request_tracc_request.status !=', 'closed');
+		$this->db->where('service_request_tracc_request.requested_by_id', $user_id);
         $query = $this->db->get();
         return $query->result_array();
     }
