@@ -61,7 +61,7 @@
             </li>
             <!-- Try -->
 
-            <li class="treeview <?= ($active_menu == 'system_administration' || $active_menu == 'users' || $active_menu == 'team') ? 'active' : ''; ?>">
+            <li class="treeview <?= ($active_menu == 'system_administration' || $active_menu == 'users' || $active_menu == 'team' || $active_menu == 'cutoff') ? 'active' : ''; ?>">
                 <a href="#">
                     <i class="fa fa-gear"></i> <span>System Administration</span>
                     <span class="pull-right-container">
@@ -71,7 +71,7 @@
                 <ul class="treeview-menu">
                     <li class="<?= ($active_menu == 'users') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/users"><i class="fa fa-users"></i> Users</a></li>
                     <li class="<?= ($active_menu == 'team') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/team"><i class="fa solid fa-user-plus"></i> Departments</a></li>
-                    <li class="<?= ($active_menu == 'cutoff') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/cutoff"><i class="fa-solid fa-ban"></i> Cutoff</a></li>
+                    <li class="<?= ($active_menu == 'cutoff') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/cutoff"><i class="fa-solid fa-ban"></i>  Cutoff</a></li>
                 </ul>
             </li>
             <li class="<?= ($active_menu == 'print') ? 'active' : ''; ?>">

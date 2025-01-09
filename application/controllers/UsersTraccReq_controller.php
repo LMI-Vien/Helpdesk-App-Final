@@ -101,6 +101,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$timecomparison2 = $currenttime < $ticketopen;
 
 		if ($this->form_validation->run() == FALSE) {
+			$trf = $this->GenerateTRFNo();
 			$data['trf'] = $trf;
 			$data['user_details'] = $user_details[1];
 			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array();
