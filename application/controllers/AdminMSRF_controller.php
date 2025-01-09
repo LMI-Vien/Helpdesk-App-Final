@@ -8,6 +8,7 @@ class AdminMSRF_controller extends CI_Controller {
         $this->load->library('upload'); // Load the upload library
     	$this->load->helper('form'); // Load form helper
 		$this->load->library('session');
+		$this->load->model('AdminMSRF_model');
     }
 
     //MSRF List of Ticket for ADMIN
