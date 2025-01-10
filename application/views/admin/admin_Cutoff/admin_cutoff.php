@@ -8,7 +8,7 @@
         width: 100%;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 10px;
+        /* margin-top: 10px; */
     }
 
     .box {
@@ -28,6 +28,14 @@
         width: 100%;
     }
 
+    #schedule-table {
+        width: 550px;
+    }
+
+    tr:hover {
+        background-color: #edf1f5;
+    }
+
 </style>
 
 
@@ -43,34 +51,133 @@
         </ol>
     </section>
     <section class="content">
+        <!-- <?= $date; ?> -->
         <div class="row">
-            <div class="col-xs-6">
-                <div class="box">
+            <div class="col-lg-6">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="box">
+                            <div class="box-body">
+                                <form method="POST" action="<?= base_url() ?>sys/admin/set_cutoff">
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                            Open Time:
+                                            <input type="time" name="open_time" class="form-control" id="cutoff" value="<?= $bypass->open_time; ?>" required />
+                                        </div>
+                                    </div>
+                                    <br>
+                                    Cutoff Time:
+                                    <div class="row">
+                                        <div class="col-xs-8">
+                                            <input type="time" name="cutoff_time" class="form-control" id="open_ticket" value="<?= $bypass->cutoff_time; ?>" required />
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <button id="button-set-cutoff" type="submit" class="btn btn-danger" href="<?= base_url() ?>sys/admin/bypass">Set Cutoff</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <a id="button-bypass" class="<?= $bypass->bypass == 0 ? 'btn btn-danger' : 'btn btn-warning'; ?>" onClick="return confirm('Reopen ticket form creation?')" href="<?= base_url() ?>sys/admin/bypass"><?= $bypass->bypass == 0 ? 'Bypass Cutoff Time' : 'Close Bypass'; ?></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="box">
+                            <div class="box-body">
+                                <h3>Schedule Cutoff</h3>
+                                <form method="POST" action="<?= base_url('sys/admin/schedule_cutoff'); ?>">
+                                    Open Time:
+                                    <input type="time" class="form-control" name="open_time" required />
+                                    <br>
+                                    Cutoff Time:
+                                    <input type="time" class="form-control" name="cutoff_time" required />
+                                    <br>
+                                    Date:
+                                    <input type="date" class="form-control" name="date" required />
+                                    <br>
+                                    End Date:
+                                    <input type="date" class="form-control" name="end_date" />
+                                    <br>
+                                    <button class="btn btn-danger">Set Cutoff Time</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="box" id="schedule-table">
                     <div class="box-body">
-                        <form method="POST" action="<?= base_url() ?>sys/admin/set_cutoff">
-                            <div class="row">
-                                <div class="col-xs-8">
-                                    Set Cutoff Time:
-                                    <input type="datetime-local" name="cutoff" class="form-control" id="cutoff" value="<?= $bypass->time; ?>" required />
-                                </div>
-                            </div>
-                            <br>
-                            Enable Ticket Buttons:
-                            <div class="row">
-                                <div class="col-xs-8">
-                                    <input type="datetime-local" name="open_ticket" class="form-control" id="open_ticket" value="<?= $bypass->open_time; ?>" required />
-                                </div>
-                                <div class="col-xs-4">
-                                    <button id="button-set-cutoff" type="submit" class="btn btn-danger" href="<?= base_url() ?>sys/admin/bypass">Set Cutoff</button>
-                                </div>
-                            </div>
-                        </form>
-                        Bypass set cutoff time
-                        <a id="button-bypass" class="<?= $bypass->bypass == 0 ? 'btn btn-danger' : 'btn btn-warning'; ?>" onClick="return confirm('Reopen ticket form creation?')" href="<?= base_url() ?>sys/admin/bypass"><?= $bypass->bypass == 0 ? 'Bypass Cutoff Time' : 'Close Bypass'; ?></a>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">End Date</th>
+                                    <th scope="col">Enable Time</th>
+                                    <th scope="col">Cutoff Time</th>
+                                    <th scope="col" colspan=2>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach($schedule as $row): ?>
+                                    <?php if($row['date'] == NULL): ?>
+                                        <tr>
+                                            <th>Standard</th>
+                                            <th><?= $row['end_date'] != "0000-00-00" ? $row['end_date'] : "-" ; ?></th>
+                                            <th><?= $row['open_time']; ?></th>
+                                            <th><?= $row['cutoff_time']; ?></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    <?php else: ?>
+                                        <tr>
+                                            <td><?= $row['date']; ?></td>
+                                            <td><?= $row['end_date'] != "0000-00-00" ? $row['end_date'] : "-" ; ?></td>
+                                            <td><?= $row['open_time']; ?></td>
+                                            <td><?= $row['cutoff_time']; ?></td>
+                                            <td>
+                                                <button class="btn btn-alert" data-toggle="modal" data-target="#editModal<?= $row['recid']; ?>">Edit</button>
+                                                <a class="btn btn-danger" onclick="return confirm('Are you sure to delete the schedule?')" href="<?= base_url('sys/admin/delete_schedule_cutoff/' . $row['recid']); ?>">Delete</a>
+                                            </td>
+                                        </tr>
+                                        
+                                        <div class="modal fade" id="editModal<?= $row['recid']; ?>">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title">Edit schedule</h3>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form method="POST" action="<?= base_url('sys/admin/edit_schedule_cutoff/' . $row['recid']); ?>">
+                                                            <input type="hidden" name="recid" value="<?= $row['recid']; ?>" />
+                                                            Open Time:
+                                                            <input type="time" class="form-control" name="new_open_time" value="<?= $row['open_time']; ?>" required />
+                                                            <br>
+                                                            Cutoff Time:
+                                                            <input type="time" class="form-control" name="new_cutoff_time" value="<?= $row['cutoff_time']; ?>" required />
+                                                            <br>
+                                                            Date:
+                                                            <input type="date" class="form-control" name="new_date" value="<?= $row['date']; ?>" required />
+                                                            <br>
+                                                            End Date:
+                                                            <input type="date" class="form-control" name="new_end_date" value="<?= $row['end_date'] != '0000-00-00' ? $row['end_date'] : ''; ?>" />
+                                                            <br>
+                                                            <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <button class="btn btn-danger">Save changes</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+
+                                <?php endforeach; ?>
+                            </tbody>
+                       </table>
                     </div>
                 </div>
             </div>
         </div>
-
+            
     </section>
 </div>

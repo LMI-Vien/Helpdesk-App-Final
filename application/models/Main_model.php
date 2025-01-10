@@ -963,8 +963,15 @@ class Main_model extends CI_Model {
 	}
 
 	public function get_cutoff() {
-		return $this->db->get('cutoff')->row();
-	}
+		$this->db->where('date', date("Y-m-d"));
+		$query = $this->db->get('cutoff')->row();
 
+		if(!empty($query)) {
+			return $query;
+		} else {
+			$this->db->where('recid', 1);
+			return $this->db->get('cutoff')->row();
+		}
+	}
 }
 ?>

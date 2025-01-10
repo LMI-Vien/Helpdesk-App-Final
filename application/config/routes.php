@@ -87,6 +87,12 @@ $route['sys/admin/set_cutoff'] = 'AdminCutoff_controller/set_cutoff';
 
 $route['sys/admin/bypass'] = 'AdminCutoff_controller/bypass';
 
+$route['sys/admin/schedule_cutoff'] = 'AdminCutoff_controller/schedule_cutoff';
+
+$route['sys/admin/edit_schedule_cutoff/(:any)'] = 'AdminCutoff_controller/edit_schedule/$1';
+
+$route['sys/admin/delete_schedule_cutoff/(:any)'] = 'AdminCutoff_controller/delete_schedule/$1';
+
 //--- PDF REPORTS VIEWING ADMIN ---//
 $route['sys/admin/customer_request_form_pdf'] = 'AdminTraccReq_controller/customer_request_form_pdf_view';
 $route['sys/admin/customer_shipping_setup_pdf'] = 'AdminTraccReq_controller/customer_shipping_setup_pdf_view';

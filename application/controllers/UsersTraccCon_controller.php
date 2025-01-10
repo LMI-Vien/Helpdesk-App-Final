@@ -79,11 +79,11 @@ class UsersTraccCon_controller extends CI_Controller {
 
 		if ($this->form_validation->run() == FALSE) {
 			$cutoff = $this->Main_model->get_cutoff();
-			$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
-			$ticketopen = new DateTime($cutoff->open_time, new DateTimeZone('Asia/Manila'));
-			$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
-			$timecomparison1 = $cutofftime < $currenttime;
-			$timecomparison2 = $currenttime < $ticketopen;
+			$cutofftime = $cutoff->cutoff_time;
+			$opentime = $cutoff->open_time;
+			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+			$timecomparison1 = $currenttime < $cutofftime;
+			$timecomparison2 = $opentime < $currenttime;
 
 			$data['user_details'] = $user_details[1];                   
 			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array();  
@@ -91,16 +91,25 @@ class UsersTraccCon_controller extends CI_Controller {
 			
 			$users_department = $users_det[1]['dept_id'];
 			$get_department = $this->Main_model->UsersDepartment($users_department);   
-			$data['get_department'] = $get_department;  
+			$data['get_department'] = $get_department;
 
-			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', 'Cutoff na');
-				redirect('sys/users/list/tickets/tracc_concern');
+			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
+				$this->load->view('users/header', $data);
+				$this->load->view('users/users_TRC/tracc_concern_form_creation', $data);
+				$this->load->view('users/footer');
 			} else {
-				$this->load->view('users/header', $data);  
-				$this->load->view('users/users_TRC/tracc_concern_form_creation', $data);  
-				$this->load->view('users/footer');  
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/users/list/tickets/msrf');
 			}
+
+			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+			// 	$this->session->set_flashdata('error', 'Cutoff na');
+			// 	redirect('sys/users/list/tickets/tracc_concern');
+			// } else {
+			// 	$this->load->view('users/header', $data);  
+			// 	$this->load->view('users/users_TRC/tracc_concern_form_creation', $data);  
+			// 	$this->load->view('users/footer');  
+			// }
 		} else {
 			// Check if file is uploaded
 			$file_path = null; // Initialize file path

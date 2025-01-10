@@ -26,6 +26,8 @@ class AdminCutoff_controller extends CI_Controller {
                 $allowed_menus = ['dashboard', 'system_administration', 'other_menu'];
 
                 $data['active_menu'] = $active_menu;
+                $data['date'] = date("Y-m-d");
+                $data['schedule'] = $this->AdminCutoff_model->get_schedule();
 
                 $this->load->view('admin/header', $data);
                 $this->load->view('admin/sidebar', $data);
@@ -50,6 +52,21 @@ class AdminCutoff_controller extends CI_Controller {
     
     public function bypass() {
         $this->AdminCutoff_model->bypass();
+        redirect('sys/admin/cutoff');
+    }
+
+    public function schedule_cutoff() {
+        $this->AdminCutoff_model->schedule_cutoff();
+        redirect('sys/admin/cutoff');
+    }
+
+    public function edit_schedule($recid) {
+        $this->AdminCutoff_model->edit_schedule($recid);
+        redirect('sys/admin/cutoff');
+    }
+
+    public function delete_schedule($recid) {
+        $this->AdminCutoff_model->delete_schedule($recid);
         redirect('sys/admin/cutoff');
     }
 }

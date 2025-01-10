@@ -94,11 +94,11 @@ class UsersTraccReq_controller extends CI_Controller {
 		$users_det = $this->Main_model->users_details_put($id);
 	
 		$cutoff = $this->Main_model->get_cutoff();
-		$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
-		$ticketopen = new DateTime($cutoff->open_time, new DateTimeZone('Asia/Manila'));
-		$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
-		$timecomparison1 = $cutofftime < $currenttime;
-		$timecomparison2 = $currenttime < $ticketopen;
+		$cutofftime = $cutoff->cutoff_time;
+		$opentime = $cutoff->open_time;
+		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+		$timecomparison1 = $currenttime < $cutofftime;
+		$timecomparison2 = $opentime < $currenttime;
 
 		if ($this->form_validation->run() == FALSE) {
 			$trf = $this->GenerateTRFNo();
@@ -111,14 +111,23 @@ class UsersTraccReq_controller extends CI_Controller {
 			$get_department = $this->Main_model->UsersDepartment($users_department);
 			$data['get_department'] = $get_department;
 	
-			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/dashboard');
-			} else {
+			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
 				$this->load->view('users/header', $data);
 				$this->load->view('users/users_TRF/tracc_request_form_creation', $data);
 				$this->load->view('users/footer');
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/users/list/tickets/tracc_request');
 			}
+			
+			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			// 	redirect('sys/users/dashboard');
+			// } else {
+			// 	$this->load->view('users/header', $data);
+			// 	$this->load->view('users/users_TRF/tracc_request_form_creation', $data);
+			// 	$this->load->view('users/footer');
+			// }
 		} else {
 			$file_path = null;
 			if (!empty($_FILES['uploaded_files']['name'])) {
@@ -344,11 +353,11 @@ class UsersTraccReq_controller extends CI_Controller {
 		$ticket_numbers = $this->UsersTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
 
 		$cutoff = $this->Main_model->get_cutoff();
-		$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
-		$ticketopen = new DateTime($cutoff->open_time, new DateTimeZone('Asia/Manila'));
-		$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
-		$timecomparison1 = $cutofftime < $currenttime;
-		$timecomparison2 = $currenttime < $ticketopen;
+		$cutofftime = $cutoff->cutoff_time;
+		$opentime = $cutoff->open_time;
+		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+		$timecomparison1 = $currenttime < $cutofftime;
+		$timecomparison2 = $opentime < $currenttime;
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['user_details'] = $user_details[1];
@@ -360,14 +369,23 @@ class UsersTraccReq_controller extends CI_Controller {
 			$get_department = $this->Main_model->UsersDepartment($users_department);
 			$data['get_department'] = $get_department;
 			
-			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/dashboard');
-			} else {
+			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
 				$this->load->view('users/header', $data);
 				$this->load->view('users/users_TRF_pdf/trf_customer_request_form_creation', $data);
 				$this->load->view('users/footer');
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/users/dashboard');
 			}
+
+			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			// 	redirect('sys/users/dashboard');
+			// } else {
+			// 	$this->load->view('users/header', $data);
+			// 	$this->load->view('users/users_TRF_pdf/trf_customer_request_form_creation', $data);
+			// 	$this->load->view('users/footer');
+			// }
 		} else {
 			return;
 		}
@@ -417,11 +435,11 @@ class UsersTraccReq_controller extends CI_Controller {
 		$ticket_numbers = $this->UsersTraccReq_model->get_customer_shipping_setup_from_tracc_req_mf_new_add($id);
 	
 		$cutoff = $this->Main_model->get_cutoff();
-		$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
-		$ticketopen = new DateTime($cutoff->open_time, new DateTimeZone('Asia/Manila'));
-		$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
-		$timecomparison1 = $cutofftime < $currenttime;
-		$timecomparison2 = $currenttime < $ticketopen;
+		$cutofftime = $cutoff->cutoff_time;
+		$opentime = $cutoff->open_time;
+		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+		$timecomparison1 = $currenttime < $cutofftime;
+		$timecomparison2 = $opentime < $currenttime;
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['user_details'] = $user_details[1];
@@ -433,14 +451,23 @@ class UsersTraccReq_controller extends CI_Controller {
 			$get_department = $this->Main_model->UsersDepartment($users_department);
 			$data['get_department'] = $get_department;
 			
-			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/dashboard');
-			} else {
+			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
 				$this->load->view('users/header', $data);
 				$this->load->view('users/users_TRF_pdf/trf_customer_shipping_setup_creation', $data);
 				$this->load->view('users/footer');
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/users/dashboard');
 			}
+
+			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			// 	redirect('sys/users/dashboard');
+			// } else {
+			// 	$this->load->view('users/header', $data);
+			// 	$this->load->view('users/users_TRF_pdf/trf_customer_shipping_setup_creation', $data);
+			// 	$this->load->view('users/footer');
+			// }
 		} else {
 			return;
 		}
@@ -485,11 +512,11 @@ class UsersTraccReq_controller extends CI_Controller {
 		$ticket_numbers = $this->UsersTraccReq_model->get_employee_request_form_from_tracc_req_mf_new_add($id);
 	
 		$cutoff = $this->Main_model->get_cutoff();
-		$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
-		$ticketopen = new DateTime($cutoff->open_time, new DateTimeZone('Asia/Manila'));
-		$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
-		$timecomparison1 = $cutofftime < $currenttime;
-		$timecomparison2 = $currenttime < $ticketopen;
+		$cutofftime = $cutoff->cutoff_time;
+		$opentime = $cutoff->open_time;
+		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+		$timecomparison1 = $currenttime < $cutofftime;
+		$timecomparison2 = $opentime < $currenttime;
 
 		// New: Fetch all departments for the dropdown
 		$departments_result = $this->Main_model->getDepartment();
@@ -507,14 +534,22 @@ class UsersTraccReq_controller extends CI_Controller {
 			$users_department = $users_det[1]['dept_id'] ?? null;
 			$data['selected_department'] = $users_department;
 			
-			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/dashboard');
-			} else {
+			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
 				$this->load->view('users/header', $data);
 				$this->load->view('users/users_TRF_pdf/trf_employee_request_form_creation', $data);
 				$this->load->view('users/footer');
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/users/dashboard');
 			}
+			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			// 	redirect('sys/users/dashboard');
+			// } else {
+			// 	$this->load->view('users/header', $data);
+			// 	$this->load->view('users/users_TRF_pdf/trf_employee_request_form_creation', $data);
+			// 	$this->load->view('users/footer');
+			// }
 		} else {
 			return;
 		}
@@ -549,11 +584,11 @@ class UsersTraccReq_controller extends CI_Controller {
 		$departments = ($departments_result[0] == "ok") ? $departments_result[1] : [];
 
 		$cutoff = $this->Main_model->get_cutoff();
-		$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
-		$ticketopen = new DateTime($cutoff->open_time, new DateTimeZone('Asia/Manila'));
-		$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
-		$timecomparison1 = $cutofftime < $currenttime;
-		$timecomparison2 = $currenttime < $ticketopen;
+		$cutofftime = $cutoff->cutoff_time;
+		$opentime = $cutoff->open_time;
+		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+		$timecomparison1 = $currenttime < $cutofftime;
+		$timecomparison2 = $opentime < $currenttime;
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['user_details'] = $user_details[1];
@@ -567,14 +602,23 @@ class UsersTraccReq_controller extends CI_Controller {
 			$users_department = $users_det[1]['dept_id'] ?? null;
 			$data['selected_department'] = $users_department;
 
-			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/dashboard');
-			} else {
+			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
 				$this->load->view('users/header', $data);
 				$this->load->view('users/users_TRF_pdf/trf_item_request_form_creation', $data);
 				$this->load->view('users/footer');
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/users/dashboard');
 			}
+
+			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			// 	redirect('sys/users/dashboard');
+			// } else {
+			// 	$this->load->view('users/header', $data);
+			// 	$this->load->view('users/users_TRF_pdf/trf_item_request_form_creation', $data);
+			// 	$this->load->view('users/footer');
+			// }
 		} else {
 			return;
 		}
@@ -682,11 +726,11 @@ class UsersTraccReq_controller extends CI_Controller {
 		$departments = ($departments_result[0] == "ok") ? $departments_result[1] : [];
 
 		$cutoff = $this->Main_model->get_cutoff();
-		$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
-		$ticketopen = new DateTime($cutoff->open_time, new DateTimeZone('Asia/Manila'));
-		$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
-		$timecomparison1 = $cutofftime < $currenttime;
-		$timecomparison2 = $currenttime < $ticketopen;
+		$cutofftime = $cutoff->cutoff_time;
+		$opentime = $cutoff->open_time;
+		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+		$timecomparison1 = $currenttime < $cutofftime;
+		$timecomparison2 = $opentime < $currenttime;
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['user_details'] = $user_details[1];
@@ -699,14 +743,23 @@ class UsersTraccReq_controller extends CI_Controller {
 			$users_department = $users_det[1]['dept_id'] ?? null;
 			$data['selected_department'] = $users_department;
 			
-			if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/dashboard');
-			} else {
+			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
 				$this->load->view('users/header', $data);
 				$this->load->view('users/users_TRF_pdf/trf_supplier_request_form_creation', $data);
 				$this->load->view('users/footer');
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/users/dashboard');
 			}
+
+			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			// 	redirect('sys/users/dashboard');
+			// } else {
+			// 	$this->load->view('users/header', $data);
+			// 	$this->load->view('users/users_TRF_pdf/trf_supplier_request_form_creation', $data);
+			// 	$this->load->view('users/footer');
+			// }
 		} else {
 			return;
 		}
