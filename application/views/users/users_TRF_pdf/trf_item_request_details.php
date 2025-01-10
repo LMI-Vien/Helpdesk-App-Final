@@ -148,9 +148,9 @@
                             <div class="tab-pane active" id="msrf">
                                 <section id="new">
                                     <div class="row">
-                                        <form action="<?= site_url('Main/user_creation_item_request_form_pdf'); ?>" method="POST">
+                                        <form action="<?= site_url('sys/users/details/concern/customer_req_item_req/update/' . $reqForm['recid']); ?>" method="POST">
                                             <div class="col-md-12">
-                                                <input type="text" class="form-control" name="ticket_id" value="<?= $reqForm['ticket_id']; ?>" readonly>
+                                                <input type="text" class="form-control" name="ticket_id" value="<?= $reqForm['ticket_id']; ?>" readonly />
                                             </div>
 
                                                 <!-- Checkboxes Section -->
@@ -541,6 +541,7 @@
                                                     <tbody>
                                                         <?php foreach($checkboxes2 as $key => $item): ?>
                                                             <tr>
+                                                                <td style="display: none"><input type="hidden" name="rows_gl[<?= $key; ?>][recid]" value="<?= $item['recid']; ?>"></td> 
                                                                 <td><input type="text" class="form-control" name="rows_gl[<?= $key; ?>][uom]" value="<?= $item['uom']; ?>" placeholder=""></td>
                                                                 <td><input type="text" class="form-control" name="rows_gl[<?= $key; ?>][barcode]" value="<?= $item['barcode']; ?>" placeholder=""></td>
                                                                 <td><input type="number" class="form-control" name="rows_gl[<?= $key; ?>][length]" value="<?= $item['length']; ?>" placeholder=""></td>
@@ -548,16 +549,16 @@
                                                                 <td><input type="number" class="form-control" name="rows_gl[<?= $key; ?>][width]" value="<?= $item['width']; ?>" placeholder=""></td>
                                                                 <td><input type="number" class="form-control" name="rows_gl[<?= $key; ?>][weight]" value="<?= $item['weight']; ?>" placeholder=""></td>
                                                             </tr>
-                                                        <?php endforeach; ?> 
+                                                        <?php endforeach; ?>
                                                         <?php for ($i = 0; $i < 4; $i++) : ?>
-                                                        <tr>
-                                                            <td><input type="text" class="form-control" name="rows_gl[<?= $i; ?>][uom]" placeholder=""></td>
-                                                            <td><input type="text" class="form-control" name="rows_gl[<?= $i; ?>][barcode]" placeholder=""></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $i; ?>][length]" placeholder=""></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $i; ?>][height]" placeholder=""></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $i; ?>][width]" placeholder=""></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $i; ?>][weight]" placeholder=""></td>
-                                                        </tr>
+                                                            <tr>
+                                                                <td><input type="text" class="form-control" name="rows_gl_new[<?= $i; ?>][uom]" placeholder=""></td>
+                                                                <td><input type="text" class="form-control" name="rows_gl_new[<?= $i; ?>][barcode]" placeholder=""></td>
+                                                                <td><input type="number" class="form-control" name="rows_gl_new[<?= $i; ?>][length]" placeholder=""></td>
+                                                                <td><input type="number" class="form-control" name="rows_gl_new[<?= $i; ?>][height]" placeholder=""></td>
+                                                                <td><input type="number" class="form-control" name="rows_gl_new[<?= $i; ?>][width]" placeholder=""></td>
+                                                                <td><input type="number" class="form-control" name="rows_gl_new[<?= $i; ?>][weight]" placeholder=""></td>
+                                                            </tr>
                                                         <?php endfor; ?>
                                                     </tbody>
                                                 </table>
@@ -599,6 +600,7 @@
                                                     <tbody>
                                                         <?php foreach($checkboxes3 as $key => $item): ?>
                                                             <tr>
+                                                                <td style="display: none;"><input type="hidden" name="rows_whs[<?= $key; ?>][recid]" value="<?= $item['recid']; ?>"></td>
                                                                 <td><input type="text" class="form-control" name="rows_whs[<?= $key; ?>][warehouse]" value="<?= $item['warehouse']; ?>" placeholder=""></td>
                                                                 <td><input type="text" class="form-control" name="rows_whs[<?= $key; ?>][warehouse_no]" value="<?= $item['warehouse_no']; ?>" placeholder=""></td>
                                                                 <td><input type="text" class="form-control" name="rows_whs[<?= $key; ?>][storage_location]" value="<?= $item['storage_location']; ?>" placeholder=""></td>
@@ -614,17 +616,17 @@
                                                         <?php endforeach; ?>
                                                         <?php for ($i = 1; $i <= 5; $i++) : ?>
                                                             <tr>
-                                                                <td><input type="text" class="form-control" name="rows_whs[<?php echo $i; ?>][warehouse]" placeholder=""></td>
-                                                                <td><input type="text" class="form-control" name="rows_whs[<?php echo $i; ?>][warehouse_no]" placeholder=""></td>
-                                                                <td><input type="text" class="form-control" name="rows_whs[<?php echo $i; ?>][storage_location]" placeholder=""></td>
-                                                                <td><input type="text" class="form-control" name="rows_whs[<?php echo $i; ?>][storage_type]" placeholder=""></td>
-                                                                <td><input type="text" class="form-control" name="rows_whs[<?php echo $i; ?>][fixed_bin]" placeholder=""></td>
-                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][min_qty]" placeholder=""></td>
-                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][max_qty]" placeholder=""></td>
-                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][replen_qty]" placeholder=""></td>
-                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][control_qty]" placeholder=""></td>
-                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][round_qty]" placeholder=""></td>
-                                                                <td><input type="text" class="form-control" name="rows_whs[<?php echo $i; ?>][uom]" placeholder=""></td>
+                                                                <td><input type="text" class="form-control" name="rows_whs_new[<?= $i; ?>][warehouse]" placeholder=""></td>
+                                                                <td><input type="text" class="form-control" name="rows_whs_new[<?= $i; ?>][warehouse_no]" placeholder=""></td>
+                                                                <td><input type="text" class="form-control" name="rows_whs_new[<?= $i; ?>][storage_location]" placeholder=""></td>
+                                                                <td><input type="text" class="form-control" name="rows_whs_new[<?= $i; ?>][storage_type]" placeholder=""></td>
+                                                                <td><input type="text" class="form-control" name="rows_whs_new[<?= $i; ?>][fixed_bin]" placeholder=""></td>
+                                                                <td><input type="number" class="form-control" name="rows_whs_new[<?= $i; ?>][min_qty]" placeholder=""></td>
+                                                                <td><input type="number" class="form-control" name="rows_whs_new[<?= $i; ?>][max_qty]" placeholder=""></td>
+                                                                <td><input type="number" class="form-control" name="rows_whs_new[<?= $i; ?>][replen_qty]" placeholder=""></td>
+                                                                <td><input type="number" class="form-control" name="rows_whs_new[<?= $i; ?>][control_qty]" placeholder=""></td>
+                                                                <td><input type="number" class="form-control" name="rows_whs_new[<?= $i; ?>][round_qty]" placeholder=""></td>
+                                                                <td><input type="text" class="form-control" name="rows_whs_new[<?= $i; ?>][uom]" placeholder=""></td>
                                                             </tr>
                                                         <?php endfor; ?>
                                                     </tbody>

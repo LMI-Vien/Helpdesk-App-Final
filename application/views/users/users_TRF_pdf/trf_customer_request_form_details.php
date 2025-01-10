@@ -110,7 +110,7 @@
                             <div class="tab-pane active" id="request_form">
                                 <section id="new">
                                     <div class="row">
-                                        <form action="<?= site_url('UsersTraccReq_controller/user_edit_customer_request_form_pdf') . '/' . $reqForm['recid']; ?>" method="POST">
+                                        <form action="<?= site_url('sys/users/details/concern/customer_req/update/' . $reqForm['recid']); ?>" method="POST">
                                             <div class="col-md-12">
                                                 <input type="text" name="trf_number" id="trf_number" class="form-control" value="<?= $reqForm['ticket_id']; ?>" readonly>
                                             </div>
@@ -128,7 +128,7 @@
                                                             ?>
                                                             <?php foreach ($availableCompanies as $company): ?>
                                                                 <div class="checkbox-inline custom-checkbox">
-                                                                    <input type="checkbox" name="trf_comp_checkbox_value[]" value="<?= $company; ?>" id="checkbox_<?= strtolower($company); ?>" <?= in_array($company, $selected_companies) ? 'checked' : ''; ?> <?= $disabled ?>>
+                                                                    <input type="checkbox" name="crf_comp_checkbox_value[]" value="<?= $company; ?>" id="checkbox_<?= strtolower($company); ?>" <?= in_array($company, $selected_companies) ? 'checked' : ''; ?> <?= $disabled ?>>
                                                                     <label for="checkbox_<?= $company; ?>" class="checkbox-label"><?= $company; ?></label>
                                                                 </div>
                                                             <?php endforeach; ?>
