@@ -43,7 +43,7 @@ class AdminMSRF_controller extends CI_Controller {
 					
 					if (isset($process[0]) && $process[0] == 1) {
 						//Tickets Approved
-						$this->session->set_flashdata('success', "Ticket's been Updated");
+						$this->session->set_flashdata('success', "Ticket's " . $msrf_number . " has been Updated");
 					} else {
 						$this->session->set_flashdata('error', 'Update failed.');
 					}

@@ -102,7 +102,7 @@
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" style="border: none; font-size: 20px; font-weight: bold; background: transparent; color: #dc3545; float: right;" aria-label="Close">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" style="border: none; font-size: 20px; font-weight: bold; background: transparent; color:rgb(240, 240, 240); float: right;" aria-label="Close">
                         &times;
                     </button>
                     <h4 class="modal-title" id="approve_modal_msrfLabel">Approve Ticket</h4>
@@ -145,7 +145,7 @@
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" style="border: none; font-size: 20px; font-weight: bold; background: transparent; color: #dc3545; float: right;" aria-label="Close">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" style="border: none; font-size: 20px; font-weight: bold; background: transparent; color:rgb(255, 255, 255); float: right;" aria-label="Close">
                         &times;
                     </button>
                     <h4 class="modal-title" id="approve_modal_tracc_concernLabel">Approve Ticket</h4>
@@ -181,7 +181,7 @@
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" style="border: none; font-size: 20px; font-weight: bold; background: transparent; color: #dc3545; float: right;" aria-label="Close">
+                    <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" style="border: none; font-size: 20px; font-weight: bold; background: transparent; color:rgb(255, 255, 255); float: right;" aria-label="Close">
                         &times;
                     </button>
                     <h4 class="modal-title" id="approve_modal_tracc_requestLabel">Approve Ticket</h4>

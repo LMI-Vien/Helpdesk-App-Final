@@ -279,7 +279,7 @@ class UsersTraccReq_controller extends CI_Controller {
 					// die();
 
 					if ($acknowledge_process) {
-						$this->session->set_flashdata('success', 'Ticket successfully acknowledged as resolved ' . $trf_number);
+						$this->session->set_flashdata('success', 'Ticket ' . $trf_number . ' has successfully acknowledged as resolved');
 					} else {
 						$this->session->set_flashdata('error', 'Failed to acknowledge ticket as resolved.');
 					}

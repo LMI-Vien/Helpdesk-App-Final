@@ -453,6 +453,20 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Acknowledge By</label>
+                                                    <input type="text" name="acknowledge_by" id="acknowledge_by" class="form-control" value="<?= $trf['acknowledge_by']; ?>" style="width: 100%;" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Acknowledge By/Date</label>
+                                                    <input type="date" name="acknowledge_by_date" id="acknowledge_by_date" class="form-control select2" value="<?= $trf['acknowledge_by_date']; ?>" style="width: 100%;" readonly>
+                                                </div>
+                                            </div>
+
                                             <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Acknowledge by <span style = "color:red;">*</span></label>
@@ -477,7 +491,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary">Submit Tickets</button>
+                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary">Validate Ticket</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -68,9 +68,9 @@ class AdminTraccCon_controller extends CI_Controller {
 					$process_checkbox = $this->AdminTraccCon_model->insert_checkbox_data($checkbox_data);
 	
 					if ($process[0] == 1 && $process_checkbox[0] == 1) {
-						$this->session->set_flashdata('success', 'Tickets Approved');
+						$this->session->set_flashdata('success', 'Tickets Approved: ' . $control_number);
 					} else {
-						$this->session->set_flashdata('error', 'Updated.');
+						$this->session->set_flashdata('error', 'Updated the ticket: ' . $control_number);
 					}
 	
 					redirect(base_url()."sys/admin/list/ticket/tracc_concern");

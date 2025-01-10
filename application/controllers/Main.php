@@ -24,7 +24,7 @@ class Main extends CI_Controller {
 			if ($this->form_validation->run() == FALSE) {
 				$response = array(
 					'status' => 'error',
-					'message' => 'Validation failed',
+					'message' => 'It seems that I can\'t find your credentials',
 					'errors' => $this->form_validation->error_array()
 				);
 				echo json_encode($response);
