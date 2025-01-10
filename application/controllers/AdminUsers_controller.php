@@ -225,6 +225,20 @@ class AdminUsers_controller extends CI_Controller {
 		}
 	}
 
+	public function inactive_employee($id){
+		if (is_numeric($id)){
+			$status = $this->AdminUsers_model->update_inactive_employee($id);
+			// print_r($status); die();
+			if($status){
+				echo json_encode(['status' => 'success', 'message' => 'Succesfully Update to Inactive']);
+			} else {
+				echo json_encode(['status' => 'error', 'message' => 'Failed to Update the Employee.']);
+			}
+		} else {
+			echo json_encode(['status' => 'error', 'message' => 'Invalid Employee ID.']);
+		}
+	}
+
     
 
 }

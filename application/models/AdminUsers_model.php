@@ -170,5 +170,17 @@ class AdminUsers_model extends CI_Model {
 			return array(0, "No changes were made to the Employee.");
 		}
 	}
+
+	public function update_inactive_employee($id){
+		$this->db->where('recid', $id);
+		$this->db->set('status', 0);
+		$this->db->update('users');
+
+		if($this->db->affected_rows() >= 0){
+			return array(1, "Employees in now Inactive.");
+		} else {
+			return array(0, "No changes were made to the Employee.");
+		}
+	}
     
 }
