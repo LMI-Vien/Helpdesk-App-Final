@@ -94,6 +94,9 @@ class AdminTraccReq_controller extends CI_Controller {
 			if($user_details[0] == "ok"){
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 				$allowed_menus = ['customer_request_form_pdf', 'system_administration', 'other_menus'];
 				if(!in_array($active_menu, $allowed_menus)) {
@@ -198,6 +201,9 @@ class AdminTraccReq_controller extends CI_Controller {
 			if($user_details[0] == "ok"){
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 				$allowed_menus = ['customer_shipping_setup_pdf', 'system_administration', 'other_menus'];
 				if(!in_array($active_menu, $allowed_menus)) {
@@ -292,6 +298,9 @@ class AdminTraccReq_controller extends CI_Controller {
 			if($user_details[0] == "ok"){
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 				$allowed_menus = ['employee_request_form_pdf', 'system_administration', 'other_menus'];
 				if(!in_array($active_menu, $allowed_menus)) {
@@ -381,6 +390,9 @@ class AdminTraccReq_controller extends CI_Controller {
 			if($user_details[0] == "ok"){
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 				$allowed_menus = ['item_request_form_pdf', 'system_administration', 'other_menus'];
 				if(!in_array($active_menu, $allowed_menus)) {
@@ -502,6 +514,9 @@ class AdminTraccReq_controller extends CI_Controller {
 			if($user_details[0] == "ok"){
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 				$allowed_menus = ['supplier_request_form_pdf', 'system_administration', 'other_menus'];
 				if(!in_array($active_menu, $allowed_menus)) {

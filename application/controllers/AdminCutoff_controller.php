@@ -24,9 +24,6 @@ class AdminCutoff_controller extends CI_Controller {
 				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
                 
                 $allowed_menus = ['dashboard', 'system_administration', 'other_menu'];
-                if(!in_array($active_menu, $allowed_menus)) {
-                    $active_menu = 'system_administration';
-                }
 
                 $data['active_menu'] = $active_menu;
 

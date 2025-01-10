@@ -101,6 +101,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$timecomparison2 = $currenttime < $ticketopen;
 
 		if ($this->form_validation->run() == FALSE) {
+			$trf = $this->GenerateTRFNo();
 			$data['trf'] = $trf;
 			$data['user_details'] = $user_details[1];
 			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array();
@@ -336,11 +337,11 @@ class UsersTraccReq_controller extends CI_Controller {
 		$id = $this->session->userdata('login_data')['user_id'];
 		$this->load->helper('form');
 		$this->load->library('session');
-	
+
 		$user_details = $this->Main_model->user_details();
 		$getdepartment = $this->Main_model->GetDepartmentID();
 		$users_det = $this->Main_model->users_details_put($id);
-		$ticket_numbers = $this->UsersTraccReq_model->get_customer_from_tracc_req_mf_new_add();
+		$ticket_numbers = $this->UsersTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
 
 		$cutoff = $this->Main_model->get_cutoff();
 		$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
@@ -413,7 +414,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$user_details = $this->Main_model->user_details();
 		$getdepartment = $this->Main_model->GetDepartmentID();
 		$users_det = $this->Main_model->users_details_put($id);
-		$ticket_numbers = $this->UsersTraccReq_model->get_customer_shipping_setup_from_tracc_req_mf_new_add();
+		$ticket_numbers = $this->UsersTraccReq_model->get_customer_shipping_setup_from_tracc_req_mf_new_add($id);
 	
 		$cutoff = $this->Main_model->get_cutoff();
 		$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
@@ -481,7 +482,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$user_details = $this->Main_model->user_details();
 		$getdepartment = $this->Main_model->GetDepartmentID();
 		$users_det = $this->Main_model->users_details_put($id);
-		$ticket_numbers = $this->UsersTraccReq_model->get_employee_request_form_from_tracc_req_mf_new_add();
+		$ticket_numbers = $this->UsersTraccReq_model->get_employee_request_form_from_tracc_req_mf_new_add($id);
 	
 		$cutoff = $this->Main_model->get_cutoff();
 		$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
@@ -542,7 +543,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$user_details = $this->Main_model->user_details();
 		$getdepartment = $this->Main_model->GetDepartmentID();
 		$users_det = $this->Main_model->users_details_put($id);
-		$ticket_numbers = $this->UsersTraccReq_model->get_item_request_form_from_tracc_req_mf_new_add();
+		$ticket_numbers = $this->UsersTraccReq_model->get_item_request_form_from_tracc_req_mf_new_add($id);
 
 		$departments_result = $this->Main_model->getDepartment();
 		$departments = ($departments_result[0] == "ok") ? $departments_result[1] : [];
@@ -675,7 +676,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$user_details = $this->Main_model->user_details();
 		$getdepartment = $this->Main_model->GetDepartmentID();
 		$users_det = $this->Main_model->users_details_put($id);
-		$ticket_numbers = $this->UsersTraccReq_model->get_supplier_from_tracc_req_mf_new_add();
+		$ticket_numbers = $this->UsersTraccReq_model->get_supplier_from_tracc_req_mf_new_add($id);
 
 		$departments_result = $this->Main_model->getDepartment();
 		$departments = ($departments_result[0] == "ok") ? $departments_result[1] : [];
