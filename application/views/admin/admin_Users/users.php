@@ -103,6 +103,27 @@
 	</div>
 </div>
 
+<!-- Update Inactive status Modal -->
+<div class="modal fade" id="UsersUpdateActiveModal" tabindex="-1" role="dialog" aria-labelledby="updateActiveModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document" style="display: flex; align-items: center; justify-content: center; height: 100vh; margin: auto;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="updateActiveModalLabel">Confirm Inactivation</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				Are you sure this employee is Inactive?
+			</div>
+			<div class="modal-footer">      
+				<a href="#" id="confirmUpdtInactiveBtn" class="btn btn-danger">Yes</a>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 
 <style>
@@ -164,6 +185,56 @@ $(document).ready(function() {
                     if (response.status === 'success') {
                         Swal.fire({
                             title: "EMPLOYEE'S BEEN SUCCESSFULLY DELETED!",
+							icon: "success",
+							width: '30%', // Set the width if needed
+							heightAuto: false, // Disable auto height
+							timer: 2000,
+							customClass: {
+								popup: 'swal-custom-popup', // Custom class for the popup
+								title: 'swal-custom-title',  // Custom class for the title
+								content: 'swal-custom-content', // Custom class for the content	
+								confirmButton: 'swal-custom-confirm-btn' // Custom class for the confirm button
+							}
+                        }).then(() => {
+                            window.location.reload(); // Reload the page or redirect as needed
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Error!",
+                            text: response.message,
+                            icon: "error"
+                        });
+                    }
+                },
+                error: function() {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "An unexpected error occurred.",
+                        icon: "error"
+                    });
+                }
+            });
+        });
+    });
+
+	$('#UsersUpdateActiveModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var recid = button.data('id');
+        var updateUrl = "<?= base_url('AdminUsers_controller/inactive_employee/'); ?>" + recid;
+
+        var confirmBtn = $(this).find('#confirmUpdtInactiveBtn');
+        confirmBtn.off('click').on('click', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: updateUrl,
+                type: 'POST',
+                success: function(response) {
+                    response = JSON.parse(response); // Parse the JSON response
+
+                    if (response.status === 'success') {
+                        Swal.fire({
+                            title: "EMPLOYEE'S BEEN SUCCESSFULLY UPDATED TO INACTIVE!",
 							icon: "success",
 							width: '30%', // Set the width if needed
 							heightAuto: false, // Disable auto height

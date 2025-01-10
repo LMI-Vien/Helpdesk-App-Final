@@ -120,12 +120,15 @@ $route['sys/admin/delete/department/(:any)'] = 'AdminDept_controller/department_
 $route['Main/download_file/(:any)'] = 'Main/download_file/$1';
 
 //
+$route['sys/users/details/concern/customer_req/update/(:any)'] = 'UsersTraccReq_controller/update_customer_request/$1';
+
 $route['sys/users/details/concern/customer_req_employee_req/update/(:any)'] = 'UsersTraccReq_controller/update_employee_request/$1';
 
 $route['sys/users/details/concern/customer_req_supplier_req/update/(:any)'] = 'UsersTraccReq_controller/update_supplier_request/$1';
 
 $route['sys/users/details/concern/customer_req_shipping_setup/update/(:any)'] = 'UsersTraccReq_controller/update_shipping_setup/$1';
 
+$route['sys/users/details/concern/customer_req_item_req/update/(:any)'] = 'UsersTraccReq_controller/update_item_request/$1';
 //--- System LOGOUT
 $route['sys/logout'] = 'main/logout';
 

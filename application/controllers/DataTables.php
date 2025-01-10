@@ -43,9 +43,9 @@ class DataTables extends CI_Controller {
     
         // SEARCH 
         if (!empty($search)) {
-            $search_query = "WHERE (emp_id LIKE '%".$search."%' OR fname LIKE '%".$search."%' OR mname LIKE '%".$search."%' OR lname LIKE '%".$search."%' OR email LIKE '%".$search."%' OR username LIKE '%".$search."%' OR role LIKE '%".$search."%' OR department_description LIKE '%".$search."%')";
+            $search_query = "WHERE status != 0 AND (emp_id LIKE '%".$search."%' OR fname LIKE '%".$search."%' OR mname LIKE '%".$search."%' OR lname LIKE '%".$search."%' OR email LIKE '%".$search."%' OR username LIKE '%".$search."%' OR role LIKE '%".$search."%' OR department_description LIKE '%".$search."%')";
         } else {
-            $search_query = "WHERE 1=1";  
+            $search_query = "WHERE status != 0";  
         }
     
         $count_array = $this->db->query("SELECT * FROM users ".$search_query." ORDER BY recid");
@@ -71,13 +71,15 @@ class DataTables extends CI_Controller {
                     $btn_action[] = "<button class='btn btn-warning btn-sm btn_lock unlock_btn' data-empid='".$rows->recid."'><i class='fa fa-power-off'></i> Unlock Account</button>";
                 }
                 $btn_edit[] = "<a href='".base_url()."sys/admin/update/employee/".$rows->recid."' class='btn btn-success btn-sm btn-edit'><i class='fa fa-pencil'></i> Update Details</a>";
-                $btn_delete[] = "<button class='btn btn-danger btn-sm btn-delete' data-toggle='modal' data-target='#UsersDeleteModal' data-id='".$rows->recid."'>
-                 <i class='fa fa-trash'></i> Delete</button>";
+                // $btn_delete[] = "<button class='btn btn-danger btn-sm btn-delete' data-toggle='modal' data-target='#UsersDeleteModal' data-id='".$rows->recid."'>
+                //  <i class='fa fa-trash'></i> Delete</button>";
+                $btn_active[] = "<button class='btn btn-info btn-sm btn-delete' data-toggle='modal' data-target='#UsersUpdateActiveModal' data-id='".$rows->recid."'>
+                <i class='fa fa-pen'></i>InActive</button>";
 
             }
     
             for ($i = 0; $i < count($bid); $i++) {
-                $data[] = array($emp_id[$i], $full_name[$i], $email[$i], $position[$i], $username[$i], $role[$i], $btn_action[$i] . $btn_edit[$i] . $btn_delete[$i]);
+                $data[] = array($emp_id[$i], $full_name[$i], $email[$i], $position[$i], $username[$i], $role[$i], $btn_action[$i] . $btn_edit[$i] . $btn_active[$i]);
             }
         }
     
@@ -363,8 +365,8 @@ class DataTables extends CI_Controller {
 
         $col = 0; 
         $dir = "asc";
-        $dept = "";
 
+        $dept = "";
         if ($user_details[1]['role'] != "L3") {
             $dept = " AND dept_id = '" . $user_details[1]['dept_id'] . "'";
         }
@@ -393,11 +395,11 @@ class DataTables extends CI_Controller {
             $search_query = "AND (ticket_id LIKE '%" . $search . "%' OR requestor_name LIKE '%" . $search . "%' OR subject LIKE '%" . $search . "%' OR department LIKE '%" . $search . "%')";
         }
         
-        $count_query = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') " . $search_query . " ORDER BY recid";
+        $count_query = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') " . $search_query . $dept . " ORDER BY recid";
         $count_array = $this->db->query($count_query);
         $length_count = $count_array->num_rows();
     
-        $strQry = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') AND (sup_id = " . $user_id . " OR it_sup_id = '23-0001' OR assigned_it_staff = '" . $emp_id . "') " . $search_query . $dept . " ORDER BY recid DESC LIMIT " . $start . ", " . $length;
+        $strQry = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') " . $search_query . $dept . " ORDER BY recid DESC LIMIT " . $start . ", " . $length;
         $data_query = $this->db->query($strQry);
         $data = array();
 
@@ -782,7 +784,7 @@ class DataTables extends CI_Controller {
             SELECT * FROM service_request_tracc_concern 
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Approved', 'Returned') AND reported_by = " . $user_id . ") 
             OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned')) 
-            " . $search_query
+            " . $search_query . $dept
         );
         $length_count = $count_array->num_rows();
 
@@ -1180,7 +1182,7 @@ class DataTables extends CI_Controller {
             SELECT * FROM service_request_tracc_request
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Returned', 'Approved') AND requested_by = " . $user_id . ") 
             OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Returned', 'Approved')) 
-            " . $search_query
+            " . $search_query . $dept
         );
         $length_count = $count_array->num_rows();
 
