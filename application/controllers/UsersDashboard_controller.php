@@ -19,7 +19,7 @@ class UsersDashboard_controller extends CI_Controller {
 			$traccConcerns = $this->Main_model->get_tracc_concerns($user_details[1]['recid']);
 			$traccRequests = $this->Main_model->get_tracc_requests($user_details[1]['recid']);
 			$name = $user_details[1]['fname'] . ' ' . $user_details[1]['mname'] . ' ' . $user_details[1]['lname'];
-			$cutofftime = new DateTime($this->Main_model->get_cutoff()->time);
+			$cutofftime = new DateTime($this->Main_model->get_cutoff()->cutoff_time);
 			$ticketopen = new DateTime($this->Main_model->get_cutoff()->open_time);
 
 			if ($user_details[0] == "ok") {

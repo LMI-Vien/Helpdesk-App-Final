@@ -97,11 +97,14 @@ class UsersMSRF_controller extends CI_Controller {
 		if ($this->form_validation->run() == FALSE) {
 			$msrf = $this->GenerateMSRFNo();
 			$cutoff = $this->Main_model->get_cutoff();
-			$cutofftime = new DateTime($cutoff->time, new DateTimeZone('Asia/Manila'));
-			$ticketopen = new DateTime($cutoff->open_time, new DateTimeZone('Asia/Manila'));
-			$currenttime = new DateTime('now', new DateTimeZone('Asia/Manila'));
-			$timecomparison1 = $cutofftime < $currenttime;
-			$timecomparison2 = $currenttime < $ticketopen;
+			
+			
+
+			$cutofftime = $cutoff->cutoff_time;
+			$opentime = $cutoff->open_time;
+			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+			$timecomparison1 = $currenttime < $cutofftime;
+			$timecomparison2 = $opentime < $currenttime;
 			
 			$data['msrf'] = $msrf;
 			$data['user_details'] = $user_details[1];
@@ -112,22 +115,36 @@ class UsersMSRF_controller extends CI_Controller {
 			$get_department = $this->Main_model->UsersDepartment($users_department); 
 			$data['get_department'] = $get_department;
 
-			if ($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-				$users_department = $users_det[1]['dept_id'];       
-				$get_department = $this->Main_model->UsersDepartment($users_department); 
-				$data['get_department'] = $get_department;
-				
-				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/list/tickets/msrf');
-			} else {
-				$users_department = $users_det[1]['dept_id'];       
-				$get_department = $this->Main_model->UsersDepartment($users_department); 
-				$data['get_department'] = $get_department;
-				
+			$users_department = $users_det[1]['dept_id'];       
+			$get_department = $this->Main_model->UsersDepartment($users_department); 
+			$data['get_department'] = $get_department;
+
+			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
 				$this->load->view('users/header', $data);
 				$this->load->view('users/users_MSRF/service_request_form_msrf_creation', $data);
 				$this->load->view('users/footer');
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/users/list/tickets/msrf');
 			}
+
+			// echo $timecomparison2; 
+			// if ($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+			// 	$users_department = $users_det[1]['dept_id'];       
+			// 	$get_department = $this->Main_model->UsersDepartment($users_department); 
+			// 	$data['get_department'] = $get_department;
+				
+			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			// 	redirect('sys/users/list/tickets/msrf');
+			// } else {
+			// 	$users_department = $users_det[1]['dept_id'];       
+			// 	$get_department = $this->Main_model->UsersDepartment($users_department); 
+			// 	$data['get_department'] = $get_department;
+				
+			// 	$this->load->view('users/header', $data);
+			// 	$this->load->view('users/users_MSRF/service_request_form_msrf_creation', $data);
+			// 	$this->load->view('users/footer');
+			// }
 	
 		} else {
 			$file_path = null; // Initialize file path

@@ -1,7 +1,7 @@
 <?php 
 	set_timezone();
 	// echo set_timezone();
-	$current_time = date('H:i');
+	$current_time = date('H.i');
 	// print_r($current_time);
 	// die();  
 ?>
@@ -336,9 +336,9 @@
 
 	// console.log(currentHour);
 	// console.log(currentMinute);
+	console.log(<?= $ticketopen->format("H.i"); ?> >= <?= $current_time; ?>);
 
-	if (currentHour >= <?= $cutofftime->sub(new DateInterval('PT2H'))->format('H'); ?> && <? $ticketopen->format("H:i"); ?> >= <? $current_time; ?>) {
-		console.log("cutoff");
+	if (currentHour >= <?= $cutofftime->sub(new DateInterval('PT2H'))->format('H'); ?> && <?= $ticketopen->format("H.i"); ?> <= <?= $current_time; ?>) {
 		$("#notificationBar").fadeIn();
 	} else if (currentHour === 0) {
 		$("#notificationBar").fadeOut();
