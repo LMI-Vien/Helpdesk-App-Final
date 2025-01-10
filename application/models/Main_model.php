@@ -585,7 +585,7 @@ class Main_model extends CI_Model {
 		$data = array(
 			'acknowledge_by' => $acknowledge_by,
 			'acknowledge_by_date' => $acknowledge_by_date,
-			'status' => 'Resolved'
+			'status' => 'Closed'
 		);
 
 		$this->db->where('ticket_id', $trf_number);
@@ -947,8 +947,8 @@ class Main_model extends CI_Model {
 			'status' => 'Resolved'
 		);
 
-		print_r($data);
-		die();
+		// print_r($data);
+		// die();
 
 		$this->db->where('ticket_id', $trf_number);
 		$this->db->update('service_request_tracc_request', $data);

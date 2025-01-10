@@ -78,14 +78,14 @@ class UsersTraccCon_model extends CI_Model {
 		$data = array(
 			'ack_as_resolved' => $ack_resolved,
 			'ack_as_resolved_date' => $ack_resolved_date,
-			'status' => 'Resolved'
+			'status' => 'Closed'
 		);
 
 		$this->db->where('control_number', $control_number);
 		$this->db->update('service_request_tracc_concern', $data);
 
 		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('success', 'Ticket acknolwedge as resolved.');
+			$this->session->set_flashdata('success', 'Ticket ' . $control_number . ' is acknolwedge as resolved.');
 		} else {
 			$this->session->set_flashdata('error', 'Error acknowledging ticket as resolved.');
 		}

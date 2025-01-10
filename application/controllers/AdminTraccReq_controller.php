@@ -39,7 +39,7 @@ class AdminTraccReq_controller extends CI_Controller {
 					$process = $this->AdminTraccReq_model->status_approval_trf($trf_number, $app_stat);
 					
 					if (isset($process[0]) && $process[0] == 1) {
-						$this->session->set_flashdata('success', "Ticket's been Updated");
+						$this->session->set_flashdata('success', "Ticket " . $trf_number . " has been Updated");
 					} else {
 						$this->session->set_flashdata('error', 'Update failed.');
 					}

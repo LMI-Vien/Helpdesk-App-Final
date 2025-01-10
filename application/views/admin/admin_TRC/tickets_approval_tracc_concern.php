@@ -429,7 +429,7 @@
                 $('#date_lst').prop('disabled', true);
             } else {
                 // Normal behavior for other roles based on ICT approval status
-                if (ictApprovalStatus === 'Approved') {
+                if (ictApprovalStatus === 'Approved' || ictApprovalStatus === 'Resolved') {
                     $('#received_by').prop('disabled', false);
                     $('#noted_by').prop('disabled', false);
                     $('#tcr_solution').prop('readonly', false);
