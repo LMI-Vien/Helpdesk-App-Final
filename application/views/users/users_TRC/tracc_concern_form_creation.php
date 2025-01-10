@@ -26,7 +26,7 @@
                                             <div class="col-md-12">
 			                    				<div class="form-group">
 			                    					<label>Control Number</label>
-                                                    <input type="text" name="control_number" id="control_number" class="form-control" value="" required pattern=".*-.*" title="Control number must contain a hyphen (-)" oninput="this.value = this.value.toUpperCase();">
+                                                    <input type="text" name="control_number" id="control_number" class="form-control" value="" required pattern=".*-.*" title="Control number must contain a hyphen (-)" oninput="this.value = this.value.toUpperCase().trim().replace(/\s+/g, '');">
 			                    				</div>                                               
 			                    			</div>
                                             <div class="col-md-6">
@@ -116,7 +116,7 @@
 <script>
     $(document).ready(function() {
         // Set the current date in YYYY-MM-DD format
-        $('#date_req').val(new Date().toISOString().split('T')[0]);
+        $('#date_rep').val(new Date().toISOString().split('T')[0]);
 
         function autoResizeTextarea() {
             $(this).css('height', 'auto'); // Reset the height to auto to calculate new height

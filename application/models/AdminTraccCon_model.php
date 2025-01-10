@@ -34,7 +34,7 @@ class AdminTraccCon_model extends CI_Model {
 				$this->db->set('status', 'Rejected');  
 			} else if ($approval_stat == 'Approved') {
 				$this->db->set('approval_status', 'Approved');
-				$this->db->set('status', 'In Progress'); 
+				$this->db->set('status', 'Approved'); 
 			} else if ($approval_stat == 'Pending') {
 				$this->db->set('approval_status', 'Pending');
 				$this->db->set('status', 'Pending'); 
