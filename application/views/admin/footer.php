@@ -197,6 +197,10 @@
                             <input type="text" name="name" class="form-control" style="width: 100%;" readonly id="inp_department">
                         </div>
                         <div class="form-group">
+                            <label>Complete Details</label>
+                            <textarea class="form-control" name="name" placeholder="" style="width: 100%; height: 90px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" readonly id="inp_complete_details"></textarea>
+                        </div>
+                        <div class="form-group">
                             <label>Remarks</label>
                             <textarea class="form-control" name="remarks" placeholder="" style="width: 100%; height: 90px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" id="tracc_concern_inp_remarks"></textarea>
                         </div>
@@ -491,9 +495,12 @@
             }else{
                 requestor = $(this).attr('data-requestor');
                 department = $(this).attr('data-department');
+                complete_details = $(this).attr('data-concern');
+                console.log(complete_details);
 
                 $("#approve_modal_tracc_request #inp_requestor").val(requestor);    
                 $("#approve_modal_tracc_request #inp_department").val(department);
+                $("#approve_modal_tracc_request #inp_complete_details").val(complete_details);
                 $('#approve_modal_tracc_request').modal('show');
             }
             
