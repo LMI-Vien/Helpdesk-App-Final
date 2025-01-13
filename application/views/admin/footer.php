@@ -52,51 +52,6 @@
         </div>
     </div>
 
-    <!-- Print Modal -->
-    <div id="printMsrfModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="printModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="printModalLabel">Print Filtered Data</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Use the filters below to narrow down the data you want to print:</p>
-
-                    <!-- Form for Filters -->
-                    <form id="printFilterForm">
-                        <!-- Date Range Filter -->
-                        <div class="form-group">
-                            <label for="startDate">Start Date:</label>
-                            <input type="date" class="form-control" id="startDate" name="startDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="endDate">End Date:</label>
-                            <input type="date" class="form-control" id="endDate" name="endDate" required>
-                        </div>
-
-                        <!-- Status Filter -->
-                        <div class="form-group">
-                            <label for="statusFilter">Status:</label>
-                            <select class="form-control" id="statusFilter" name="statusFilter" required>
-                                <option value="" disabled selected>Statuses</option>
-                                <option value="Open">Open</option>
-                                <option value="In Progress">In Progress</option>
-                                <option value="Closed">Closed</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" id="confirmPrint">Print</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Approve Modal MSRF -->
     <div class="modal fade" id="approve_modal_msrf" tabindex="-1" role="dialog" aria-labelledby="approve_modal_msrfLabel" data-backdrop="static" data-keyboard="false">
             <div class="modal-dialog" role="document">
@@ -362,44 +317,19 @@
                 "responsive": true,
                 "autoWidth": false,
                 "lengthChange": false,
-                /*"dom": "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
-                "buttons": [
+                'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
+                buttons: [
                     {
-                        text: 'Print Data',
+                        text: 'Create Ticket', 
                         className: 'btn btn-primary',
                         action: function (e, dt, node, config) {
-                            // Open the modal when the button is clicked
-                            $('#printMsrfModal').modal('show');
+                            window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/msrf';
+                        },
+                        attr: {
+                            style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
                         }
                     }
-                ]*/
-            });
-
-            // Handle the confirm print action inside the modal
-            $('#confirmPrint').on('click', function() {
-                // Prevent the modal from closing if the form is not valid
-                var form = $('#printFilterForm')[0];
-                
-                // Check form validity
-                if (!form.checkValidity()) {
-                    form.reportValidity(); // Show validation errors
-                    return; // Exit function if form is invalid
-                }
-
-                // Close the modal
-                $('#printMsrfModal').modal('hide');
-
-                // Redraw the table with new filter parameters
-                table.ajax.reload(function() {
-                    // After table is reloaded, trigger the print functionality
-                    table.button('.buttons-print').trigger();
-                }, false); // false to avoid resetting the page number
-            });
-
-            $('.input-sm').on('keyup', function () {
-                const value = $(this).val();
-                localStorage.setItem('datatable_filter', value);
-                //console.log(localStorage);
+                ]
             });
 
 
@@ -412,7 +342,20 @@
                 },
                 "responsive": true,
                 "autoWidth": false,
-                "lengthChange": false
+                "lengthChange": false,
+                'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
+                buttons: [
+                    {
+                        text: 'Create Ticket', 
+                        className: 'btn btn-primary',
+                        action: function (e, dt, node, config) {
+                            window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/tracc_concern';
+                        },
+                        attr: {
+                            style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
+                        }
+                    }
+                ]
             });
 
             $('#tblTicketsTraccRequest').DataTable({
@@ -424,7 +367,20 @@
                 }, 
                 "responsive": true,
                 "autoWidth": false,
-                "lengthChange": false
+                "lengthChange": false,
+                'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
+                buttons: [
+                    {
+                        text: 'Create Ticket', 
+                        className: 'btn btn-primary',
+                        action: function (e, dt, node, config) {
+                            window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/tracc_request';
+                        },
+                        attr: {
+                            style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
+                        }
+                    }
+                ]
             });
             
 

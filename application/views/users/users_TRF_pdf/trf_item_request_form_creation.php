@@ -577,10 +577,10 @@
                                                         <tr>
                                                             <td><input type="text" class="form-control" name="rows_gl[<?php echo $i; ?>][uom]" placeholder=""></td>
                                                             <td><input type="text" class="form-control" name="rows_gl[<?php echo $i; ?>][barcode]" placeholder=""></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?php echo $i; ?>][length]" placeholder=""></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?php echo $i; ?>][height]" placeholder=""></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?php echo $i; ?>][width]" placeholder=""></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?php echo $i; ?>][weight]" placeholder=""></td>
+                                                            <td><input type="number" class="form-control" name="rows_gl[<?php echo $i; ?>][length]" placeholder="" min="0"></td>
+                                                            <td><input type="number" class="form-control" name="rows_gl[<?php echo $i; ?>][height]" placeholder="" min="0"></td>
+                                                            <td><input type="number" class="form-control" name="rows_gl[<?php echo $i; ?>][width]" placeholder="" min="0"></td>
+                                                            <td><input type="number" class="form-control" name="rows_gl[<?php echo $i; ?>][weight]" placeholder="" min="0"></td>
                                                         </tr>
                                                         <?php endfor; ?>
                                                     </tbody>
@@ -628,11 +628,11 @@
                                                                 <td><input type="text" class="form-control" name="rows_whs[<?php echo $i; ?>][storage_location]" placeholder=""></td>
                                                                 <td><input type="text" class="form-control" name="rows_whs[<?php echo $i; ?>][storage_type]" placeholder=""></td>
                                                                 <td><input type="text" class="form-control" name="rows_whs[<?php echo $i; ?>][fixed_bin]" placeholder=""></td>
-                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][min_qty]" placeholder=""></td>
-                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][max_qty]" placeholder=""></td>
-                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][replen_qty]" placeholder=""></td>
-                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][control_qty]" placeholder=""></td>
-                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][round_qty]" placeholder=""></td>
+                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][min_qty]" placeholder="" min="0"></td>
+                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][max_qty]" placeholder="" min="0"></td>
+                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][replen_qty]" placeholder="" min="0"></td>
+                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][control_qty]" placeholder="" min="0"></td>
+                                                                <td><input type="number" class="form-control" name="rows_whs[<?php echo $i; ?>][round_qty]" placeholder="" min="0"></td>
                                                                 <td><input type="text" class="form-control" name="rows_whs[<?php echo $i; ?>][uom]" placeholder=""></td>
                                                             </tr>
                                                         <?php endfor; ?>

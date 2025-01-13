@@ -99,7 +99,7 @@ class UsersTraccCon_controller extends CI_Controller {
 				$this->load->view('users/footer');
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/list/tickets/msrf');
+				redirect('sys/users/list/tickets/tracc_concern');
 			}
 
 			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {

@@ -362,7 +362,7 @@ class UsersTraccReq_model extends CI_Model {
 
     public function insert_batch_rows_gl_setup($insert_data_gl_setup) {
 		if (!empty($insert_data_gl_setup)) {
-			$this->db->insert('tracc_req_item_req_form_gl_setup', $insert_data_gl_setup);
+			$this->db->insert_batch('tracc_req_item_req_form_gl_setup', $insert_data_gl_setup);
 		}
 	}
 
