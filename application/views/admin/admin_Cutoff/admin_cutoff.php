@@ -58,7 +58,7 @@
                     <div class="col-xs-6">
                         <div class="box">
                             <div class="box-body">
-                                <form method="POST" action="<?= base_url() ?>sys/admin/set_cutoff">
+                                <form method="POST" action="<?= base_url() ?>sys/admin/set_cutoff" id="cutoffForm">
                                     <div class="row">
                                         <div class="col-xs-8">
                                             Open Time:
@@ -72,11 +72,15 @@
                                             <input type="time" name="cutoff_time" class="form-control" id="open_ticket" value="<?= $bypass->cutoff_time; ?>" required />
                                         </div>
                                         <div class="col-xs-4">
-                                            <button id="button-set-cutoff" type="submit" class="btn btn-danger" href="<?= base_url() ?>sys/admin/bypass">Set Cutoff</button>
+                                            <!-- <button id="button-set-cutoff" type="submit" class="btn btn-danger" href="<?= base_url() ?>sys/admin/bypass">Set Cutoff</button> -->
+                                            <button id="button-set-cutoff" type="submit" class="btn btn-danger">Set Cutoff</button>
                                         </div>
                                     </div>
                                 </form>
-                                <a id="button-bypass" class="<?= $bypass->bypass == 0 ? 'btn btn-danger' : 'btn btn-warning'; ?>" onClick="return confirm('Reopen ticket form creation?')" href="<?= base_url() ?>sys/admin/bypass"><?= $bypass->bypass == 0 ? 'Bypass Cutoff Time' : 'Close Bypass'; ?></a>
+                                <!-- <a id="button-bypass" class="<?= $bypass->bypass == 0 ? 'btn btn-danger' : 'btn btn-warning'; ?>" onClick="return confirm('Reopen ticket form creation?')" href="<?= base_url() ?>sys/admin/bypass"><?= $bypass->bypass == 0 ? 'Bypass Cutoff Time' : 'Close Bypass'; ?></a> -->
+                                <a id="button-bypass" class="<?= $bypass->bypass == 0 ? 'btn btn-danger' : 'btn btn-warning'; ?>" href="<?= base_url() ?>sys/admin/bypass">
+                                    <?= $bypass->bypass == 0 ? 'Bypass Cutoff Time' : 'Close Bypass'; ?>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -181,3 +185,69 @@
             
     </section>
 </div>
+
+<style>
+    .swal-wide {
+        width: 400px !important;
+        font-size: 1.4rem; 
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#cutoffForm').on('submit', function (e) {
+            e.preventDefault();
+            
+            $.post($(this).attr('action'), $(this).serialize(), function (response) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Cutoff time has been set successfully!',
+                    timer: 3000, 
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'swal-wide' 
+                    },
+                }).then(() => {
+                    // Optional: Redirect after showing notification
+                    window.location.href = "<?= base_url() ?>sys/admin/cutoff";
+                });
+            }).fail(function () {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong. Please try again.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'swal-wide' 
+                    },
+                });
+            });
+        });
+
+        $('#button-bypass').on('click', function (e) {
+            e.preventDefault(); // Prevent default link behavior
+
+            // Get the link URL
+            const href = $(this).attr('href');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Reopen ticket form creation?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#228B22',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, proceed!',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    popup: 'swal-wide' 
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = href;
+                }
+            });
+        });
+    });
+</script>
