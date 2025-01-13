@@ -72,7 +72,7 @@ $route['sys/admin/create/tickets/tracc_concern'] = 'AdminTraccCon_controller/adm
 
 //--- DATATABLE of ADMIN for TRACC REQUEST
 $route['sys/admin/list/ticket/tracc_request'] = 'AdminTraccReq_controller/admin_list_tracc_request';
-//--- TICKET CREATION of USER for TRACC CONCERN
+//--- TICKET CREATION of USER for TRACC REQUEST
 $route['sys/admin/create/tickets/tracc_request'] = 'AdminTraccReq_controller/admin_creation_tickets_tracc_request';
 
 //--- DATATABLE of ADMIN for EMPLOYEES/USERS
