@@ -114,6 +114,8 @@
                     Swal.fire({
                         icon: 'error',
                         title: 'Login Failed',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
                         text: response.message
                     });
                 } else {

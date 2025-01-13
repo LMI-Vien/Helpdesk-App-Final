@@ -20,37 +20,48 @@ class AdminMSRF_model extends CI_Model {
 	
 		if ($qry->num_rows() > 0) {
 			$row = $qry->row();
+
+			$fields_to_update = false;
 	
 			if ($approval_stat == 'Rejected') {
 				$this->db->set('approval_status', 'Rejected');
 				$this->db->set('status', 'Rejected'); 
+				$fields_to_update = true;
 			} else if ($approval_stat == 'Approved') {
 				$this->db->set('approval_status', 'Approved');
 				$this->db->set('status', 'In Progress'); 
+				$fields_to_update = true;
 			} else if ($approval_stat == 'Returned') {
 				$this->db->set('approval_status', 'Returned');
 				$this->db->set('status', 'Returned');
+				$fields_to_update = true;
 			}
 	
 			
 			if ($it_approval_stat == 'Resolved') {
 				$this->db->set('it_approval_status', 'Resolved');
 				$this->db->set('status', 'Closed'); 
+				$fields_to_update = true;
 			} else if ($it_approval_stat == 'Rejected') {
 				$this->db->set('it_approval_status', 'Rejected');
 				$this->db->set('remarks_ict', $reject_reason); 
 				$this->db->set('status', 'Rejected'); 
+				$fields_to_update = true;
 			} else if ($it_approval_stat == 'Approved') {
 				$this->db->set('it_approval_status', 'Approved');
 				$this->db->set('status', 'In Progress'); 
+				$fields_to_update = true;
 			}
 	
 			if (!empty($assign_staff)) {
 				$this->db->set('assigned_it_staff', $assign_staff);
+				$fields_to_update = true;
 			}
 	
-			$this->db->where('ticket_id', $ticket_id);
-			$this->db->update('service_request_msrf');
+			if ($fields_to_update) {
+				$this->db->where('ticket_id', $ticket_id);
+				$this->db->update('service_request_msrf');
+			}
 	
 			$this->db->trans_complete();
 	
