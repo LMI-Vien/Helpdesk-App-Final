@@ -280,5 +280,127 @@ class AdminTraccReq_model extends CI_Model {
 		}
 	}
 
+	public function trf_add_ticket($file_path = null, $comp_checkbox_values = null, $checkbox_data_newadd, $checkbox_data_update, $checkbox_data_account) {
+		$user_id = $this->session->userdata('login_data')['user_id'];
+		$trf_number = $this->input->post('trf_number', true);
+		$fullname = $this->input->post('name', true);
+		$department_description = $this->input->post('department_description', true);
+		$department_id = $this->input->post('dept_id', true);
+		$date_requested = $this->input->post('date_req', true);
+		$date_needed = $this->input->post('date_needed', true);
+		$complete_details = $this->input->post('complete_details', true);
+		$acknowledge_by = $this->input->post('acknowledge_by', true);
+		$acknowledge_by_date = $this->input->post('acknowledge_by_date', true);
+	
+		$query = $this->db->select('ticket_id')
+					->where('ticket_id', $trf_number)
+					->get('service_request_tracc_request');
+		if($query->num_rows() > 0) {
+			return array(0, "Data is Existing");
+		} else {
+			$priority = 'Low';
+			if (
+				!empty($checkbox_data_newadd['checkbox_item']) ||
+				!empty($checkbox_data_newadd['checkbox_customer']) ||
+				!empty($checkbox_data_newadd['checkbox_supplier']) ||
+				!empty($checkbox_data_newadd['checkbox_whs']) ||
+				!empty($checkbox_data_newadd['checkbox_bin']) ||
+				!empty($checkbox_data_newadd['checkbox_cus_ship_setup']) ||
+				!empty($checkbox_data_newadd['checkbox_employee_req_form']) ||
+				!empty($checkbox_data_newadd['checkbox_others_newadd'])
+			) {
+				$priority = 'High';
+			}
+			else if (
+				!empty($checkbox_data_update['checkbox_system_date_lock']) ||
+				!empty($checkbox_data_update['checkbox_user_file_access']) ||
+				!empty($checkbox_data_update['checkbox_item_dets']) ||
+				!empty($checkbox_data_update['checkbox_customer_dets']) ||
+				!empty($checkbox_data_update['checkbox_supplier_dets']) ||
+				!empty($checkbox_data_update['checkbox_employee_dets']) ||
+				!empty($checkbox_data_update['checkbox_others_update'])
+			) {
+				$priority = "Medium";
+			}
+			$data = array(
+				'ticket_id' 				            => $trf_number,
+				'subject' 					            => 'TRACC_REQUEST',
+				'requested_by' 				            => $fullname,
+				'department' 				            => $department_description,
+                'department_id' 			            => $department_id,
+                'date_requested'		 	            => $date_requested,
+				'date_needed' 				            => $date_needed,
+				'requested_by_id' 			            => $user_id,
+				'complete_details' 			            => $complete_details,
+				'priority' 					            => $priority,
+				// 'acknowledge_by' 			            => $acknowledge_by,
+				// 'acknowledge_by_date'		            => $acknowledge_by_date,
+				'status' 					            => 'Open',
+				'approval_status' 			            => 'Pending',
+				'it_approval_status' 		            => 'Pending',
+				'created_at' 				            => date("Y-m-d H:i:s")
+			);
+	
+			if ($file_path !== null) {
+				$data['file'] = $file_path;
+			}
+	
+			if ($comp_checkbox_values !== null) {
+				$data['company'] = $comp_checkbox_values;
+			}
+	
+			$this->db->trans_start();
+			$query = $this->db->insert('service_request_tracc_request', $data);
+	
+			if ($this->db->affected_rows() > 0) {
+				$checkbox_entry_newadd = [
+					'ticket_id'                         => $trf_number,
+					'item'                              => isset($checkbox_data_newadd['checkbox_item']) ? $checkbox_data_newadd['checkbox_item'] : 0,
+					'customer'                          => isset($checkbox_data_newadd['checkbox_customer']) ? $checkbox_data_newadd['checkbox_customer'] : 0,
+					'supplier'                          => isset($checkbox_data_newadd['checkbox_supplier']) ? $checkbox_data_newadd['checkbox_supplier'] : 0,
+					'warehouse'                         => isset($checkbox_data_newadd['checkbox_whs']) ? $checkbox_data_newadd['checkbox_whs'] : 0,
+					'bin_number'                        => isset($checkbox_data_newadd['checkbox_bin']) ? $checkbox_data_newadd['checkbox_bin'] : 0,
+					'customer_shipping_setup'           => isset($checkbox_data_newadd['checkbox_cus_ship_setup']) ? $checkbox_data_newadd['checkbox_cus_ship_setup'] : 0,
+					'employee_request_form'             => isset($checkbox_data_newadd['checkbox_employee_req_form']) ? $checkbox_data_newadd['checkbox_employee_req_form'] : 0,
+					'others'                            => isset($checkbox_data_newadd['checkbox_others_newadd']) ? $checkbox_data_newadd['checkbox_others_newadd'] : 0,
+					'others_description_add'            => isset($checkbox_data_newadd['others_text_newadd']) ? $checkbox_data_newadd['others_text_newadd'] : ""
+				];
+				$this->db->insert('tracc_req_mf_new_add', $checkbox_entry_newadd);
+
+				$checkbox_entry_update = [
+					'ticket_id'                         => $trf_number,
+					'system_date_lock'                  => isset($checkbox_data_update['checkbox_system_date_lock']) ? $checkbox_data_update['checkbox_system_date_lock'] : 0,
+					'user_file_access'                  => isset($checkbox_data_update['checkbox_user_file_access']) ? $checkbox_data_update['checkbox_user_file_access'] : 0,
+					'item_details'                      => isset($checkbox_data_update['checkbox_item_dets']) ? $checkbox_data_update['checkbox_item_dets'] : 0,
+					'customer_details'                  => isset($checkbox_data_update['checkbox_customer_dets']) ? $checkbox_data_update['checkbox_customer_dets'] : 0,
+					'supplier_details'                  => isset($checkbox_data_update['checkbox_supplier_dets']) ? $checkbox_data_update['checkbox_supplier_dets'] : 0,
+					'employee_details'                  => isset($checkbox_data_update['checkbox_employee_dets']) ? $checkbox_data_update['checkbox_employee_dets'] : 0,
+					'others'                            => isset($checkbox_data_update['checkbox_others_update']) ? $checkbox_data_update['checkbox_others_update'] : 0,
+					'others_description_update'         => isset($checkbox_data_update['others_text_update']) ? $checkbox_data_update['others_text_update'] : ""
+				];
+				$this->db->insert('tracc_req_mf_update', $checkbox_entry_update);
+
+				$checkbox_entry_account = [
+					'ticket_id'                         => $trf_number,
+					'tracc_orientation'                 => isset($checkbox_data_account['checkbox_tracc_orien']) ? $checkbox_data_account['checkbox_tracc_orien'] : 0,
+					'lmi'                               => isset($checkbox_data_account['checkbox_create_lmi']) ? $checkbox_data_account['checkbox_create_lmi'] : 0,
+					'rgdi'                              => isset($checkbox_data_account['checkbox_create_rgdi']) ? $checkbox_data_account['checkbox_create_rgdi'] : 0,
+					'lpi'                               => isset($checkbox_data_account['checkbox_create_lpi']) ? $checkbox_data_account['checkbox_create_lpi'] : 0,
+					'sv'                                => isset($checkbox_data_account['checkbox_create_sv']) ? $checkbox_data_account['checkbox_create_sv'] : 0,
+					'gps_account'                       => isset($checkbox_data_account['checkbox_gps_account']) ? $checkbox_data_account['checkbox_gps_account'] : 0,
+					'others'                            => isset($checkbox_data_account['checkbox_others_account']) ? $checkbox_data_account['checkbox_others_account'] : 0,
+					'others_description_acc'            => isset($checkbox_data_account['others_text_account']) ? $checkbox_data_account['others_text_account'] : ""
+				];
+				$this->db->insert('tracc_req_mf_account', $checkbox_entry_account);
+
+				$this->db->trans_commit();
+				return array(1, "Successfully Created Ticket: ".$trf_number);
+			} else {
+				$this->db->trans_rollback();
+				return array(0, "There seems to be a problem when inserting new user. Please try again.");
+			}
+		}
+	}
+
 }
 ?>

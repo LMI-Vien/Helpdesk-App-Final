@@ -11,6 +11,154 @@ class AdminTraccReq_controller extends CI_Controller {
         $this->load->model('AdminTraccReq_model');
     }
 
+	//Generate TRF Number
+	public function GenerateTRFNo() {
+		$lastTRF = $this->Main_model->getLastTRFNumber();
+
+        // Increment the last MSRF number
+        $lastNumber = (int) substr($lastTRF, -4);
+        $newNumber = $lastNumber + 1;
+
+        // Format the new MSRF number
+        $newTRFNumber = 'TRF-' . sprintf('%04d', $newNumber);
+
+        return $newTRFNumber;
+	}
+
+	public function admin_creation_tickets_tracc_request() {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$this->load->helper('form');
+		$this->load->library('session');
+		$this->load->library('upload');
+	
+		$this->form_validation->set_rules('trf_number', 'Ticket Number', 'trim|required');
+	
+		$user_details = $this->Main_model->user_details();
+		$getdepartment = $this->Main_model->GetDepartmentID();
+		$users_det = $this->Main_model->users_details_put($id);
+	
+		$cutoff = $this->Main_model->get_cutoff();
+		$cutofftime = $cutoff->cutoff_time;
+		$opentime = $cutoff->open_time;
+		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+		$timecomparison1 = $currenttime < $cutofftime;
+		$timecomparison2 = $opentime < $currenttime;
+
+		if ($this->form_validation->run() == FALSE) {
+			$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+			$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+			$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
+
+			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu'];
+			$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'system_tickets_list';
+
+			$data['active_menu'] = $active_menu;
+			
+			$trf = $this->GenerateTRFNo();
+			$data['trf'] = $trf;
+			$data['user_details'] = $user_details[1];
+			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array();
+			$data['getdept'] = isset($getdepartment[1]) ? $getdepartment[1] : array();
+	
+			$users_department = $users_det[1]['dept_id'];
+			$get_department = $this->Main_model->UsersDepartment($users_department);
+			$data['get_department'] = $get_department;
+	
+			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
+				$this->load->view('admin/header', $data);
+				$this->load->view('admin/sidebar', $data);
+				$this->load->view('admin/admin_TRF/trf_creation', $data);
+				$this->load->view('admin/footer');
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/admin/list/ticket/tracc_request');
+			}
+			
+			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			// 	redirect('sys/users/dashboard');
+			// } else {
+			// 	$this->load->view('users/header', $data);
+			// 	$this->load->view('users/users_TRF/tracc_request_form_creation', $data);
+			// 	$this->load->view('users/footer');
+			// }
+		} else {
+			$file_path = null;
+			if (!empty($_FILES['uploaded_files']['name'])) {
+				$config['upload_path'] = FCPATH . 'uploads/tracc_request/';
+				$config['allowed_types'] = 'pdf|jpg|png|doc|docx|jpeg';
+				$config['max_size'] = 5048;
+				$config['file_name'] = time() . '_' . $_FILES['uploaded_files']['name'];
+	
+				$this->upload->initialize($config);
+	
+				if (!$this->upload->do_upload('uploaded_files')) {
+					$this->session->set_flashdata('error', $this->upload->display_errors());
+					redirect(base_url() . 'sys/admin/create/tickets/tracc_request');
+				} else {
+					$file_data = $this->upload->data();
+					$file_path = $file_data['file_name'];
+				}
+			}
+	
+			$checkbox_data_newadd = [
+				'checkbox_item'                 => $this->input->post('checkbox_item') ? 1 : 0,
+				'checkbox_customer'             => $this->input->post('checkbox_customer') ? 1 : 0,
+				'checkbox_supplier'             => $this->input->post('checkbox_supplier') ? 1 : 0,
+				'checkbox_whs'                  => $this->input->post('checkbox_whs') ? 1 : 0,
+				'checkbox_bin'                  => $this->input->post('checkbox_bin') ? 1 : 0,
+				'checkbox_cus_ship_setup'       => $this->input->post('checkbox_cus_ship_setup') ? 1 : 0,
+				'checkbox_employee_req_form'    => $this->input->post('checkbox_employee_req_form') ? 1 : 0,
+				'checkbox_others_newadd'        => $this->input->post('checkbox_others_newadd') ? 1 : 0, 
+				'others_text_newadd'            => $this->input->post('others_text_newadd')
+			];
+
+			$checkbox_data_update = [
+				'checkbox_system_date_lock'     => $this->input->post('checkbox_system_date_lock') ? 1 : 0,
+				'checkbox_user_file_access'     => $this->input->post('checkbox_user_file_access') ? 1 : 0,
+				'checkbox_item_dets'            => $this->input->post('checkbox_item_dets') ? 1 : 0,
+				'checkbox_customer_dets'        => $this->input->post('checkbox_customer_dets') ? 1 : 0,
+				'checkbox_supplier_dets'        => $this->input->post('checkbox_supplier_dets') ? 1 : 0,
+				'checkbox_employee_dets'        => $this->input->post('checkbox_employee_dets') ? 1 : 0,
+				'checkbox_others_update'        => $this->input->post('checkbox_others_update') ? 1 : 0,
+				'others_text_update'            => $this->input->post('others_text_update')
+			]; 
+
+			$checkbox_data_account = [
+				'checkbox_tracc_orien'          => $this->input->post('checkbox_tracc_orien') ? 1 : 0,
+				'checkbox_create_lmi'           => $this->input->post('checkbox_create_lmi') ? 1 : 0,
+				'checkbox_create_lpi'           => $this->input->post('checkbox_create_lpi') ? 1 : 0,
+				'checkbox_create_rgdi'          => $this->input->post('checkbox_create_rgdi') ? 1 : 0,
+				'checkbox_create_sv'            => $this->input->post('checkbox_create_sv') ? 1 : 0,
+				'checkbox_gps_account'          => $this->input->post('checkbox_gps_account') ? 1 : 0,
+				'checkbox_others_account'       => $this->input->post('checkbox_others_account') ? 1 : 0,
+				'others_text_account'           => $this->input->post('others_text_account')
+			];
+	
+			$comp_checkbox_values = isset($_POST['comp_checkbox_value']) ? $_POST['comp_checkbox_value'] : [];
+			$imploded_values = implode(',', $comp_checkbox_values);
+	
+			$process = $this->AdminTraccReq_model->trf_add_ticket($file_path, $imploded_values, $checkbox_data_newadd, $checkbox_data_update, $checkbox_data_account);
+
+			$newadd = [
+				'Item Request Form'             => $checkbox_data_newadd['checkbox_item'],
+				'Customer Request Form'         => $checkbox_data_newadd['checkbox_customer'],
+				'Supplier Request Form'         => $checkbox_data_newadd['checkbox_supplier'],
+				'Customer Shipping Setup'       => $checkbox_data_newadd['checkbox_cus_ship_setup'],
+				'Employee Request Form'         => $checkbox_data_newadd['checkbox_employee_req_form'],
+			];
+	
+			if ($process[0] == 1) {
+				$this->session->set_flashdata('success', $process[1]);
+				$this->session->set_userdata('data', ['checkbox_data' => $newadd, 'expires_at' => time() + (5 * 60)]);
+				redirect(base_url() . 'sys/admin/list/ticket/tracc_request');
+			} else {
+				$this->session->set_flashdata('error', $process[1]);
+				redirect(base_url() . 'sys/admin/create/tickets/tracc_request');
+			}
+		}
+	}
+
     //TRACC REQUEST List of Ticket for ADMIN
 	public function admin_list_tracc_request(){
 		$this->load->helper('form');
