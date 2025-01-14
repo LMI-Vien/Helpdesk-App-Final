@@ -25,7 +25,7 @@ class AdminMSRF_controller extends CI_Controller {
 	}
 
 	// DATATABLE na nakikita ni Admin (MSRF)
-	public function service_form_msrf_list($active_menu = 'admin_creation_ticket') {
+	public function service_form_msrf_list() {
 		$id = $this->session->userdata('login_data')['user_id']; 
 		$dept_id = $this->session->userdata('login_data')['dept_id']; 
 	

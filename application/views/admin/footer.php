@@ -343,19 +343,19 @@
                 "responsive": true,
                 "autoWidth": false,
                 "lengthChange": false,
-                'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
-                buttons: [
-                    {
-                        text: 'Create Ticket', 
-                        className: 'btn btn-primary',
-                        action: function (e, dt, node, config) {
-                            window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/tracc_concern';
-                        },
-                        attr: {
-                            style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
-                        }
-                    }
-                ]
+                // 'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
+                // buttons: [
+                //     {
+                //         text: 'Create Ticket', 
+                //         className: 'btn btn-primary',
+                //         action: function (e, dt, node, config) {
+                //             window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/tracc_concern';
+                //         },
+                //         attr: {
+                //             style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
+                //         }
+                //     }
+                // ]
             });
 
             $('#tblTicketsTraccRequest').DataTable({
@@ -540,6 +540,46 @@
                     className: 'btn btn-primary',
                     action: function (e, dt, node, config){
                         window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/msrf';
+                    },
+                    attr: {
+                            style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
+                    }
+                });
+            // }
+            return buttonsConfig;
+        })(),
+
+        "columnDefs": [{
+            'target': 4,
+            'orderable': false,
+            "data": "btn_action",
+            "className": "text-center"
+        }]
+    });
+
+    $('#tblTraccConcernAdmin').DataTable({
+        "serverSide": true,
+        "processing": true,
+        "ajax": {
+            "url": "<?= base_url(); ?>DataTables/create_tracc_concern_ticket_admin",
+            "type": "POST"
+        },
+        "responsive": true,
+        "autoWidth": false,
+        "lengthChange": false,
+        'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
+        
+        // Define buttonsConfig and apply conditional logic for dept_id
+        "buttons": (function(){
+            var buttonsConfig = [];
+            // if (dept_id == 1){
+            //     console.log(dept_id);
+            // }else{
+                buttonsConfig.push({
+                    text: 'Create Tickets',
+                    className: 'btn btn-primary',
+                    action: function (e, dt, node, config){
+                        window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/tracc_concern';
                     },
                     attr: {
                             style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'

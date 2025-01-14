@@ -6,7 +6,7 @@
     $disabled = "";
     $readonly = "";
     $btn_label = "Submit Ticket";
-    if ($role === "L1") {
+    if ($role === "L2") {
         $department_head_status = $msrf['approval_status'];
         
         $status_msrf = $msrf['status'];
