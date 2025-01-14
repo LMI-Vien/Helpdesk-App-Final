@@ -852,14 +852,14 @@ class UsersTraccReq_controller extends CI_Controller {
 			$user_details = $this->Main_model->user_details();
 			$getdepartment = $this->Main_model->GetDepartmentID();
 			$customerReqForm = $this->UsersTraccReq_model->get_customer_req_form_ss_details($id);
-			$ticket_numbers = $this->UsersTraccReq_model->get_customer_shipping_setup_from_tracc_req_mf_new_add();
+			$ticket_numbers = $this->UsersTraccReq_model->get_customer_shipping_setup_from_tracc_req_mf_new_add($id);
 			
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
 				$data['getdept'] = $getdepartment[1];
 				$data['reqForm'] = $customerReqForm[0];
-				$data['ticket_numbers'] = $ticket_numbers[0];
+				$data['ticket_numbers'] = $ticket_numbers;
 				$data['companies'] = explode(',', $customerReqForm[0]['company']);
 
 				$this->load->view('users/header', $data);
