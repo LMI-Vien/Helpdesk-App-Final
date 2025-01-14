@@ -62,8 +62,6 @@ $route['sys/users/details/concern/customer_req_supplier_req/(:any)'] = 'UsersTra
 //--- ADMIN ROUTES ---//
 //--- DATATABLE of ADMIN for MSRF
 $route['sys/admin/list/ticket/msrf'] = 'AdminMSRF_controller/admin_list_tickets';
-//--- TICKET CREATION of ADMIN for MSRF
-$route['sys/admin/create/tickets/msrf'] = 'AdminMSRF_controller/admin_creation_tickets_msrf';
 
 //--- DATATABLE of ADMIN TRACC CONCERN
 $route['sys/admin/list/ticket/tracc_concern'] = 'AdminTraccCon_controller/admin_list_tracc_concern';
@@ -144,6 +142,16 @@ $route['sys/users/details/concern/customer_req_supplier_req/update/(:any)'] = 'U
 $route['sys/users/details/concern/customer_req_shipping_setup/update/(:any)'] = 'UsersTraccReq_controller/update_shipping_setup/$1';
 
 $route['sys/users/details/concern/customer_req_item_req/update/(:any)'] = 'UsersTraccReq_controller/update_item_request/$1';
+
+
+// --- Admin CREATION OF TICKETS ---//
+//--- DATATABLE of ADMIN in MSRF
+$route['sys/admin/list/creation_tickets/msrf'] = 'AdminMSRF_controller/service_form_msrf_list';
+//--- TICKET CREATION of ADMIN for MSRF
+$route['sys/admin/create/tickets/msrf'] = 'AdminMSRF_controller/admin_creation_tickets_msrf';
+//clickable link to the details page, msrf
+$route['sys/admin/details/concern/msrf/(:any)'] = 'AdminMSRF_controller/admin_msrf_details/$1';
+
 //--- System LOGOUT
 $route['sys/logout'] = 'main/logout';
 

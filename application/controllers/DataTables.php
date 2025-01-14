@@ -2283,4 +2283,175 @@ class DataTables extends CI_Controller {
         echo json_encode($output);
         exit();
     }
+
+    // Admin Creation Ticket
+    public function create_msrf_ticket_admin() {
+        $user_id = $this->session->userdata('login_data')['user_id'];  
+        $emp_id = $this->session->userdata('login_data')['emp_id'];  
+        $string_emp = $this->db->escape($emp_id);  
+    
+        $draw = intval($this->input->post("draw")); 
+        $start = intval($this->input->post("start")); 
+        $length = intval($this->input->post("length"));  
+        $order = $this->input->post("order"); 
+        $search = $this->input->post("search");  
+        $search = $this->db->escape_str($search['value']);  
+    
+        $col = 0;  
+        $dir = ""; 
+    
+        if (!empty($order)) {
+            foreach ($order as $o) {
+                $col = $o['column'];  
+                $dir = $o['dir'];  
+            }
+        }
+    
+        if ($dir != "asc" && $dir != "desc") {
+            $dir = "asc";  
+        }
+    
+        $valid_columns = array(
+            0 => 'disable_date',  
+            1 => 'stamp'  
+        );
+    
+        if (!isset($valid_columns[$col])) {
+            $order = null;
+        } else {
+            $order = $valid_columns[$col]; 
+        }
+
+        // SEARCH
+        if (!empty($search)) {
+            $search_query = "AND (ticket_id LIKE '%" . $search . "%' OR requestor_name LIKE '%" . $search . "%' OR subject LIKE '%" . $search . "%')";
+        } else {
+            $search_query = "";
+        }
+    
+        $count_array = $this->db->query("
+            SELECT * FROM service_request_msrf 
+            WHERE (status IN ('Open', 'In Progress', 'Resolved', 'Approved') AND assigned_it_staff = " . $string_emp . ") 
+            OR (status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved') AND requester_id = " . $user_id . ") " 
+            . $search_query
+        );
+        $length_count = $count_array->num_rows();  
+    
+        $data = array();
+        $strQry = $this->db->query("
+            SELECT * FROM service_request_msrf 
+            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved') AND assigned_it_staff = " . $string_emp . ") 
+            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Approved') AND requester_id = " . $user_id . ") " 
+            . $search_query . 
+            " ORDER BY recid DESC LIMIT " . $start . ", " . $length
+        );
+
+        if ($strQry->num_rows() > 0) {
+            foreach ($strQry->result() as $rows) {
+                $label_class = '';
+                switch ($rows->status) {
+                    case 'Open':
+                        $label_class = 'label-primary';
+                        break;
+                    case 'In Progress':
+                        $label_class = 'label-warning';
+                        break;
+                    case 'Resolved':
+                        $label_class = 'label-success';
+                        break;
+                    case 'Closed': 
+                        $label_class = 'label-danger';
+                        break;
+                    case 'Rejected':
+                        $label_class = 'label-danger';
+                        break;
+                    case 'On Going':
+                        $label_class = 'label-success';
+                        break;
+                    case 'Approved':
+                        $label_class = 'label-success';
+                        break;
+                    case 'Returned':
+                        $label_class = 'label-warning';
+                        break;
+                }
+                $status_label[] = '<span class="label ' . $label_class . '">' . $rows->status . '</span>';
+    
+                $prio_class = '';
+                switch ($rows->priority) {
+                    case 'Low':
+                        $prio_class = 'label-primary';
+                        break;
+                    case 'Medium':
+                        $prio_class = 'label-warning';
+                        break;
+                    case 'High':
+                        $prio_class = 'label-danger';
+                        break;
+                }
+                $prio_label[] = '<span class="label ' . $prio_class . '">' . $rows->priority . '</span>';
+    
+                $app_stat_class = '';
+                switch ($rows->approval_status) {
+                    case 'Approved':
+                        $app_stat_class = 'label-success';
+                        break;
+                    case 'Pending':
+                        $app_stat_class = 'label-warning';
+                        break;
+                    case 'Rejected':
+                        $app_stat_class = 'label-danger';
+                        break;
+                    case 'Returned':
+                        $app_stat_class = 'label-warning';
+                        break;
+                }
+                $app_stat_label[] = '<span class="label ' . $app_stat_class . '">' . $rows->approval_status . '</span>';
+    
+                $it_stat_class = '';
+                switch ($rows->it_approval_status) {
+                    case 'Approved':
+                        $it_stat_class = 'label-success';
+                        break;
+                    case 'Pending':
+                        $it_stat_class = 'label-warning';
+                        break;
+                    case 'Rejected':
+                        $it_stat_class = 'label-danger';
+                        break;
+                    case 'Closed':
+                        $it_stat_class = 'label-info';
+                        break;
+                }
+                $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
+    
+                $tickets[] = "<a href='" . base_url() . "sys/admin/details/concern/msrf/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
+                $name[] = $rows->requestor_name;
+                $subject[] = $rows->subject;
+                
+            }
+    
+            for ($i = 0; $i < count($tickets); $i++) {
+                $data[] = array(
+                    $tickets[$i],       
+                    $name[$i],          
+                    $subject[$i],      
+                    $prio_label[$i],    
+                    $status_label[$i],  
+                    $app_stat_label[$i],
+                    $it_stat_label[$i],  
+                );
+            }
+        }
+    
+        $output = array(
+            "draw" => $draw,  
+            "recordsTotal" => $length_count,  
+            "recordsFiltered" => $length_count,  
+            "data" => $data  
+        );
+       
+        echo json_encode($output);
+        exit();  
+    }
 }

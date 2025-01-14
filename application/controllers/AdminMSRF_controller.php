@@ -24,6 +24,141 @@ class AdminMSRF_controller extends CI_Controller {
         return $newMSRFNumber;
 	}
 
+	// DATATABLE na nakikita ni Admin (MSRF)
+	public function service_form_msrf_list($active_menu = 'admin_creation_ticket') {
+		$id = $this->session->userdata('login_data')['user_id']; 
+		$dept_id = $this->session->userdata('login_data')['dept_id']; 
+	
+		$this->load->helper('form'); 
+		$this->load->library('session'); 
+
+		// Set validation rule for the form input 'msrf_number'
+		$this->form_validation->set_rules('msrf_number', 'Ticket ID', 'trim|required'); 
+	
+		$user_details = $this->Main_model->user_details(); 
+		$department_data = $this->Main_model->getDepartment(); 
+		$users_det = $this->Main_model->users_details_put($id); 
+		$getdepartment = $this->Main_model->GetDepartmentID(); 
+
+		if ($this->form_validation->run() == FALSE) { 
+			// If validation fails, it will proceed to generate the MSRF number
+			$msrfNumber = $this->GenerateMSRFNo(); // Calls a function to generate a new MSRF number
+
+			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_ticket'];
+			$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_ticket';
+			$data['active_menu'] = 'admin_creation_ticket';
+			// print_r($active_menu);
+			// die();
+			$msrf = $this->GenerateMSRFNo();
+			$data['msrf'] = $msrf;
+			$data['active_menu'] = $active_menu;
+			$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+			$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+			$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
+			$data['user_details'] = $user_details[1]; 
+			$data['department_data'] = $department_data; 
+			$data['users_det'] = $users_det[1]; 
+			$data['dept_id'] = $dept_id; 
+			
+			if ($department_data[0] == "ok") { 
+				$data['departments'] = $department_data[1]; 
+			} else {
+				$data['departments'] = array(); 
+				echo "No departments found."; 
+			}
+	
+			$data['getdept'] = $getdepartment[1]; 
+			
+			// Add a form type to differentiate between MSRF and TRACC
+			$data['form_type'] = 'msrf';
+
+			$data['msrfNumber'] = $msrfNumber; 
+			$this->load->view('admin/header', $data);
+			$this->load->view('admin/sidebar', $data);
+			$this->load->view('admin/admin_MSRF/admin_list_msrf_creation', $data);
+			$this->load->view('admin/footer');
+		} else { 
+
+			$process = $this->UsersMSRF_model->msrf_add_ticket(); 
+
+			if ($process[0] == 1) { 
+				$this->session->set_flashdata('success', $process[1]); 
+				redirect(base_url().'sys/users/dashboard');
+			} else {
+				$this->session->set_flashdata('error', $process[1]); 
+				redirect(base_url().'sys/users/dashboard'); 
+			}
+		}
+	}
+
+	public function admin_msrf_details($id) {
+		if($this->session->userdata('login_data')) {
+			$user_details = $this->Main_model->user_details();
+			$getdepartment = $this->Main_model->GetDepartmentID();
+			$getMsrf = $this->Main_model->getTicketsMSRF($id);
+
+			if ($user_details[0] == "ok") {
+				$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_ticket'];
+				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_ticket';
+				$data['active_menu'] = 'admin_creation_ticket';
+				$sid = $this->session->session_id;
+				$data['user_details'] = $user_details[1];
+				$data['getdept'] = $getdepartment[1];
+				$data['msrf'] = $getMsrf[1];
+
+				$this->load->view('admin/header', $data);
+				$this->load->view('admin/sidebar', $data);
+				$this->load->view('admin/admin_MSRF/admin_msrf_details', $data);
+				$this->load->view('admin/footer');
+			} else {
+				$this->session->set_flashdata('error', 'Error fetching user information.');
+				redirect("sys/authentication");
+			}
+		} else {
+			$this->session->sess_destroy();
+        	$this->session->set_flashdata('error', 'Session expired. Please login again.');
+			redirect("sys/authentication");
+		}
+	}
+
+	public function update_status_msrf_assign() {
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+		$ticket_id = $this->input->post('msrf_number', true);
+		$date_needed = $this->input->post('date_need', true);
+		$asset_code = $this->input->post('asset_code', true);
+		$request_category = $this->input->post('category', true);
+		$specify = $this->input->post('msrf_specify', true);
+		$details_concern = $this->input->post('concern', true);
+
+		if ($this->session->userdata('login_data')) {
+			$user_id = $this->session->userdata('login_data')['user_id'];
+			$user_details = $this->Main_model->user_details();
+
+			if ($user_details[0] == "ok") {
+				$sid = $this->session->session_id;
+				$data['user_details'] = $user_details[1];
+
+				$process = $this->AdminMSRF_model->UpdateMSRFAssign($ticket_id, $date_needed, $asset_code, $request_category, $specify, $details_concern);
+
+				if ($process[0] == 1) {
+					$this->session->set_flashdata('success', $process[1]);
+					redirect(base_url()."sys/admin/list/creation_tickets/msrf");
+				} else {
+					$this->session->set_flashdata('error', $process[0]);
+					redirect(base_url()."sys/admin/list/creation_tickets/msrf");
+				}
+			} else {
+				$this->session->set_flashdata('error', 'Error fetching user information.');
+				redirect("sys/authentication");
+			}
+		} else {
+			$this->session->set_flashdata('error', 'Error fetching user information');
+            redirect(base_url()."admin/login");
+		}
+	}
+
+
 	public function admin_creation_tickets_msrf() {
 		$id = $this->session->userdata('login_data')['user_id'];
 		$this->load->helper('form');
@@ -37,8 +172,8 @@ class AdminMSRF_controller extends CI_Controller {
 		$users_det = $this->Main_model->users_details_put($id); 
 	
 		if ($this->form_validation->run() == FALSE) {
-			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu'];
-			$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'system_tickets_list';
+			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_ticket'];
+			$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_ticket';
 			$data['active_menu'] = $active_menu;
 
 			$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();

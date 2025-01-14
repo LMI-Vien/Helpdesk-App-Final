@@ -145,6 +145,50 @@ class AdminMSRF_model extends CI_Model {
 			}
 		}
 	}
+
+	public function UpdateMSRFAssign($ticket_id, $date_needed, $asset_code, $request_category, $specify, $details_concern) {
+		$user_id = $this->session->userdata('login_data')['user_id'];
+		$status = $this->input->post('it_status', true);
+		$status_users = $this->input->post('status_users', true);
+		$status_requestor = $this->input->post('status_requestor', true);
+		
+		$qry = $this->db->query('SELECT * FROM service_request_msrf WHERE ticket_id = ?', [$ticket_id]);
+	
+		if ($qry->num_rows() > 0) {
+			$row = $qry->row();
+	
+			// Determine which status to set based on the current status
+			/*if ($row->status == 'In Progress') {
+				$this->db->set('status', $status);
+			} else if ($row->status == 'Resolved') {
+				$this->db->set('status', $status_requestor);
+			} else {
+				$this->db->set('status', $status_users);
+			}*/
+			
+			// Update the additional fields
+			$this->db->set('date_needed', $date_needed);
+			$this->db->set('asset_code', $asset_code);
+			$this->db->set('category', $request_category);
+			$this->db->set('specify', $specify);
+			$this->db->set('details_concern', $details_concern);
+	
+			// Update only status and additional fields in the database
+			$this->db->where('ticket_id', $ticket_id);
+			$this->db->update('service_request_msrf');
+		
+			if ($this->db->affected_rows() > 0) {
+				$this->db->trans_commit();
+				return array(1, "Successfully Updating Tickets: " . $ticket_id);
+			} else {
+				$this->db->trans_rollback();
+				return array(0, "Error updating Keywords's status. Please try again.");
+			}
+		} else {
+			return array(0, "Service request not found for ticket: " . $ticket_id);
+		}
+		
+	}
 }
 
 ?>

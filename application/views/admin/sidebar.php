@@ -7,6 +7,25 @@
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                 </a>
             </li>
+            <!-- Admin Tickets  -->
+            <?php if ($this->session->userdata('login_data')['role'] !== 'L3'): ?>
+            <li class="treeview <?= ($active_menu == 'admin_creation_ticket') ? 'active' : ''; ?>">
+                <a href="#">
+                    <i class="fa fa-ticket"></i> <span>My Tickets</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="<?= ($active_menu == 'admin_creation_msrf') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/list/creation_tickets/msrf"><i class="fa fa-circle-o"></i> My MSRF Form List</a></li>
+                    
+                    <li class="<?= ($active_menu == 'admin_creation_ticket_tracc_concern') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/list/creation_tickets/tracc_concern"><i class="fa fa-circle-o"></i> My TRACC Concern List</a></li>
+                    
+                    <li class="<?= ($active_menu == 'admin_creation_ticket_tracc_request') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/list/creation_tickets/tracc_request"><i class="fa fa-circle-o"></i> My TRACC Request List</a></li>
+                </ul>
+            </li>
+            <?php endif; ?>
+
             <li class="treeview <?= ($active_menu == 'system_tickets_list' || $active_menu == 'open_tickets' || $active_menu == 'other_menu' || $active_menu == 'admin_list_tickets' || $active_menu == 'admin_list_tracc_concern' || $active_menu == 'admin_list_tracc_request' || $active_menu == 'approved_tickets') ? 'active' : ''; ?>">
                 <a href="#">
                     <i class="fa fa-ticket"></i> <span>Tickets</span>
