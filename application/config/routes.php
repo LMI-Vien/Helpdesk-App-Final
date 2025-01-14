@@ -62,13 +62,9 @@ $route['sys/users/details/concern/customer_req_supplier_req/(:any)'] = 'UsersTra
 //--- ADMIN ROUTES ---//
 //--- DATATABLE of ADMIN for MSRF
 $route['sys/admin/list/ticket/msrf'] = 'AdminMSRF_controller/admin_list_tickets';
-//--- TICKET CREATION of ADMIN for MSRF
-$route['sys/admin/create/tickets/msrf'] = 'AdminMSRF_controller/admin_creation_tickets_msrf';
 
 //--- DATATABLE of ADMIN TRACC CONCERN
 $route['sys/admin/list/ticket/tracc_concern'] = 'AdminTraccCon_controller/admin_list_tracc_concern';
-//--- TICKET CREATION of ADMIN for TRACC CONCERN
-$route['sys/admin/create/tickets/tracc_concern'] = 'AdminTraccCon_controller/admin_creation_tickets_tracc_concern';
 
 //--- DATATABLE of ADMIN for TRACC REQUEST
 $route['sys/admin/list/ticket/tracc_request'] = 'AdminTraccReq_controller/admin_list_tracc_request';
@@ -144,6 +140,30 @@ $route['sys/users/details/concern/customer_req_supplier_req/update/(:any)'] = 'U
 $route['sys/users/details/concern/customer_req_shipping_setup/update/(:any)'] = 'UsersTraccReq_controller/update_shipping_setup/$1';
 
 $route['sys/users/details/concern/customer_req_item_req/update/(:any)'] = 'UsersTraccReq_controller/update_item_request/$1';
+
+
+// --- Admin CREATION OF TICKETS ---//
+//--- DATATABLE of ADMIN in MSRF
+$route['sys/admin/list/creation_tickets/msrf'] = 'AdminMSRF_controller/service_form_msrf_list';
+//--- TICKET CREATION of ADMIN for MSRF
+$route['sys/admin/create/tickets/msrf'] = 'AdminMSRF_controller/admin_creation_tickets_msrf';
+//clickable link to the details page, msrf
+$route['sys/admin/details/concern/msrf/(:any)'] = 'AdminMSRF_controller/admin_msrf_details/$1';
+
+//--- DATATABLE of ADMIN in TRACC CONCERN
+$route['sys/admin/list/creation_tickets/tracc_concern'] = 'AdminTraccCon_controller/tracc_concern_list';
+//--- TICKET CREATION of ADMIN for TRACC CONCERN
+$route['sys/admin/create/tickets/tracc_concern'] = 'AdminTraccCon_controller/admin_creation_tickets_tracc_concern';
+//clickable link to the details page, TRACC CONCERN
+$route['sys/admin/details/concern/tracc_concern/(:any)'] = 'AdminTraccCon_controller/admin_tracc_concern_details/$1';
+
+//--- DATATABLE of ADMIN in TRACC REQUEST
+$route['sys/admin/list/creation_tickets/tracc_request'] = 'AdminTraccReq_controller/tracc_request_list';
+//--- TICKET CREATION of ADMIN for TRACC CONCERN
+$route['sys/admin/create/tickets/tracc_request'] = 'AdminTraccReq_controller/admin_creation_tickets_tracc_request';
+//clickable link to the details page, TRACC CONCERN
+$route['sys/admin/details/concern/tracc_request/(:any)'] = 'AdminTraccReq_controller/admin_tracc_request_details/$1';
+
 //--- System LOGOUT
 $route['sys/logout'] = 'main/logout';
 

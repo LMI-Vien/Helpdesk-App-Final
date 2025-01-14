@@ -30,7 +30,7 @@ class AdminTraccCon_controller extends CI_Controller {
 			$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu'];
-			$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'system_tickets_list';
+			$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_ticket';
 			// print_r($active_menu);
 			// die();
 
@@ -57,7 +57,7 @@ class AdminTraccCon_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/admin/list/ticket/tracc_concern');
+				redirect('sys/admin/list/creation_tickets/tracc_concern');
 			}
 
 			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
@@ -82,7 +82,7 @@ class AdminTraccCon_controller extends CI_Controller {
 	
 				if (!$this->upload->do_upload('uploaded_photo')) {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
-					redirect(base_url().'sys/admin/create/tickets/tracc_concern');  
+					redirect(base_url().'sys/admin/list/creation_tickets/tracc_concern');  
 				} else {
 					$file_data = $this->upload->data();
 					$file_path = $file_data['file_name']; 
@@ -93,10 +93,10 @@ class AdminTraccCon_controller extends CI_Controller {
 	
 			if ($process[0] == 1) {
 				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'sys/admin/list/ticket/tracc_concern');  
+				redirect(base_url().'sys/admin/list/creation_tickets/tracc_concern');  
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'sys/admin/create/tickets/tracc_concern');  
+				redirect(base_url().'sys/admin/list/creation_tickets/tracc_concern');  
 			}
 		}
 	}
@@ -210,6 +210,177 @@ class AdminTraccCon_controller extends CI_Controller {
 		} else {
 			$this->session->flashdata('error', 'Session expired. Please login again.');
 			redirect("sys/authentication");
+		}
+	}
+
+	// DATATABLE na nakikita ni Admin TRACC CONCERN
+	public function tracc_concern_list() {
+		$id = $this->session->userdata('login_data')['user_id']; 
+		$dept_id = $this->session->userdata('login_data')['dept_id']; 
+
+		$this->load->helper('form'); 
+		$this->load->library('session'); 
+
+		$this->form_validation->set_rules('control_number', 'Control Number', 'trim|required'); 
+	
+		$user_details = $this->Main_model->user_details(); 
+		$department_data = $this->Main_model->getDepartment(); 
+		$users_det = $this->Main_model->users_details_put($id); 
+		$getdepartment = $this->Main_model->GetDepartmentID(); 
+	
+		if ($this->form_validation->run() == FALSE) { 
+
+			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_ticket'];
+			$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_ticket';
+			$data['active_menu'] = 'admin_creation_ticket';
+
+			$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+			$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+			$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
+			
+			$data['user_details'] = $user_details[1]; 
+			$data['department_data'] = $department_data; 
+			$data['users_det'] = $users_det[1]; 
+			$data['dept_id'] = $dept_id; 
+			$control_number = $this->session->userdata('control_number');
+	
+			if ($department_data[0] == "ok") { 
+				$data['departments'] = $department_data[1]; 
+			} else {
+				$data['departments'] = array(); 
+				echo "No departments found."; 
+			}
+	
+			$data['getdept'] = $getdepartment[1]; 
+			
+			//$data['form_type'] = 'tracc_concern';
+
+			$data['control_number'] = $control_number; 
+			$this->load->view('admin/header', $data);
+			$this->load->view('admin/sidebar', $data);
+			$this->load->view('admin/admin_TRC/admin_list_tracc_concern_creation', $data);
+			$this->load->view('admin/footer');
+	
+		} else {
+	
+			$process = $this->UsersTraccCon_model->tracc_concern_add_ticket();
+
+			if ($process[0] == 1) { 
+				$this->session->set_flashdata('success', $process[1]);
+				redirect(base_url().'sys/users/dashboard'); 
+			} else {
+				$this->session->set_flashdata('error', $process[1]); 
+				redirect(base_url().'sys/users/dashboard');
+			}
+		}
+	}
+
+	//Tracc concern details USERS
+	public function admin_tracc_concern_details($id) {
+		if ($this->session->userdata('login_data')) {
+			$user_details = $this->Main_model->user_details();
+			$getdepartment = $this->Main_model->GetDepartmentID();
+			$getTraccCon = $this->Main_model->getTraccConcernByID($id);
+	
+			if ($user_details[0] == "ok") {
+				$sid = $this->session->session_id;
+				$data['user_details'] = $user_details[1];
+				$data['getdept'] = $getdepartment[1];
+				$data['tracc_con'] = $getTraccCon[1];
+
+				$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_ticket'];
+				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_ticket';
+				$data['active_menu'] = 'admin_creation_ticket';
+
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
+			
+
+				if (isset($getTraccCon[1])) {
+					$control_number = $getTraccCon[1]['control_number'];
+					$data['checkboxes'] = $this->Main_model->get_checkbox_values($control_number);  
+					$data['tracc_con'] = $getTraccCon[1];
+				} else {
+					$data['checkboxes'] = [];
+					$data['tracc_con'] = [];
+					$this->session->set_flashdata('error', 'TRACC concern data not found.');
+				}
+				// Load the views and pass the data
+				$this->load->view('admin/header', $data);
+				$this->load->view('admin/sidebar', $data);
+				$this->load->view('admin/admin_TRC/admin_tracc_concern_details', $data);
+				$this->load->view('admin/footer');
+			} else {
+				$this->session->set_flashdata('error', 'Error fetching user information.');
+				redirect("sys/authentication");
+			}
+		} else {
+			$this->session->sess_destroy();
+			$this->session->set_flashdata('error', 'Session expired. Please login again.');
+			redirect("sys/authentication");
+		}
+	}
+
+	// Acknowledging the form as resolved
+	public function acknowledge_as_resolved() {
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+	
+		$control_number = $this->input->post('control_number', true);
+		$action = $this->input->post('action', true); // Get the action (edit or acknowledge)
+	
+		if ($this->session->userdata('login_data')) {
+			$user_id = $this->session->userdata('login_data')['user_id'];
+			$user_details = $this->Main_model->user_details();
+	
+			if ($user_details[0] == "ok") {
+				$sid = $this->session->session_id;
+	
+				if ($action == 'edit') {
+					// Logic to update fields without closing the ticket
+					$edit_data = [
+						'module_affected' => $this->input->post('module_affected', true),
+						'company' => $this->input->post('company', true),
+						'tcr_details' => $this->input->post('concern', true)
+					];
+	
+					$update_process = $this->AdminTraccCon_model->update_tracc_concern($control_number, $edit_data);
+	
+					if ($update_process[0] == 1) {
+						$this->session->set_flashdata('success', 'Data updated successfully.');
+					} else {
+						$this->session->set_flashdata('error', 'Failed to update data.');
+					}
+	
+					redirect(base_url() . "sys/admin/list/creation_tickets/tracc_concern");
+	
+				} elseif ($action == 'acknowledge') {
+					$acknowledge_data = [
+						'ack_as_resolved' => $this->input->post('ack_as_res_by', true),
+						'ack_as_resolved_date' => $this->input->post('ack_as_res_date', true)
+					];
+	
+					$acknowledge_process = $this->AdminTraccCon_model->AcknolwedgeAsResolved($control_number, $acknowledge_data);
+	
+					if ($acknowledge_process[0] == 1) {
+						$this->session->set_flashdata('success', 'Ticket successfully acknowledged as resolved.');
+					} else {
+						$this->session->set_flashdata('error', 'Failed to acknowledge ticket as resolved.');
+					}
+	
+					redirect(base_url() . "sys/admin/list/creation_tickets/tracc_concern");
+				} else {
+					$this->session->set_flashdata('error', 'Invalid action.');
+					redirect(base_url() . "sys/admin/list/creation_tickets/tracc_concern");
+				}
+			} else {
+				$this->session->set_flashdata('error', 'Error fetching user information.');
+				redirect("sys/authentication");
+			}
+		} else {
+			$this->session->set_flashdata('error', 'Error fetching user information');
+			redirect(base_url() . "admin/login");
 		}
 	}
 }
