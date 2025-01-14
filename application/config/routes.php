@@ -157,6 +157,13 @@ $route['sys/admin/create/tickets/tracc_concern'] = 'AdminTraccCon_controller/adm
 //clickable link to the details page, TRACC CONCERN
 $route['sys/admin/details/concern/tracc_concern/(:any)'] = 'AdminTraccCon_controller/admin_tracc_concern_details/$1';
 
+//--- DATATABLE of ADMIN in TRACC REQUEST
+$route['sys/admin/list/creation_tickets/tracc_request'] = 'AdminTraccReq_controller/tracc_request_list';
+//--- TICKET CREATION of ADMIN for TRACC CONCERN
+$route['sys/admin/create/tickets/tracc_request'] = 'AdminTraccReq_controller/admin_creation_tickets_tracc_request';
+//clickable link to the details page, TRACC CONCERN
+$route['sys/admin/details/concern/tracc_request/(:any)'] = 'AdminTraccReq_controller/admin_tracc_request_details/$1';
+
 //--- System LOGOUT
 $route['sys/logout'] = 'main/logout';
 
