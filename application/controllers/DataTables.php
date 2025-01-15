@@ -43,9 +43,9 @@ class DataTables extends CI_Controller {
     
         // SEARCH 
         if (!empty($search)) {
-            $search_query = "WHERE status != 0 AND (emp_id LIKE '%".$search."%' OR fname LIKE '%".$search."%' OR mname LIKE '%".$search."%' OR lname LIKE '%".$search."%' OR email LIKE '%".$search."%' OR username LIKE '%".$search."%' OR role LIKE '%".$search."%' OR department_description LIKE '%".$search."%')";
+            $search_query = "WHERE active != 0 AND (emp_id LIKE '%".$search."%' OR fname LIKE '%".$search."%' OR mname LIKE '%".$search."%' OR lname LIKE '%".$search."%' OR email LIKE '%".$search."%' OR username LIKE '%".$search."%' OR role LIKE '%".$search."%' OR department_description LIKE '%".$search."%')";
         } else {
-            $search_query = "WHERE status != 0";  
+            $search_query = "WHERE active != 0";  
         }
     
         $count_array = $this->db->query("SELECT * FROM users ".$search_query." ORDER BY recid");
