@@ -57,6 +57,7 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="box">
+                        <h2>Set cut off time</h2>
                             <div class="box-body">
                                 <form method="POST" action="<?= base_url() ?>sys/admin/set_cutoff" id="cutoffForm">
                                     <div class="row">
@@ -202,7 +203,7 @@
                 Swal.fire({
                     title: 'Success!',
                     text: 'Cutoff time has been set successfully!',
-                    timer: 3000, 
+                    timer: 2000, 
                     icon: 'success',
                     confirmButtonText: 'OK',
                     customClass: {

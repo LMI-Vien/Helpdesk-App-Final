@@ -82,7 +82,7 @@ class AdminTraccCon_controller extends CI_Controller {
 	
 				if (!$this->upload->do_upload('uploaded_photo')) {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
-					redirect(base_url().'sys/admin/list/creation_tickets/tracc_concern');  
+					redirect(base_url().'sys/admin/create/tickets/tracc_concern');  
 				} else {
 					$file_data = $this->upload->data();
 					$file_path = $file_data['file_name']; 

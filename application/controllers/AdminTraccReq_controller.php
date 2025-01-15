@@ -823,7 +823,7 @@ class AdminTraccReq_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/admin/list/ticket/tracc_request');
+				redirect('sys/admin/list/creation_tickets/tracc_request');
 			}
 			
 			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
