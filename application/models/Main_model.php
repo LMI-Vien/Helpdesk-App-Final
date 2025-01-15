@@ -78,6 +78,7 @@ class Main_model extends CI_Model {
 				"role" 							=> 'L1',
 				'status' 						=> 1,
 				'failed_attempts' 				=> 1,
+				'active'						=> 1,
 				'created_at' 					=> date("Y-m-d H:i:s")
 			);
 

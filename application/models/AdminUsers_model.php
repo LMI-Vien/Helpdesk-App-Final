@@ -61,24 +61,25 @@ class AdminUsers_model extends CI_Model {
 		$department_description = $department_details['dept_desc']; 
 	
 		$data = array(
-			'emp_id' => $emp_id,
-			'fname' => $fname,
-			'mname' => $mname,
-			'lname' => $lname,
-			'email' => $email,
-			'position' => $position,
-			'username' => $username,
-			'password' => $new_password,
-			//'s_password' => $password,
-			'api_password' => $new_password,
-			//'s_api_password' => $password,
-			'dept_id' => $department, 
-			'department_description' => $department_description, 
-			'sup_id' => $sup_id,
-			'role' => $role,
-			'status' => 1,
-			'failed_attempts' => 1,
-			'created_at' => date("Y-m-d H:i:s")
+			'emp_id' 							=> $emp_id,
+			'fname' 							=> $fname,
+			'mname' 							=> $mname,
+			'lname' 							=> $lname,
+			'email' 							=> $email,
+			'position' 							=> $position,
+			'username' 							=> $username,
+			'password' 							=> $new_password,
+			//'s_password' 						=> $password,
+			'api_password' 						=> $new_password,
+			//'s_api_password' 					=> $password,
+			'dept_id' 							=> $department, 
+			'department_description' 			=> $department_description, 
+			'sup_id' 							=> $sup_id,
+			'role' 								=> $role,
+			'status' 							=> 1,
+			'failed_attempts' 					=> 1,
+			'active'							=> 1,
+			'created_at'						=> date("Y-m-d H:i:s")
 		);
 	
 		$this->db->trans_start(); 
@@ -173,7 +174,7 @@ class AdminUsers_model extends CI_Model {
 
 	public function update_inactive_employee($id){
 		$this->db->where('recid', $id);
-		$this->db->set('status', 0);
+		$this->db->set('active', 0);
 		$this->db->update('users');
 
 		if($this->db->affected_rows() >= 0){
