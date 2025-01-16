@@ -8,6 +8,10 @@ class UsersDashboard_controller extends CI_Controller {
     	$this->load->helper('form'); // Load form helper
 		$this->load->library('session');
         $this->load->model('UsersDashboard_model');
+
+		if($this->session->userdata('login_data')['role'] != 'L1') {
+			show_404();
+		}
 	}
 
 	// Users Dashboard

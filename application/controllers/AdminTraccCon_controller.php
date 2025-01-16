@@ -9,6 +9,10 @@ class AdminTraccCon_controller extends CI_Controller {
     	$this->load->helper('form'); // Load form helper
 		$this->load->library('session');
         $this->load->model('AdminTraccCon_model');
+
+		if($this->session->userdata('login_data')['role'] == 'L1') {
+			show_404();
+		}
     }
 
 	public function admin_creation_tickets_tracc_concern() {

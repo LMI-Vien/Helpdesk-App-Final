@@ -9,6 +9,10 @@ class UsersTraccReq_controller extends CI_Controller {
 		$this->load->library('session');
         $this->load->model('UsersTraccReq_model');
 		$this->load->model('AdminTraccReq_model');
+
+		if($this->session->userdata('login_data')['role'] != 'L1') {
+			show_404();
+		}
 	}
 
     //Generate TRF Number
@@ -400,7 +404,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
-					$this->load->view('users/users_TRF/trf_customer_request_form_creation', $data);
+					$this->load->view('users/users_TRF_pdf/trf_customer_request_form_creation', $data);
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
@@ -503,7 +507,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
-					$this->load->view('users/users_TRF/trf_shipping_setup_creation', $data);
+					$this->load->view('users/users_TRF_pdf/trf_shipping_setup_creation', $data);
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
@@ -607,7 +611,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
-					$this->load->view('users/users_TRF/trf_employee_request_form_creation', $data);
+					$this->load->view('users/users_TRF_pdf/trf_employee_request_form_creation', $data);
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
@@ -696,7 +700,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
-					$this->load->view('users/users_TRF/trf_item_request_form_creation', $data);
+					$this->load->view('users/users_TRF_pdf/trf_item_request_form_creation', $data);
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
@@ -858,7 +862,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
-					$this->load->view('users/users_TRF/trf_supplier_request_form_creation', $data);
+					$this->load->view('users/users_TRF_pdf/trf_supplier_request_form_creation', $data);
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
@@ -1003,33 +1007,37 @@ class UsersTraccReq_controller extends CI_Controller {
 	}
 
 	public function update_shipping_setup($id) {
-		if($this->session->userdata('login_data')) {
-			$css_comp_checkbox_value = isset($_POST['css_comp_checkbox_value']) ? $_POST['css_comp_checkbox_value'] : [];
-			$imploded_values = implode(',', $css_comp_checkbox_value);
-
-			$checkbox_cus_ship_setup = [
-				'checkbox_monday'           => isset($_POST['checkbox_monday']) ? 1 : 0,
-				'checkbox_tuesday'          => isset($_POST['checkbox_tuesday']) ? 1 : 0,
-				'checkbox_wednesday'        => isset($_POST['checkbox_wednesday']) ? 1 : 0,
-				'checkbox_thursday'         => isset($_POST['checkbox_thursday']) ? 1 : 0,
-				'checkbox_friday'           => isset($_POST['checkbox_friday']) ? 1 : 0,
-				'checkbox_saturday'         => isset($_POST['checkbox_saturday']) ? 1 : 0,
-				'checkbox_sunday'           => isset($_POST['checkbox_sunday']) ? 1 : 0,
-			];
-
-			$process = $this->UsersTraccReq_model->update_ss($id, $imploded_values, $checkbox_cus_ship_setup);
-
-			if ($process[0] == 1) {
-				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'sys/users/details/concern/customer_req_ship_setup/' . $id);  
-			} else {
-				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'sys/users/details/concern/customer_req_ship_setup/' . $id);  
-			} 
+		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+			show_404();
 		} else {
-			$this->session->sess_destroy();
-			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			if($this->session->userdata('login_data')) {
+				$css_comp_checkbox_value = isset($_POST['css_comp_checkbox_value']) ? $_POST['css_comp_checkbox_value'] : [];
+				$imploded_values = implode(',', $css_comp_checkbox_value);
+	
+				$checkbox_cus_ship_setup = [
+					'checkbox_monday'           => isset($_POST['checkbox_monday']) ? 1 : 0,
+					'checkbox_tuesday'          => isset($_POST['checkbox_tuesday']) ? 1 : 0,
+					'checkbox_wednesday'        => isset($_POST['checkbox_wednesday']) ? 1 : 0,
+					'checkbox_thursday'         => isset($_POST['checkbox_thursday']) ? 1 : 0,
+					'checkbox_friday'           => isset($_POST['checkbox_friday']) ? 1 : 0,
+					'checkbox_saturday'         => isset($_POST['checkbox_saturday']) ? 1 : 0,
+					'checkbox_sunday'           => isset($_POST['checkbox_sunday']) ? 1 : 0,
+				];
+	
+				$process = $this->UsersTraccReq_model->update_ss($id, $imploded_values, $checkbox_cus_ship_setup);
+	
+				if ($process[0] == 1) {
+					$this->session->set_flashdata('success', $process[1]);
+					redirect(base_url().'sys/users/details/concern/customer_req_ship_setup/' . $id);  
+				} else {
+					$this->session->set_flashdata('error', $process[1]);
+					redirect(base_url().'sys/users/details/concern/customer_req_ship_setup/' . $id);  
+				} 
+			} else {
+				$this->session->sess_destroy();
+				$this->session->set_flashdata('error', 'Session expired. Please login again.');
+				redirect("sys/authentication");
+			}
 		}
 	}
 
@@ -1098,37 +1106,41 @@ class UsersTraccReq_controller extends CI_Controller {
 	}
 
 	public function update_employee_request($id) {	
-		if($this->session->userdata('login_data')) {
-			$process = $this->UsersTraccReq_model->update_er($id);
-			$user_details = $this->Main_model->user_details();
-			$getdepartment = $this->Main_model->GetDepartmentID();
-			$customerReqForm = $this->UsersTraccReq_model->get_customer_req_form_er_details($id);
-			$departments_result = $this->Main_model->getDepartment();
-			$departments = ($departments_result[0] == "ok") ? $departments_result[1] : [];
-			
-			if ($user_details[0] == "ok") {
-				$sid = $this->session->session_id;
-				$data['user_details'] = $user_details[1];
-				$data['getdept'] = $getdepartment[1];
-				$data['reqForm'] = $customerReqForm[0];
-				$data['departments'] = $departments;
+		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+			show_404();
+		} else {
+			if($this->session->userdata('login_data')) {
+				$process = $this->UsersTraccReq_model->update_er($id);
+				$user_details = $this->Main_model->user_details();
+				$getdepartment = $this->Main_model->GetDepartmentID();
+				$customerReqForm = $this->UsersTraccReq_model->get_customer_req_form_er_details($id);
+				$departments_result = $this->Main_model->getDepartment();
+				$departments = ($departments_result[0] == "ok") ? $departments_result[1] : [];
 				
-				if ($process[0] == 1) {
-					$this->session->set_flashdata('success', $process[1]);
-					redirect("sys/users/details/concern/customer_req_employee_req/" . $id);
+				if ($user_details[0] == "ok") {
+					$sid = $this->session->session_id;
+					$data['user_details'] = $user_details[1];
+					$data['getdept'] = $getdepartment[1];
+					$data['reqForm'] = $customerReqForm[0];
+					$data['departments'] = $departments;
+					
+					if ($process[0] == 1) {
+						$this->session->set_flashdata('success', $process[1]);
+						redirect("sys/users/details/concern/customer_req_employee_req/" . $id);
+					} else {
+						$this->session->set_flashdata('error', $process[1]);
+						redirect("sys/users/details/concern/customer_req_employee_req/" . $id);
+					}
+	
 				} else {
-					$this->session->set_flashdata('error', $process[1]);
-					redirect("sys/users/details/concern/customer_req_employee_req/" . $id);
+					$this->session->set_flashdata('error', 'Error fetching user information.');
+					redirect("sys/authentication");
 				}
-
 			} else {
-				$this->session->set_flashdata('error', 'Error fetching user information.');
+				$this->session->sess_destroy();
+				$this->session->set_flashdata('error', 'Session expired. Please login again.');
 				redirect("sys/authentication");
 			}
-		} else {
-			$this->session->sess_destroy();
-			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
 		}
 	}
 
@@ -1163,210 +1175,223 @@ class UsersTraccReq_controller extends CI_Controller {
 	}
 
 	public function update_supplier_request($id) {
-		if ($this->session->userdata('login_data')) {
-			$trf_comp_checkbox_value = isset($_POST['trf_comp_checkbox_value']) ? $_POST['trf_comp_checkbox_value'] : [];
-			$imploded_values = implode(',', $trf_comp_checkbox_value);
-
-			$checkbox_non_vat = isset($_POST['checkbox_non_vat']) ? 1 : 0;
-
-			$checkbox_supplier_req_form = [
-				'local_supplier_grp'                => isset($_POST['local_supplier_grp']) ? 1 : 0,
-				'foreign_supplier_grp'              => isset($_POST['foreign_supplier_grp']) ? 1 : 0,
-				'supplier_trade'                    => isset($_POST['supplier_trade']) ? 1 : 0,
-				'supplier_non_trade'                => isset($_POST['supplier_non_trade']) ? 1 : 0,
-				'trade_type_goods'                  => isset($_POST['trade_type_goods']) ? 1 : 0,
-				'trade_type_services'               => isset($_POST['trade_type_services']) ? 1 : 0,
-				'trade_type_GoodsServices'          => isset($_POST['trade_type_GoodsServices']) ? 1 : 0,
-				'major_grp_local_trade_ven'         => isset($_POST['major_grp_local_trade_ven']) ? 1 : 0,
-				'major_grp_local_nontrade_ven'      => isset($_POST['major_grp_local_nontrade_ven']) ? 1 : 0,
-				'major_grp_foreign_trade_ven'       => isset($_POST['major_grp_foreign_trade_ven']) ? 1 : 0,
-				'major_grp_foreign_nontrade_ven'    => isset($_POST['major_grp_foreign_nontrade_ven']) ? 1 : 0,
-				'major_grp_local_broker_forwarder'  => isset($_POST['major_grp_local_broker_forwarder']) ? 1 : 0,
-				'major_grp_rental'                  => isset($_POST['major_grp_rental']) ? 1 : 0,
-				'major_grp_bank'                    => isset($_POST['major_grp_bank']) ? 1 : 0,
-				'major_grp_one_time_supplier'       => isset($_POST['major_grp_one_time_supplier']) ? 1 : 0,
-				'major_grp_government_offices'      => isset($_POST['major_grp_government_offices']) ? 1 : 0,
-				'major_grp_insurance'               => isset($_POST['major_grp_insurance']) ? 1 : 0,
-				'major_grp_employees'               => isset($_POST['major_grp_employees']) ? 1 : 0,
-				'major_grp_subs_affiliates'         => isset($_POST['major_grp_subs_affiliates']) ? 1 : 0,
-				'major_grp_utilities'               => isset($_POST['major_grp_utilities']) ? 1 : 0,
-			];
-
-			$process = $this->UsersTraccReq_model->update_sr($id, $imploded_values, $checkbox_non_vat, $checkbox_supplier_req_form);
-
-			if($process[0] == 1) {
-				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'sys/users/details/concern/customer_req_supplier_req/' . $id);
-			} else {
-				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'sys/users/details/concern/customer_req_supplier_req/' . $id);
-			}
+		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+			show_404();
 		} else {
-			$this->session->sess_destroy();
-			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			if ($this->session->userdata('login_data')) {
+				$trf_comp_checkbox_value = isset($_POST['trf_comp_checkbox_value']) ? $_POST['trf_comp_checkbox_value'] : [];
+				$imploded_values = implode(',', $trf_comp_checkbox_value);
+	
+				$checkbox_non_vat = isset($_POST['checkbox_non_vat']) ? 1 : 0;
+	
+				$checkbox_supplier_req_form = [
+					'local_supplier_grp'                => isset($_POST['local_supplier_grp']) ? 1 : 0,
+					'foreign_supplier_grp'              => isset($_POST['foreign_supplier_grp']) ? 1 : 0,
+					'supplier_trade'                    => isset($_POST['supplier_trade']) ? 1 : 0,
+					'supplier_non_trade'                => isset($_POST['supplier_non_trade']) ? 1 : 0,
+					'trade_type_goods'                  => isset($_POST['trade_type_goods']) ? 1 : 0,
+					'trade_type_services'               => isset($_POST['trade_type_services']) ? 1 : 0,
+					'trade_type_GoodsServices'          => isset($_POST['trade_type_GoodsServices']) ? 1 : 0,
+					'major_grp_local_trade_ven'         => isset($_POST['major_grp_local_trade_ven']) ? 1 : 0,
+					'major_grp_local_nontrade_ven'      => isset($_POST['major_grp_local_nontrade_ven']) ? 1 : 0,
+					'major_grp_foreign_trade_ven'       => isset($_POST['major_grp_foreign_trade_ven']) ? 1 : 0,
+					'major_grp_foreign_nontrade_ven'    => isset($_POST['major_grp_foreign_nontrade_ven']) ? 1 : 0,
+					'major_grp_local_broker_forwarder'  => isset($_POST['major_grp_local_broker_forwarder']) ? 1 : 0,
+					'major_grp_rental'                  => isset($_POST['major_grp_rental']) ? 1 : 0,
+					'major_grp_bank'                    => isset($_POST['major_grp_bank']) ? 1 : 0,
+					'major_grp_one_time_supplier'       => isset($_POST['major_grp_one_time_supplier']) ? 1 : 0,
+					'major_grp_government_offices'      => isset($_POST['major_grp_government_offices']) ? 1 : 0,
+					'major_grp_insurance'               => isset($_POST['major_grp_insurance']) ? 1 : 0,
+					'major_grp_employees'               => isset($_POST['major_grp_employees']) ? 1 : 0,
+					'major_grp_subs_affiliates'         => isset($_POST['major_grp_subs_affiliates']) ? 1 : 0,
+					'major_grp_utilities'               => isset($_POST['major_grp_utilities']) ? 1 : 0,
+				];
+	
+				$process = $this->UsersTraccReq_model->update_sr($id, $imploded_values, $checkbox_non_vat, $checkbox_supplier_req_form);
+	
+				if($process[0] == 1) {
+					$this->session->set_flashdata('success', $process[1]);
+					redirect(base_url().'sys/users/details/concern/customer_req_supplier_req/' . $id);
+				} else {
+					$this->session->set_flashdata('error', $process[1]);
+					redirect(base_url().'sys/users/details/concern/customer_req_supplier_req/' . $id);
+				}
+			} else {
+				$this->session->sess_destroy();
+				$this->session->set_flashdata('error', 'Session expired. Please login again.');
+				redirect("sys/authentication");
+			}
 		}
 	}
 
 	public function update_customer_request ($recid) {
-		$id = $this->session->userdata('login_data')['user_id'];
-		$crf_comp_checkbox_values = isset($_POST['crf_comp_checkbox_value']) ? $_POST['crf_comp_checkbox_value'] : [];
-		$imploded_values = implode(',', $crf_comp_checkbox_values);
-
-		$checkbox_cus_req_form_del = [
-			'checkbox_outright'             => isset($_POST['checkbox_outright']) ? 1 : 0,
-			'checkbox_consignment'          => isset($_POST['checkbox_consignment']) ? 1 : 0,
-			'checkbox_cus_a_supplier'       => isset($_POST['checkbox_cus_a_supplier']) ? 1 : 0,
-			'checkbox_online'               => isset($_POST['checkbox_online']) ? 1 : 0,
-			'checkbox_walkIn'               => isset($_POST['checkbox_walkIn']) ? 1 : 0,
-			'checkbox_monday'               => isset($_POST['checkbox_monday']) ? 1 : 0,
-			'checkbox_tuesday'              => isset($_POST['checkbox_tuesday']) ? 1 : 0,
-			'checkbox_wednesday'            => isset($_POST['checkbox_wednesday']) ? 1 : 0,
-			'checkbox_thursday'             => isset($_POST['checkbox_thursday']) ? 1 : 0,
-			'checkbox_friday'               => isset($_POST['checkbox_friday']) ? 1 : 0,
-			'checkbox_saturday'             => isset($_POST['checkbox_saturday']) ? 1 : 0,
-			'checkbox_sunday'               => isset($_POST['checkbox_sunday']) ? 1 : 0,
-		];
-
-		$process = $this->UsersTraccReq_model->update_cr($recid, $imploded_values, $checkbox_cus_req_form_del, $id);
-
-		if ($process[0] == 1) {
-			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/users/details/concern/customer_req_form/'.$recid);  
+		if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+			show_404();
 		} else {
-			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/users/details/concern/customer_req_form/'.$recid); 
+			$id = $this->session->userdata('login_data')['user_id'];
+			$crf_comp_checkbox_values = isset($_POST['crf_comp_checkbox_value']) ? $_POST['crf_comp_checkbox_value'] : [];
+			$imploded_values = implode(',', $crf_comp_checkbox_values);
+	
+			$checkbox_cus_req_form_del = [
+				'checkbox_outright'             => isset($_POST['checkbox_outright']) ? 1 : 0,
+				'checkbox_consignment'          => isset($_POST['checkbox_consignment']) ? 1 : 0,
+				'checkbox_cus_a_supplier'       => isset($_POST['checkbox_cus_a_supplier']) ? 1 : 0,
+				'checkbox_online'               => isset($_POST['checkbox_online']) ? 1 : 0,
+				'checkbox_walkIn'               => isset($_POST['checkbox_walkIn']) ? 1 : 0,
+				'checkbox_monday'               => isset($_POST['checkbox_monday']) ? 1 : 0,
+				'checkbox_tuesday'              => isset($_POST['checkbox_tuesday']) ? 1 : 0,
+				'checkbox_wednesday'            => isset($_POST['checkbox_wednesday']) ? 1 : 0,
+				'checkbox_thursday'             => isset($_POST['checkbox_thursday']) ? 1 : 0,
+				'checkbox_friday'               => isset($_POST['checkbox_friday']) ? 1 : 0,
+				'checkbox_saturday'             => isset($_POST['checkbox_saturday']) ? 1 : 0,
+				'checkbox_sunday'               => isset($_POST['checkbox_sunday']) ? 1 : 0,
+			];
+	
+			$process = $this->UsersTraccReq_model->update_cr($recid, $imploded_values, $checkbox_cus_req_form_del, $id);
+	
+			if ($process[0] == 1) {
+				$this->session->set_flashdata('success', $process[1]);
+				redirect(base_url().'sys/users/details/concern/customer_req_form/'.$recid);  
+			} else {
+				$this->session->set_flashdata('error', $process[1]);
+				redirect(base_url().'sys/users/details/concern/customer_req_form/'.$recid); 
+			}
 		}
 	}
 
 	public function update_item_request ($recid) {
-		$id = $this->session->userdata('login_data')['user_id'];
-		$trf_number = $this->input->post('ticket_id', true);
-		$irf_comp_checkbox_value = isset($_POST['irf_comp_checkbox_value']) ? $_POST['irf_comp_checkbox_value'] : [];
-		$imploded_values = implode(',', $irf_comp_checkbox_value);
-
-		$checkbox_item_req_form = [
-			'checkbox_inventory'            => isset($_POST['checkbox_inventory']) ? 1 : 0,
-			'checkbox_non_inventory'        => isset($_POST['checkbox_non_inventory']) ? 1 : 0,
-			'checkbox_services'             => isset($_POST['checkbox_services']) ? 1 : 0,
-			'checkbox_charges'              => isset($_POST['checkbox_charges']) ? 1 : 0,
-			'checkbox_watsons'              => isset($_POST['checkbox_watsons']) ? 1 : 0,
-			'checkbox_other_accounts'       => isset($_POST['checkbox_other_accounts']) ? 1 : 0,
-			'checkbox_online'               => isset($_POST['checkbox_online']) ? 1 : 0,
-			'checkbox_all_accounts'         => isset($_POST['checkbox_all_accounts']) ? 1 : 0,
-			'radio_trade_type'              => isset($_POST['radio_trade_type']) ? $_POST['radio_trade_type'] : '',
-			'radio_batch_required'          => isset($_POST['radio_batch_required']) ? $_POST['radio_batch_required'] : '',
- 
-		];
-
-		$process = $this->UsersTraccReq_model->update_ir($recid, $imploded_values, $checkbox_item_req_form, $id);
-
-		$rows_data = $this->input->post('rows_gl', true);
-		$rows_data_new = $this->input->post('rows_gl_new', true);
-
-		// echo var_dump($rows_data);
-
-		$update_data_gl_setup = [];
-		foreach ($rows_data as $row) {
-			if (!empty($row['uom']) && !empty($row['barcode'])) { // Basic validation
-				// echo print_r($row);
-				$update_data_gl_setup[] = [
-					'recid'				=> $row['recid'],
-					'requested_by_id'	=> $id,
-					'ticket_id'         => $trf_number,
-					'uom'               => $row['uom'],
-					'barcode'           => $row['barcode'],
-					'length'            => $row['length'],
-					'height'            => $row['height'],
-					'width'             => $row['width'],
-					'weight'            => $row['weight'],
-				];
-			}
-		}
-
-		$insert_data_gl_setup = [];
-		foreach ($rows_data_new as $row) {
-			if (!empty($row['uom']) && !empty($row['barcode'])) { // Basic validation
-				$insert_data_gl_setup[] = [
-					'requested_by_id'	=> $id,
-					'ticket_id'         => $trf_number,
-					'uom'               => $row['uom'],
-					'barcode'           => $row['barcode'],
-					'length'            => $row['length'],
-					'height'            => $row['height'],
-					'width'             => $row['width'],
-					'weight'            => $row['weight'],
-				];
-			}
-		}
-
-		// echo var_dump($insert_data_gl_setup2);
-
-		$this->UsersTraccReq_model->update_batch_rows_gl_setup($trf_number, $update_data_gl_setup, $insert_data_gl_setup);
-
-		// ===================== //
-		//    WAREHOUSE SETUP    //
-		// ===================== //
-
-		$rows_data = $this->input->post('rows_whs',true);
-		$rows_data_new = $this->input->post('rows_whs_new', true);
-
-		// echo var_dump($rows_data);
-
-		$update_data_whs_setup = [];
-		foreach ($rows_data as $row){
-			if 	(!empty($row['warehouse']) && !empty($row['warehouse_no'])) {
-				// echo $row['warehouse'];
-				$update_data_whs_setup[] = [
-					'recid'				=> $row['recid'],
-					'requested_by_id'	=> $id,
-					'ticket_id'         => $trf_number,
-					'warehouse'         => $row['warehouse'],
-					'warehouse_no'      => $row['warehouse_no'],
-					'storage_location'  => $row['storage_location'],
-					'storage_type'      => $row['storage_type'],
-					'fixed_bin'         => $row['fixed_bin'],
-					'min_qty'           => $row['min_qty'],
-					'max_qty'           => $row['max_qty'],
-					'replen_qty'        => $row['replen_qty'],
-					'control_qty'       => $row['control_qty'],
-					'round_qty'         => $row['round_qty'],
-					'uom'               => $row['uom'],
-				];
-			}
-		}
-
-		$insert_data_whs_setup = [];
-		foreach($rows_data_new as $row) {
-			if(!empty($row['warehouse']) && !empty($row['warehouse_no'])) {
-				// echo print_r($row);
-				$insert_data_whs_setup[] = [
-					'requested_by_id'	=> $id,
-					'ticket_id'         => $trf_number,
-					'warehouse'         => $row['warehouse'],
-					'warehouse_no'      => $row['warehouse_no'],
-					'storage_location'  => $row['storage_location'],
-					'storage_type'      => $row['storage_type'],
-					'fixed_bin'         => $row['fixed_bin'],
-					'min_qty'           => $row['min_qty'],
-					'max_qty'           => $row['max_qty'],
-					'replen_qty'        => $row['replen_qty'],
-					'control_qty'       => $row['control_qty'],
-					'round_qty'         => $row['round_qty'],
-					'uom'               => $row['uom'],
-				];
-			}
-		}
-
-		$this->UsersTraccReq_model->update_batch_rows_whs_setup($trf_number, $update_data_whs_setup, $insert_data_whs_setup);
-		
-
-		if ($process[0] == 1) {
-			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/users/details/concern/customer_req_item_req/'.$recid);  
+		if($_SERVER['REQUEST_METHOD'] !== 'POST') {
+			show_404();
 		} else {
-			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/users/details/concern/customer_req_item_req/'.$recid); 
+
+			$id = $this->session->userdata('login_data')['user_id'];
+			$trf_number = $this->input->post('ticket_id', true);
+			$irf_comp_checkbox_value = isset($_POST['irf_comp_checkbox_value']) ? $_POST['irf_comp_checkbox_value'] : [];
+			$imploded_values = implode(',', $irf_comp_checkbox_value);
+	
+			$checkbox_item_req_form = [
+				'checkbox_inventory'            => isset($_POST['checkbox_inventory']) ? 1 : 0,
+				'checkbox_non_inventory'        => isset($_POST['checkbox_non_inventory']) ? 1 : 0,
+				'checkbox_services'             => isset($_POST['checkbox_services']) ? 1 : 0,
+				'checkbox_charges'              => isset($_POST['checkbox_charges']) ? 1 : 0,
+				'checkbox_watsons'              => isset($_POST['checkbox_watsons']) ? 1 : 0,
+				'checkbox_other_accounts'       => isset($_POST['checkbox_other_accounts']) ? 1 : 0,
+				'checkbox_online'               => isset($_POST['checkbox_online']) ? 1 : 0,
+				'checkbox_all_accounts'         => isset($_POST['checkbox_all_accounts']) ? 1 : 0,
+				'radio_trade_type'              => isset($_POST['radio_trade_type']) ? $_POST['radio_trade_type'] : '',
+				'radio_batch_required'          => isset($_POST['radio_batch_required']) ? $_POST['radio_batch_required'] : '',
+	 
+			];
+	
+			$process = $this->UsersTraccReq_model->update_ir($recid, $imploded_values, $checkbox_item_req_form, $id);
+	
+			$rows_data = $this->input->post('rows_gl', true);
+			$rows_data_new = $this->input->post('rows_gl_new', true);
+	
+			// echo var_dump($rows_data);
+	
+			$update_data_gl_setup = [];
+			foreach ($rows_data as $row) {
+				if (!empty($row['uom']) && !empty($row['barcode'])) { // Basic validation
+					// echo print_r($row);
+					$update_data_gl_setup[] = [
+						'recid'				=> $row['recid'],
+						'requested_by_id'	=> $id,
+						'ticket_id'         => $trf_number,
+						'uom'               => $row['uom'],
+						'barcode'           => $row['barcode'],
+						'length'            => $row['length'],
+						'height'            => $row['height'],
+						'width'             => $row['width'],
+						'weight'            => $row['weight'],
+					];
+				}
+			}
+	
+			$insert_data_gl_setup = [];
+			foreach ($rows_data_new as $row) {
+				if (!empty($row['uom']) && !empty($row['barcode'])) { // Basic validation
+					$insert_data_gl_setup[] = [
+						'requested_by_id'	=> $id,
+						'ticket_id'         => $trf_number,
+						'uom'               => $row['uom'],
+						'barcode'           => $row['barcode'],
+						'length'            => $row['length'],
+						'height'            => $row['height'],
+						'width'             => $row['width'],
+						'weight'            => $row['weight'],
+					];
+				}
+			}
+	
+			// echo var_dump($insert_data_gl_setup2);
+	
+			$this->UsersTraccReq_model->update_batch_rows_gl_setup($trf_number, $update_data_gl_setup, $insert_data_gl_setup);
+	
+			// ===================== //
+			//    WAREHOUSE SETUP    //
+			// ===================== //
+	
+			$rows_data = $this->input->post('rows_whs',true);
+			$rows_data_new = $this->input->post('rows_whs_new', true);
+	
+			// echo var_dump($rows_data);
+	
+			$update_data_whs_setup = [];
+			foreach ($rows_data as $row){
+				if 	(!empty($row['warehouse']) && !empty($row['warehouse_no'])) {
+					// echo $row['warehouse'];
+					$update_data_whs_setup[] = [
+						'recid'				=> $row['recid'],
+						'requested_by_id'	=> $id,
+						'ticket_id'         => $trf_number,
+						'warehouse'         => $row['warehouse'],
+						'warehouse_no'      => $row['warehouse_no'],
+						'storage_location'  => $row['storage_location'],
+						'storage_type'      => $row['storage_type'],
+						'fixed_bin'         => $row['fixed_bin'],
+						'min_qty'           => $row['min_qty'],
+						'max_qty'           => $row['max_qty'],
+						'replen_qty'        => $row['replen_qty'],
+						'control_qty'       => $row['control_qty'],
+						'round_qty'         => $row['round_qty'],
+						'uom'               => $row['uom'],
+					];
+				}
+			}
+	
+			$insert_data_whs_setup = [];
+			foreach($rows_data_new as $row) {
+				if(!empty($row['warehouse']) && !empty($row['warehouse_no'])) {
+					// echo print_r($row);
+					$insert_data_whs_setup[] = [
+						'requested_by_id'	=> $id,
+						'ticket_id'         => $trf_number,
+						'warehouse'         => $row['warehouse'],
+						'warehouse_no'      => $row['warehouse_no'],
+						'storage_location'  => $row['storage_location'],
+						'storage_type'      => $row['storage_type'],
+						'fixed_bin'         => $row['fixed_bin'],
+						'min_qty'           => $row['min_qty'],
+						'max_qty'           => $row['max_qty'],
+						'replen_qty'        => $row['replen_qty'],
+						'control_qty'       => $row['control_qty'],
+						'round_qty'         => $row['round_qty'],
+						'uom'               => $row['uom'],
+					];
+				}
+			}
+	
+			$this->UsersTraccReq_model->update_batch_rows_whs_setup($trf_number, $update_data_whs_setup, $insert_data_whs_setup);
+			
+	
+			if ($process[0] == 1) {
+				$this->session->set_flashdata('success', $process[1]);
+				redirect(base_url().'sys/users/details/concern/customer_req_item_req/'.$recid);  
+			} else {
+				$this->session->set_flashdata('error', $process[1]);
+				redirect(base_url().'sys/users/details/concern/customer_req_item_req/'.$recid); 
+			}
 		}
 	}
 }
