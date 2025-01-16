@@ -57,9 +57,8 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="box">
-                        <h2>Set cut off time</h2>
                             <div class="box-body">
-                                <form method="POST" action="<?= base_url() ?>sys/admin/set_cutoff" id="cutoffForm">
+                                <form method="POST" action="<?= base_url() ?>sys/admin/set_cutoff">
                                     <div class="row">
                                         <div class="col-xs-8">
                                             Open Time:
@@ -73,15 +72,11 @@
                                             <input type="time" name="cutoff_time" class="form-control" id="open_ticket" value="<?= $bypass->cutoff_time; ?>" required />
                                         </div>
                                         <div class="col-xs-4">
-                                            <!-- <button id="button-set-cutoff" type="submit" class="btn btn-danger" href="<?= base_url() ?>sys/admin/bypass">Set Cutoff</button> -->
-                                            <button id="button-set-cutoff" type="submit" class="btn btn-danger">Set Cutoff</button>
+                                            <button id="button-set-cutoff" type="submit" class="btn btn-danger" href="<?= base_url() ?>sys/admin/bypass">Set Cutoff</button>
                                         </div>
                                     </div>
                                 </form>
-                                <!-- <a id="button-bypass" class="<?= $bypass->bypass == 0 ? 'btn btn-danger' : 'btn btn-warning'; ?>" onClick="return confirm('Reopen ticket form creation?')" href="<?= base_url() ?>sys/admin/bypass"><?= $bypass->bypass == 0 ? 'Bypass Cutoff Time' : 'Close Bypass'; ?></a> -->
-                                <a id="button-bypass" class="<?= $bypass->bypass == 0 ? 'btn btn-danger' : 'btn btn-warning'; ?>" href="<?= base_url() ?>sys/admin/bypass">
-                                    <?= $bypass->bypass == 0 ? 'Bypass Cutoff Time' : 'Close Bypass'; ?>
-                                </a>
+                                <a id="button-bypass" class="<?= $bypass->bypass == 0 ? 'btn btn-danger' : 'btn btn-warning'; ?>" href="<?= base_url() ?>sys/admin/bypass"><?= $bypass->bypass == 0 ? 'Bypass Cutoff Time' : 'Close Bypass'; ?></a>
                             </div>
                         </div>
                     </div>
@@ -138,8 +133,8 @@
                                         <tr>
                                             <td><?= $row['date']; ?></td>
                                             <td><?= $row['end_date'] != "0000-00-00" ? $row['end_date'] : "-" ; ?></td>
-                                            <td><?= $row['open_time']; ?></td>
-                                            <td><?= $row['cutoff_time']; ?></td>
+                                            <td><?= date_format(date_create($row['open_time']), 'h:i A'); ?></td>
+                                            <td><?= date_format(date_create($row['cutoff_time']), 'h:i A'); ?></td>
                                             <td>
                                                 <button class="btn btn-alert" data-toggle="modal" data-target="#editModal<?= $row['recid']; ?>">Edit</button>
                                                 <a class="btn btn-danger" onclick="return confirm('Are you sure to delete the schedule?')" href="<?= base_url('sys/admin/delete_schedule_cutoff/' . $row['recid']); ?>">Delete</a>

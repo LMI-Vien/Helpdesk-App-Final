@@ -234,7 +234,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4 text-left"">
+                                                <div class="col-md-4 text-left">
                                                     <div class="form-group d-flex flex-column align-items-center" style="margin-left: 80px;">
                                                         <label for="" style="font-size: 21px;">Update</label>
                                                         <div class="circle-checkbox mb-2">

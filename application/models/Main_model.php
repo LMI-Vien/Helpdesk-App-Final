@@ -964,7 +964,8 @@ class Main_model extends CI_Model {
 	}
 
 	public function get_cutoff() {
-		$this->db->where('date', date("Y-m-d"));
+		$this->db->where('date <=', date("Y-m-d"));
+		$this->db->where('end_date >=', date("Y-m-d"));
 		$query = $this->db->get('cutoff')->row();
 
 		if(!empty($query)) {

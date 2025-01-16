@@ -43,14 +43,28 @@ class AdminCutoff_model extends CI_Model {
         $date = $this->input->post('date');
         $end_date = $this->input->post('end_date');
 
-        $data = [
-            "open_time" => $opentime,
-            "cutoff_time" => $cutoff,
-            "date" => $date,
-            "end_date" => $end_date,
-        ];
+        $this->db->where('date <=', $date);
+        $this->db->where('end_date >=', $date);
 
-        $this->db->insert('cutoff', $data);
+        if($end_date != '0000-00-00') {
+            $this->db->where('date <=', $end_date);
+            $this->db->where('end_date >=', $end_date);
+        }
+
+        $query = $this->db->get('cutoff')->result_array();
+
+        if(count($query) > 0) {
+            echo 'schedules cannot overlap';
+        } else {
+            $data = [
+                "open_time" => $opentime,
+                "cutoff_time" => $cutoff,
+                "date" => $date,
+                "end_date" => $end_date,
+            ];
+    
+            $this->db->insert('cutoff', $data);
+        }
     }
 
     public function get_schedule() {
