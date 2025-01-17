@@ -481,7 +481,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Zip Code:</label>
-                                                    <input type="number" name="zip_code" id="zip_code" value="" class="form-control select2"> 
+                                                    <input type="number" name="zip_code" id="zip_code" value="" min=0 class="form-control select2"> 
                                                 </div>
                                             </div>
 
@@ -502,14 +502,14 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Tin No:</label>
-                                                    <input type="number" name="tin_no" id="tin_no" value="" class="form-control select2"> 
+                                                    <input type="number" name="tin_no" id="tin_no" value="" min=0 class="form-control select2"> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Pricelist:</label>
-                                                    <input type="number" name="pricelist" id="pricelist" value="" step="0.01" class="form-control select2">  
+                                                    <input type="number" name="pricelist" id="pricelist" value="" min=0.01 step="0.01" class="form-control select2">  
                                                 </div>
                                             </div>
 
@@ -539,7 +539,7 @@
                                                     <label for="item_classification">VAT:</label>
                                                     <div class="d-flex align-items-center">
                                                         <!-- Textbox -->
-                                                        <input type="number" name="vat" id="vat" class="form-control" style="flex: 1;">
+                                                        <input type="number" name="vat" id="vat" class="form-control" min=0 style="flex: 1;">
                                                         <!-- Checkbox -->
                                                         <div class="form-check ms-auto d-flex align-items-center" style="margin-left: auto; margin-top: 10px;">
                                                             <label for="non_vat" class="form-check-label me-2" style="font-size: 20px; line-height: 1.5;">Non-VAT</label>
