@@ -440,6 +440,7 @@ class UsersTraccReq_controller extends CI_Controller {
     // USER CREATION {FUNCTION} of CUSTOMER REQUEST FORM TMS (pdf ni mam hanna)
 	public function user_creation_customer_request_form_pdf() {
 		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
 		$crf_comp_checkbox_values = isset($_POST['crf_comp_checkbox_value']) ? $_POST['crf_comp_checkbox_value'] : [];
 		$imploded_values = implode(',', $crf_comp_checkbox_values);
 
@@ -458,7 +459,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			'checkbox_sunday'               => isset($_POST['checkbox_sunday']) ? 1 : 0,
 		];
 	
-		$process = $this->UsersTraccReq_model->add_customer_request_form_pdf($imploded_values, $checkbox_cus_req_form_del, $id);
+		$process = $this->UsersTraccReq_model->add_customer_request_form_pdf($imploded_values, $checkbox_cus_req_form_del, $id, $dept_id);
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
@@ -507,7 +508,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
-					$this->load->view('users/users_TRF_pdf/trf_shipping_setup_creation', $data);
+					$this->load->view('users/users_TRF_pdf/trf_customer_shipping_setup_creation', $data);
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
@@ -543,6 +544,7 @@ class UsersTraccReq_controller extends CI_Controller {
     // USER CREATION {FUCNTION} of CUSTOMER SHIPPING SETUP (pdf ni mam hanna)
 	public function user_creation_customer_shipping_setup_pdf() {
 		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
 		$css_comp_checkbox_value = isset($_POST['css_comp_checkbox_value']) ? $_POST['css_comp_checkbox_value'] : [];
 		$imploded_values = implode(',', $css_comp_checkbox_value);
 
@@ -556,7 +558,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			'checkbox_sunday'           => isset($_POST['checkbox_sunday']) ? 1 : 0,
 		];
 
-		$process = $this->UsersTraccReq_model->add_customer_shipping_setup_pdf($imploded_values, $checkbox_cus_ship_setup, $id);
+		$process = $this->UsersTraccReq_model->add_customer_shipping_setup_pdf($imploded_values, $checkbox_cus_ship_setup, $id, $dept_id);
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
@@ -646,7 +648,8 @@ class UsersTraccReq_controller extends CI_Controller {
     // USER CREATION {FUCNTION} of EMPLOYEE REQUEST FORM (pdf ni mam hanna)
 	public function user_creation_employee_request_form_pdf() {
 		$id = $this->session->userdata('login_data')['user_id'];
-		$process = $this->UsersTraccReq_model->add_employee_request_form_pdf($id);
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
+		$process = $this->UsersTraccReq_model->add_employee_request_form_pdf($id, $dept_id);
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
@@ -736,6 +739,7 @@ class UsersTraccReq_controller extends CI_Controller {
     // USER CREATION {FUCNTION} of ITEM REQUEST FORM (pdf ni mam hanna)
 	public function user_creation_item_request_form_pdf() {
 		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
 		$trf_number = $this->input->post('trf_number', true);
 		$irf_comp_checkbox_value = isset($_POST['irf_comp_checkbox_value']) ? $_POST['irf_comp_checkbox_value'] : [];
 		$imploded_values = implode(',', $irf_comp_checkbox_value);
@@ -754,7 +758,7 @@ class UsersTraccReq_controller extends CI_Controller {
  
 		];
 
-		$process = $this->UsersTraccReq_model->add_item_request_form_pdf($imploded_values, $checkbox_item_req_form, $id);
+		$process = $this->UsersTraccReq_model->add_item_request_form_pdf($imploded_values, $checkbox_item_req_form, $id, $dept_id);
 
 		$rows_data = $this->input->post('rows_gl', true);
 
@@ -765,6 +769,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				if (!empty($row['uom']) && !empty($row['barcode'])) { // Basic validation
 					$insert_data_gl_setup[] = [
 						'requested_by_id'	=> $id,
+						'dept_id'			=> $dept_id,
 						'ticket_id'         => $trf_number,
 						'uom'               => $row['uom'],
 						'barcode'           => $row['barcode'],
@@ -789,6 +794,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				if(!empty($row['warehouse']) && !empty($row['warehouse_no'])) {
 					$insert_data_wh_setup[] = [
 						'requested_by_id'	=> $id,
+						'dept_id'			=> $dept_id,
 						'ticket_id'         => $trf_number,
 						'warehouse'         => $row['warehouse'],
 						'warehouse_no'      => $row['warehouse_no'],
@@ -898,6 +904,7 @@ class UsersTraccReq_controller extends CI_Controller {
     // USER CREATION {FUCNTION} of SUPPLIER REQUEST FORM (pdf ni mam hanna)
 	public function user_creation_supplier_request_form_pdf() {
 		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
 		$trf_comp_checkbox_value = isset($_POST['trf_comp_checkbox_value']) ? $_POST['trf_comp_checkbox_value'] : [];
 		$imploded_values = implode(',', $trf_comp_checkbox_value);
 
@@ -926,7 +933,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			'major_grp_utilities'               => isset($_POST['major_grp_utilities']) ? 1 : 0,
 		];
 	
-		$process = $this->UsersTraccReq_model->add_supplier_request_form_pdf($imploded_values, $checkbox_non_vat, $checkbox_supplier_req_form, $id);
+		$process = $this->UsersTraccReq_model->add_supplier_request_form_pdf($imploded_values, $checkbox_non_vat, $checkbox_supplier_req_form, $id, $dept_id);
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);

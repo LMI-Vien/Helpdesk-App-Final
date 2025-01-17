@@ -129,13 +129,14 @@ class UsersTraccReq_model extends CI_Model {
 		}
 	}
 
-    public function add_customer_request_form_pdf($crf_comp_checkbox_values = null, $checkbox_cus_req_form_del, $id) {
+    public function add_customer_request_form_pdf($crf_comp_checkbox_values = null, $checkbox_cus_req_form_del, $id, $dept_id) {
 		$trf_number = $this->input->post('trf_number', true);
 		
 		$data = array(
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
 			'requested_by_id'							=> $id,
+			'dept_id'									=> $dept_id,
 			'date'                                      => $this->input->post('date', true),
 			'customer_code'                             => $this->input->post('customer_code', true),
 			'customer_name'                             => $this->input->post('customer_name', true),
@@ -173,6 +174,7 @@ class UsersTraccReq_model extends CI_Model {
 		if ($this->db->affected_rows() > 0) {
 			$checkbox_cus_req_form_del_days = [
 				'requested_by_id'						=> $id,
+				'dept_id'								=> $dept_id,
 				'ticket_id'                             => $trf_number,
 				'outright'                              => isset($checkbox_cus_req_form_del['checkbox_outright']) ? $checkbox_cus_req_form_del['checkbox_outright'] : 0,
 				'consignment'                           => isset($checkbox_cus_req_form_del['checkbox_consignment']) ? $checkbox_cus_req_form_del['checkbox_consignment'] : 0,
@@ -204,13 +206,14 @@ class UsersTraccReq_model extends CI_Model {
 
 	}
 
-    public function add_customer_shipping_setup_pdf($css_comp_checkbox_values = null, $checkbox_cus_ship_setup, $id) {
+    public function add_customer_shipping_setup_pdf($css_comp_checkbox_values = null, $checkbox_cus_ship_setup, $id, $dept_id) {
 		$trf_number = $this->input->post('trf_number', true);
 	
 		$data = array(
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
 			'requested_by_id'							=> $id,
+			'dept_id'									=> $dept_id,
 			'shipping_code'                             => $this->input->post('shipping_code', true),
 			'route_code'                                => $this->input->post('route_code', true),
 			'customer_address'                          => $this->input->post('customer_address', true),
@@ -246,7 +249,7 @@ class UsersTraccReq_model extends CI_Model {
 		}
 	}
 
-    public function add_employee_request_form_pdf($id) {
+    public function add_employee_request_form_pdf($id, $dept_id) {
 		$trf_number = $this->input->post('trf_number', true);
 
 		$department_id = $this->input->post('department', true);
@@ -266,6 +269,7 @@ class UsersTraccReq_model extends CI_Model {
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
 			'requested_by_id'							=> $id,
+			'dept_id'									=> $dept_id,
 			'name'                                      => $this->input->post('employee_name', true),
 			'department'                                => $department_id, 
         	'department_desc'                           => $department_desc,
@@ -290,13 +294,14 @@ class UsersTraccReq_model extends CI_Model {
 		}
 	}
 
-    public function add_item_request_form_pdf($irf_comp_checkbox_value = null, $checkbox_item_req_form, $id) {
+    public function add_item_request_form_pdf($irf_comp_checkbox_value = null, $checkbox_item_req_form, $id, $dept_id) {
 		$trf_number = $this->input->post('trf_number', true);
 
 		$data = array(
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
 			'requested_by_id'							=> $id,
+			'dept_id'									=> $dept_id,
 			'date'                                      => $this->input->post('date', true),
 			// 'lmi_item_code'                             => $this->input->post('lmi_item_code', true),
 			'long_description'                          => $this->input->post('long_description', true),
@@ -338,6 +343,8 @@ class UsersTraccReq_model extends CI_Model {
 
 		if ($this->db->affected_rows() > 0) {
 			$checkboxes_item_req_form = [
+				'requested_by_id'						=> $id,
+				'dept_id'								=> $dept_id,
 				'ticket_id'                             => $trf_number,
 				'inventory'                             => isset($checkbox_item_req_form['checkbox_inventory']) ? $checkbox_item_req_form['checkbox_inventory'] : 0,
 				'non_inventory'                         => isset($checkbox_item_req_form['checkbox_non_inventory']) ? $checkbox_item_req_form['checkbox_non_inventory'] : 0,
@@ -372,13 +379,14 @@ class UsersTraccReq_model extends CI_Model {
 		}
 	}
 
-    public function add_supplier_request_form_pdf($trf_comp_checkbox_value = null, $checkbox_non_vat = 0, $checkbox_supplier_req_form, $id) {
+    public function add_supplier_request_form_pdf($trf_comp_checkbox_value = null, $checkbox_non_vat = 0, $checkbox_supplier_req_form, $id, $dept_id) {
 		$trf_number = $this->input->post('trf_number', true);
 
 		$data = array(
 			'ticket_id'                                 => $trf_number,
 			'requested_by'                              => $this->input->post('requested_by', true),
 			'requested_by_id'							=> $id,
+			'dept_id'									=> $dept_id,
 			'date'                                      => $this->input->post('date', true),
 			'supplier_code'                             => $this->input->post('supplier_code', true),
 			'supplier_account_group'                    => $this->input->post('supplier_account_group', true),
@@ -419,6 +427,7 @@ class UsersTraccReq_model extends CI_Model {
 		if ($this->db->affected_rows() > 0) {
 			$checkboxes_sup_req_form = [
 				'requested_by_id'						=> $id,
+				'dept_id'								=> $dept_id,
 				'ticket_id'                             => $trf_number,
 				'supplier_group_local'                  => isset($checkbox_supplier_req_form['local_supplier_grp']) ? $checkbox_supplier_req_form['local_supplier_grp'] : 0,
 				'supplier_group_foreign'                => isset($checkbox_supplier_req_form['foreign_supplier_grp']) ? $checkbox_supplier_req_form['foreign_supplier_grp'] : 0,
