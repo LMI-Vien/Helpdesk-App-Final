@@ -287,7 +287,7 @@ class UsersTraccReq_model extends CI_Model {
 
 		if ($this->db->affected_rows() > 0) {
 			$this->db->trans_commit();
-			return array(1, "Successfully Created Customer Shipping Setup for: " . $data['ticket_id']);
+			return array(1, "Successfully Created Employee Request Form for: " . $data['ticket_id']);
 		} else {
 			$this->db->trans_rollback();
 			return array(0, "Error: Could not insert data. Please try again.");
@@ -453,7 +453,7 @@ class UsersTraccReq_model extends CI_Model {
 			$this->db->insert('tracc_req_supplier_req_form_checkboxes', $checkboxes_sup_req_form);
 
 			$this->db->trans_commit();
-			return array(1, "Successfully Created Item Request Form for: " . $data['ticket_id']);
+			return array(1, "Successfully Created Supplier Request Form for: " . $data['ticket_id']);
 		} else {
 			$this->db->trans_rollback();
 			return array(0, "Error: Could not insert data. Please try again.");
