@@ -139,9 +139,12 @@ class AdminTraccReq_controller extends CI_Controller {
 	}
 
 	// JQuery TABS for Customer Request Form
-	public function cus_req_form_JTabs(){
+	public function cus_req_form_JTabs($dept_id){
 		$user_role = $this->session->userdata('login_data')['role'];
-		$tickets = $this->AdminTraccReq_model->get_ticket_counts_customer_req();
+
+		$dept = $user_role == 'L3' ? null : $dept_id;
+
+		$tickets = $this->AdminTraccReq_model->get_ticket_counts_customer_req($dept);
 
 		if ($tickets) {
 			$data = [];
@@ -246,10 +249,15 @@ class AdminTraccReq_controller extends CI_Controller {
 	}
 
 	// JQuery TABS for Customer Shipping Setup
-	public function cus_ship_setup_JTtabs(){
+	public function cus_ship_setup_JTtabs($dept_id){
 		$user_role = $this->session->userdata('login_data')['role'];
-		$tickets = $this->AdminTraccReq_model->get_ticket_counts_customer_ship_setup();
+
+		$dept = $user_role == 'L3' ? null : $dept_id;
+
+		$tickets = $this->AdminTraccReq_model->get_ticket_counts_customer_ship_setup($dept);
 		// print_r($tickets); die();
+
+
 
 		if ($tickets) {
 			$data = [];
@@ -343,9 +351,12 @@ class AdminTraccReq_controller extends CI_Controller {
 	}
 
 	// JQuery TABS for Employee Request Form
-	public function emp_req_form_JTabs(){
+	public function emp_req_form_JTabs($dept_id){
 		$user_role = $this->session->userdata('login_data')['role'];
-		$tickets = $this->AdminTraccReq_model->get_ticket_counts_employee_req();
+
+		$dept = $user_role == 'L3' ? null : $dept_id;
+
+		$tickets = $this->AdminTraccReq_model->get_ticket_counts_employee_req($dept);
 
 		if ($tickets) {
 			$data = [];
@@ -435,9 +446,12 @@ class AdminTraccReq_controller extends CI_Controller {
 	}
 
 	// JQuery TABS for Item Request Form 
-	public function item_req_form_JTabs(){
+	public function item_req_form_JTabs($dept_id){
 		$user_role = $this->session->userdata('login_data')['role'];
-		$tickets = $this->AdminTraccReq_model->get_ticket_counts_item_req_form();
+
+		$dept = $user_role == 'L3' ? null : $dept_id;
+
+		$tickets = $this->AdminTraccReq_model->get_ticket_counts_item_req_form($dept);
 
 		if ($tickets) {
 			$data = [];
@@ -559,9 +573,12 @@ class AdminTraccReq_controller extends CI_Controller {
 	}
 
 	// JQuery TABS for Supplier Request Form
-	public function sup_req_form_JTabs(){
+	public function sup_req_form_JTabs($dept_id){
 		$user_role = $this->session->userdata('login_data')['role'];
-		$tickets = $this->AdminTraccReq_model->get_ticket_counts_supplier_req();
+
+		$dept = $user_role == 'L3' ? null : $dept_id;
+
+		$tickets = $this->AdminTraccReq_model->get_ticket_counts_supplier_req($dept);
 
 		if ($tickets) {
 			$data = [];

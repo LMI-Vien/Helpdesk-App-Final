@@ -25,8 +25,10 @@
 
 <script>
      $(document).ready(function() {
+        
+        console.log('AdminTraccReq_controller/cus_req_form_JTabs/' + <?= $user_details['dept_id']; ?>);
         $.ajax({
-            url: base_url + 'AdminTraccReq_controller/cus_req_form_JTabs',
+            url: base_url + 'AdminTraccReq_controller/cus_req_form_JTabs/' + <?= $user_details['dept_id']; ?>,
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -93,7 +95,7 @@
                     // Initialize jQuery UI Tabs
                     $('#tabs').tabs();
                 } else {
-                    alert('Failed to load tickets.');
+                    // alert('Failed to load tickets.');
                 }
             }
         });

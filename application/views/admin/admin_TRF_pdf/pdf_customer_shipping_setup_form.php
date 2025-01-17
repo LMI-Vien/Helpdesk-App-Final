@@ -26,7 +26,7 @@
 <script>
      $(document).ready(function() {
         $.ajax({
-            url: base_url + 'AdminTraccReq_controller/cus_ship_setup_JTtabs',
+            url: base_url + 'AdminTraccReq_controller/cus_ship_setup_JTtabs/' + <?= $user_details['dept_id']; ?>,
             type: 'GET',
             dataType: 'json',
             success: function(response) {
@@ -93,7 +93,7 @@
                     // Initialize jQuery UI Tabs
                     $('#tabs').tabs();
                 } else {
-                    alert('Failed to load tickets.');
+                    // alert('Failed to load tickets.');
                 }
             }
         });

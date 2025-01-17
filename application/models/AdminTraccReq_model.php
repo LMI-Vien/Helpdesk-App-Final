@@ -74,9 +74,14 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// CRF
-	public function get_ticket_counts_customer_req() {
+	public function get_ticket_counts_customer_req($dept_id = null) {
 		$this->db->select('*, COUNT(ticket_id) as count');
 		$this->db->from('tracc_req_customer_req_form');
+
+		if($dept_id != null) {
+			$this->db->where('dept_id', $dept_id);
+		} 
+
 		$this->db->where('remarks !=', 'Done');
 		$this->db->group_by('recid'); 
 		$query = $this->db->get();
@@ -97,9 +102,13 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// CSS
-	public function get_ticket_counts_customer_ship_setup() {
+	public function get_ticket_counts_customer_ship_setup($dept_id = null) {
 		$this->db->select('*, COUNT(ticket_id) as count');
 		$this->db->from('tracc_req_customer_ship_setup');
+
+		if($dept_id != null) {
+			$this->db->where('dept_id', $dept_id);
+		}
 		$this->db->where('remarks !=', 'Done');
 		$this->db->group_by('recid');
 		$query = $this->db->get();
@@ -114,9 +123,13 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// ERF
-	public function get_ticket_counts_employee_req() {
+	public function get_ticket_counts_employee_req($dept_id = null) {
 		$this->db->select('*, COUNT(ticket_id) as count');
 		$this->db->from('tracc_req_employee_req_form');
+
+		if($dept_id != null) {
+			$this->db->where('dept_id', $dept_id);
+		}
 		$this->db->where('remarks !=', 'Done');
 		$this->db->group_by('recid');
 		$query = $this->db->get();
@@ -131,9 +144,13 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// IRF 
-	public function get_ticket_counts_item_req_form() {
+	public function get_ticket_counts_item_req_form($dept_id = null) {
 		$this->db->select('*, COUNT(ticket_id) as count');
 		$this->db->from('tracc_req_item_request_form');
+
+		if($dept_id != null) {
+			$this->db->where('dept_id', $dept_id);
+		}
 		$this->db->where('remarks !=', 'Done');
 		$this->db->group_by('recid');
 		$query = $this->db->get();
@@ -171,9 +188,13 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// SRF
-	public function get_ticket_counts_supplier_req() {
+	public function get_ticket_counts_supplier_req($dept_id = null) {
 		$this->db->select('*, COUNT(ticket_id) as count');
 		$this->db->from('tracc_req_supplier_req_form');
+
+		if($dept_id != null) {
+			$this->db->where('dept_id', $dept_id);
+		}
 		$this->db->where('remarks !=', 'Done');
 		$this->db->group_by('recid');
 		$query = $this->db->get();
