@@ -26,7 +26,7 @@
                                             <div class="col-md-12">
 			                    				<div class="form-group">
 			                    					<label>Control Number</label>
-                                                    <input type="text" name="control_number" id="control_number" class="form-control" value="" required pattern=".*-.*" title="Control number must contain a hyphen (-)" oninput="this.value = this.value.toUpperCase().trim().replace(/\s+/g, '');">
+                                                    <input type="text" name="control_number" id="control_number" value="<?= $trc; ?>" class="form-control" value="" required pattern=".*-.*" title="Control number must contain a hyphen (-)" oninput="this.value = this.value.toUpperCase().trim().replace(/\s+/g, '');" disabled>
 			                    				</div>                                               
 			                    			</div>
                                             <div class="col-md-6">

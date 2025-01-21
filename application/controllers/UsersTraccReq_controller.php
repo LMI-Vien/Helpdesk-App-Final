@@ -122,7 +122,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF/tracc_request_form_creation', $data);
@@ -401,7 +401,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF_pdf/trf_customer_request_form_creation', $data);
@@ -505,7 +505,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF_pdf/trf_customer_shipping_setup_creation', $data);
@@ -610,7 +610,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF_pdf/trf_employee_request_form_creation', $data);
@@ -700,7 +700,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF_pdf/trf_item_request_form_creation', $data);
@@ -865,7 +865,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF_pdf/trf_supplier_request_form_creation', $data);

@@ -23,7 +23,7 @@ class AdminMSRF_controller extends CI_Controller {
         $newNumber = $lastNumber + 1;
 
         // Format the new MSRF number
-        $newMSRFNumber = 'MSRF-' . sprintf('%03d', $newNumber);
+        $newMSRFNumber = 'MSRF-' . sprintf('%03d', $newNumber) . '-' . date("Y");
 
         return $newMSRFNumber;
 	}
@@ -109,6 +109,10 @@ class AdminMSRF_controller extends CI_Controller {
 				$data['user_details'] = $user_details[1];
 				$data['getdept'] = $getdepartment[1];
 				$data['msrf'] = $getMsrf[1];
+
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 				$this->load->view('admin/header', $data);
 				$this->load->view('admin/sidebar', $data);

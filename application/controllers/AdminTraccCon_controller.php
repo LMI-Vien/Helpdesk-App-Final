@@ -15,6 +15,18 @@ class AdminTraccCon_controller extends CI_Controller {
 		}
     }
 
+	public function GenerateTRCNo($dept_id) {
+		$lastTRF = $this->Main_model->getLastTRCNumber();
+		$dept_code = $this->Main_model->get_department_code($dept_id);
+
+        $lastcode = (int) substr($lastTRF, -4);
+		$newNumber = $lastcode + 1;
+
+		$newTRCNumber = $dept_code . '-' . date("Y") . '-' . sprintf('%04d', $newNumber);
+
+		return $newTRCNumber;
+	}
+
 	public function admin_creation_tickets_tracc_concern() {
 		$id = $this->session->userdata('login_data')['user_id'];
 
@@ -26,9 +38,11 @@ class AdminTraccCon_controller extends CI_Controller {
 
 		$user_details = $this->Main_model->user_details();              
 		$getdepartment = $this->Main_model->GetDepartmentID();          
-		$users_det = $this->Main_model->users_details_put($id);         
+		$users_det = $this->Main_model->users_details_put($id);
+		$trc = $this->GenerateTRCNo($user_details[1]['dept_id']);      
 
 		if ($this->form_validation->run() == FALSE) {
+			$data['trc'] = $trc;
 			$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
 			$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
 			$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();

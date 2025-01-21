@@ -87,7 +87,7 @@ class AdminMSRF_model extends CI_Model {
 		$asset_code = $this->input->post('asset_code', true);
 		$category = $this->input->post('category', true);
 		$specify = $this->input->post('specify', true);
-		$concern = $this->input->post('concern', true);
+		$concern = $this->input->post('msrf_concern', true);
 		$sup_id = $this->input->post('sup_id', true);
 		
 		$query = $this->db->select('ticket_id')
@@ -120,7 +120,7 @@ class AdminMSRF_model extends CI_Model {
 				'specify' => $spec,
 				'details_concern' => $concern,
 				'status' => 'Open',
-				'approval_status' => 'Pending',
+				'approval_status' => 'Approved',
 				'priority' => $categ,
 				'requester_id' => $user_id,
 				'sup_id' => $sup_id,

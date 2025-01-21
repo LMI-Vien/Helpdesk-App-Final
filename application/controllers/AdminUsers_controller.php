@@ -23,12 +23,9 @@ class AdminUsers_controller extends CI_Controller {
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
 
-				$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
-				$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
-				$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
-				$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
-				$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
-				$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 
 				$allowed_menus = ['dashboard', 'system_administration', 'users', 'team'];
 				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'system_administration';
@@ -61,12 +58,9 @@ class AdminUsers_controller extends CI_Controller {
 				$data['user_details'] = $user_details[1];
 				$data['department_data'] = $department_data;
 
-				$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
-				$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
-				$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
-				$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
-				$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
-				$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 	
 				$allowed_menus = ['dashboard', 'system_administration', 'users', 'other_menu'];
 				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'system_administration';
@@ -138,12 +132,9 @@ class AdminUsers_controller extends CI_Controller {
 			$user_id = $this->session->userdata('login_data')['user_id'];
 			$user_details = $this->Main_model->user_details();
 
-			$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
-			$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
-			$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
-			$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
-			$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
-			$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
+			$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 	
 			$department_data = $this->Main_model->getDepartment();
 	
@@ -180,12 +171,9 @@ class AdminUsers_controller extends CI_Controller {
 				$data['department_data'] = $department_data;
 				$data['users_det'] = $users_det[1];
 
-				$unopenedMSRF =  $this->Main_model->get_unopened_msrf_tickets();
-				$data['unopenedMSRF'] = $unopenedMSRF[0]["COUNT(*)"];
-				$unopenedTraccConcern = $this->Main_model->get_unopened_tracc_concerns();
-				$data['unopenedTraccConcern'] = $unopenedTraccConcern[0]["COUNT(*)"];
-				$unopenedTraccRequest = $this->Main_model->get_unopened_tracc_request();
-				$data['unopenedTraccRequest'] = $unopenedTraccRequest[0]["COUNT(*)"];
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
 	
 				$allowed_menus = ['dashboard', 'system_administration', 'users', 'other_menu'];
 				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'system_administration';

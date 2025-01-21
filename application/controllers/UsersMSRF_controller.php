@@ -127,7 +127,7 @@ class UsersMSRF_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) {
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
 				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_MSRF/service_request_form_msrf_creation', $data);

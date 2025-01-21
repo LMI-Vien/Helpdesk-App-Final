@@ -19,7 +19,7 @@ class UsersMSRF_model extends CI_Model {
 		$asset_code = $this->input->post('asset_code', true);
 		$category = $this->input->post('category', true);
 		$specify = $this->input->post('specify', true);
-		$concern = $this->input->post('concern', true);
+		$concern = $this->input->post('msrf_concern', true);
 		$sup_id = $this->input->post('sup_id', true);
 		
 		$query = $this->db->select('ticket_id')

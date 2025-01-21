@@ -226,6 +226,19 @@ class Main_model extends CI_Model {
 		}
 	}
 
+	public function getLastTRCNumber() {
+		$this->db->select('control_number');
+		$this->db->order_by('recid', 'DESC');
+		$this->db->limit(1);
+		$query = $this->db->get('service_request_tracc_concern');
+		if ($query->num_rows() > 0) {
+			$row = $query->row();
+			return $row->control_number;
+		} else {
+			return 'TRC-0000';
+		}
+	}
+
 	public function getDepartmentUsers() {
 		$user_id = $this->session->userdata('login_data')['user_id'];
 		if ($query = $this->db->query("SELECT * FROM department WHERE recid = ". $user_id ."")) {
@@ -338,6 +351,13 @@ class Main_model extends CI_Model {
 		} else {
 			return array("error", "No data found.");
 		}
+	}
+
+	public function get_department_code($id) {
+		$this->db->where('recid', $id);
+		$query = $this->db->get('departments');
+
+		return $query->row()->dept_code;
 	}
 
 
