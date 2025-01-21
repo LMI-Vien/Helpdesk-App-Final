@@ -42,22 +42,33 @@
         </section>
         <div class="alert">
             <?php
-            $data = $this->session->userdata('data');
-            if($data['checkbox_data'] > 0 && time() < $data['expires_at']) : ?>
-            <div class="alert-content" id="form-alert">
-                <h1>Please fill up the following forms:</h1>
-                <ul>
-                    <?php foreach($this->session->userdata('data')['checkbox_data'] as $key => $data)
-                    if($data == 1) {
-                        echo '<li>';
-                        echo $key;
-                        echo '</li>';
-                    }
-                    ?>
-                </ul>
-            </div>
-            <?php endif; ?>
+
+            if($this->session->userdata('data')) {
+                $data = $this->session->userdata('data');
+                $count = 0;
+
+                foreach($data['checkbox_data'] as $value) {
+                    $count += $value;
+                }
+
+                if($count > 0 && time() < $data['expires_at']) : ?>
+                    <div class="alert-content" id="form-alert">
+                        <h1>Please fill up the following forms:</h1>
+                        <ul>
+                            <?php foreach($this->session->userdata('data')['checkbox_data'] as $key => $data)
+                            if($data == 1) {
+                                echo '<li>';
+                                echo $key;
+                                echo '</li>';
+                            }
+                            ?>
+                        </ul>
+                    </div>
+                <?php endif;
+            }
+            ?>
         </div>
+        
         <section class="content">
             <div class="row">
                 <div class="col-xs-12">
