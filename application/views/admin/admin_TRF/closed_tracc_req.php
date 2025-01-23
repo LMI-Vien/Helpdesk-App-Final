@@ -28,6 +28,7 @@
                                         <th>Priority</th>
                                         <th>Status</th>
                                         <th>ICT Approval Status</th>
+                                        <th>Date Needed</th>
                                         <th>Accomplished Date</th>
                                     </tr>
                                 </thead>
@@ -59,7 +60,23 @@ $(document).ready(function() {
             { "data": "priority" },
             { "data": "status" },
             { "data": "it_approval_status" },
-            { "data": "accomplished_by_date",
+            {
+                "data": "date_needed" ,
+                "render": function(data, type, row) {
+                    if (data) {
+                        let date = new Date(data);
+                        let formattedDate = date.toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: '2-digit',
+                            year: 'numeric'
+                        });
+                        return formattedDate;
+                    }
+                    return ""; // Return empty string if no date
+                }
+            },
+            {
+                "data": "accomplished_by_date",
                 "render": function(data, type, row) {
                     if (data) {
                         let date = new Date(data);

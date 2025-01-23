@@ -43,6 +43,9 @@ class AdminTraccReq_model extends CI_Model {
 			} else if ($it_approval_stat == 'Approved'){
 				$this->db->set('it_approval_status', 'Approved');
 				$this->db->set('status', 'In Progress');
+			} else if ($it_approval_stat == 'Closed'){
+				$this->db->set('it_approval_status', 'Closed');
+				$this->db->set('status', 'Closed');
 			}
 
 			$this->db->set('accomplished_by', $accomplished_by);

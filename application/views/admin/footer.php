@@ -80,10 +80,10 @@
                             <label>Date Needed</label>
                             <input type="date" name="date_needed" id="inp_date_needed" class="form-control" value="" style="width: 100%;" readonly>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Remarks</label>
                             <textarea class="form-control" name="remarks" placeholder="" style="width: 100%; height: 90px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" id="msrf_inp_remarks"></textarea>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -115,10 +115,10 @@
                             <label>Details Concern</label>
                             <textarea class="form-control" name="concern" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" readonly id="inp_concern"></textarea>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Remarks</label>
                             <textarea class="form-control" name="remarks" placeholder="" style="width: 100%; height: 90px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" id="tracc_request_inp_remarks"></textarea>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -155,10 +155,10 @@
                             <label>Complete Details</label>
                             <textarea class="form-control" name="name" placeholder="" style="width: 100%; height: 90px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" readonly id="inp_complete_details"></textarea>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Remarks</label>
                             <textarea class="form-control" name="remarks" placeholder="" style="width: 100%; height: 90px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" id="tracc_concern_inp_remarks"></textarea>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
                 <div class="modal-footer">

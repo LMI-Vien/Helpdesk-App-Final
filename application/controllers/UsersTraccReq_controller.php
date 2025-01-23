@@ -819,7 +819,7 @@ class UsersTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/users/create/tickets/trf_item_request_form');  
+			redirect(base_url().'sys/users/dashboard');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
 			redirect(base_url().'sys/users/create/tickets/trf_item_request_form');  

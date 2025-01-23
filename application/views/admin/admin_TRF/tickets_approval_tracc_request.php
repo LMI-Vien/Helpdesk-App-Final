@@ -377,32 +377,6 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Acknowledge By</label>
-                                                    <input type="text" name="acknowledge_by" id="acknowledge_by" class="form-control" value="<?= $trf['acknowledge_by']; ?>" style="width: 100%;" readonly>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Acknowledge By/Date</label>
-                                                    <input type="date" name="acknowledge_by_date" id="acknowledge_by_date" class="form-control select2" value="<?= $trf['acknowledge_by_date']; ?>" style="width: 100%;" readonly>
-                                                </div>
-                                            </div>
-
-                                            <!-- <div class="col-md-12">
-                                                <div class="form-group">
-			                    					<label>Priority</label>
-                                                    <select class="form-control select2" name="priority" id="priority">
-                                                        <option value=""disabled selected>Priority</option>
-                                                        <option value="Low"<?php if ($trf['priority'] == 'Low') echo ' selected'; ?>>Low</option>
-                                                        <option value="Medium"<?php if ($trf['priority'] == 'Medium') echo ' selected'; ?>>Medium</option>
-                                                        <option value="High"<?php if ($trf['priority'] == 'High') echo ' selected'; ?>>High</option>
-                                                    </select>                    
-			                    				</div>                                              
-			                                </div> -->
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
                                                     <label>Approval Status <span style = "color:red;">*</span></label>
                                                     <select class="form-control select2" name="app_stat" id="app_stat" <?= $is_disabled?>>
                                                         <option value=""disabled selected>Approval Status</option>
@@ -421,6 +395,7 @@
                                                         <option value="Approved"<?php if ($trf['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
                                                         <option value="Rejected"<?php if ($trf['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
                                                         <option value="Resolved"<?php if ($trf['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Resolved</option>
+                                                        <option value="Closed"<?php if ($trf['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
                                                     </select>       
                                                 </div>
                                             </div>
@@ -466,27 +441,6 @@
                                                     <input type="date" name="acknowledge_by_date" id="acknowledge_by_date" class="form-control select2" value="<?= $trf['acknowledge_by_date']; ?>" style="width: 100%;" readonly>
                                                 </div>
                                             </div>
-
-                                            <!-- <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Acknowledge by <span style = "color:red;">*</span></label>
-                                                    <select class="form-control select2" name="acknowledge_by" id="acknowledge_by" <?= $is_disabled?>>
-                                                        <option value=""disabled selected>Acknowledge By</option>
-                                                        <option value="HANNA" <?php if ($trf['acknowledge_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($trf['acknowledge_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>
-                                                        <option value="CK" <?php if ($trf['acknowledge_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="ERIC" <?php if ($trf['acknowledge_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
-                                                        
-                                                    </select>  
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Acknowledge by Date <span style = "color:red;">*</span></label>
-                                                    <input type="date" name="ack_by_date" id="ack_by_date" class="form-control select2" value="<?= $trf['acknowledge_by_date']; ?>" style="width: 100%;" <?= $is_disabled?>>
-                                                </div>
-                                            </div> -->
                                             
                                             <div class="col-md-12">
                                                 <div class="form-group">

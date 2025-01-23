@@ -13,7 +13,7 @@
         // print_r($status_trf);
         // die();
 
-        if(($status_trf === "In Progress" || $status_trf === 'Approved' || $status_trf === 'Resolved')) {
+        if(($status_trf === "In Progress" || $status_trf === 'Approved' || $status_trf === 'Resolved' || $status_trf === 'Rejected' || $status_trf === 'Closed')) {
             // echo "try";
             // die();
             $disabled = "disabled";
@@ -469,7 +469,7 @@
                                                 <div class="form-group">
                                                     <div class="box-body pad">
                                                         <button type="submit" class="btn btn-primary" name="edit" <?=$disabled?>><?=$btn_label?></button>
-                                                        <button type="submit" class="btn btn-success" name="acknowledge" onclick="document.querySelector('[name=action]').value='acknowledge';" <?= ($status_trf === 'Open' || $status_trf === 'Rejected') ? 'disabled' : '' ?>>Acknowledge as Resolved</button>
+                                                        <button type="submit" class="btn btn-success" name="acknowledge" onclick="document.querySelector('[name=action]').value='acknowledge';" <?= ($status_trf === 'Open' || $status_trf === 'Rejected' || $status_trf === 'Approved' || $status_trf === 'Returned' || $status_trf === 'Closed') ? 'disabled' : '' ?>>Acknowledge as Resolved</button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -2266,7 +2266,7 @@ class DataTables extends CI_Controller {
                     $it_stat_class = 'label-primary';
                     break;
                 case 'Closed':
-                    $it_stat_class = 'label-info';
+                    $it_stat_class = 'label-danger';
                     break;
             }
             $row['it_approval_status'] = '<span class="label ' . $it_stat_class . '">' . $row['it_approval_status'] . '</span>';

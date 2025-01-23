@@ -513,6 +513,7 @@ class Main_model extends CI_Model {
 
 			$this->db->set('date_needed', $date_need);
 			$this->db->set('complete_details', $complete_details);
+			$this->db->set('status', 'Open');
 
 			if (!empty($selected_companies)) {
 				$this->db->set('company', implode(',', $selected_companies));
@@ -611,17 +612,6 @@ class Main_model extends CI_Model {
 
 		$this->db->where('ticket_id', $trf_number);
 		$this->db->update('service_request_tracc_request', $data);
-
-		// $affected_rows = $this->db->affected_rows();
-		// // print_r($affected_rows);
-		// // die();
-
-		// if ($this->db->affected_rows() >= 0) {
-		// 	$this->session->set_flashdata('success', 'Ticket acknolwedge as resolved.');
-		// } else {
-		// 	$this->session->set_flashdata('error', 'Error acknowledging ticket as resolved.');
-		// }
-
 		return $this->db->affected_rows() > 0;
 	}
 	
