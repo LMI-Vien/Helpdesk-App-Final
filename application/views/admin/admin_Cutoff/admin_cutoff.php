@@ -91,20 +91,20 @@
                         <div class="box">
                             <div class="box-body">
                                 <h3>Schedule Cutoff</h3>
-                                <form method="POST" action="<?= base_url('sys/admin/schedule_cutoff'); ?>">
+                                <form id="schedule_cutoff_form" method="POST" action="<?= base_url('sys/admin/schedule_cutoff'); ?>">
                                     Open Time:
-                                    <input type="time" class="form-control" name="open_time" required />
+                                    <input type="time" class="form-control" name="open_time">
                                     <br>
                                     Cutoff Time:
-                                    <input type="time" class="form-control" name="cutoff_time" required />
+                                    <input type="time" class="form-control" name="cutoff_time">
                                     <br>
                                     Date:
-                                    <input type="date" class="form-control" name="date" required />
+                                    <input type="date" class="form-control" name="date">
                                     <br>
                                     End Date:
-                                    <input type="date" class="form-control" name="end_date" />
+                                    <input type="date" class="form-control" name="end_date">
                                     <br>
-                                    <button class="btn btn-danger">Set Cutoff Time</button>
+                                    <button class="btn btn-danger" id="submit_cutoff_btn">Set Cutoff Time</button>
                                 </form>
                             </div>
                         </div>
@@ -138,8 +138,8 @@
                                         </tr>
                                     <?php else: ?>
                                         <tr>
-                                            <td><?= $row['date']; ?></td>
-                                            <td><?= $row['end_date'] != "0000-00-00" ? $row['end_date'] : "-" ; ?></td>
+                                            <td><?= date('M-d-Y', strtotime($row['date'])); ?></td>
+                                            <td><?= $row['end_date'] != "0000-00-00" ? date('M-d-Y', strtotime($row['end_date'])) : "-" ; ?></td>
                                             <td><?= date_format(date_create($row['open_time']), 'h:i A'); ?></td>
                                             <td><?= date_format(date_create($row['cutoff_time']), 'h:i A'); ?></td>
                                             <td>
@@ -174,7 +174,7 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>  
                                         </div>
                                     <?php endif; ?>
 
@@ -243,6 +243,58 @@
                 if (result.isConfirmed) {
                     window.location.href = href;
                 }
+            });
+        });
+
+        $('#submit_cutoff_btn').on('click', function (e) {
+            e.preventDefault();
+
+            // Validate form fields
+            const openTime = $('input[name="open_time"]').val();
+            const cutoffTime = $('input[name="cutoff_time"]').val();
+            const date = $('input[name="date"]').val();
+
+            if (!openTime || !cutoffTime || !date) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Please fill out all required fields.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'swal-wide',
+                    },
+                });
+                return; // Stop the execution if validation fails
+            }
+
+            // Serialize form data
+            const formData = $('#schedule_cutoff_form').serialize();
+
+            // Send AJAX POST request
+            $.post($('#schedule_cutoff_form').attr('action'), formData, function (response) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: 'Cutoff time has been set successfully!',
+                    timer: 2000,
+                    icon: 'success',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'swal-wide',
+                    },
+                }).then(() => {
+                    // Optional: Reload the page after success
+                    window.location.reload();
+                });
+            }).fail(function (xhr) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'Something went wrong. Please try again.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'swal-wide',
+                    },
+                });
             });
         });
     });
