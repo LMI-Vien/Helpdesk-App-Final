@@ -90,7 +90,7 @@ $role = $this->session->userdata('login_data')['role'];
                                                     ?>
                                                     <?php foreach ($availableCompanies as $company): ?>
                                                         <div class="checkbox-inline custom-checkbox">
-                                                            <input type="checkbox" name="trf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?>>
+                                                            <input type="checkbox" name="trf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?> disabled>
                                                             <label for="" class="checkbox-label"><?php echo $company; ?></label>
                                                         </div>
                                                     <?php endforeach;?>
@@ -219,36 +219,6 @@ $role = $this->session->userdata('login_data')['role'];
                                         </div>
                                     </div>
 
-                                    <!-- <div class="col-md-6">
-                                        <div class="d-flex flex-wrap">
-                                            <div class="form-check me-3">  
-                                                <input class="form-check-input" type="checkbox" id="checkbox_outright" name="checkbox_outright" value="1"
-                                                <?= isset($checkbox_data['outright']) && $checkbox_data['outright'] == 1 ? 'checked' : ''; ?>>
-                                                <label class="form-check-label" for="checkbox_outright">Outright</label>
-                                            </div>
-                                            <div class="form-check me-3">  
-                                                <input class="form-check-input" type="checkbox" id="checkbox_consignment" name="checkbox_consignment" value="1"
-                                                <?= isset($checkbox_data['consignment']) && $checkbox_data['consignment'] == 1 ? 'checked' : ''; ?>>
-                                                <label class="form-check-label" for="checkbox_consignment">Consignment</label>
-                                            </div>
-                                            <div class="form-check me-3">  
-                                                <input class="form-check-input" type="checkbox" id="checkbox_cus_a_supplier" name="checkbox_cus_a_supplier" value="1"
-                                                <?= isset($checkbox_data['customer_is_also_a_supplier']) && $checkbox_data['customer_is_also_a_supplier'] == 1 ? 'checked' : ''; ?>>
-                                                <label class="form-check-label" for="checkbox_cus_a_supplier">Customer is also a Supplier</label>
-                                            </div>
-                                            <div class="form-check me-3"> 
-                                                <input class="form-check-input" type="checkbox" id="checkbox_online" name="checkbox_online" value="1"
-                                                <?= isset($checkbox_data['online']) && $checkbox_data['online'] == 1 ? 'checked' : ''; ?>>
-                                                <label class="form-check-label" for="checkbox_online">ONLINE</label>
-                                            </div>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="checkbox_walkIn" name="checkbox_walkIn" value="1"
-                                                <?= isset($checkbox_data['walk_in']) && $checkbox_data['walk_in'] == 1 ? 'checked' : ''; ?>>
-                                                <label class="form-check-label" for="checkbox_walkIn">WALK-IN</label>
-                                            </div>
-                                        </div>
-                                    </div> -->
-
                                     <div class="col-md-12">
                                         <table class="table">
                                             <thead>
@@ -265,13 +235,13 @@ $role = $this->session->userdata('login_data')['role'];
                                                     <td colspan="2" class="text-start" style="font-weight: bold">Outright</td>
                                                     <td colspan="2" class="text-center">
                                                         <input class="form-check-input" type="checkbox" id="checkbox_outright" name="checkbox_outright" value="1"
-                                                        <?= isset($checkbox_data['outright']) && $checkbox_data['outright'] == 1 ? 'checked' : ''; ?>>
+                                                        <?= isset($checkbox_data['outright']) && $checkbox_data['outright'] == 1 ? 'checked' : ''; ?> disabled>
                                                     </td>
                                                     <td colspan="2" class="text-center"></td>
                                                     <td colspan="2" class="text-start" style="font-weight: bold">Online</td>
                                                     <td colspan="2" class="text-center">
                                                         <input class="form-check-input" type="checkbox" id="checkbox_online" name="checkbox_online" value="1"
-                                                        <?= isset($checkbox_data['online']) && $checkbox_data['online'] == 1 ? 'checked' : ''; ?>>
+                                                        <?= isset($checkbox_data['online']) && $checkbox_data['online'] == 1 ? 'checked' : ''; ?> disabled>
                                                     </td>
                                                 </tr>
 
@@ -279,20 +249,20 @@ $role = $this->session->userdata('login_data')['role'];
                                                     <td colspan="2" class="text-start" style="font-weight: bold">Consignment</td>
                                                     <td colspan="2" class="text-center">
                                                         <input class="form-check-input" type="checkbox" id="checkbox_consignment" name="checkbox_consignment" value="1"
-                                                        <?= isset($checkbox_data['consignment']) && $checkbox_data['consignment'] == 1 ? 'checked' : ''; ?>>
+                                                        <?= isset($checkbox_data['consignment']) && $checkbox_data['consignment'] == 1 ? 'checked' : ''; ?> disabled>
                                                     </td>
                                                     <td colspan="2" class="text-center"></td>
                                                     <td colspan="2" class="text-start" style="font-weight: bold">Walk-In</td>
                                                     <td colspan="2" class="text-center">
                                                         <input class="form-check-input" type="checkbox" id="checkbox_walkIn" name="checkbox_walkIn" value="1"
-                                                        <?= isset($checkbox_data['walk_in']) && $checkbox_data['walk_in'] == 1 ? 'checked' : ''; ?>>
+                                                        <?= isset($checkbox_data['walk_in']) && $checkbox_data['walk_in'] == 1 ? 'checked' : ''; ?> disabled>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" class="text-start" style="font-weight: bold">Customer is Also a Supplier</td>
                                                     <td colspan="2" class="text-center">
                                                         <input class="form-check-input" type="checkbox" id="checkbox_cus_a_supplier" name="checkbox_cus_a_supplier" value="1"
-                                                        <?= isset($checkbox_data['customer_is_also_a_supplier']) && $checkbox_data['customer_is_also_a_supplier'] == 1 ? 'checked' : ''; ?>>
+                                                        <?= isset($checkbox_data['customer_is_also_a_supplier']) && $checkbox_data['customer_is_also_a_supplier'] == 1 ? 'checked' : ''; ?> disabled>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -385,31 +355,31 @@ $role = $this->session->userdata('login_data')['role'];
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_wednesday" name="checkbox_wednesday" value="1"
-                                                <?= isset($checkbox_data['wednesday']) && $checkbox_data['wednesday'] == 1 ? 'checked' : ''; ?>> 
+                                                <?= isset($checkbox_data['wednesday']) && $checkbox_data['wednesday'] == 1 ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_wednesday">Wednesday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_thursday" name="checkbox_thursday" value="1"
-                                                <?= isset($checkbox_data['thursday']) && $checkbox_data['thursday'] == 1 ? 'checked' : ''; ?>> 
+                                                <?= isset($checkbox_data['thursday']) && $checkbox_data['thursday'] == 1 ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_thursday">Thursday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_friday" name="checkbox_friday" value="1"
-                                                <?= isset($checkbox_data['friday']) && $checkbox_data['friday'] == 1 ? 'checked' : ''; ?>> 
+                                                <?= isset($checkbox_data['friday']) && $checkbox_data['friday'] == 1 ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_friday">Friday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_saturday" name="checkbox_saturday" value="1"
-                                                <?= isset($checkbox_data['saturday']) && $checkbox_data['saturday'] == 1 ? 'checked' : ''; ?>> 
+                                                <?= isset($checkbox_data['saturday']) && $checkbox_data['saturday'] == 1 ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_saturday">Saturday</label> 
                                             </div>
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_sunday" name="checkbox_sunday" value="1"
-                                                <?= isset($checkbox_data['sunday']) && $checkbox_data['sunday'] == 1 ? 'checked' : ''; ?>> 
+                                                <?= isset($checkbox_data['sunday']) && $checkbox_data['sunday'] == 1 ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_sunday">Sunday</label> 
                                             </div> 
                                         </div> 

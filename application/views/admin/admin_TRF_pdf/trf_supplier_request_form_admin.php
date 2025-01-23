@@ -103,7 +103,7 @@ $role = $this->session->userdata('login_data')['role'];
                                                 ?>
                                                 <?php foreach ($availableCompanies as $company): ?>
                                                     <div class="checkbox-inline custom-checkbox">
-                                                        <input type="checkbox" name="trf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?>>
+                                                        <input type="checkbox" name="trf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?> disabled>
                                                         <label for="checkbox_rgdi" class="checkbox-label"><?php echo $company; ?></label>
                                                     </div>
                                                 <?php endforeach;?>
@@ -146,13 +146,13 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">01 - Local</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="local_supplier_grp" id="local_supplier_grp" value="1"
-                                                    <?= isset($checkbox_data['supplier_group_local']) && $checkbox_data['supplier_group_local'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['supplier_group_local']) && $checkbox_data['supplier_group_local'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                                 <td colspan="2" class="text-center"></td>
                                                 <td colspan="2" class="text-start">001 - Local Trade Vendors</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_local_trade_ven" id="major_grp_local_trade_ven" value="1"
-                                                    <?= isset($checkbox_data['major_grp_local_trade_vendor']) && $checkbox_data['major_grp_local_trade_vendor'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_local_trade_vendor']) && $checkbox_data['major_grp_local_trade_vendor'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -160,13 +160,13 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">02 - Foreign</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="foreign_supplier_grp" id="foreign_supplier_grp" value="1"
-                                                    <?= isset($checkbox_data['supplier_group_foreign']) && $checkbox_data['supplier_group_foreign'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['supplier_group_foreign']) && $checkbox_data['supplier_group_foreign'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                                 <td colspan="2" class="text-center"></td>
                                                 <td colspan="2" class="text-start">002 - Local Non-Trade Vendors</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_local_nontrade_ven" id="major_grp_local_nontrade_ven" value="1"
-                                                    <?= isset($checkbox_data['major_grp_local_non_trade_vendor']) && $checkbox_data['major_grp_local_non_trade_vendor'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_local_non_trade_vendor']) && $checkbox_data['major_grp_local_non_trade_vendor'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -177,7 +177,7 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">003 - Foreign Trade Vendors</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_foreign_trade_ven" id="major_grp_foreign_trade_ven" value="1"
-                                                    <?= isset($checkbox_data['major_grp_foreign_trade_vendors']) && $checkbox_data['major_grp_foreign_trade_vendors'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_foreign_trade_vendors']) && $checkbox_data['major_grp_foreign_trade_vendors'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -188,7 +188,7 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">004 - Foreign Non-Trade Vendors</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_foreign_nontrade_ven" id="major_grp_foreign_nontrade_ven" value="1"
-                                                    <?= isset($checkbox_data['major_grp_foreign_non_trade_vendors']) && $checkbox_data['major_grp_foreign_non_trade_vendors'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_foreign_non_trade_vendors']) && $checkbox_data['major_grp_foreign_non_trade_vendors'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -196,13 +196,13 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">01 - Trade</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="supplier_trade" id="supplier_trade" value="1"
-                                                    <?= isset($checkbox_data['supplier_trade']) && $checkbox_data['supplier_trade'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['supplier_trade']) && $checkbox_data['supplier_trade'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                                 <td colspan="2" class="text-center"></td>
                                                 <td colspan="2" class="text-start">005 - Local-Broker/Forwarder</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_local_broker_forwarder" id="major_grp_local_broker_forwarder" value="1"
-                                                    <?= isset($checkbox_data['major_grp_local_broker_forwarder']) && $checkbox_data['major_grp_local_broker_forwarder'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_local_broker_forwarder']) && $checkbox_data['major_grp_local_broker_forwarder'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -210,13 +210,13 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">02 - Non-Trade</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="supplier_non_trade" id="supplier_non_trade" value="1"
-                                                    <?= isset($checkbox_data['supplier_non_trade']) && $checkbox_data['supplier_non_trade'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['supplier_non_trade']) && $checkbox_data['supplier_non_trade'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                                 <td colspan="2" class="text-center"></td>
                                                 <td colspan="2" class="text-start">006 - Rental</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_rental" id="major_grp_rental" value="1"
-                                                    <?= isset($checkbox_data['major_grp_rental']) && $checkbox_data['major_grp_rental'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_rental']) && $checkbox_data['major_grp_rental'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -227,7 +227,7 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">007 - Bank</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_bank" id="major_grp_bank" value="1"
-                                                    <?= isset($checkbox_data['major_grp_bank']) && $checkbox_data['major_grp_bank'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_bank']) && $checkbox_data['major_grp_bank'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -238,7 +238,7 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">008 - One Time Supplier</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_one_time_supplier" id="major_grp_one_time_supplier" value="1"
-                                                    <?= isset($checkbox_data['major_grp_ot_supplier']) && $checkbox_data['major_grp_ot_supplier'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_ot_supplier']) && $checkbox_data['major_grp_ot_supplier'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -246,13 +246,13 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">01 - Goods</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="trade_type_goods" id="trade_type_goods" value="1"
-                                                    <?= isset($checkbox_data['trade_type_goods']) && $checkbox_data['trade_type_goods'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['trade_type_goods']) && $checkbox_data['trade_type_goods'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                                 <td colspan="2" class="text-center"></td>
                                                 <td colspan="2" class="text-start">009 - Government Offices</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_government_offices" id="major_grp_government_offices" value="1"
-                                                    <?= isset($checkbox_data['major_grp_government_offices']) && $checkbox_data['major_grp_government_offices'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_government_offices']) && $checkbox_data['major_grp_government_offices'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -260,13 +260,13 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">02 - Services</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="trade_type_services" id="trade_type_services" value="1"
-                                                    <?= isset($checkbox_data['trade_type_services']) && $checkbox_data['trade_type_services'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['trade_type_services']) && $checkbox_data['trade_type_services'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                                 <td colspan="2" class="text-center"></td>
                                                 <td colspan="2" class="text-start">010 - Insurance</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_insurance" id="major_grp_insurance" value="1"
-                                                    <?= isset($checkbox_data['major_grp_insurance']) && $checkbox_data['major_grp_insurance'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_insurance']) && $checkbox_data['major_grp_insurance'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -274,13 +274,13 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">03 - Goods/Services</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="trade_type_GoodsServices" id="trade_type_GoodsServices" value="1"
-                                                    <?= isset($checkbox_data['trade_type_goods_services']) && $checkbox_data['trade_type_goods_services'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['trade_type_goods_services']) && $checkbox_data['trade_type_goods_services'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                                 <td colspan="2" class="text-center"></td>
                                                 <td colspan="2" class="text-start">011 - Employees</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_employees" id="major_grp_employees" value="1"
-                                                    <?= isset($checkbox_data['major_grp_employees']) && $checkbox_data['major_grp_employees'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_employees']) && $checkbox_data['major_grp_employees'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -291,7 +291,7 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">012 - Sub/Affiliates/Intercompany</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_subs_affiliates" id="major_grp_subs_affiliates" value="1"
-                                                    <?= isset($checkbox_data['major_grp_sub_aff_intercompany']) && $checkbox_data['major_grp_sub_aff_intercompany'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_sub_aff_intercompany']) && $checkbox_data['major_grp_sub_aff_intercompany'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -302,7 +302,7 @@ $role = $this->session->userdata('login_data')['role'];
                                                 <td colspan="2" class="text-start">013 - Utilities</td>
                                                 <td colspan="2" class="text-center">
                                                     <input type="checkbox" name="major_grp_utilities" id="major_grp_utilities" value="1"
-                                                    <?= isset($checkbox_data['major_grp_utilities']) && $checkbox_data['major_grp_utilities'] == 1 ? 'checked' : ''; ?>>
+                                                    <?= isset($checkbox_data['major_grp_utilities']) && $checkbox_data['major_grp_utilities'] == 1 ? 'checked' : ''; ?> disabled>
                                                 </td>
                                             </tr>
 
@@ -418,7 +418,7 @@ $role = $this->session->userdata('login_data')['role'];
                                             <div class="form-check ms-auto d-flex align-items-center" style="margin-left: auto; margin-top: 10px;">
                                                 <label for="non_vat" class="form-check-label me-2" style="font-size: 20px; line-height: 1.5;">Non-VAT</label>
                                                     <input type="checkbox" name="checkbox_non_vat" id="checkbox_non_vat" class="form-check-input" style="width: 40px; height: 19px;" 
-                                                    value="1" <?php echo ($non_vat == 1) ? 'checked' : ''; ?>>
+                                                    value="1" <?php echo ($non_vat == 1) ? 'checked' : ''; ?> disabled>
                                             </div>
                                         </div>
                                     </div>

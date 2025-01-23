@@ -91,7 +91,7 @@ $role = $this->session->userdata('login_data')['role'];
                                                     ?>
                                                     <?php foreach ($availableCompanies as $company): ?>
                                                     <div class="checkbox-inline custom-checkbox">
-                                                        <input type="checkbox" name="trf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?>>
+                                                        <input type="checkbox" name="trf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?> disabled>
                                                         <label for="checkbox_rgdi" class="checkbox-label"><?php echo $company; ?></label>
                                                     </div>
                                                     <?php endforeach;?>
@@ -167,43 +167,43 @@ $role = $this->session->userdata('login_data')['role'];
                                         <div class="d-flex flex-wrap"> 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_monday" name="checkbox_monday" value="1" 
-                                                <?php echo ($monday == 1) ? 'checked' : ''; ?>> 
+                                                <?php echo ($monday == 1) ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_monday">Monday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_tuesday" name="checkbox_tuesday" value="1"
-                                                <?php echo ($tuesday == 1) ? 'checked' : ''; ?>> 
+                                                <?php echo ($tuesday == 1) ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_tuesday">Tuesday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_wednesday" name="checkbox_wednesday" value="1"
-                                                <?php echo ($wednesday == 1) ? 'checked' : ''; ?>> 
+                                                <?php echo ($wednesday == 1) ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_wednesday">Wednesday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_thursday" name="checkbox_thursday" value="1"
-                                                <?php echo ($thursday == 1) ? 'checked' : ''; ?>> 
+                                                <?php echo ($thursday == 1) ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_thursday">Thursday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_friday" name="checkbox_friday" value="1"
-                                                <?php echo ($friday == 1) ? 'checked' : ''; ?>> 
+                                                <?php echo ($friday == 1) ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_friday">Friday</label> 
                                             </div>
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_saturday" name="checkbox_saturday" value="1"
-                                                <?php echo ($saturday == 1) ? 'checked' : ''; ?>> 
+                                                <?php echo ($saturday == 1) ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_saturday">Saturday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_sunday" name="checkbox_sunday" value="1"
-                                                <?php echo ($sunday == 1) ? 'checked' : ''; ?>> 
+                                                <?php echo ($sunday == 1) ? 'checked' : ''; ?> disabled> 
                                                 <label class="form-check-label" for="checkbox_sunday">Sunday</label> 
                                             </div> 
                                         </div> 

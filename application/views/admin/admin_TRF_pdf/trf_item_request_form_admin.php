@@ -166,7 +166,7 @@ $role = $sess_login_data['role'];
                                             ?>
                                             <?php foreach ($availableCompanies as $company): ?>
                                             <div class="checkbox-inline custom-checkbox">
-                                                <input type="checkbox" name="irf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?>>
+                                                <input type="checkbox" name="irf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?> disabled>
                                                 <label for="" class="checkbox-label"><?php echo $company; ?></label>
                                             </div>
                                             <?php endforeach;?>
@@ -215,22 +215,22 @@ $role = $sess_login_data['role'];
                                                     <div class="d-flex flex-wrap custom-checkbox-group justify-content-center">
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_inventory" id="checkbox_inventory" value="1"
-                                                            <?= isset($checkbox_data1['inventory']) && $checkbox_data1['inventory'] == 1 ? 'checked' : ''; ?>>
+                                                            <?= isset($checkbox_data1['inventory']) && $checkbox_data1['inventory'] == 1 ? 'checked' : ''; ?> disabled>
                                                             <label for="checkbox_inventory">Inventory</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_non_inventory" id="checkbox_non_inventory" value="1"
-                                                            <?= isset($checkbox_data1['non_inventory']) && $checkbox_data1['non_inventory'] == 1 ? 'checked' : ''; ?>>
+                                                            <?= isset($checkbox_data1['non_inventory']) && $checkbox_data1['non_inventory'] == 1 ? 'checked' : ''; ?> disabled>
                                                             <label for="checkbox_non_inventory">Non-Inventory</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_services" id="checkbox_services" value="1"
-                                                            <?= isset($checkbox_data1['services']) && $checkbox_data1['services'] == 1 ? 'checked' : ''; ?>>
+                                                            <?= isset($checkbox_data1['services']) && $checkbox_data1['services'] == 1 ? 'checked' : ''; ?> disabled>
                                                             <label for="checkbox_services">Services</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_charges" id="checkbox_charges" value="1"
-                                                            <?= isset($checkbox_data1['charges']) && $checkbox_data1['charges'] == 1 ? 'checked' : ''; ?>>
+                                                            <?= isset($checkbox_data1['charges']) && $checkbox_data1['charges'] == 1 ? 'checked' : ''; ?> disabled>
                                                             <label for="checkbox_charges">Charges</label>
                                                         </div>
                                                     </div>
@@ -244,22 +244,22 @@ $role = $sess_login_data['role'];
                                                     <div class="d-flex flex-wrap custom-checkbox-group justify-content-center">
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_watsons" id="checkbox_watsons" value="1"
-                                                            <?= isset($checkbox_data1['watsons']) && $checkbox_data1['watsons'] == 1 ? 'checked' : ''; ?>>
+                                                            <?= isset($checkbox_data1['watsons']) && $checkbox_data1['watsons'] == 1 ? 'checked' : ''; ?> disabled>
                                                             <label for="checkbox_watsons">Watsons</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_other_accounts" id="checkbox_other_accounts" value="1"
-                                                            <?= isset($checkbox_data1['other_accounts']) && $checkbox_data1['other_accounts'] == 1 ? 'checked' : ''; ?>>
+                                                            <?= isset($checkbox_data1['other_accounts']) && $checkbox_data1['other_accounts'] == 1 ? 'checked' : ''; ?> disabled>
                                                             <label for="checkbox_other_accounts">Other Accounts</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_online" id="checkbox_online" value="1"
-                                                            <?= isset($checkbox_data1['online']) && $checkbox_data1['online'] == 1 ? 'checked' : ''; ?>>
+                                                            <?= isset($checkbox_data1['online']) && $checkbox_data1['online'] == 1 ? 'checked' : ''; ?> disabled>
                                                             <label for="checkbox_online">Online</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_all_accounts" id="checkbox_all_accounts" value="1"
-                                                            <?= isset($checkbox_data1['all_accounts']) && $checkbox_data1['all_accounts'] == 1 ? 'checked' : ''; ?>>
+                                                            <?= isset($checkbox_data1['all_accounts']) && $checkbox_data1['all_accounts'] == 1 ? 'checked' : ''; ?> disabled>
                                                             <label for="checkbox_all_accounts">All Accounts</label>
                                                         </div>
                                                     </div>
@@ -272,60 +272,31 @@ $role = $sess_login_data['role'];
 
                                     <div class="container mt-4">
                                         <div class="row">
-                                            <!-- Trade and Non-Trade Checkboxes -->
-                                            <!-- <div class="col-md-6 d-flex align-items-center" style="margin-top: 5px;">
-                                                <div class="form-group d-flex flex-wrap align-items-center custom-checkbox-group">
-                                                    <div class="checkbox-container">
-                                                        <input type="checkbox" name="checkbox_trade" id="checkbox_trade" value="1"
-                                                        <?= isset($checkbox_data1['trade']) && $checkbox_data1['trade'] == 1 ? 'checked' : ''; ?>>
-                                                        <label for="checkbox_trade">Trade</label>
-                                                    </div>
-                                                    <div class="checkbox-container">
-                                                        <input type="checkbox" name="checkbox_non_trade" id="checkbox_non_trade" value="1"
-                                                        <?= isset($checkbox_data1['non_trade']) && $checkbox_data1['non_trade'] == 1 ? 'checked' : ''; ?>>
-                                                        <label for="checkbox_non_trade">Non-Trade</label>
-                                                    </div>
-                                                </div>
-                                            </div> -->
+                                            <!-- Trade and Non-Trade Radio button -->
                                             <div class="col-md-6 d-flex align-items-center" style="margin-top: 5px;">
                                                 <div class="form-group d-flex flex-wrap align-items-center custom-checkbox-group">
                                                     <label class="custom-label">Type:</label>
                                                     <div class="checkbox-container">
-                                                        <input type="radio" name="radio_trade_type" id="radio_trade" value="trade" <?= isset($checkbox_data1['trade']) && $checkbox_data1['trade'] == 1 ? 'checked' : ''; ?>>
+                                                        <input type="radio" name="radio_trade_type" id="radio_trade" value="trade" <?= isset($checkbox_data1['trade']) && $checkbox_data1['trade'] == 1 ? 'checked' : ''; ?> disabled>
                                                         <label for="radio_trade">Trade</label>
                                                     </div>
                                                     <div class="checkbox-container">
-                                                        <input type="radio" name="radio_trade_type" id="radio_non_trade" value="non_trade" <?= isset($checkbox_data1['trade']) && $checkbox_data1['trade'] == 0 ? 'checked' : ''; ?>>
+                                                        <input type="radio" name="radio_trade_type" id="radio_non_trade" value="non_trade" <?= isset($checkbox_data1['trade']) && $checkbox_data1['trade'] == 0 ? 'checked' : ''; ?> disabled>
                                                         <label for="radio_non_trade">Non-Trade</label>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <!-- Batch Required Checkboxes -->
-                                            <!-- <div class="col-md-6 d-flex align-items-center" style="margin-top: 5px;">
-                                                <div class="form-group d-flex flex-wrap align-items-center custom-checkbox-group">
-                                                    <label for="" class="custom-label">Batch Required?</label>
-                                                    <div class="checkbox-container">
-                                                        <input type="checkbox" name="checkbox_batch_required_yes" id="checkbox_batch_required_yes" value="1"
-                                                        <?= isset($checkbox_data1['yes']) && $checkbox_data1['yes'] == 1 ? 'checked' : ''; ?>>
-                                                        <label for="checkbox_batch_required_yes">YES</label>
-                                                    </div>
-                                                    <div class="checkbox-container">
-                                                        <input type="checkbox" name="checkbox_batch_required_no" id="checkbox_batch_required_no" value="1"
-                                                        <?= isset($checkbox_data1['no']) && $checkbox_data1['no'] == 1 ? 'checked' : ''; ?>>
-                                                        <label for="checkbox_batch_required_no">NO</label>
-                                                    </div>
-                                                </div>
-                                            </div> -->
+                                            <!-- Batch Required Radio button  -->
                                             <div class="col-md-6 d-flex align-items-center" style="margin-top: 5px;">
                                                 <div class="form-group d-flex flex-wrap align-items-center custom-checkbox-group">
                                                     <label class="custom-label">Batch Required?</label>
                                                     <div class="checkbox-container">
-                                                        <input type="radio" name="radio_batch_required" id="radio_batch_required_yes" value="yes" <?= isset($checkbox_data1['yes']) && $checkbox_data1['yes'] == 1 ? 'checked' : ''; ?>>
+                                                        <input type="radio" name="radio_batch_required" id="radio_batch_required_yes" value="yes" <?= isset($checkbox_data1['yes']) && $checkbox_data1['yes'] == 1 ? 'checked' : ''; ?> disabled>
                                                         <label for="radio_batch_required_yes">YES</label>
                                                     </div>
                                                     <div class="checkbox-container">
-                                                        <input type="radio" name="radio_batch_required" id="radio_batch_required_no" value="no" <?= isset($checkbox_data1['yes']) && $checkbox_data1['yes'] == 0 ? 'checked' : ''; ?>>
+                                                        <input type="radio" name="radio_batch_required" id="radio_batch_required_no" value="no" <?= isset($checkbox_data1['yes']) && $checkbox_data1['yes'] == 0 ? 'checked' : ''; ?> disabled>
                                                         <label for="radio_batch_required_no">NO</label>
                                                     </div>
                                                 </div>
