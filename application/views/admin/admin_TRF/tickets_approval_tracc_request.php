@@ -430,7 +430,7 @@
                                             <div class="col-md-12" id="reason_rejected_ticket">
                                                 <div class="form-group">
                                                     <label>Reason for Rejected Ticket</label>
-                                                    <textarea class="form-control" id="reason_rejected" name="reason_rejected" placeholder="Place the reason here" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;"><?= isset($trf['reason_reject_tickets']) ? htmlspecialchars($trf['reason_reject_tickets']) : ''; ?></textarea>
+                                                    <textarea class="form-control" id="reason_rejected" name="reason_rejected" placeholder="Place the reason here" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;"><?= isset($trf['reason_reject_ticket']) ? htmlspecialchars($trf['reason_reject_ticket']) : ''; ?></textarea>
                                                 </div>
                                             </div>
 

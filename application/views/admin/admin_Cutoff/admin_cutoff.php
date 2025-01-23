@@ -36,6 +36,11 @@
         background-color: #edf1f5;
     }
 
+    .swal-wide {
+        width: 400px !important;
+        font-size: 1.4rem; 
+    }
+
 </style>
 
 
@@ -58,7 +63,7 @@
                     <div class="col-xs-6">
                         <div class="box">
                             <div class="box-body">
-                                <form method="POST" action="<?= base_url() ?>sys/admin/set_cutoff">
+                                <form id="cutoffForm" method="POST" action="<?= base_url() ?>sys/admin/set_cutoff">
                                     <div class="row">
                                         <div class="col-xs-8">
                                             Open Time:
@@ -76,7 +81,9 @@
                                         </div>
                                     </div>
                                 </form>
-                                <a id="button-bypass" class="<?= $bypass->bypass == 0 ? 'btn btn-danger' : 'btn btn-warning'; ?>" href="<?= base_url() ?>sys/admin/bypass"><?= $bypass->bypass == 0 ? 'Bypass Cutoff Time' : 'Close Bypass'; ?></a>
+                                <a id="button-bypass" class="<?= $bypass->bypass == 0 ? 'btn btn-danger' : 'btn btn-warning'; ?>" href="<?= base_url() ?>sys/admin/bypass">
+                                    <?= $bypass->bypass == 0 ? 'Bypass Cutoff Time' : 'Close Bypass'; ?>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -124,8 +131,8 @@
                                         <tr>
                                             <th>Standard</th>
                                             <th><?= $row['end_date'] != "0000-00-00" ? $row['end_date'] : "-" ; ?></th>
-                                            <th><?= $row['open_time']; ?></th>
-                                            <th><?= $row['cutoff_time']; ?></th>
+                                            <th><?= date("g:i A", strtotime($row['open_time'])); ?></th>
+                                            <th><?= date("g:i A", strtotime($row['cutoff_time'])); ?></th>
                                             <th></th>
                                             <th></th>
                                         </tr>
@@ -181,13 +188,6 @@
             
     </section>
 </div>
-
-<style>
-    .swal-wide {
-        width: 400px !important;
-        font-size: 1.4rem; 
-    }
-</style>
 
 <script>
     $(document).ready(function () {

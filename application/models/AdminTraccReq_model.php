@@ -14,7 +14,6 @@ class AdminTraccReq_model extends CI_Model {
 		$it_approval_stat = $this->input->post('it_app_stat', true);
 		$approval_stat = $this->input->post('app_stat', true);
 		$reject_reason = $this->input->post('reason_rejected', true);
-		// $priority = $this->input->post('priority', true);
 
 		$this->db->trans_start();
 
@@ -45,14 +44,6 @@ class AdminTraccReq_model extends CI_Model {
 				$this->db->set('it_approval_status', 'Approved');
 				$this->db->set('status', 'In Progress');
 			}
-
-			// if ($priority == 'Low') {
-			// 	$this->db->set('priority', 'Low');
-			// } else if ($priority == 'Medium') {
-			// 	$this->db->set('priority', 'Medium');
-			// } else if ($priority == 'High') {
-			// 	$this->db->set('priority', 'High');
-			// }
 
 			$this->db->set('accomplished_by', $accomplished_by);
 			$this->db->set('accomplished_by_date', $accomplished_by_date);
