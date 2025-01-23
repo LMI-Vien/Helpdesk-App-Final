@@ -42,33 +42,39 @@
         </section>
         <div class="alert">
             <?php
-
-            if($this->session->userdata('data')) {
+            if ($this->session->userdata('data')) {
                 $data = $this->session->userdata('data');
-                $count = 0;
+                $current_user_id = $this->session->userdata('login_data')['user_id']; 
+                $requestor_user_id = $data['recid']; 
 
-                foreach($data['checkbox_data'] as $value) {
-                    $count += $value;
+                if ($current_user_id == $requestor_user_id) {
+                    $count = 0;
+
+                    foreach ($data['checkbox_data'] as $value) {
+                        $count += $value;
+                    }
+
+                    // Display alert if there are forms to fill and session has not expired
+                    if ($count > 0 && time() < $data['expires_at']) : ?>
+                        <div class="alert-content" id="form-alert">
+                            <h1>Please fill up the following forms:</h1>
+                            <ul>
+                                <?php 
+                                foreach ($data['checkbox_data'] as $key => $checkbox_value) {
+                                    if ($checkbox_value == 1) {
+                                        echo '<li>' . htmlspecialchars($key) . '</li>';
+                                    }
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                    <?php endif;
                 }
-
-                if($count > 0 && time() < $data['expires_at']) : ?>
-                    <div class="alert-content" id="form-alert">
-                        <h1>Please fill up the following forms:</h1>
-                        <ul>
-                            <?php foreach($this->session->userdata('data')['checkbox_data'] as $key => $data)
-                            if($data == 1) {
-                                echo '<li>';
-                                echo $key;
-                                echo '</li>';
-                            }
-                            ?>
-                        </ul>
-                    </div>
-                <?php endif;
             }
             ?>
         </div>
-        
+
+
         <section class="content">
             <div class="row">
                 <div class="col-xs-12">

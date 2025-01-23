@@ -94,6 +94,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$this->form_validation->set_rules('trf_number', 'Ticket Number', 'trim|required');
 	
 		$user_details = $this->Main_model->user_details();
+		// print_r($user_details); die();
 		$getdepartment = $this->Main_model->GetDepartmentID();
 		$users_det = $this->Main_model->users_details_put($id);
 	
@@ -135,24 +136,6 @@ class UsersTraccReq_controller extends CI_Controller {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
 				redirect('sys/users/list/tickets/tracc_request');
 			}
-
-			// if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
-			// 	$this->load->view('users/header', $data);
-			// 	$this->load->view('users/users_TRF/tracc_request_form_creation', $data);
-			// 	$this->load->view('users/footer');
-			// } else {
-			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-			// 	redirect('sys/users/list/tickets/tracc_request');
-			// }
-			
-			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-			// 	redirect('sys/users/dashboard');
-			// } else {
-			// 	$this->load->view('users/header', $data);
-			// 	$this->load->view('users/users_TRF/tracc_request_form_creation', $data);
-			// 	$this->load->view('users/footer');
-			// }
 		} else {
 			$file_path = null;
 			if (!empty($_FILES['uploaded_files']['name'])) {
@@ -221,7 +204,11 @@ class UsersTraccReq_controller extends CI_Controller {
 	
 			if ($process[0] == 1) {
 				$this->session->set_flashdata('success', $process[1]);
-				$this->session->set_userdata('data', ['checkbox_data' => $newadd, 'expires_at' => time() + (5 * 60)]);
+				$this->session->set_userdata('data', [
+					'checkbox_data' => $newadd, 
+					'expires_at' => time() + (5 * 60),
+					'recid' => $user_details[1]['recid'],
+				]);
 				redirect(base_url() . 'sys/users/list/tickets/tracc_request');
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
