@@ -39,7 +39,8 @@ class AdminTraccCon_controller extends CI_Controller {
 		$user_details = $this->Main_model->user_details();              
 		$getdepartment = $this->Main_model->GetDepartmentID();          
 		$users_det = $this->Main_model->users_details_put($id);
-		$trc = $this->GenerateTRCNo($user_details[1]['dept_id']);      
+		$trc = $this->GenerateTRCNo($user_details[1]['dept_id']); 
+		$cutoff = $this->Main_model->get_cutoff();     
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['trc'] = $trc;
@@ -53,12 +54,6 @@ class AdminTraccCon_controller extends CI_Controller {
 			// die();
 
 			$data['active_menu'] = $active_menu;
-			$cutoff = $this->Main_model->get_cutoff();
-			$cutofftime = $cutoff->cutoff_time;
-			$opentime = $cutoff->open_time;
-			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
-			$timecomparison1 = $currenttime < $cutofftime;
-			$timecomparison2 = $opentime < $currenttime;
 
 			$data['user_details'] = $user_details[1];                   
 			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array();  
@@ -67,12 +62,24 @@ class AdminTraccCon_controller extends CI_Controller {
 			$users_department = $users_det[1]['dept_id'];
 			$get_department = $this->Main_model->UsersDepartment($users_department);   
 			$data['get_department'] = $get_department;
-
-			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
-				$this->load->view('admin/header', $data);
-				$this->load->view('admin/sidebar', $data);
-				$this->load->view('admin/admin_TRC/trc_creation', $data);
-				$this->load->view('admin/footer');
+			$startdate = $cutoff->date;
+			$enddate = $cutoff->end_date;
+			$cutofftime = $cutoff->cutoff_time;
+			$opentime = $cutoff->open_time;
+			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+			$timecomparison1 = $currenttime < $cutofftime;
+			$timecomparison2 = $opentime < $currenttime;
+	
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+					$this->load->view('admin/header', $data);
+					$this->load->view('admin/sidebar', $data);
+					$this->load->view('admin/admin_TRC/trc_creation', $data);
+					$this->load->view('admin/footer');
+				} else {
+					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+					redirect('sys/admin/list/creation_tickets/tracc_concern');
+				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
 				redirect('sys/admin/list/creation_tickets/tracc_concern');

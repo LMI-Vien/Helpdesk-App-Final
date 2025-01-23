@@ -828,7 +828,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$departments = ($departments_result[0] == "ok") ? $departments_result[1] : [];
 
 		$cutoff = $this->Main_model->get_cutoff();
-			
+		
 		$startdate = $cutoff->date;
 		$enddate = $cutoff->end_date;
 		$cutofftime = $cutoff->cutoff_time;

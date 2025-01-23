@@ -148,7 +148,7 @@
                             <div class="tab-pane active" id="msrf">
                                 <section id="new">
                                     <div class="row">
-                                        <form id="trf_irf_form" action="<?= site_url('UsersTraccReq_controller/user_creation_item_request_form_pdf'); ?>" method="POST">
+                                        <form id="trf_irf_form" action="<?= site_url('AdminTraccReq_controller/admin_creation_item_request_form_pdf'); ?>" method="POST">
                                             <div class="col-md-12">
                                                 <select name="trf_number" id="trf_number" class="form-control" required>
                                                     <option value="" disabled selected>Select Ticket Number</option>

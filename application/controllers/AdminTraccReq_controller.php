@@ -809,13 +809,7 @@ class AdminTraccReq_controller extends CI_Controller {
 		$user_details = $this->Main_model->user_details();
 		$getdepartment = $this->Main_model->GetDepartmentID();
 		$users_det = $this->Main_model->users_details_put($id);
-	
 		$cutoff = $this->Main_model->get_cutoff();
-		$cutofftime = $cutoff->cutoff_time;
-		$opentime = $cutoff->open_time;
-		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
-		$timecomparison1 = $currenttime < $cutofftime;
-		$timecomparison2 = $opentime < $currenttime;
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
@@ -837,11 +831,24 @@ class AdminTraccReq_controller extends CI_Controller {
 			$get_department = $this->Main_model->UsersDepartment($users_department);
 			$data['get_department'] = $get_department;
 	
-			if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
-				$this->load->view('admin/header', $data);
-				$this->load->view('admin/sidebar', $data);
-				$this->load->view('admin/admin_TRF/trf_creation', $data);
-				$this->load->view('admin/footer');
+			$startdate = $cutoff->date;
+			$enddate = $cutoff->end_date;
+			$cutofftime = $cutoff->cutoff_time;
+			$opentime = $cutoff->open_time;
+			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+			$timecomparison1 = $currenttime < $cutofftime;
+			$timecomparison2 = $opentime < $currenttime;
+	
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+					$this->load->view('admin/header', $data);
+					$this->load->view('admin/sidebar', $data);
+					$this->load->view('admin/admin_TRF/trf_creation', $data);
+					$this->load->view('admin/footer');
+				} else {
+					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+					redirect('sys/admin/list/creation_tickets/tracc_request');
+				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
 				redirect('sys/admin/list/creation_tickets/tracc_request');
@@ -1081,95 +1088,258 @@ class AdminTraccReq_controller extends CI_Controller {
 	public function admin_customer_request_form() {
 		if($this->session->userdata('login_data')) {
 			$id = $this->session->userdata('login_data')['user_id'];
+			$ticket_numbers = $this->AdminTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
+			$cutoff = $this->Main_model->get_cutoff();
 	
 			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
 	
 			$data = [
 				'user_details' => $this->Main_model->user_details()[1],
+				'ticket_numbers' => $ticket_numbers,
 				'unopenedMSRF' => $this->Main_model->get_unopened_msrf_tickets(),
 				'unopenedTraccConcern' => $this->Main_model->get_unopened_tracc_concerns(),
 				'unopenedTraccRequest' => $this->Main_model->get_unopened_tracc_request(),
 				'active_menu' => ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_request_form'
 			];
+
+			$startdate = $cutoff->date;
+			$enddate = $cutoff->end_date;
+			$cutofftime = $cutoff->cutoff_time;
+			$opentime = $cutoff->open_time;
+			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+			$timecomparison1 = $currenttime < $cutofftime;
+			$timecomparison2 = $opentime < $currenttime;
 	
-			$this->load->view('admin/header', $data);
-			$this->load->view('admin/sidebar', $data);
-			$this->load->view('admin/admin_TRF_pdf/trf_customer_request_form_creation', $data);
-			$this->load->view('admin/footer');
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+					$this->load->view('admin/header', $data);
+					$this->load->view('admin/sidebar', $data);
+					$this->load->view('admin/admin_TRF_pdf/trf_customer_request_form_creation', $data);
+					$this->load->view('admin/footer');
+				} else {
+					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+					redirect('sys/admin/dashboard');
+				}
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/admin/dashboard');
+			}
+
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
 			redirect("sys/authentication");
+		}
+	}
+
+	public function admin_creation_customer_request_form_pdf() {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
+		$crf_comp_checkbox_values = isset($_POST['crf_comp_checkbox_value']) ? $_POST['crf_comp_checkbox_value'] : [];
+		$imploded_values = implode(',', $crf_comp_checkbox_values);
+
+		$checkbox_cus_req_form_del = [
+			'checkbox_outright'             => isset($_POST['checkbox_outright']) ? 1 : 0,
+			'checkbox_consignment'          => isset($_POST['checkbox_consignment']) ? 1 : 0,
+			'checkbox_cus_a_supplier'       => isset($_POST['checkbox_cus_a_supplier']) ? 1 : 0,
+			'checkbox_online'               => isset($_POST['checkbox_online']) ? 1 : 0,
+			'checkbox_walkIn'               => isset($_POST['checkbox_walkIn']) ? 1 : 0,
+			'checkbox_monday'               => isset($_POST['checkbox_monday']) ? 1 : 0,
+			'checkbox_tuesday'              => isset($_POST['checkbox_tuesday']) ? 1 : 0,
+			'checkbox_wednesday'            => isset($_POST['checkbox_wednesday']) ? 1 : 0,
+			'checkbox_thursday'             => isset($_POST['checkbox_thursday']) ? 1 : 0,
+			'checkbox_friday'               => isset($_POST['checkbox_friday']) ? 1 : 0,
+			'checkbox_saturday'             => isset($_POST['checkbox_saturday']) ? 1 : 0,
+			'checkbox_sunday'               => isset($_POST['checkbox_sunday']) ? 1 : 0,
+		];
+	
+		$process = $this->AdminTraccReq_model->add_customer_request_form_pdf($imploded_values, $checkbox_cus_req_form_del, $id, $dept_id);
+
+		if ($process[0] == 1) {
+			$this->session->set_flashdata('success', $process[1]);
+			redirect(base_url().'sys/admin/create/tickets/tracc_request/customer_request');  
+		} else {
+			$this->session->set_flashdata('error', $process[1]);
+			redirect(base_url().'sys/admin/create/tickets/tracc_request/customer_request'); 
 		}
 	}
 
 	public function admin_shipping_setup_form() {
 		if($this->session->userdata('login_data')) {
 			$id = $this->session->userdata('login_data')['user_id'];
+			$ticket_numbers = $this->AdminTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
+			$cutoff = $this->Main_model->get_cutoff();
 	
 			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
 	
 			$data = [
 				'user_details' => $this->Main_model->user_details()[1],
+				'ticket_numbers' => $ticket_numbers,
 				'unopenedMSRF' => $this->Main_model->get_unopened_msrf_tickets(),
 				'unopenedTraccConcern' => $this->Main_model->get_unopened_tracc_concerns(),
 				'unopenedTraccRequest' => $this->Main_model->get_unopened_tracc_request(),
 				'active_menu' => ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_request_form'
 			];
+
+			$startdate = $cutoff->date;
+			$enddate = $cutoff->end_date;
+			$cutofftime = $cutoff->cutoff_time;
+			$opentime = $cutoff->open_time;
+			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+			$timecomparison1 = $currenttime < $cutofftime;
+			$timecomparison2 = $opentime < $currenttime;
 	
-			$this->load->view('admin/header', $data);
-			$this->load->view('admin/sidebar', $data);
-			$this->load->view('admin/admin_TRF_pdf/trf_customer_shipping_setup_creation', $data);
-			$this->load->view('admin/footer');
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+					$this->load->view('admin/header', $data);
+					$this->load->view('admin/sidebar', $data);
+					$this->load->view('admin/admin_TRF_pdf/trf_customer_shipping_setup_creation', $data);
+					$this->load->view('admin/footer');
+				} else {
+					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+					redirect('sys/admin/dashboard');
+				}
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/admin/dashboard');
+			}
+	
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
 			redirect("sys/authentication");
+		}
+	}
+
+	public function admin_creation_customer_shipping_setup_pdf() {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
+		$css_comp_checkbox_value = isset($_POST['css_comp_checkbox_value']) ? $_POST['css_comp_checkbox_value'] : [];
+		$imploded_values = implode(',', $css_comp_checkbox_value);
+
+		$checkbox_cus_ship_setup = [
+			'checkbox_monday'           => isset($_POST['checkbox_monday']) ? 1 : 0,
+			'checkbox_tuesday'          => isset($_POST['checkbox_tuesday']) ? 1 : 0,
+			'checkbox_wednesday'        => isset($_POST['checkbox_wednesday']) ? 1 : 0,
+			'checkbox_thursday'         => isset($_POST['checkbox_thursday']) ? 1 : 0,
+			'checkbox_friday'           => isset($_POST['checkbox_friday']) ? 1 : 0,
+			'checkbox_saturday'         => isset($_POST['checkbox_saturday']) ? 1 : 0,
+			'checkbox_sunday'           => isset($_POST['checkbox_sunday']) ? 1 : 0,
+		];
+
+		$process = $this->AdminTraccReq_model->add_customer_shipping_setup_pdf($imploded_values, $checkbox_cus_ship_setup, $id, $dept_id);
+
+		if ($process[0] == 1) {
+			$this->session->set_flashdata('success', $process[1]);
+			redirect(base_url().'sys/admin/create/tickets/tracc_request/shipping_setup');  
+		} else {
+			$this->session->set_flashdata('error', $process[1]);
+			redirect(base_url().'sys/admin/create/tickets/tracc_request/shipping_setup');  
 		}
 	}
 
 	public function admin_employee_request_form() {
 		if($this->session->userdata('login_data')) {
 			$id = $this->session->userdata('login_data')['user_id'];
+			$departments = $this->Main_model->getDepartment();
+			$ticket_numbers = $this->AdminTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
+			$cutoff = $this->Main_model->get_cutoff();
 	
 			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
 	
 			$data = [
 				'user_details' => $this->Main_model->user_details()[1],
+				'ticket_numbers' => $ticket_numbers,
+				'departments' => ($departments[0] == "ok") ? $departments[1] : [],
 				'unopenedMSRF' => $this->Main_model->get_unopened_msrf_tickets(),
 				'unopenedTraccConcern' => $this->Main_model->get_unopened_tracc_concerns(),
 				'unopenedTraccRequest' => $this->Main_model->get_unopened_tracc_request(),
 				'active_menu' => ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_request_form'
 			];
+
+			$startdate = $cutoff->date;
+			$enddate = $cutoff->end_date;
+			$cutofftime = $cutoff->cutoff_time;
+			$opentime = $cutoff->open_time;
+			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+			$timecomparison1 = $currenttime < $cutofftime;
+			$timecomparison2 = $opentime < $currenttime;
 	
-			$this->load->view('admin/header', $data);
-			$this->load->view('admin/sidebar', $data);
-			$this->load->view('admin/admin_TRF_pdf/trf_employee_request_form_creation', $data);
-			$this->load->view('admin/footer');
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+					$this->load->view('admin/header', $data);
+					$this->load->view('admin/sidebar', $data);
+					$this->load->view('admin/admin_TRF_pdf/trf_employee_request_form_creation', $data);
+					$this->load->view('admin/footer');
+				} else {
+					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+					redirect('sys/admin/dashboard');
+				}
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/admin/dashboard');
+			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
 			redirect("sys/authentication");
+		}
+	}
+
+	public function admin_creation_employee_request_form_pdf() {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
+		$process = $this->AdminTraccReq_model->add_employee_request_form_pdf($id, $dept_id);
+
+		if ($process[0] == 1) {
+			$this->session->set_flashdata('success', $process[1]);
+			redirect(base_url().'sys/admin/create/tickets/tracc_request/employee_request');  
+		} else {
+			$this->session->set_flashdata('error', $process[1]);
+			redirect(base_url().'sys/admin/create/tickets/tracc_request/employee_request');  
 		}
 	}
 
 	public function admin_item_request_form() {
 		if($this->session->userdata('login_data')) {
+			$id = $this->session->userdata('login_data')['user_id'];
+			$cutoff = $this->Main_model->get_cutoff();
+			$ticket_numbers = $this->AdminTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
 
 			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
 
 			$data = [
 				'user_details' => $this->Main_model->user_details()[1],
+				'ticket_numbers' => $ticket_numbers,
 				'unopenedMSRF' => $this->Main_model->get_unopened_msrf_tickets(),
 				'unopenedTraccConcern' => $this->Main_model->get_unopened_tracc_concerns(),
 				'unopenedTraccRequest' => $this->Main_model->get_unopened_tracc_request(),
 				'active_menu' => ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_request_form'
 			];
 
-			$this->load->view('admin/header', $data);
-			$this->load->view('admin/sidebar', $data);
-			$this->load->view('admin/admin_TRF_pdf/trf_item_request_form_creation', $data);
-			$this->load->view('admin/footer');
+			$startdate = $cutoff->date;
+			$enddate = $cutoff->end_date;
+			$cutofftime = $cutoff->cutoff_time;
+			$opentime = $cutoff->open_time;
+			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+			$timecomparison1 = $currenttime < $cutofftime;
+			$timecomparison2 = $opentime < $currenttime;
+	
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+					$this->load->view('admin/header', $data);
+					$this->load->view('admin/sidebar', $data);
+					$this->load->view('admin/admin_TRF_pdf/trf_item_request_form_creation', $data);
+					$this->load->view('admin/footer');
+				} else {
+					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+					redirect('sys/admin/dashboard');
+				}
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/admin/dashboard');
+			}
+
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
@@ -1177,26 +1347,183 @@ class AdminTraccReq_controller extends CI_Controller {
 		}
 	}
 
+	public function admin_creation_item_request_form_pdf() {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
+		$trf_number = $this->input->post('trf_number', true);
+		$irf_comp_checkbox_value = isset($_POST['irf_comp_checkbox_value']) ? $_POST['irf_comp_checkbox_value'] : [];
+		$imploded_values = implode(',', $irf_comp_checkbox_value);
+
+		$checkbox_item_req_form = [
+			'checkbox_inventory'            => isset($_POST['checkbox_inventory']) ? 1 : 0,
+			'checkbox_non_inventory'        => isset($_POST['checkbox_non_inventory']) ? 1 : 0,
+			'checkbox_services'             => isset($_POST['checkbox_services']) ? 1 : 0,
+			'checkbox_charges'              => isset($_POST['checkbox_charges']) ? 1 : 0,
+			'checkbox_watsons'              => isset($_POST['checkbox_watsons']) ? 1 : 0,
+			'checkbox_other_accounts'       => isset($_POST['checkbox_other_accounts']) ? 1 : 0,
+			'checkbox_online'               => isset($_POST['checkbox_online']) ? 1 : 0,
+			'checkbox_all_accounts'         => isset($_POST['checkbox_all_accounts']) ? 1 : 0,
+			'radio_trade_type'              => isset($_POST['radio_trade_type']) ? $_POST['radio_trade_type'] : '',
+			'radio_batch_required'          => isset($_POST['radio_batch_required']) ? $_POST['radio_batch_required'] : '',
+ 
+		];
+
+		$process = $this->AdminTraccReq_model->add_item_request_form_pdf($imploded_values, $checkbox_item_req_form, $id, $dept_id);
+
+		$rows_data = $this->input->post('rows_gl', true);
+
+		if ($process[0] == 1 && !empty($rows_data)) {
+			// Prepare structured data for rows insertion
+			$insert_data_gl_setup = [];
+			foreach ($rows_data as $row) {
+				if (!empty($row['uom']) && !empty($row['barcode'])) { // Basic validation
+					$insert_data_gl_setup[] = [
+						'requested_by_id'	=> $id,
+						'dept_id'			=> $dept_id,
+						'ticket_id'         => $trf_number,
+						'uom'               => $row['uom'],
+						'barcode'           => $row['barcode'],
+						'length'            => $row['length'],
+						'height'            => $row['height'],
+						'width'             => $row['width'],
+						'weight'            => $row['weight'],
+					];
+				}
+			}
+
+			if (!empty($insert_data_gl_setup)) {
+				$this->AdminTraccReq_model->insert_batch_rows_gl_setup($insert_data_gl_setup);
+			}
+		}
+
+		$rows_data = $this->input->post('rows_whs',true);
+
+		if ($process[0] == 1 && !empty($rows_data)) {
+			$insert_data_whs_setup = [];
+			foreach ($rows_data as $row){
+				if(!empty($row['warehouse']) && !empty($row['warehouse_no'])) {
+					$insert_data_wh_setup[] = [
+						'requested_by_id'	=> $id,
+						'dept_id'			=> $dept_id,
+						'ticket_id'         => $trf_number,
+						'warehouse'         => $row['warehouse'],
+						'warehouse_no'      => $row['warehouse_no'],
+						'storage_location'  => $row['storage_location'],
+						'storage_type'      => $row['storage_type'],
+						'fixed_bin'         => $row['fixed_bin'],
+						'min_qty'           => $row['min_qty'],
+						'max_qty'           => $row['max_qty'],
+						'replen_qty'        => $row['replen_qty'],
+						'control_qty'       => $row['control_qty'],
+						'round_qty'         => $row['round_qty'],
+						'uom'               => $row['uom'],
+					];
+				}
+			}
+
+			if (!empty($insert_data_wh_setup)) {
+				$this->AdminTraccReq_model->insert_batch_rows_whs_setup($insert_data_wh_setup);
+			}
+		}
+
+
+		if ($process[0] == 1) {
+			$this->session->set_flashdata('success', $process[1]);
+			redirect(base_url().'sys/admin/create/tickets/tracc_request/item_request');  
+		} else {
+			$this->session->set_flashdata('error', $process[1]);
+			redirect(base_url().'sys/admin/create/tickets/tracc_request/item_request');  
+		}
+	}
+
 	public function admin_supplier_request_form() {
 		if($this->session->userdata('login_data')) {
+			$id = $this->session->userdata('login_data')['user_id'];
+			$cutoff = $this->Main_model->get_cutoff();
+			$ticket_numbers = $this->AdminTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
+			$departments = $this->Main_model->getDepartment();
+			
 			$allowed_menu = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
 
 			$data = [
 				'user_details' => $this->Main_model->user_details()[1],
+				'ticket_numbers' => $ticket_numbers,
+				'departments' => ($departments[0] == "ok") ? $departments[1] : [],
 				'unopenedMSRF' => $this->Main_model->get_unopened_tracc_concerns(),
 				'unopenedTraccConcern' => $this->Main_model->get_unopened_tracc_concerns(),
 				'unopenedTraccRequest' => $this->Main_model->get_unopened_tracc_request(),
 				'active_menu' => ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menu)) ? $this->uri->segment(3) : 'admin_creation_request_form'
 			];
 
-			$this->load->view('admin/header', $data);
-			$this->load->view('admin/sidebar', $data);
-			$this->load->view('admin/admin_TRF_pdf/trf_supplier_request_form_creation', $data);
-			$this->load->view('admin/footer');
+			$startdate = $cutoff->date;
+			$enddate = $cutoff->end_date;
+			$cutofftime = $cutoff->cutoff_time;
+			$opentime = $cutoff->open_time;
+			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
+			$timecomparison1 = $currenttime < $cutofftime;
+			$timecomparison2 = $opentime < $currenttime;
+	
+			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+					$this->load->view('admin/header', $data);
+					$this->load->view('admin/sidebar', $data);
+					$this->load->view('admin/admin_TRF_pdf/trf_supplier_request_form_creation', $data);
+					$this->load->view('admin/footer');
+				} else {
+					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+					redirect('sys/admin/dashboard');
+				}
+			} else {
+				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+				redirect('sys/admin/dashboard');
+			}
+
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
 			redirect("sys/authentication");
+		}
+	}
+
+	public function admin_creation_supplier_request_form_pdf() {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
+		$trf_comp_checkbox_value = isset($_POST['trf_comp_checkbox_value']) ? $_POST['trf_comp_checkbox_value'] : [];
+		$imploded_values = implode(',', $trf_comp_checkbox_value);
+
+		$checkbox_non_vat = isset($_POST['checkbox_non_vat']) ? 1 : 0;
+
+		$checkbox_supplier_req_form = [
+			'local_supplier_grp'                => isset($_POST['local_supplier_grp']) ? 1 : 0,
+			'foreign_supplier_grp'              => isset($_POST['foreign_supplier_grp']) ? 1 : 0,
+			'supplier_trade'                    => isset($_POST['supplier_trade']) ? 1 : 0,
+			'supplier_non_trade'                => isset($_POST['supplier_non_trade']) ? 1 : 0,
+			'trade_type_goods'                  => isset($_POST['trade_type_goods']) ? 1 : 0,
+			'trade_type_services'               => isset($_POST['trade_type_services']) ? 1 : 0,
+			'trade_type_GoodsServices'          => isset($_POST['trade_type_GoodsServices']) ? 1 : 0,
+			'major_grp_local_trade_ven'         => isset($_POST['major_grp_local_trade_ven']) ? 1 : 0,
+			'major_grp_local_nontrade_ven'      => isset($_POST['major_grp_local_nontrade_ven']) ? 1 : 0,
+			'major_grp_foreign_trade_ven'       => isset($_POST['major_grp_foreign_trade_ven']) ? 1 : 0,
+			'major_grp_foreign_nontrade_ven'    => isset($_POST['major_grp_foreign_nontrade_ven']) ? 1 : 0,
+			'major_grp_local_broker_forwarder'  => isset($_POST['major_grp_local_broker_forwarder']) ? 1 : 0,
+			'major_grp_rental'                  => isset($_POST['major_grp_rental']) ? 1 : 0,
+			'major_grp_bank'                    => isset($_POST['major_grp_bank']) ? 1 : 0,
+			'major_grp_one_time_supplier'       => isset($_POST['major_grp_one_time_supplier']) ? 1 : 0,
+			'major_grp_government_offices'      => isset($_POST['major_grp_government_offices']) ? 1 : 0,
+			'major_grp_insurance'               => isset($_POST['major_grp_insurance']) ? 1 : 0,
+			'major_grp_employees'               => isset($_POST['major_grp_employees']) ? 1 : 0,
+			'major_grp_subs_affiliates'         => isset($_POST['major_grp_subs_affiliates']) ? 1 : 0,
+			'major_grp_utilities'               => isset($_POST['major_grp_utilities']) ? 1 : 0,
+		];
+	
+		$process = $this->AdminTraccReq_model->add_supplier_request_form_pdf($imploded_values, $checkbox_non_vat, $checkbox_supplier_req_form, $id, $dept_id);
+
+		if ($process[0] == 1) {
+			$this->session->set_flashdata('success', $process[1]);
+			redirect(base_url().'sys/admin/create/tickets/tracc_request/supplier_request');  
+		} else {
+			$this->session->set_flashdata('error', $process[1]);
+			redirect(base_url().'sys/admin/create/tickets/tracc_request/supplier_request');  
 		}
 	}
 
