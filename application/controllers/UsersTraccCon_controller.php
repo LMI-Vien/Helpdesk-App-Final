@@ -14,6 +14,18 @@ class UsersTraccCon_controller extends CI_Controller {
 		}
 	}
 
+	public function GenerateTRCNo($dept_id) {
+		$lastTRC = $this->Main_model->getLastTRCNumber();
+		$dept_code = $this->Main_model->get_department_code($dept_id);
+
+        $lastcode = (int) substr($lastTRC, -4);
+		$newNumber = $lastcode + 1;
+
+		$newTRCNumber = $dept_code . '-' . date("Y") . '-' . sprintf('%04d', $newNumber);
+
+		return $newTRCNumber;
+	}
+
     // DATATABLE na nakikita ni USER TRACC CONCERN
 	public function service_form_tracc_concern_list() {
 		$id = $this->session->userdata('login_data')['user_id']; 
@@ -79,7 +91,8 @@ class UsersTraccCon_controller extends CI_Controller {
 
 		$user_details = $this->Main_model->user_details();              
 		$getdepartment = $this->Main_model->GetDepartmentID();          
-		$users_det = $this->Main_model->users_details_put($id);         
+		$users_det = $this->Main_model->users_details_put($id);
+		$trc = $this->GenerateTRCNo($user_details[1]['dept_id']);  
 
 		if ($this->form_validation->run() == FALSE) {
 			$cutoff = $this->Main_model->get_cutoff();
@@ -92,6 +105,7 @@ class UsersTraccCon_controller extends CI_Controller {
 			$timecomparison1 = $currenttime < $cutofftime;
 			$timecomparison2 = $opentime < $currenttime;
 
+			$data['trc'] = $trc;
 			$data['user_details'] = $user_details[1];                   
 			$data['users_det'] = isset($users_det[1]) ? $users_det[1] : array();  
 			$data['getdept'] = isset($getdepartment[1]) ? $getdepartment[1] : array();  

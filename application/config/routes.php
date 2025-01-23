@@ -164,6 +164,20 @@ $route['sys/admin/create/tickets/tracc_request'] = 'AdminTraccReq_controller/adm
 //clickable link to the details page, TRACC CONCERN
 $route['sys/admin/details/concern/tracc_request/(:any)'] = 'AdminTraccReq_controller/admin_tracc_request_details/$1';
 
+
+
+$route['sys/admin/create/tickets/tracc_request/customer_request'] = 'AdminTraccReq_controller/admin_customer_request_form';
+
+$route['sys/admin/create/tickets/tracc_request/shipping_setup'] = 'AdminTraccReq_controller/admin_shipping_setup_form';
+
+$route['sys/admin/create/tickets/tracc_request/employee_request'] = 'AdminTraccReq_controller/admin_employee_request_form';
+
+$route['sys/admin/create/tickets/tracc_request/item_request'] = 'AdminTraccReq_controller/admin_item_request_form';
+
+$route['sys/admin/create/tickets/tracc_request/supplier_request'] = 'AdminTraccReq_controller/admin_supplier_request_form';
+
+
+
 //--- System LOGOUT
 $route['sys/logout'] = 'main/logout';
 

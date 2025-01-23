@@ -16,10 +16,10 @@ class AdminTraccCon_controller extends CI_Controller {
     }
 
 	public function GenerateTRCNo($dept_id) {
-		$lastTRF = $this->Main_model->getLastTRCNumber();
+		$lastTRC = $this->Main_model->getLastTRCNumber();
 		$dept_code = $this->Main_model->get_department_code($dept_id);
 
-        $lastcode = (int) substr($lastTRF, -4);
+        $lastcode = (int) substr($lastTRC, -4);
 		$newNumber = $lastcode + 1;
 
 		$newTRCNumber = $dept_code . '-' . date("Y") . '-' . sprintf('%04d', $newNumber);
