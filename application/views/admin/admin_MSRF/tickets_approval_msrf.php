@@ -112,7 +112,6 @@
 											<select class="form-control select2" name="approval_stat" id="approval_stat" style="width: 100%;" <?php if ($msrf['approval_status'] == 'Approved' || $msrf['approval_status'] == 'Rejected') echo 'disabled'; ?> <?= $is_disabled ?>>
 												<option value="" disabled selected>Select Approval</option>
 												<option value="Approved"<?php if ($msrf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-												<option value="Pending"<?php if ($msrf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
 												<option value="Rejected"<?php if ($msrf['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
 												<option value="Returned"<?php if ($msrf['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
 											</select>

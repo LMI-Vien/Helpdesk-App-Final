@@ -407,7 +407,6 @@
                                                     <select class="form-control select2" name="app_stat" id="app_stat" <?= $is_disabled?>>
                                                         <option value=""disabled selected>Approval Status</option>
                                                         <option value="Approved"<?php if ($trf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-                                                        <option value="Pending"<?php if ($trf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
                                                         <option value="Rejected"<?php if ($trf['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
                                                         <option value="Returned"<?php if ($trf['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
                                                     </select>       
@@ -420,7 +419,6 @@
                                                     <select class="form-control select2" name="it_app_stat" id="it_app_stat" <?= $is_disable?>>
                                                         <option value=""disabled selected>ICT Approval Status</option>
                                                         <option value="Approved"<?php if ($trf['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-                                                        <option value="Pending"<?php if ($trf['it_approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
                                                         <option value="Rejected"<?php if ($trf['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
                                                         <option value="Resolved"<?php if ($trf['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Resolved</option>
                                                     </select>       

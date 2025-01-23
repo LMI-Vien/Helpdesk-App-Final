@@ -121,7 +121,6 @@
                                                     <?php if ($tracc_con['approval_status'] == 'Approved' || $tracc_con['approval_status'] == 'Rejected') echo 'disabled'; ?>
                                                         <option value=""disabled selected>Approval Status</option>
                                                         <option value="Approved"<?php if ($tracc_con['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-                                                        <option value="Pending"<?php if ($tracc_con['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
                                                         <option value="Rejected"<?php if ($tracc_con['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
                                                         <option value="Returned"<?php if ($tracc_con['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
                                                     </select>       
@@ -134,7 +133,6 @@
                                                     <select class="form-control select2" name="it_app_stat" id="it_app_stat" <?= $disabled; ?>>
                                                         <option value=""disabled selected>ICT Approval Status</option>
                                                         <option value="Approved"<?php if ($tracc_con['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-                                                        <option value="Pending"<?php if ($tracc_con['it_approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
                                                         <option value="Rejected"<?php if ($tracc_con['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
                                                         <option value="Resolved"<?php if ($tracc_con['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Done</option>
                                                         <option value="Closed"<?php if ($tracc_con['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>

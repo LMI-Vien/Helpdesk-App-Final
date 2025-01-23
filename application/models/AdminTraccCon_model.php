@@ -35,9 +35,9 @@ class AdminTraccCon_model extends CI_Model {
 			} else if ($approval_stat == 'Approved') {
 				$this->db->set('approval_status', 'Approved');
 				$this->db->set('status', 'Approved'); 
-			} else if ($approval_stat == 'Pending') {
-				$this->db->set('approval_status', 'Pending');
-				$this->db->set('status', 'Pending'); 
+			} else if ($approval_stat == 'Returned') {
+				$this->db->set('approval_status', 'Returned');
+				$this->db->set('status', 'Returned'); 
 			}
 	
 			if ($it_approval_stat == 'Resolved') {
