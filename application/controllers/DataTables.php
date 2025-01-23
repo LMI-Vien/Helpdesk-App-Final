@@ -369,6 +369,8 @@ class DataTables extends CI_Controller {
         $dept = "";
         if ($user_details[1]['role'] != "L3") {
             $dept = " AND dept_id = '" . $user_details[1]['dept_id'] . "'";
+        } else {
+            $dept = " AND status != 'Open'";
         }
     
         if (!empty($order)) {
@@ -750,6 +752,8 @@ class DataTables extends CI_Controller {
 
         if ($user_details[1]['role'] != "L3") {
             $dept = " AND dept_id = '" . $user_details[1]['dept_id'] . "'";
+        } else {
+            $dept = " AND status != 'Open'";
         }
 
         if (!empty($order)) {
@@ -1148,6 +1152,8 @@ class DataTables extends CI_Controller {
 
         if($user_details[1]['role'] != "L3") {
             $dept = " AND department_id = '" . $user_details[1]['dept_id'] . "'";
+        } else {
+            $dept = " AND status != 'Open'";
         }
 
         if (!empty($order)){

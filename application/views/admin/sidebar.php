@@ -46,7 +46,7 @@
 
             <li class="treeview <?= ($active_menu == 'system_tickets_list' || $active_menu == 'open_tickets' || $active_menu == 'other_menu' || $active_menu == 'admin_list_tickets' || $active_menu == 'admin_list_tracc_concern' || $active_menu == 'admin_list_tracc_request' || $active_menu == 'approved_tickets') ? 'active' : ''; ?>">
                 <a href="#">
-                    <i class="fa fa-ticket"></i> <span>Tickets</span>
+                    <i class="fa fa-ticket"></i> <span>Tickets Approval</span>
                     <span class="pull-right-container">
                         <i class="fa fa-angle-left pull-right"></i>
                     </span>
