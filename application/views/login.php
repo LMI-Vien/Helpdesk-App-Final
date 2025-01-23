@@ -95,6 +95,8 @@
     $('#loginForm').on('submit', function(e) {
         e.preventDefault(); // Prevent default form submission
 
+        const username = $("#username").val().trim();
+        
         $.ajax({
             type: 'POST',
             url: $(this).attr('action'), // Form action URL
@@ -103,7 +105,18 @@
             success: function(response) {
                 if (response.status === 'success') {
                     // Redirect on success
-                    window.location.href = response.redirect_url;
+                        Swal.fire({
+                            icon: "success",
+                            title: "Login Successful",
+                            text: "Welcome " + username + " !",
+                            timer: 2000,
+                            showConfirmButton: false,
+                            didOpen: () => {
+                                Swal.showLoading();
+                            }
+                        }).then(() => {
+                            window.location.href = response.redirect_url;
+                        });
                 } else if(response.status === 'error') {
                     let errorMessage = response.message;
                     if (response.errors) {

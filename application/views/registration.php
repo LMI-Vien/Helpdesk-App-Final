@@ -106,97 +106,23 @@
 </div>
 
 <?php $this->load->view('footer'); ?>
-<!-- <script>
-    $(document).ready(function () {
-        $('#registrationForm').on('submit', function (e) {
-            e.preventDefault(); 
-
-            const username = $('#username').val().trim();
-            const password = $('#password').val().trim();
-            const deptName = $('#dept_name').val();
-
-            // Client-side validation for username
-            if (username.length < 6) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Invalid Username',
-                    text: 'Username must be at least 6 characters long.',
-                });
-                return; 
-            } else if (password.length < 6){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Invalid Password',
-                    text: 'Password must be at least 6 characters long.',
-                });
-                return;
-            }
-
-            // Client-side validation for password
-            // if (password.length < 6) {
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: 'Invalid Password',
-            //         text: 'Password must be at least 6 characters long.',
-            //     });
-            //     return; 
-            // }
-
-            if (!deptName) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Department Required',
-                    text: 'Please select a department.',
-                });
-                return; 
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: $(this).attr('action'),
-                data: $(this).serialize(), // Serialize form data
-                dataType: 'json',
-                success: function (response) {
-                    if (response.status === 'success') {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Registration Successful',
-                            text: response.message,
-                            timer: 5000, 
-                            timerProgressBar: true, 
-                            allowOutsideClick: false,
-                        }).then(function () {
-                            window.location.href = '<?= base_url(); ?>sys/registration';
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Registration Failed',
-                            text: response.message,
-                        });
-                    }
-                },
-                error: function () {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'Something went wrong. Please try again.',
-                    });
-                }
-            });
-        });
-
-        $('#submitBtn').click(function () {
-            $('#registrationForm').submit(); 
-        });
-});
-
-</script> -->
 
 <script>
     $(document).ready(function () {
         $('#registrationForm').on('submit', function(e) {
             e.preventDefault(); 
+
+            const password = $('#password').val();
+            const conpassword = $('#conpassword').val();
+
+            if (password !== conpassword) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Passwords Do Not Match',
+                    text: 'Please ensure both password fields are identical.'
+                });
+                return; // Stop the form submission
+            }
 
             $.ajax({
                 type: 'POST',
@@ -209,9 +135,10 @@
                         Swal.fire({
                             icon: 'success',
                             title: 'Registration Successful',
+                            timer: 2000,
                             text: response.message
                         }).then(function() {
-                            window.location.href = '<?= base_url(); ?>sys/registration';
+                            window.location.href = '<?= base_url(); ?>';
                         });
                     } else {
                         Swal.fire({

@@ -102,6 +102,22 @@
         const $tab = $(this).closest('li'); // Get the tab element
         const recid = $tab.data('recid'); // Fetch the unique recid
         const lmiItemCode = $(`#tabs-${recid}`).find('#lmi_item_code').val(); // Get the value of lmi_item_code for this tab
+        
+            if (!lmiItemCode) { // Check if lmi_item_code is empty
+                Swal.fire({
+                    title: 'Error!',
+                    text: 'LMI Item Code is required.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    customClass: {
+                        popup: 'large-popup', 
+                        title: 'large-popup-title', 
+                        content: 'large-popup-content', 
+                        confirmButton: 'large-popup-button', 
+                    },
+                });
+                return; // Stop further execution
+            }
 
             Swal.fire({
                 title: 'Are you Done?',
