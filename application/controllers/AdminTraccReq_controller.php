@@ -1077,5 +1077,128 @@ class AdminTraccReq_controller extends CI_Controller {
 		}
 	}
 
+	
+	public function admin_customer_request_form() {
+		if($this->session->userdata('login_data')) {
+			$id = $this->session->userdata('login_data')['user_id'];
+	
+			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
+	
+			$data = [
+				'user_details' => $this->Main_model->user_details()[1],
+				'unopenedMSRF' => $this->Main_model->get_unopened_msrf_tickets(),
+				'unopenedTraccConcern' => $this->Main_model->get_unopened_tracc_concerns(),
+				'unopenedTraccRequest' => $this->Main_model->get_unopened_tracc_request(),
+				'active_menu' => ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_request_form'
+			];
+	
+			$this->load->view('admin/header', $data);
+			$this->load->view('admin/sidebar', $data);
+			$this->load->view('admin/admin_TRF_pdf/trf_customer_request_form_creation', $data);
+			$this->load->view('admin/footer');
+		} else {
+			$this->session->sess_destroy();
+			$this->session->set_flashdata('error', 'Session expired. Please login again.');
+			redirect("sys/authentication");
+		}
+	}
+
+	public function admin_shipping_setup_form() {
+		if($this->session->userdata('login_data')) {
+			$id = $this->session->userdata('login_data')['user_id'];
+	
+			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
+	
+			$data = [
+				'user_details' => $this->Main_model->user_details()[1],
+				'unopenedMSRF' => $this->Main_model->get_unopened_msrf_tickets(),
+				'unopenedTraccConcern' => $this->Main_model->get_unopened_tracc_concerns(),
+				'unopenedTraccRequest' => $this->Main_model->get_unopened_tracc_request(),
+				'active_menu' => ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_request_form'
+			];
+	
+			$this->load->view('admin/header', $data);
+			$this->load->view('admin/sidebar', $data);
+			$this->load->view('admin/admin_TRF_pdf/trf_customer_shipping_setup_creation', $data);
+			$this->load->view('admin/footer');
+		} else {
+			$this->session->sess_destroy();
+			$this->session->set_flashdata('error', 'Session expired. Please login again.');
+			redirect("sys/authentication");
+		}
+	}
+
+	public function admin_employee_request_form() {
+		if($this->session->userdata('login_data')) {
+			$id = $this->session->userdata('login_data')['user_id'];
+	
+			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
+	
+			$data = [
+				'user_details' => $this->Main_model->user_details()[1],
+				'unopenedMSRF' => $this->Main_model->get_unopened_msrf_tickets(),
+				'unopenedTraccConcern' => $this->Main_model->get_unopened_tracc_concerns(),
+				'unopenedTraccRequest' => $this->Main_model->get_unopened_tracc_request(),
+				'active_menu' => ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_request_form'
+			];
+	
+			$this->load->view('admin/header', $data);
+			$this->load->view('admin/sidebar', $data);
+			$this->load->view('admin/admin_TRF_pdf/trf_employee_request_form_creation', $data);
+			$this->load->view('admin/footer');
+		} else {
+			$this->session->sess_destroy();
+			$this->session->set_flashdata('error', 'Session expired. Please login again.');
+			redirect("sys/authentication");
+		}
+	}
+
+	public function admin_item_request_form() {
+		if($this->session->userdata('login_data')) {
+
+			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
+
+			$data = [
+				'user_details' => $this->Main_model->user_details()[1],
+				'unopenedMSRF' => $this->Main_model->get_unopened_msrf_tickets(),
+				'unopenedTraccConcern' => $this->Main_model->get_unopened_tracc_concerns(),
+				'unopenedTraccRequest' => $this->Main_model->get_unopened_tracc_request(),
+				'active_menu' => ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_request_form'
+			];
+
+			$this->load->view('admin/header', $data);
+			$this->load->view('admin/sidebar', $data);
+			$this->load->view('admin/admin_TRF_pdf/trf_item_request_form_creation', $data);
+			$this->load->view('admin/footer');
+		} else {
+			$this->session->sess_destroy();
+			$this->session->set_flashdata('error', 'Session expired. Please login again.');
+			redirect("sys/authentication");
+		}
+	}
+
+	public function admin_supplier_request_form() {
+		if($this->session->userdata('login_data')) {
+			$allowed_menu = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
+
+			$data = [
+				'user_details' => $this->Main_model->user_details()[1],
+				'unopenedMSRF' => $this->Main_model->get_unopened_tracc_concerns(),
+				'unopenedTraccConcern' => $this->Main_model->get_unopened_tracc_concerns(),
+				'unopenedTraccRequest' => $this->Main_model->get_unopened_tracc_request(),
+				'active_menu' => ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menu)) ? $this->uri->segment(3) : 'admin_creation_request_form'
+			];
+
+			$this->load->view('admin/header', $data);
+			$this->load->view('admin/sidebar', $data);
+			$this->load->view('admin/admin_TRF_pdf/trf_supplier_request_form_creation', $data);
+			$this->load->view('admin/footer');
+		} else {
+			$this->session->sess_destroy();
+			$this->session->set_flashdata('error', 'Session expired. Please login again.');
+			redirect("sys/authentication");
+		}
+	}
+
 }
 ?>

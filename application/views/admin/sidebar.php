@@ -26,6 +26,24 @@
             </li>
             <?php endif; ?>
 
+            <?php if ($this->session->userdata('login_data')['role'] !== 'L3'): ?>
+                <li class="treeview <?= ($active_menu == 'admin_creation_request_form') ? 'active' : ''; ?>">
+                    <a href="#">
+                        <i class="fa fa-ticket"></i> <span>Tracc Request Forms</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="<?= ($active_menu == 'admin_customer_request') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/create/tickets/tracc_request/customer_request"><i class="fa fa-circle-o"></i> Customer Request Form</a></li>
+                        <li class="<?= ($active_menu == 'admin_shipping_setup') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/create/tickets/tracc_request/shipping_setup"><i class="fa fa-circle-o"></i> Shipping Setup Form</a></li>
+                        <li class="<?= ($active_menu == 'admin_employee_request') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/create/tickets/tracc_request/employee_request"><i class="fa fa-circle-o"></i> Employee Request Form</a></li>
+                        <li class="<?= ($active_menu == 'admin_item_request') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/create/tickets/tracc_request/item_request"><i class="fa fa-circle-o"></i> Item Request Form</a></li>
+                        <li class="<?= ($active_menu == 'admin_supplier_request') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>sys/admin/create/tickets/tracc_request/supplier_request"><i class="fa fa-circle-o"></i> Supplier Request Form</a></li>
+                    </ul>
+                </li>
+            <?php endif; ?>
+
             <li class="treeview <?= ($active_menu == 'system_tickets_list' || $active_menu == 'open_tickets' || $active_menu == 'other_menu' || $active_menu == 'admin_list_tickets' || $active_menu == 'admin_list_tracc_concern' || $active_menu == 'admin_list_tracc_request' || $active_menu == 'approved_tickets') ? 'active' : ''; ?>">
                 <a href="#">
                     <i class="fa fa-ticket"></i> <span>Tickets</span>
