@@ -207,6 +207,7 @@ class Main extends CI_Controller {
 			$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
 			$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
 			$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
+			$data['ict_dept'] = $this->Main_model->get_ict();
 
 			$user_id = $this->session->userdata('login_data')['user_id'];
 			$user_role = $this->session->userdata('login_data')['role'];
@@ -221,7 +222,6 @@ class Main extends CI_Controller {
 			$checkbox_account = $this->Main_model->getCheckboxDataAccount($id);
 			
 			$ict = $this->Main_model->GetICTSupervisor();
-			
 			
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;

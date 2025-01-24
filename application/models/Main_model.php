@@ -985,5 +985,11 @@ class Main_model extends CI_Model {
 			return $this->db->get('cutoff')->row();
 		}
 	}
+
+	public function get_ict() {
+		$this->db->select("fname");
+		$this->db->where('dept_id', 1);
+		return $this->db->get('users')->result_array();
+	}
 }
 ?>

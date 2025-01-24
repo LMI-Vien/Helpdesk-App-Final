@@ -138,10 +138,9 @@
 											<label>ICT Assign To</label>
 											<select name="assign_to" id="assign_to" class="form-control select2" <?= $is_disable ?>>
 												<option value="" disabled selected>Select ICT</option>
-												<option value="ChristianJ" <?php if ($msrf['assigned_it_staff'] == 'ChristianJ') echo ' selected'; ?>>Sir Chinchan</option>
-												<option value="Michael" <?php if ($msrf['assigned_it_staff'] == 'Michael') echo ' selected'; ?>>Sir Michael</option>
-												<option value="Louise" <?php if ($msrf['assigned_it_staff'] == 'Louise') echo ' selected'; ?>>Sir Louise</option>
-												<option value="ChristanA" <?php if ($msrf['assigned_it_staff'] == 'Louise') echo ' selected'; ?>>Sir Bok</option>
+												<?php foreach($ict_dept as $ict): ?>
+													<option value="<?= $ict['fname']; ?>"><?= $ict['fname']; ?></option>
+												<?php endforeach; ?>
 											</select>
 										</div>
 									</div>	
@@ -150,11 +149,11 @@
 									<div class="col-md-12" id="reason" style="display: none;">
 										<div class="form-group">
 											<label>Reason for Reject Tickets</label>
-											<textarea class="form-control" name="rejecttix" id="rejecttix" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; text-align: left; resize: vertical;"><?= isset($msrf['remarks_ict']) ? htmlspecialchars($msrf['remarks_ict']) : ''; ?></textarea>
+											<textarea class="form-control" name="rejecttix" id="rejecttix" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; text-align: left; resize: vertical;" <?= $is_disable; ?>><?= isset($msrf['remarks_ict']) ? htmlspecialchars($msrf['remarks_ict']) : ''; ?></textarea>
 										</div>
 									</div>
 									<!-- REJECTED TIX -->	
-										
+									
 			                        <div class="col-md-12">
 			                            <div class="form-group">
 			                                <div class="box-body pad">
