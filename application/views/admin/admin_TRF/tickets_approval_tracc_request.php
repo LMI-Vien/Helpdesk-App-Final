@@ -412,11 +412,10 @@
                                                     <label>Accomplished by<span style = "color:red;">*</span></label>
                                                     <select class="form-control select2" name="accomplished_by" id="accomplished_by" <?= $is_disable?>>
                                                         <option value=""disabled selected>Accomplished by</option>
-                                                        <option value="HANNA" <?php if ($trf['accomplished_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($trf['accomplished_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>
-                                                        <option value="CK" <?php if ($trf['accomplished_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="ERIC" <?php if ($trf['accomplished_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
-                                                        
+                                                        <?php foreach($ict_dept as $ict): ?>
+                                                            <option value="<?= $ict['fname']; ?>"><?= $ict['fname']; ?></option>
+                                                        <?php endforeach; ?>
+                                                                
                                                     </select>  
                                                 </div>
                                             </div>

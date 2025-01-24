@@ -152,10 +152,9 @@
                                                     <label>Received by</label>
                                                     <select class="form-control select2" name="received_by" id="received_by" <?= $disabled; ?>>
                                                         <option value=""disabled selected>Received By</option>
-                                                        <option value="ERIC" <?php if ($tracc_con['received_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
-                                                        <option value="CK" <?php if ($tracc_con['received_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="HANNA" <?php if ($tracc_con['received_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($tracc_con['received_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>
+                                                        <?php foreach($ict_dept as $ict): ?>
+                                                            <option value="<?= $ict['fname']; ?>"><?= $ict['fname']; ?></option>
+                                                        <?php endforeach; ?>
                                                     </select>       
                                                 </div>
                                             </div>
@@ -165,10 +164,9 @@
                                                     <label>Noted by</label>
                                                     <select class="form-control select2" name="noted_by" id="noted_by" <?= $disabled; ?>>
                                                         <option value=""disabled selected>Noted By</option>
-                                                        <option value="ERIC" <?php if ($tracc_con['noted_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
-                                                        <option value="CK" <?php if ($tracc_con['noted_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="HANNA" <?php if ($tracc_con['noted_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($tracc_con['noted_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>    
+                                                            <?php foreach($ict_dept as $ict): ?>
+                                                        <option value="<?= $ict['fname']; ?>"><?= $ict['fname']; ?></option>
+												<?php endforeach; ?> 
                                                     </select>  
                                                 </div>
                                             </div>
@@ -185,10 +183,9 @@
                                                     <label>Resolved by</label>
                                                     <select class="form-control select2" name="resolved_by" id="resolved_by" <?= $disabled; ?>>
                                                         <option value=""disabled selected>Resolved By</option>
-                                                        <option value="ERIC" <?php if ($tracc_con['resolved_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
-                                                        <option value="CK" <?php if ($tracc_con['resolved_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="HANNA" <?php if ($tracc_con['resolved_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($tracc_con['resolved_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>
+                                                        <?php foreach($ict_dept as $ict): ?>
+                                                            <option value="<?= $ict['fname']; ?>"><?= $ict['fname']; ?></option>
+                                                        <?php endforeach; ?>
                                                     </select>  
                                                 </div>
                                             </div>
