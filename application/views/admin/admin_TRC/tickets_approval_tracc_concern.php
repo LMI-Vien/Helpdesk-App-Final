@@ -147,7 +147,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Received by</label>
                                                     <select class="form-control select2" name="received_by" id="received_by" <?= $disabled; ?>>
@@ -169,7 +169,7 @@
 												<?php endforeach; ?> 
                                                     </select>  
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
