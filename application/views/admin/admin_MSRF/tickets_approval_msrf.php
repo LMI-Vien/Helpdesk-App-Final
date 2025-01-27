@@ -137,14 +137,13 @@
 										<div class="form-group">
 											<label>ICT Assign To</label>
 											<select name="assign_to" id="assign_to" class="form-control select2" <?= $is_disable ?>>
-												<option value="" disabled selected>Select ICT</option>
 												<?php foreach($ict_dept as $ict): ?>
-													<option value="<?= $ict['fname']; ?>"><?= $ict['fname']; ?></option>
+													<option value="<?= $ict['fname']; ?>" <?= $ict['fname'] == $msrf['assigned_it_staff'] ? 'selected' : ''; ?>><?= $ict['fname']; ?></option>
 												<?php endforeach; ?>
 											</select>
 										</div>
-									</div>	
-									
+									</div>
+																		
 									<!-- REJECTED TIX -->
 									<div class="col-md-12" id="reason" style="display: none;">
 										<div class="form-group">

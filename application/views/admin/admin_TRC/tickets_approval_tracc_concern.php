@@ -153,7 +153,7 @@
                                                     <select class="form-control select2" name="received_by" id="received_by" <?= $disabled; ?>>
                                                         <option value=""disabled selected>Received By</option>
                                                         <?php foreach($ict_dept as $ict): ?>
-                                                            <option value="<?= $ict['fname']; ?>"><?= $ict['fname']; ?></option>
+                                                            <option value="<?= $ict['fname']; ?>" <?= $ict['fname'] == $tracc_con['received_by'] ? 'selected' : ''; ?>><?= $ict['fname']; ?></option>
                                                         <?php endforeach; ?>
                                                     </select>       
                                                 </div>
@@ -165,7 +165,7 @@
                                                     <select class="form-control select2" name="noted_by" id="noted_by" <?= $disabled; ?>>
                                                         <option value=""disabled selected>Noted By</option>
                                                             <?php foreach($ict_dept as $ict): ?>
-                                                        <option value="<?= $ict['fname']; ?>"><?= $ict['fname']; ?></option>
+                                                        <option value="<?= $ict['fname']; ?>" <?= $ict['fname'] == $tracc_con['resolved_by'] ? 'selected' : ''; ?>><?= $ict['fname']; ?></option>
 												<?php endforeach; ?> 
                                                     </select>  
                                                 </div>
@@ -181,10 +181,10 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Resolved by</label>
-                                                    <select class="form-control select2" name="resolved_by" id="resolved_by" <?= $disabled; ?>>
+                                                    <select class="form-control select2" name="resolved_by" id="resolved_by" >
                                                         <option value=""disabled selected>Resolved By</option>
                                                         <?php foreach($ict_dept as $ict): ?>
-                                                            <option value="<?= $ict['fname']; ?>"><?= $ict['fname']; ?></option>
+                                                            <option value="<?= $ict['fname']; ?>" <?= $ict['fname'] == $tracc_con['resolved_by'] ? 'selected' : ''; ?>><?= $ict['fname']; ?></option>
                                                         <?php endforeach; ?>
                                                     </select>  
                                                 </div>
