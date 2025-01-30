@@ -930,7 +930,11 @@ class AdminTraccReq_controller extends CI_Controller {
 	
 			if ($process[0] == 1) {
 				$this->session->set_flashdata('success', $process[1]);
-				$this->session->set_userdata('data', ['checkbox_data' => $newadd, 'expires_at' => time() + (5 * 60)]);
+				$this->session->set_userdata('data', [
+					'checkbox_data' => $newadd,
+					'expires_at' => time() + (5 * 60),
+					'recid' => $user_details[1]['recid'],
+				]);
 				redirect(base_url() . 'sys/admin/list/creation_tickets/tracc_request');
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
@@ -1167,7 +1171,7 @@ class AdminTraccReq_controller extends CI_Controller {
 	public function admin_shipping_setup_form() {
 		if($this->session->userdata('login_data')) {
 			$id = $this->session->userdata('login_data')['user_id'];
-			$ticket_numbers = $this->AdminTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
+			$ticket_numbers = $this->AdminTraccReq_model->get_customer_shipping_setup_from_tracc_req_mf_new_add($id);
 			$cutoff = $this->Main_model->get_cutoff();
 	
 			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
@@ -1242,7 +1246,7 @@ class AdminTraccReq_controller extends CI_Controller {
 		if($this->session->userdata('login_data')) {
 			$id = $this->session->userdata('login_data')['user_id'];
 			$departments = $this->Main_model->getDepartment();
-			$ticket_numbers = $this->AdminTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
+			$ticket_numbers = $this->AdminTraccReq_model->get_employee_request_form_from_tracc_req_mf_new_add($id);
 			$cutoff = $this->Main_model->get_cutoff();
 	
 			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
@@ -1304,7 +1308,7 @@ class AdminTraccReq_controller extends CI_Controller {
 		if($this->session->userdata('login_data')) {
 			$id = $this->session->userdata('login_data')['user_id'];
 			$cutoff = $this->Main_model->get_cutoff();
-			$ticket_numbers = $this->AdminTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
+			$ticket_numbers = $this->AdminTraccReq_model->get_item_request_form_from_tracc_req_mf_new_add($id);
 
 			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
 
@@ -1440,7 +1444,7 @@ class AdminTraccReq_controller extends CI_Controller {
 		if($this->session->userdata('login_data')) {
 			$id = $this->session->userdata('login_data')['user_id'];
 			$cutoff = $this->Main_model->get_cutoff();
-			$ticket_numbers = $this->AdminTraccReq_model->get_customer_from_tracc_req_mf_new_add($id);
+			$ticket_numbers = $this->AdminTraccReq_model->get_supplier_from_tracc_req_mf_new_add($id);
 			$departments = $this->Main_model->getDepartment();
 			
 			$allowed_menu = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu', 'admin_creation_request_form'];
