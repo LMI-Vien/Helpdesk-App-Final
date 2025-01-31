@@ -818,5 +818,309 @@ class AdminTraccReq_model extends CI_Model {
 			return array(0, "Error: Could not insert data. Please try again.");
 		}
 	}
+
+	public function update_cr($recid, $crf_comp_checkbox_values = null, $checkbox_cus_req_form_del) {
+		$trf_number = $this->input->post('trf_number', true);
+		
+		$data = array(
+			'ticket_id'                                 => $trf_number,
+			'requested_by'                              => $this->input->post('requested_by', true),
+			// 'requested_by_id'							=> $id,
+			'company'									=> $crf_comp_checkbox_values,
+			'date'                                      => $this->input->post('date', true),
+			'customer_code'                             => $this->input->post('customer_code', true),
+			'customer_name'                             => $this->input->post('customer_name', true),
+			'tin_no'                                    => $this->input->post('tin_no', true),
+			'terms'                                     => $this->input->post('terms', true),
+			'customer_address'                          => $this->input->post('customer_address', true),
+			'contact_person'                            => $this->input->post('contact_person', true),
+			'office_tel_no'                             => $this->input->post('office_tel_no', true),
+			'pricelist'                                 => $this->input->post('pricelist', true),
+			'payment_group'                             => $this->input->post('payment_grp', true),
+			'contact_no'                                => $this->input->post('contact_no', true),
+			'territory'                                 => $this->input->post('territory', true),
+			'salesman'                                  => $this->input->post('salesman', true),
+			'business_style'                            => $this->input->post('business_style', true),
+			'email'                                     => $this->input->post('email', true),
+			'shipping_code'                             => $this->input->post('shipping_code', true),
+			'route_code'                                => $this->input->post('route_code', true),
+			'customer_shipping_address'                 => $this->input->post('customer_shipping_address', true),
+			'landmark'                                  => $this->input->post('landmark', true),
+			'window_time_start'                         => $this->input->post('window_time_start', true),
+			'window_time_end'                           => $this->input->post('window_time_end', true),
+			'special_instruction'                       => $this->input->post('special_instruction', true),
+			'created_at'                                => date("Y-m-d H:i:s"),
+		);
+
+		// Start transaction
+		// $this->db->trans_start();
+		$this->db->update('tracc_req_customer_req_form', $data, ['recid' => $recid]);
+		
+		$checkbox_cus_req_form_del_days = [
+			// 'requested_by_id'						=> $id,
+			'ticket_id'                             => $trf_number,
+			'outright'                              => isset($checkbox_cus_req_form_del['checkbox_outright']) ? $checkbox_cus_req_form_del['checkbox_outright'] : 0,
+			'consignment'                           => isset($checkbox_cus_req_form_del['checkbox_consignment']) ? $checkbox_cus_req_form_del['checkbox_consignment'] : 0,
+			'customer_is_also_a_supplier'           => isset($checkbox_cus_req_form_del['checkbox_cus_a_supplier']) ? $checkbox_cus_req_form_del['checkbox_cus_a_supplier'] : 0,
+			'online'                                => isset($checkbox_cus_req_form_del['checkbox_online']) ? $checkbox_cus_req_form_del['checkbox_online'] : 0,
+			'walk_in'                               => isset($checkbox_cus_req_form_del['checkbox_walkIn']) ? $checkbox_cus_req_form_del['checkbox_walkIn'] : 0,
+			'monday'                                => isset($checkbox_cus_req_form_del['checkbox_monday']) ? $checkbox_cus_req_form_del['checkbox_monday'] : 0,
+			'tuesday'                               => isset($checkbox_cus_req_form_del['checkbox_tuesday']) ? $checkbox_cus_req_form_del['checkbox_tuesday'] : 0,
+			'wednesday'                             => isset($checkbox_cus_req_form_del['checkbox_wednesday']) ? $checkbox_cus_req_form_del['checkbox_wednesday'] : 0,
+			'thursday'                              => isset($checkbox_cus_req_form_del['checkbox_thursday']) ? $checkbox_cus_req_form_del['checkbox_thursday'] : 0,
+			'friday'                                => isset($checkbox_cus_req_form_del['checkbox_friday']) ? $checkbox_cus_req_form_del['checkbox_friday'] : 0,
+			'saturday'                              => isset($checkbox_cus_req_form_del['checkbox_saturday']) ? $checkbox_cus_req_form_del['checkbox_saturday'] : 0,
+			'sunday'                                => isset($checkbox_cus_req_form_del['checkbox_sunday']) ? $checkbox_cus_req_form_del['checkbox_sunday'] : 0,
+			'created_at'                            => date("Y-m-d H:i:s"),
+		];
+		$this->db->update('tracc_req_customer_req_form_del_days', $checkbox_cus_req_form_del_days, ['recid' => $recid]);
+
+		return array(1, "Successfully Updated Customer Request Form for: " . $data['ticket_id']);
+
+		// print_r($recid);
+		// print_r($crf_comp_checkbox_values);
+		// print_r($checkbox_cus_req_form_del);
+
+		// if ($this->db->affected_rows() > 0) {
+		// 	$this->db->trans_commit();
+		// } else {
+		// 	$this->db->trans_rollback();
+		// 	return array(0, "Error: Could not update delivery days data.");
+		// }
+	}
+
+	public function update_ss($id, $trf_comp_checkbox_values = null, $checkbox_cus_ship_setup) {
+		$trf_number = $this->input->post('trf_number', true);
+	
+		$data = array(
+			'ticket_id'                                 => $trf_number,
+			'requested_by'                              => $this->input->post('requested_by', true),
+			'shipping_code'                             => $this->input->post('shipping_code', true),
+			'route_code'                                => $this->input->post('route_code', true),
+			'customer_address'                          => $this->input->post('customer_address', true),
+			'landmark'                                  => $this->input->post('landmark', true),
+			'window_time_start'                         => $this->input->post('window_time_start', true),
+			'window_time_end'                           => $this->input->post('window_time_end', true),
+			'special_instruction'                       => $this->input->post('special_instruction', true),
+			'created_at'                                => date("Y-m-d H:i:s"),
+		);
+
+		if ($trf_comp_checkbox_values !== null) {
+			$data['company'] = $trf_comp_checkbox_values;
+		}
+	
+		$data['monday'] = isset($checkbox_cus_ship_setup['checkbox_monday']) ? $checkbox_cus_ship_setup['checkbox_monday'] : 0;
+		$data['tuesday'] = isset($checkbox_cus_ship_setup['checkbox_tuesday']) ? $checkbox_cus_ship_setup['checkbox_tuesday'] : 0;
+		$data['wednesday'] = isset($checkbox_cus_ship_setup['checkbox_wednesday']) ? $checkbox_cus_ship_setup['checkbox_wednesday'] : 0;
+		$data['thursday'] = isset($checkbox_cus_ship_setup['checkbox_thursday']) ? $checkbox_cus_ship_setup['checkbox_thursday'] : 0;
+		$data['friday'] = isset($checkbox_cus_ship_setup['checkbox_friday']) ? $checkbox_cus_ship_setup['checkbox_friday'] : 0;
+		$data['saturday'] = isset($checkbox_cus_ship_setup['checkbox_saturday']) ? $checkbox_cus_ship_setup['checkbox_saturday'] : 0;
+		$data['sunday'] = isset($checkbox_cus_ship_setup['checkbox_sunday']) ? $checkbox_cus_ship_setup['checkbox_sunday'] : 0;
+	
+		// $this->db->trans_begin();
+	
+		$this->db->update('tracc_req_customer_ship_setup', $data, ['recid' => $id]);
+		
+		return array(1, "Successfully Edited Customer Shipping Setup for: " . $data['ticket_id']);
+		
+		// print_r($data);
+		
+		// print_r($trf_comp_checkbox_values);
+
+		// if ($this->db->affected_rows() > 0) {
+		// 	$this->db->trans_commit();
+		// } else {
+		// 	$this->db->trans_rollback();
+		// 	return array(0, "Error: Could not edit data.");
+		// }
+	}
+
+	public function update_er($id) {
+		$data = [
+			'name' => $this->input->post('employee_name', true),
+			'position' => $this->input->post('position', true),
+			'department_desc' => $this->input->post('department', true),
+			'position' => $this->input->post('position', true),
+			'address' => $this->input->post('address', true),
+			'tel_no_mob_no' => $this->input->post('tel_mobile_no', true),
+			'tin_no' => $this->input->post('tin_no', true),
+			'contact_person' => $this->input->post('contact_person', true),
+		];
+
+		$this->db->update('tracc_req_employee_req_form', $data, ['recid' => $id]);
+
+		return array(1, "Successfully Edited Employee Request for: " . $this->input->post('ticket_id', true));
+	}
+
+	public function update_ir($recid, $irf_comp_checkbox_value = null, $checkbox_item_req_form) {
+		$trf_number = $this->input->post('trf_number', true);
+
+		$data = array(
+			'ticket_id'                                 => $trf_number,
+			'requested_by'                              => $this->input->post('requested_by', true),
+			// 'requested_by_id'							=> $id,
+			'date'                                      => $this->input->post('date', true),
+			'lmi_item_code'                             => $this->input->post('lmi_item_code', true),
+			'long_description'                          => $this->input->post('long_description', true),
+			'short_description'                         => $this->input->post('short_description', true),
+			'item_classification'                       => $this->input->post('item_classification', true),
+			'item_sub_classification'                   => $this->input->post('item_sub_classification', true),
+			'department'                                => $this->input->post('department', true),
+			'merch_category'                            => $this->input->post('merch_cat', true),
+			'brand'                                     => $this->input->post('brand', true),
+			'supplier_code'                             => $this->input->post('supplier_code', true),
+			'supplier_name'                             => $this->input->post('supplier_name', true),
+			'class'                                     => $this->input->post('class', true),
+			'tag'                                       => $this->input->post('tag', true),
+			'source'                                    => $this->input->post('source', true),
+			'hs_code'                                   => $this->input->post('hs_code', true),
+			'unit_cost'                                 => $this->input->post('unit_cost', true),
+			'selling_price'                             => $this->input->post('selling_price', true),
+			'major_item_group'                          => $this->input->post('major_item_group', true),
+			'item_sub_group'                            => $this->input->post('item_sub_group', true),
+			'account_type'                              => $this->input->post('account_type', true),
+			'sales'                                     => $this->input->post('sales', true),
+			'sales_return'                              => $this->input->post('sales_return', true),
+			'purchases'                                 => $this->input->post('purchases', true),
+			'purchase_return'                           => $this->input->post('purchase_return', true),
+			'cgs'                                       => $this->input->post('cgs', true),
+			'inventory'                                 => $this->input->post('inventory', true),
+			'sales_disc'                                => $this->input->post('sales_disc', true),
+			'gl_department'                             => $this->input->post('gl_dept', true),
+			'capacity_per_pallet'                       => $this->input->post('capacity_per_pallet', true),
+			'created_at'                                => date("Y-m-d H:i:s"),
+		);
+
+		if ($irf_comp_checkbox_value !== null) {
+			$data['company'] = $irf_comp_checkbox_value;
+		}
+
+		$this->db->trans_begin();
+		$this->db->update('tracc_req_item_request_form', $data, ['recid' => $recid]);
+
+		$checkboxes_item_req_form = [
+			'ticket_id'                             => $trf_number,
+			'inventory'                             => isset($checkbox_item_req_form['checkbox_inventory']) ? $checkbox_item_req_form['checkbox_inventory'] : 0,
+			'non_inventory'                         => isset($checkbox_item_req_form['checkbox_non_inventory']) ? $checkbox_item_req_form['checkbox_non_inventory'] : 0,
+			'services'                              => isset($checkbox_item_req_form['checkbox_services']) ? $checkbox_item_req_form['checkbox_services'] : 0,
+			'charges'                               => isset($checkbox_item_req_form['checkbox_charges']) ? $checkbox_item_req_form['checkbox_charges'] : 0,
+			'watsons'                               => isset($checkbox_item_req_form['checkbox_watsons']) ? $checkbox_item_req_form['checkbox_watsons'] : 0,
+			'other_accounts'                        => isset($checkbox_item_req_form['checkbox_other_accounts']) ? $checkbox_item_req_form['checkbox_other_accounts'] : 0,
+			'online'                                => isset($checkbox_item_req_form['checkbox_online']) ? $checkbox_item_req_form['checkbox_online'] : 0,
+			'all_accounts'                          => isset($checkbox_item_req_form['checkbox_all_accounts']) ? $checkbox_item_req_form['checkbox_all_accounts'] : 0,
+			'trade'                                 => isset($checkbox_item_req_form['radio_trade_type']) && $checkbox_item_req_form['radio_trade_type'] === 'trade' ? 1 : 0,  					
+			'yes'                                   => isset($checkbox_item_req_form['radio_batch_required']) && $checkbox_item_req_form['radio_batch_required'] === 'yes' ? 1 : 0,
+		];
+		$this->db->update('tracc_req_item_request_form_checkboxes', $checkboxes_item_req_form, ['recid' => $recid]);
+
+		$this->db->trans_commit();
+		return array(1, "Successfully Updated Item Request Form for: " . $data['ticket_id']);
+	}
+
+	public function update_batch_rows_gl_setup($update_data_gl_setup) {
+		// if(!empty($insert_data_gl_setup)) {
+		// 	foreach($insert_data_gl_setup as $row) {
+		// 		// echo print_r($row);
+		// 		$this->db->insert('tracc_req_item_req_form_gl_setup', $row);
+		// 	}
+		// }
+
+		foreach($update_data_gl_setup as $row) {
+			echo print_r($row);
+			$this->db->update('tracc_req_item_req_form_gl_setup', $row, ['recid' => $row['recid']]);
+		}
+
+	}
+
+	public function update_batch_rows_whs_setup($update_data_whs_setup) {
+		// if(!empty($insert_data_whs_setup)) {
+		// 	foreach($insert_data_whs_setup as $row) {
+		// 		$this->db->insert('tracc_req_item_req_form_whs_setup', $row);
+		// 	}
+		// }
+
+		// echo print_r($update_data_whs_setup);
+		foreach($update_data_whs_setup as $row) {
+			$this->db->update('tracc_req_item_req_form_whs_setup', $row, ['recid' => $row['recid']]);
+		}
+	}
+
+	public function update_sr($id, $trf_comp_checkbox_value = null, $checkbox_non_vat = 0, $checkbox_supplier_req_form) {
+		$trf_number = $this->input->post('trf_number', true);
+
+		$data = array(
+			'ticket_id'                                 => $trf_number,
+			'requested_by'                              => $this->input->post('requested_by', true),
+			'date'                                      => $this->input->post('date', true),
+			'supplier_code'                             => $this->input->post('supplier_code', true),
+			'supplier_account_group'                    => $this->input->post('supplier_account_group', true),
+			'supplier_name'                             => $this->input->post('supplier_name', true),
+			'country_origin'                            => $this->input->post('country_origin', true),
+			'supplier_address'                          => $this->input->post('supplier_address', true),
+			'office_tel'                                => $this->input->post('office_tel_no', true),
+			'zip_code'                                  => $this->input->post('zip_code', true),
+			'contact_person'                            => $this->input->post('contact_person', true),
+			'terms'                                     => $this->input->post('terms', true),
+			'tin_no'                                    => $this->input->post('tin_no', true),
+			'pricelist'                                 => $this->input->post('pricelist', true),
+			'ap_account'                                => $this->input->post('ap_account', true),
+			'ewt'                                       => $this->input->post('ewt', true),
+			'advance_account'                           => $this->input->post('advance_acc', true),
+			'vat'                                       => $this->input->post('vat', true),
+			'non_vat'                                   => $checkbox_non_vat,
+			'payee_1'                                   => $this->input->post('payee1', true),
+			'payee_2'                                   => $this->input->post('payee2', true),
+			'payee_3'                                   => $this->input->post('payee3', true),
+			'driver_name'                               => $this->input->post('driver_name', true),
+			'driver_contact_no'                         => $this->input->post('driver_contact_no', true),
+			'driver_fleet'                              => $this->input->post('driver_fleet', true),
+			'driver_plate_no'                           => $this->input->post('driver_plate_no', true),
+			'helper_name'                               => $this->input->post('helper_name', true),
+			'helper_contact_no'                         => $this->input->post('helper_contact_no', true),
+			'helper_rate_card'                          => $this->input->post('helper_rate_card', true),
+			'created_at'                                => date("Y-m-d H:i:s"),
+		);
+
+		if ($trf_comp_checkbox_value !== null) {
+			$data['company'] = $trf_comp_checkbox_value;
+		}
+
+		// $this->db->trans_begin();
+		$this->db->update('tracc_req_supplier_req_form', $data, ['recid' => $id]);
+
+		$checkboxes_sup_req_form = [
+			'ticket_id'                             => $trf_number,
+			'supplier_group_local'                  => isset($checkbox_supplier_req_form['local_supplier_grp']) ? $checkbox_supplier_req_form['local_supplier_grp'] : 0,
+			'supplier_group_foreign'                => isset($checkbox_supplier_req_form['foreign_supplier_grp']) ? $checkbox_supplier_req_form['foreign_supplier_grp'] : 0,
+			'supplier_trade'                        => isset($checkbox_supplier_req_form['supplier_trade']) ? $checkbox_supplier_req_form['supplier_trade'] : 0, 
+			'supplier_non_trade'                    => isset($checkbox_supplier_req_form['supplier_non_trade']) ? $checkbox_supplier_req_form['supplier_non_trade'] : 0,
+			'trade_type_goods'                      => isset($checkbox_supplier_req_form['trade_type_goods']) ? $checkbox_supplier_req_form['trade_type_goods'] : 0, 
+			'trade_type_services'                   => isset($checkbox_supplier_req_form['trade_type_services']) ? $checkbox_supplier_req_form['trade_type_services'] : 0,
+			'trade_type_goods_services'             => isset($checkbox_supplier_req_form['trade_type_GoodsServices']) ? $checkbox_supplier_req_form['trade_type_GoodsServices'] : 0,
+			'major_grp_local_trade_vendor'          => isset($checkbox_supplier_req_form['major_grp_local_trade_ven']) ? $checkbox_supplier_req_form['major_grp_local_trade_ven'] : 0,
+			'major_grp_local_non_trade_vendor'      => isset($checkbox_supplier_req_form['major_grp_local_nontrade_ven']) ? $checkbox_supplier_req_form['major_grp_local_nontrade_ven'] : 0,
+			'major_grp_foreign_trade_vendors'       => isset($checkbox_supplier_req_form['major_grp_foreign_trade_ven']) ? $checkbox_supplier_req_form['major_grp_foreign_trade_ven'] : 0,
+			'major_grp_foreign_non_trade_vendors'   => isset($checkbox_supplier_req_form['major_grp_foreign_nontrade_ven']) ? $checkbox_supplier_req_form['major_grp_foreign_nontrade_ven'] : 0,
+			'major_grp_local_broker_forwarder'      => isset($checkbox_supplier_req_form['major_grp_local_broker_forwarder']) ? $checkbox_supplier_req_form['major_grp_local_broker_forwarder'] : 0,
+			'major_grp_rental'                      => isset($checkbox_supplier_req_form['major_grp_rental']) ? $checkbox_supplier_req_form['major_grp_rental'] : 0,
+			'major_grp_bank'                        => isset($checkbox_supplier_req_form['major_grp_bank']) ? $checkbox_supplier_req_form['major_grp_bank'] : 0,
+			'major_grp_ot_supplier'                 => isset($checkbox_supplier_req_form['major_grp_one_time_supplier']) ? $checkbox_supplier_req_form['major_grp_one_time_supplier'] : 0,
+			'major_grp_government_offices'          => isset($checkbox_supplier_req_form['major_grp_government_offices']) ? $checkbox_supplier_req_form['major_grp_government_offices'] : 0,
+			'major_grp_insurance'                   => isset($checkbox_supplier_req_form['major_grp_insurance']) ? $checkbox_supplier_req_form['major_grp_insurance'] : 0,
+			'major_grp_employees'                   => isset($checkbox_supplier_req_form['major_grp_employees']) ? $checkbox_supplier_req_form['major_grp_employees'] : 0,
+			'major_grp_sub_aff_intercompany'        => isset($checkbox_supplier_req_form['major_grp_subs_affiliates']) ? $checkbox_supplier_req_form['major_grp_subs_affiliates'] : 0,
+			'major_grp_utilities'                   => isset($checkbox_supplier_req_form['major_grp_utilities']) ? $checkbox_supplier_req_form['major_grp_utilities'] : 0,
+		];
+		$this->db->update('tracc_req_supplier_req_form_checkboxes', $checkboxes_sup_req_form, ['recid' => $id]);
+
+		// $this->db->trans_commit();
+		return array(1, "Successfully CreatedItem Request Form for: " . $data['ticket_id']);
+		// if ($this->db->affected_rows() > 0) {
+		// } else {
+		// 	$this->db->trans_rollback();
+		// 	return array(0, "Error: Could not edit data.");
+		// }
+	}
+	
 }
 ?>

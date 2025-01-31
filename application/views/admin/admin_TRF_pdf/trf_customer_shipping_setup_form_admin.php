@@ -1,5 +1,12 @@
 <?php 
 $role = $this->session->userdata('login_data')['role'];
+
+$disabled = "disabled";
+
+
+if($user_id) {
+    $disabled = "";
+}
 ?>
 
 <style>
@@ -74,8 +81,14 @@ $role = $this->session->userdata('login_data')['role'];
                     <div class="tab-pane active" id="msrf">
                         <section id="new">
                             <div class="row">
-                                <form action="<?= site_url('AdminTraccReq_controller/approve_css'); ?>" method="POST">      
-                                    <input type="hidden" name="recid" id="recid" value="<?php echo $recid; ?>">                                  
+                                <?php if($role == "L2" && $user_id): ?>
+                                    <form method="POST" action="<?= site_url('AdminTraccReq_controller/admin_update_customer_shipping_setup_pdf/' . $recid); ?>">
+                                <?php else: ?>
+                                    <form action="<?= site_url('AdminTraccReq_controller/approve_css'); ?>" method="POST">
+                                <?php endif; ?>
+                                    <input type="hidden" name="recid" id="recid" value="<?php echo $recid; ?>">
+                                    <input type="hidden" name="trf_number" value="<?= $ticket_id; ?>">
+                                    <input type="hidden" name="approved" value="<?= $user_details['fname'] . ' ' . $user_details['lname']; ?>">
                                     <div class="row">
                                         <!-- Checkboxes Section -->
                                         <div class="col-md-12 text-center" style="margin-top: 15px;">
@@ -91,7 +104,7 @@ $role = $this->session->userdata('login_data')['role'];
                                                     ?>
                                                     <?php foreach ($availableCompanies as $company): ?>
                                                     <div class="checkbox-inline custom-checkbox">
-                                                        <input type="checkbox" name="trf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?> disabled>
+                                                        <input type="checkbox" name="trf_comp_checkbox_value[]" value="<?= $company; ?>" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                         <label for="checkbox_rgdi" class="checkbox-label"><?php echo $company; ?></label>
                                                     </div>
                                                     <?php endforeach;?>
@@ -103,21 +116,21 @@ $role = $this->session->userdata('login_data')['role'];
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Shipping Code</label>
-                                            <input type="text" name="shipping_code" id="shipping_code" value="<?php echo $shipping_code ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="shipping_code" id="shipping_code" value="<?php echo $shipping_code ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Route Code</label>
-                                            <input type="text" name="route_code" id="route_code" value="<?php echo $route_code ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="route_code" id="route_code" value="<?php echo $route_code ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Customer Address</label>
-                                            <input type="text" name="customer_address" id="customer_address" value="<?php echo $customer_address ?>" class="form-control select2" readonly>
+                                            <input type="text" name="customer_address" id="customer_address" value="<?php echo $customer_address ?>" class="form-control select2" <?= $disabled; ?>>
                                             <small class="form-text text-muted">
                                                 <table class="table table-borderless mb-0">
                                                     <tr>
@@ -137,28 +150,28 @@ $role = $this->session->userdata('login_data')['role'];
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Landmark</label>
-                                            <input type="text" name="landmark" id="landmark" value="<?php echo $landmark ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="landmark" id="landmark" value="<?php echo $landmark ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Window Time Start</label>
-                                            <input type="time" name="window_time_start" id="window_time_start" value="<?php echo $window_time_start ?>" class="form-control select2" readonly>
+                                            <input type="time" name="window_time_start" id="window_time_start" value="<?php echo $window_time_start ?>" class="form-control select2" <?= $disabled; ?>>
                                         </div>
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Window Time End</label>
-                                            <input type="time" name="window_time_end" id="window_time_end" value="<?php echo $window_time_end ?>" class="form-control select2" readonly>
+                                            <input type="time" name="window_time_end" id="window_time_end" value="<?php echo $window_time_end ?>" class="form-control select2" <?= $disabled; ?>>
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Special Instruction</label>
-                                            <input type="text" name="special_instruction" id="special_instruction" value="<?php echo $special_instruction ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="special_instruction" id="special_instruction" value="<?php echo $special_instruction ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
@@ -167,43 +180,43 @@ $role = $this->session->userdata('login_data')['role'];
                                         <div class="d-flex flex-wrap"> 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_monday" name="checkbox_monday" value="1" 
-                                                <?php echo ($monday == 1) ? 'checked' : ''; ?> disabled> 
+                                                <?php echo ($monday == 1) ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                 <label class="form-check-label" for="checkbox_monday">Monday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_tuesday" name="checkbox_tuesday" value="1"
-                                                <?php echo ($tuesday == 1) ? 'checked' : ''; ?> disabled> 
+                                                <?php echo ($tuesday == 1) ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                 <label class="form-check-label" for="checkbox_tuesday">Tuesday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_wednesday" name="checkbox_wednesday" value="1"
-                                                <?php echo ($wednesday == 1) ? 'checked' : ''; ?> disabled> 
+                                                <?php echo ($wednesday == 1) ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                 <label class="form-check-label" for="checkbox_wednesday">Wednesday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_thursday" name="checkbox_thursday" value="1"
-                                                <?php echo ($thursday == 1) ? 'checked' : ''; ?> disabled> 
+                                                <?php echo ($thursday == 1) ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                 <label class="form-check-label" for="checkbox_thursday">Thursday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_friday" name="checkbox_friday" value="1"
-                                                <?php echo ($friday == 1) ? 'checked' : ''; ?> disabled> 
+                                                <?php echo ($friday == 1) ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                 <label class="form-check-label" for="checkbox_friday">Friday</label> 
                                             </div>
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_saturday" name="checkbox_saturday" value="1"
-                                                <?php echo ($saturday == 1) ? 'checked' : ''; ?> disabled> 
+                                                <?php echo ($saturday == 1) ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                 <label class="form-check-label" for="checkbox_saturday">Saturday</label> 
                                             </div> 
 
                                             <div class="form-check form-check-inline-custom"> 
                                                 <input class="form-check-input" type="checkbox" id="checkbox_sunday" name="checkbox_sunday" value="1"
-                                                <?php echo ($sunday == 1) ? 'checked' : ''; ?> disabled> 
+                                                <?php echo ($sunday == 1) ? 'checked' : ''; ?> <?= $disabled; ?>> 
                                                 <label class="form-check-label" for="checkbox_sunday">Sunday</label> 
                                             </div> 
                                         </div> 
@@ -212,24 +225,39 @@ $role = $this->session->userdata('login_data')['role'];
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Requested By</label>
-                                            <input type="text" name="requested_by" id="requested_by" value="<?php echo $requested_by; ?>" class="form-control select2" required readonly> 
+                                            <input type="text" name="requested_by" id="requested_by" value="<?php echo $requested_by; ?>" class="form-control select2" required disabled>
                                         </div>
                                     </div>
                                     
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Approved By</label>
-                                            <input type="text" name="approved_by" id="approved_by" value="<?php echo $approved_by; ?>" class="form-control select2" <?php echo ($role === 'L3') ? 'readonly' : ''; ?> required> 
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div class="box-body pad">
-                                                <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?php echo ($role === 'L3') ? 'disabled' : ''; ?>>Approved</button>
+                                    <?php if($role == "L3"): ?>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Approved By</label>
+                                                <input type="text" name="approved_by" id="approved_by" value="<?php echo $approved_by; ?>" class="form-control select2" <?php echo ($role === 'L3') ? 'readonly' : ''; ?> required> 
                                             </div>
                                         </div>
-                                    </div>
+                                    <?php endif; ?>
+
+                                    <?php if($role == "L2" && $user_id): ?>
+                                    
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="box-body pad">
+                                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    <?php else: ?>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="box-body pad">
+                                                    <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?php echo ($role === 'L3') ? 'disabled' : ''; ?>>Approved</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
                                                             
                                 </form>
                             </div>

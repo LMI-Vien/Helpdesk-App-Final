@@ -1,5 +1,12 @@
 <?php 
 $role = $this->session->userdata('login_data')['role'];
+
+$disabled = '';
+
+if(!$user_id) {
+    $disabled = 'disabled';
+}
+
 ?>
 
 <style>
@@ -86,12 +93,18 @@ $role = $this->session->userdata('login_data')['role'];
                     <div class="tab-pane active" id="msrf">
                         <section id="new">
                             <div class="row">
-                                <form action="<?= site_url('AdminTraccReq_controller/approve_erf'); ?>" method="POST">
+                                <?php if($role == "L2" && $user_id): ?>
+                                    <form action="<?= site_url('AdminTraccReq_controller/admin_update_employee_request_form_pdf/' . $recid); ?>" method="POST">
+                                <?php else: ?>
+                                    <form action="<?= site_url('AdminTraccReq_controller/approve_erf'); ?>" method="POST">
+                                <?php endif; ?>
                                 <input type="hidden" name="recid" id="recid" value="<?php echo $recid; ?>">
+                                <input type="hidden" name="ticket_id" id="ticket_id" value="<?= $ticket_id; ?>">
+                                <input type="hidden" name="approved" value="<?= $user_details['fname'] . ' ' . $user_details['lname']; ?>">
                                     <div class="col-md-12" style="margin-top: 20px;">
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input type="text" name="employee_name" id="employee_name" value="<?php echo $name; ?>" class="form-control select2" required readonly> 
+                                            <input type="text" name="employee_name" id="employee_name" value="<?php echo $name; ?>" class="form-control select2" required <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
@@ -107,66 +120,78 @@ $role = $this->session->userdata('login_data')['role'];
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Department</label>
-                                            <input type="text" name="position" id="position" value="<?php echo $department_desc; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="department" id="department" value="<?php echo $department_desc; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Position</label>
-                                            <input type="text" name="position" id="position" value="<?php echo $position; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="position" id="position" value="<?php echo $position; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Address</label>
-                                            <input type="text" name="address" id="address" value="<?php echo $address; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="address" id="address" value="<?php echo $address; ?>" class="form-control select2" <?= $disabled; ?>>
                                         </div>
                                     </div>
                                     
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Tel No. / Mobile No.</label>
-                                            <input type="text" name="tel_mobile_no" id="tel_mobile_no" value="<?php echo $tel_no_mob_no; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="tel_mobile_no" id="tel_mobile_no" value="<?php echo $tel_no_mob_no; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>TIN No.</label>
-                                            <input type="text" name="tin_no" id="tin_no" value="<?php echo $tin_no; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="tin_no" id="tin_no" value="<?php echo $tin_no; ?>" class="form-control select2" <?= $disabled; ?>>
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Contact Person</label>
-                                            <input type="text" name="contact_person" id="contact_person" value="<?php echo $contact_person; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="contact_person" id="contact_person" value="<?php echo $contact_person; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>  
                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Requested By</label>
-                                            <input type="text" name="requested_by" id="requested_by" value="<?php echo $requested_by; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="requested_by" id="requested_by" value="<?php echo $requested_by; ?>" class="form-control select2" disabled> 
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Approved By</label>
-                                            <input type="text" name="approved_by" id="approved_by" value="<?php echo $approved_by; ?>" class="form-control select2" <?php echo ($role === 'L3') ? 'readonly' : ''; ?>> 
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div class="box-body pad">
-                                                <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?php echo ($role === 'L3') ? 'disabled' : ''; ?>>Approved</button>
+                                    <?php if($role == "L3"): ?>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Approved By</label>
+                                                <input type="text" name="approved_by" id="approved_by" value="<?php echo $approved_by; ?>" class="form-control select2" <?php echo ($role === 'L3') ? 'readonly' : ''; ?>> 
                                             </div>
                                         </div>
-                                    </div>
+                                    <?php endif; ?>
+
+                                    <?php if($role == "L2" && $user_id): ?>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="box-body pad">
+                                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="box-body pad">
+                                                    <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?php echo ($role === 'L3') ? 'disabled' : ''; ?>>Approved</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
 
                                 </form>
                             </div>

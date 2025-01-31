@@ -141,6 +141,7 @@ class AdminTraccReq_controller extends CI_Controller {
 	// JQuery TABS for Customer Request Form
 	public function cus_req_form_JTabs($dept_id){
 		$user_role = $this->session->userdata('login_data')['role'];
+		$user_details = $this->Main_model->user_details();
 
 		$dept = $user_role == 'L3' ? null : $dept_id;
 
@@ -186,6 +187,8 @@ class AdminTraccReq_controller extends CI_Controller {
 					'approved_by' 					=> $ticket['approved_by'],
 					'approved_date' 				=> $ticket['approved_date'],
 					'checkbox_data'		 			=> $checkbox_data,
+					'user_id'						=> $ticket['requested_by_id'] == $this->session->userdata('login_data')['user_id'],
+					'user_details'					=> $user_details,
 				];
 
 				$formHtml = $this->load->view('admin/admin_TRF_pdf/trf_customer_request_form_admin', $formData, TRUE);			
@@ -251,6 +254,7 @@ class AdminTraccReq_controller extends CI_Controller {
 	// JQuery TABS for Customer Shipping Setup
 	public function cus_ship_setup_JTtabs($dept_id){
 		$user_role = $this->session->userdata('login_data')['role'];
+		$user_details = $this->Main_model->user_details()[1];
 
 		$dept = $user_role == 'L3' ? null : $dept_id;
 
@@ -288,6 +292,8 @@ class AdminTraccReq_controller extends CI_Controller {
 					'created_at' 				=> $ticket['created_at'],
 					'approved_by' 				=> $ticket['approved_by'],
 					'approved_date' 			=> $ticket['approved_date'],
+					'user_id'					=> $ticket['requested_by_id'] == $this->session->userdata('login_data')['user_id'],
+					'user_details'				=> $user_details,
 				];
 
 				$formHtml = $this->load->view('admin/admin_TRF_pdf/trf_customer_shipping_setup_form_admin', $formData, TRUE);			
@@ -353,7 +359,7 @@ class AdminTraccReq_controller extends CI_Controller {
 	// JQuery TABS for Employee Request Form
 	public function emp_req_form_JTabs($dept_id){
 		$user_role = $this->session->userdata('login_data')['role'];
-
+		$user_details = $this->Main_model->user_details()[1];
 		$dept = $user_role == 'L3' ? null : $dept_id;
 
 		$tickets = $this->AdminTraccReq_model->get_ticket_counts_employee_req($dept);
@@ -378,6 +384,8 @@ class AdminTraccReq_controller extends CI_Controller {
 					'created_at' 				=> $ticket['created_at'],
 					'approved_by' 				=> $ticket['approved_by'],
 					'approved_date' 			=> $ticket['approved_date'],
+					'user_id'					=> $this->session->userdata('login_data')['user_id'] == $ticket['requested_by_id'],
+					'user_details'				=> $user_details,
 				];
 				
 				$formHtml = $this->load->view('admin/admin_TRF_pdf/trf_employee_request_form_admin', $formData, TRUE);
@@ -448,7 +456,7 @@ class AdminTraccReq_controller extends CI_Controller {
 	// JQuery TABS for Item Request Form 
 	public function item_req_form_JTabs($dept_id){
 		$user_role = $this->session->userdata('login_data')['role'];
-
+		$user_details = $this->Main_model->user_details()[1];
 		$dept = $user_role == 'L3' ? null : $dept_id;
 
 		$tickets = $this->AdminTraccReq_model->get_ticket_counts_item_req_form($dept);
@@ -469,6 +477,7 @@ class AdminTraccReq_controller extends CI_Controller {
 					'recid' 						=> $ticket['recid'],
 					'ticket_id' 					=> $ticket['ticket_id'],
 					'requested_by' 					=> $ticket['requested_by'],
+					'requested_by_id'				=> $ticket['requested_by_id'],
 					'companies' 					=> $companies,
 					'date' 							=> $ticket['date'],
 					'lmi_item_code' 				=> $ticket['lmi_item_code'],
@@ -505,6 +514,8 @@ class AdminTraccReq_controller extends CI_Controller {
 					'checkbox_data1' 				=> $checkbox_data1,
 					'checkbox_data2' 				=> $checkbox_data2,
 					'checkbox_data3' 				=> $checkbox_data3,
+					'user_details'					=> $user_details,
+					'user_id'						=> $this->session->userdata('login_data')['user_id'] == $ticket['requested_by_id'],
 				];
 
 				$formHtml = $this->load->view('admin/admin_TRF_pdf/trf_item_request_form_admin', $formData, TRUE);			
@@ -575,7 +586,7 @@ class AdminTraccReq_controller extends CI_Controller {
 	// JQuery TABS for Supplier Request Form
 	public function sup_req_form_JTabs($dept_id){
 		$user_role = $this->session->userdata('login_data')['role'];
-
+		$user_details = $this->Main_model->user_details()[1];
 		$dept = $user_role == 'L3' ? null : $dept_id;
 
 		$tickets = $this->AdminTraccReq_model->get_ticket_counts_supplier_req($dept);
@@ -624,6 +635,8 @@ class AdminTraccReq_controller extends CI_Controller {
 					'approved_by'					=> $ticket['approved_by'],
 					'approved_date'  				=> $ticket['approved_date'],
 					'checkbox_data' 				=> $checkbox_data,
+					'user_details'					=> $user_details,
+					'user_id'						=> $this->session->userdata('login_data')['user_id'] == $ticket['requested_by_id'],
 				];
 				
 				$formHtml = $this->load->view('admin/admin_TRF_pdf/trf_supplier_request_form_admin', $formData, TRUE);
@@ -661,7 +674,7 @@ class AdminTraccReq_controller extends CI_Controller {
 
 	// Approve Customer Request Form
 	public function approve_crf(){			
-		$approved_by = $this->input->post('approved_by');
+		$approved_by = $this->input->post('approved');
 		$recid = $this->input->post('recid');
 
 		$process = $this->AdminTraccReq_model->approve_crf($approved_by, $recid);
@@ -676,7 +689,7 @@ class AdminTraccReq_controller extends CI_Controller {
 
 	// Approve Customer Shipping Setup
 	public function approve_css(){
-		$approved_by = $this->input->post('approved_by');
+		$approved_by = $this->input->post('approved');
 		$recid = $this->input->post('recid');
 
 		$process = $this->AdminTraccReq_model->approve_css($approved_by, $recid);
@@ -691,7 +704,7 @@ class AdminTraccReq_controller extends CI_Controller {
 
 	// Approve Employee Request Form
 	public function approve_erf(){
-		$approved_by = $this->input->post('approved_by');
+		$approved_by = $this->input->post('approved');
 		$recid = $this->input->post('recid');
 
 		$process = $this->AdminTraccReq_model->approve_erf($approved_by, $recid);
@@ -706,7 +719,7 @@ class AdminTraccReq_controller extends CI_Controller {
 
 	// Approve Item Request Form
 	public function approve_irf(){
-		$approved_by = $this->input->post('approved_by');
+		$approved_by = $this->input->post('approved');
 		$recid = $this->input->post('recid');
 
 		$process = $this->AdminTraccReq_model->approve_irf($approved_by, $recid);
@@ -721,7 +734,7 @@ class AdminTraccReq_controller extends CI_Controller {
 
 	// Approve Supplier Request Form
 	public function approve_srf(){
-		$approved_by = $this->input->post('approved_by');
+		$approved_by = $this->input->post('approved');
 		$recid = $this->input->post('recid');
 
 		$process = $this->AdminTraccReq_model->approve_srf($approved_by, $recid);
@@ -1168,6 +1181,38 @@ class AdminTraccReq_controller extends CI_Controller {
 		}
 	}
 
+	public function admin_update_customer_request_form_pdf($recid) {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
+		$trf_comp_checkbox_values = isset($_POST['trf_comp_checkbox_value']) ? $_POST['trf_comp_checkbox_value'] : [];
+		$imploded_values = implode(',', $trf_comp_checkbox_values);
+
+		$checkbox_cus_req_form_del = [
+			'checkbox_outright'             => isset($_POST['checkbox_outright']) ? 1 : 0,
+			'checkbox_consignment'          => isset($_POST['checkbox_consignment']) ? 1 : 0,
+			'checkbox_cus_a_supplier'       => isset($_POST['checkbox_cus_a_supplier']) ? 1 : 0,
+			'checkbox_online'               => isset($_POST['checkbox_online']) ? 1 : 0,
+			'checkbox_walkIn'               => isset($_POST['checkbox_walkIn']) ? 1 : 0,
+			'checkbox_monday'               => isset($_POST['checkbox_monday']) ? 1 : 0,
+			'checkbox_tuesday'              => isset($_POST['checkbox_tuesday']) ? 1 : 0,
+			'checkbox_wednesday'            => isset($_POST['checkbox_wednesday']) ? 1 : 0,
+			'checkbox_thursday'             => isset($_POST['checkbox_thursday']) ? 1 : 0,
+			'checkbox_friday'               => isset($_POST['checkbox_friday']) ? 1 : 0,
+			'checkbox_saturday'             => isset($_POST['checkbox_saturday']) ? 1 : 0,
+			'checkbox_sunday'               => isset($_POST['checkbox_sunday']) ? 1 : 0,
+		];
+
+		$process = $this->AdminTraccReq_model->update_cr($recid, $imploded_values, $checkbox_cus_req_form_del);
+
+		if ($process[0] == 1) {
+			$this->session->set_flashdata('success', $process[1]);
+			redirect(base_url().'sys/admin/customer_request_form_pdf');  
+		} else {
+			$this->session->set_flashdata('error', $process[1]);
+			redirect(base_url().'sys/admin/customer_request_form_pdf'); 
+		}
+	}
+
 	public function admin_shipping_setup_form() {
 		if($this->session->userdata('login_data')) {
 			$id = $this->session->userdata('login_data')['user_id'];
@@ -1242,6 +1287,34 @@ class AdminTraccReq_controller extends CI_Controller {
 		}
 	}
 
+	public function admin_update_customer_shipping_setup_pdf($recid) {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
+		$trf_comp_checkbox_value = isset($_POST['trf_comp_checkbox_value']) ? $_POST['trf_comp_checkbox_value'] : [];
+		$imploded_values = implode(',', $trf_comp_checkbox_value);
+
+		$checkbox_cus_ship_setup = [
+			'checkbox_monday'           => isset($_POST['checkbox_monday']) ? 1 : 0,
+			'checkbox_tuesday'          => isset($_POST['checkbox_tuesday']) ? 1 : 0,
+			'checkbox_wednesday'        => isset($_POST['checkbox_wednesday']) ? 1 : 0,
+			'checkbox_thursday'         => isset($_POST['checkbox_thursday']) ? 1 : 0,
+			'checkbox_friday'           => isset($_POST['checkbox_friday']) ? 1 : 0,
+			'checkbox_saturday'         => isset($_POST['checkbox_saturday']) ? 1 : 0,
+			'checkbox_sunday'           => isset($_POST['checkbox_sunday']) ? 1 : 0,
+		];
+
+		$process = $this->AdminTraccReq_model->update_ss($recid, $imploded_values, $checkbox_cus_ship_setup);
+		// echo $recid;
+		// echo print_r($imploded_values);
+		if ($process[0] == 1) {
+			$this->session->set_flashdata('success', $process[1]);
+			redirect(base_url().'sys/admin/customer_shipping_setup_pdf');  
+		} else {
+			$this->session->set_flashdata('error', $process[1]);
+			redirect(base_url().'sys/admin/customer_shipping_setup_pdf');  
+		}
+	}
+
 	public function admin_employee_request_form() {
 		if($this->session->userdata('login_data')) {
 			$id = $this->session->userdata('login_data')['user_id'];
@@ -1302,6 +1375,20 @@ class AdminTraccReq_controller extends CI_Controller {
 			$this->session->set_flashdata('error', $process[1]);
 			redirect(base_url().'sys/admin/create/tickets/tracc_request/employee_request');  
 		}
+	}
+
+	public function admin_update_employee_request_form_pdf($recid) {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$process = $this->AdminTraccReq_model->update_er($recid);
+
+		if($process[0] == 1) {
+			$this->session->set_flashdata('success', $process[1]);
+			redirect(base_url().'sys/admin/employee_request_form_pdf');
+		} else {
+			$this->session->set_flashdata('error', $process[1]);
+			redirect(base_url().'sys/admin/employee_request_form_pdf');
+		}
+		
 	}
 
 	public function admin_item_request_form() {
@@ -1440,6 +1527,98 @@ class AdminTraccReq_controller extends CI_Controller {
 		}
 	}
 
+	public function admin_update_item_request_form_pdf($recid) {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
+		$trf_number = $this->input->post('trf_number', true);
+		$irf_comp_checkbox_value = isset($_POST['irf_comp_checkbox_value']) ? $_POST['irf_comp_checkbox_value'] : [];
+		$imploded_values = implode(',', $irf_comp_checkbox_value);
+
+		$checkbox_item_req_form = [
+			'checkbox_inventory'            => isset($_POST['checkbox_inventory']) ? 1 : 0,
+			'checkbox_non_inventory'        => isset($_POST['checkbox_non_inventory']) ? 1 : 0,
+			'checkbox_services'             => isset($_POST['checkbox_services']) ? 1 : 0,
+			'checkbox_charges'              => isset($_POST['checkbox_charges']) ? 1 : 0,
+			'checkbox_watsons'              => isset($_POST['checkbox_watsons']) ? 1 : 0,
+			'checkbox_other_accounts'       => isset($_POST['checkbox_other_accounts']) ? 1 : 0,
+			'checkbox_online'               => isset($_POST['checkbox_online']) ? 1 : 0,
+			'checkbox_all_accounts'         => isset($_POST['checkbox_all_accounts']) ? 1 : 0,
+			'radio_trade_type'              => isset($_POST['radio_trade_type']) ? $_POST['radio_trade_type'] : '',
+			'radio_batch_required'          => isset($_POST['radio_batch_required']) ? $_POST['radio_batch_required'] : '',
+ 
+		];
+
+		$process = $this->AdminTraccReq_model->update_ir($recid, $imploded_values, $checkbox_item_req_form);
+
+		$rows_data = $this->input->post('rows_gl', true);
+
+		if ($process[0] == 1 && !empty($rows_data)) {
+			// Prepare structured data for rows insertion
+			$insert_data_gl_setup = [];
+			foreach ($rows_data as $row) {
+				// print_r($row);
+				if (!empty($row['uom']) && !empty($row['barcode'])) { // Basic validation
+					$insert_data_gl_setup[] = [
+						'recid'				=> $row['recid'],
+						'requested_by_id'	=> $id,
+						'dept_id'			=> $dept_id,
+						'ticket_id'         => $trf_number,
+						'uom'               => $row['uom'],
+						'barcode'           => $row['barcode'],
+						'length'            => $row['length'],
+						'height'            => $row['height'],
+						'width'             => $row['width'],
+						'weight'            => $row['weight'],
+					];
+				}
+			}
+
+			if (!empty($insert_data_gl_setup)) {
+				$this->AdminTraccReq_model->update_batch_rows_gl_setup($insert_data_gl_setup);
+			}
+		}
+
+		$rows_data = $this->input->post('rows_whs',true);
+
+		if ($process[0] == 1 && !empty($rows_data)) {
+			$insert_data_whs_setup = [];
+			foreach ($rows_data as $row){
+				if(!empty($row['warehouse']) && !empty($row['warehouse_no'])) {
+					$insert_data_wh_setup[] = [
+						'recid'				=> $row['recid'],
+						'requested_by_id'	=> $id,
+						'dept_id'			=> $dept_id,
+						'ticket_id'         => $trf_number,
+						'warehouse'         => $row['warehouse'],
+						'warehouse_no'      => $row['warehouse_no'],
+						'storage_location'  => $row['storage_location'],
+						'storage_type'      => $row['storage_type'],
+						'fixed_bin'         => $row['fixed_bin'],
+						'min_qty'           => $row['min_qty'],
+						'max_qty'           => $row['max_qty'],
+						'replen_qty'        => $row['replen_qty'],
+						'control_qty'       => $row['control_qty'],
+						'round_qty'         => $row['round_qty'],
+						'uom'               => $row['uom'],
+					];
+				}
+			}
+
+			if (!empty($insert_data_wh_setup)) {
+				$this->AdminTraccReq_model->update_batch_rows_whs_setup($insert_data_wh_setup);
+			}
+		}
+
+
+		if ($process[0] == 1) {
+			$this->session->set_flashdata('success', $process[1]);
+			redirect(base_url().'sys/admin/item_request_form_pdf');  
+		} else {
+			$this->session->set_flashdata('error', $process[1]);
+			redirect(base_url().'sys/admin/item_request_form_pdf');  
+		}
+	}
+
 	public function admin_supplier_request_form() {
 		if($this->session->userdata('login_data')) {
 			$id = $this->session->userdata('login_data')['user_id'];
@@ -1528,6 +1707,48 @@ class AdminTraccReq_controller extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
 			redirect(base_url().'sys/admin/create/tickets/tracc_request/supplier_request');  
+		}
+	}
+
+	public function admin_update_supplier_request_form_pdf($recid) {
+		$id = $this->session->userdata('login_data')['user_id'];
+		$dept_id = $this->Main_model->user_details()[1]['dept_id'];
+		$trf_comp_checkbox_value = isset($_POST['trf_comp_checkbox_value']) ? $_POST['trf_comp_checkbox_value'] : [];
+		$imploded_values = implode(',', $trf_comp_checkbox_value);
+
+		$checkbox_non_vat = isset($_POST['checkbox_non_vat']) ? 1 : 0;
+
+		$checkbox_supplier_req_form = [
+			'local_supplier_grp'                => isset($_POST['local_supplier_grp']) ? 1 : 0,
+			'foreign_supplier_grp'              => isset($_POST['foreign_supplier_grp']) ? 1 : 0,
+			'supplier_trade'                    => isset($_POST['supplier_trade']) ? 1 : 0,
+			'supplier_non_trade'                => isset($_POST['supplier_non_trade']) ? 1 : 0,
+			'trade_type_goods'                  => isset($_POST['trade_type_goods']) ? 1 : 0,
+			'trade_type_services'               => isset($_POST['trade_type_services']) ? 1 : 0,
+			'trade_type_GoodsServices'          => isset($_POST['trade_type_GoodsServices']) ? 1 : 0,
+			'major_grp_local_trade_ven'         => isset($_POST['major_grp_local_trade_ven']) ? 1 : 0,
+			'major_grp_local_nontrade_ven'      => isset($_POST['major_grp_local_nontrade_ven']) ? 1 : 0,
+			'major_grp_foreign_trade_ven'       => isset($_POST['major_grp_foreign_trade_ven']) ? 1 : 0,
+			'major_grp_foreign_nontrade_ven'    => isset($_POST['major_grp_foreign_nontrade_ven']) ? 1 : 0,
+			'major_grp_local_broker_forwarder'  => isset($_POST['major_grp_local_broker_forwarder']) ? 1 : 0,
+			'major_grp_rental'                  => isset($_POST['major_grp_rental']) ? 1 : 0,
+			'major_grp_bank'                    => isset($_POST['major_grp_bank']) ? 1 : 0,
+			'major_grp_one_time_supplier'       => isset($_POST['major_grp_one_time_supplier']) ? 1 : 0,
+			'major_grp_government_offices'      => isset($_POST['major_grp_government_offices']) ? 1 : 0,
+			'major_grp_insurance'               => isset($_POST['major_grp_insurance']) ? 1 : 0,
+			'major_grp_employees'               => isset($_POST['major_grp_employees']) ? 1 : 0,
+			'major_grp_subs_affiliates'         => isset($_POST['major_grp_subs_affiliates']) ? 1 : 0,
+			'major_grp_utilities'               => isset($_POST['major_grp_utilities']) ? 1 : 0,
+		];
+	
+		$process = $this->AdminTraccReq_model->update_sr($recid, $imploded_values, $checkbox_non_vat, $checkbox_supplier_req_form);
+
+		if ($process[0] == 1) {
+			$this->session->set_flashdata('success', $process[1]);
+			redirect(base_url().'sys/admin/supplier_request_form_pdf');  
+		} else {
+			$this->session->set_flashdata('error', $process[1]);
+			redirect(base_url().'sys/admin/supplier_request_form_pdf');  
 		}
 	}
 

@@ -2,15 +2,21 @@
 $sess_login_data = $this->session->userdata('login_data');
 $role = $sess_login_data['role'];
 
+    // $disabled = "";
+    // $readonly = "";
+    // $btn_label = "Submit Ticket";
+    // if ($role === "L2") {
+    //     $disabled = "disabled";
+    //     $readonly = "readonly";
+    // } else {
+    //     $disabled = "";
+    //     $readonly = "";
+    // }
+
     $disabled = "";
-    $readonly = "";
-    $btn_label = "Submit Ticket";
-    if ($role === "L2") {
+
+    if(!$user_id) {
         $disabled = "disabled";
-        $readonly = "readonly";
-    } else {
-        $disabled = "";
-        $readonly = "";
     }
 ?>
 
@@ -151,8 +157,14 @@ $role = $sess_login_data['role'];
                     <div class="tab-pane active" id="msrf">
                         <section id="new">
                             <div class="row">
-                                <form action="<?= site_url('AdminTraccReq_controller/approve_irf'); ?>" method="POST">
+                                <?php if($role == "L2" && $user_id): ?>
+                                    <form action="<?= site_url('AdminTraccReq_controller/admin_update_item_request_form_pdf/' . $recid); ?>" method="POST">
+                                <?php else: ?>
+                                    <form action="<?= site_url('AdminTraccReq_controller/approve_irf'); ?>" method="POST">
+                                <?php endif; ?>
                                 <input type="hidden" name="recid" id="recid" value="<?php echo $recid; ?>">
+                                <input type="hidden" name="trf_number" id="trf_number" value="<?= $ticket_id; ?>">
+                                <input type="hidden" name="approved" value="<?= $user_details['fname'] . ' ' . $user_details['lname']; ?>">
                                     <!-- Checkboxes Section -->
                                     <div class="col-md-7 text-center" style="margin-top: 15px;">
                                         <div class="form-group d-flex justify-content-center">
@@ -166,7 +178,7 @@ $role = $sess_login_data['role'];
                                             ?>
                                             <?php foreach ($availableCompanies as $company): ?>
                                             <div class="checkbox-inline custom-checkbox">
-                                                <input type="checkbox" name="irf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?> disabled>
+                                                <input type="checkbox" name="irf_comp_checkbox_value[]" value="" id="checkbox_<?php echo ($company); ?>"<?php echo in_array($company, $companies) ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                 <label for="" class="checkbox-label"><?php echo $company; ?></label>
                                             </div>
                                             <?php endforeach;?>
@@ -185,21 +197,21 @@ $role = $sess_login_data['role'];
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>LMI Item Code</label>
-                                            <input type="text" name="lmi_item_code" id="lmi_item_code" value="<?php echo $lmi_item_code; ?>" class="form-control select2" required oninput="this.value = this.value.toUpperCase();" <?=$readonly?>> 
+                                            <input type="text" name="lmi_item_code" id="lmi_item_code" value="<?php echo $lmi_item_code; ?>" class="form-control select2" required oninput="this.value = this.value.toUpperCase();" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Long Description (<small style="font-size:0.8em; color: red;">100 max char.</small>)</label>
-                                            <input type="text" name="long_description" id="long_description" value="<?php echo $long_description; ?>" class="form-control select2" maxlength="100" readonly> 
+                                            <input type="text" name="long_description" id="long_description" value="<?php echo $long_description; ?>" class="form-control select2" maxlength="100" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Short Description (<small style="font-size:0.8em; color: red;">50 max char.</small>)</label>
-                                            <input type="text" name="short_description" id="short_description" value="<?php echo $short_description; ?>" class="form-control select2" maxlength="50" readonly> 
+                                            <input type="text" name="short_description" id="short_description" value="<?php echo $short_description; ?>" class="form-control select2" maxlength="50" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
@@ -215,22 +227,22 @@ $role = $sess_login_data['role'];
                                                     <div class="d-flex flex-wrap custom-checkbox-group justify-content-center">
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_inventory" id="checkbox_inventory" value="1"
-                                                            <?= isset($checkbox_data1['inventory']) && $checkbox_data1['inventory'] == 1 ? 'checked' : ''; ?> disabled>
+                                                            <?= isset($checkbox_data1['inventory']) && $checkbox_data1['inventory'] == 1 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_inventory">Inventory</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_non_inventory" id="checkbox_non_inventory" value="1"
-                                                            <?= isset($checkbox_data1['non_inventory']) && $checkbox_data1['non_inventory'] == 1 ? 'checked' : ''; ?> disabled>
+                                                            <?= isset($checkbox_data1['non_inventory']) && $checkbox_data1['non_inventory'] == 1 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_non_inventory">Non-Inventory</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_services" id="checkbox_services" value="1"
-                                                            <?= isset($checkbox_data1['services']) && $checkbox_data1['services'] == 1 ? 'checked' : ''; ?> disabled>
+                                                            <?= isset($checkbox_data1['services']) && $checkbox_data1['services'] == 1 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_services">Services</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_charges" id="checkbox_charges" value="1"
-                                                            <?= isset($checkbox_data1['charges']) && $checkbox_data1['charges'] == 1 ? 'checked' : ''; ?> disabled>
+                                                            <?= isset($checkbox_data1['charges']) && $checkbox_data1['charges'] == 1 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_charges">Charges</label>
                                                         </div>
                                                     </div>
@@ -244,22 +256,22 @@ $role = $sess_login_data['role'];
                                                     <div class="d-flex flex-wrap custom-checkbox-group justify-content-center">
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_watsons" id="checkbox_watsons" value="1"
-                                                            <?= isset($checkbox_data1['watsons']) && $checkbox_data1['watsons'] == 1 ? 'checked' : ''; ?> disabled>
+                                                            <?= isset($checkbox_data1['watsons']) && $checkbox_data1['watsons'] == 1 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_watsons">Watsons</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_other_accounts" id="checkbox_other_accounts" value="1"
-                                                            <?= isset($checkbox_data1['other_accounts']) && $checkbox_data1['other_accounts'] == 1 ? 'checked' : ''; ?> disabled>
+                                                            <?= isset($checkbox_data1['other_accounts']) && $checkbox_data1['other_accounts'] == 1 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_other_accounts">Other Accounts</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_online" id="checkbox_online" value="1"
-                                                            <?= isset($checkbox_data1['online']) && $checkbox_data1['online'] == 1 ? 'checked' : ''; ?> disabled>
+                                                            <?= isset($checkbox_data1['online']) && $checkbox_data1['online'] == 1 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_online">Online</label>
                                                         </div>
                                                         <div class="checkbox-container">
                                                             <input type="checkbox" name="checkbox_all_accounts" id="checkbox_all_accounts" value="1"
-                                                            <?= isset($checkbox_data1['all_accounts']) && $checkbox_data1['all_accounts'] == 1 ? 'checked' : ''; ?> disabled>
+                                                            <?= isset($checkbox_data1['all_accounts']) && $checkbox_data1['all_accounts'] == 1 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                             <label for="checkbox_all_accounts">All Accounts</label>
                                                         </div>
                                                     </div>
@@ -277,11 +289,11 @@ $role = $sess_login_data['role'];
                                                 <div class="form-group d-flex flex-wrap align-items-center custom-checkbox-group">
                                                     <label class="custom-label">Type:</label>
                                                     <div class="checkbox-container">
-                                                        <input type="radio" name="radio_trade_type" id="radio_trade" value="trade" <?= isset($checkbox_data1['trade']) && $checkbox_data1['trade'] == 1 ? 'checked' : ''; ?> disabled>
+                                                        <input type="radio" name="radio_trade_type" id="radio_trade" value="trade" <?= isset($checkbox_data1['trade']) && $checkbox_data1['trade'] == 1 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                         <label for="radio_trade">Trade</label>
                                                     </div>
                                                     <div class="checkbox-container">
-                                                        <input type="radio" name="radio_trade_type" id="radio_non_trade" value="non_trade" <?= isset($checkbox_data1['trade']) && $checkbox_data1['trade'] == 0 ? 'checked' : ''; ?> disabled>
+                                                        <input type="radio" name="radio_trade_type" id="radio_non_trade" value="non_trade" <?= isset($checkbox_data1['trade']) && $checkbox_data1['trade'] == 0 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                         <label for="radio_non_trade">Non-Trade</label>
                                                     </div>
                                                 </div>
@@ -292,11 +304,11 @@ $role = $sess_login_data['role'];
                                                 <div class="form-group d-flex flex-wrap align-items-center custom-checkbox-group">
                                                     <label class="custom-label">Batch Required?</label>
                                                     <div class="checkbox-container">
-                                                        <input type="radio" name="radio_batch_required" id="radio_batch_required_yes" value="yes" <?= isset($checkbox_data1['yes']) && $checkbox_data1['yes'] == 1 ? 'checked' : ''; ?> disabled>
+                                                        <input type="radio" name="radio_batch_required" id="radio_batch_required_yes" value="yes" <?= isset($checkbox_data1['yes']) && $checkbox_data1['yes'] == 1 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                         <label for="radio_batch_required_yes">YES</label>
                                                     </div>
                                                     <div class="checkbox-container">
-                                                        <input type="radio" name="radio_batch_required" id="radio_batch_required_no" value="no" <?= isset($checkbox_data1['yes']) && $checkbox_data1['yes'] == 0 ? 'checked' : ''; ?> disabled>
+                                                        <input type="radio" name="radio_batch_required" id="radio_batch_required_no" value="no" <?= isset($checkbox_data1['yes']) && $checkbox_data1['yes'] == 0 ? 'checked' : ''; ?> <?= $disabled; ?>>
                                                         <label for="radio_batch_required_no">NO</label>
                                                     </div>
                                                 </div>
@@ -310,84 +322,84 @@ $role = $sess_login_data['role'];
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Item Classification</label>
-                                            <input type="text" name="item_classification" id="item_classification" value="<?php echo $item_classification; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="item_classification" id="item_classification" value="<?php echo $item_classification; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Item Sub-Classification</label>
-                                            <input type="text" name="item_sub_classification" id="item_sub_classification" value="<?php echo $item_sub_classification; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="item_sub_classification" id="item_sub_classification" value="<?php echo $item_sub_classification; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Department</label>
-                                            <input type="text" name="department" id="department" value="<?php echo $department; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="department" id="department" value="<?php echo $department; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Merch Category</label>
-                                            <input type="text" name="merch_cat" id="merch_cat" value="<?php echo $merch_category; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="merch_cat" id="merch_cat" value="<?php echo $merch_category; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Brand</label>
-                                            <input type="text" name="brand" id="brand" value="<?php echo $brand; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="brand" id="brand" value="<?php echo $brand; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Supplier Code</label>
-                                            <input type="text" name="supplier_code" id="supplier_code" value="<?php echo $supplier_code; ?>" class="form-control select2" oninput="this.value = this.value.toUpperCase();" readonly> 
+                                            <input type="text" name="supplier_code" id="supplier_code" value="<?php echo $supplier_code; ?>" class="form-control select2" oninput="this.value = this.value.toUpperCase();" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Supplier Name</label>
-                                            <input type="text" name="supplier_name" id="supplier_name" value="<?php echo $supplier_name; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="supplier_name" id="supplier_name" value="<?php echo $supplier_name; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Class</label>
-                                            <input type="text" name="class" id="class" value="<?php echo $class; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="class" id="class" value="<?php echo $class; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Tag</label>
-                                            <input type="text" name="tag" id="tag" value="<?php echo $tag; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="tag" id="tag" value="<?php echo $tag; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Source</label>
-                                            <input type="text" name="source" id="source" value="<?php echo $source; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="source" id="source" value="<?php echo $source; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>HS Code</label>
-                                            <input type="text" name="hs_code" id="hs_code" value="<?php echo $hs_code; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="hs_code" id="hs_code" value="<?php echo $hs_code; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6"> 
                                         <div class="form-group"> 
                                             <label for="unit_cost">Unit Cost</label> 
-                                            <input type="number" name="unit_cost" id="unit_cost" value="<?php echo $unit_cost; ?>" class="form-control select2" min="0" step="0.01" readonly> 
+                                            <input type="number" name="unit_cost" id="unit_cost" value="<?php echo $unit_cost; ?>" class="form-control select2" min="0" step="0.01" <?= $disabled; ?>> 
                                             <small class="form-text text-muted">Please enter a valid unit cost.</small> 
                                         </div> 
                                     </div>
@@ -395,7 +407,7 @@ $role = $sess_login_data['role'];
                                     <div class="col-md-6"> 
                                         <div class="form-group"> 
                                             <label for="selling_price">Selling Price</label> 
-                                            <input type="number" name="selling_price" id="selling_price" value="<?php echo $selling_price; ?>" class="form-control select2" min="0" step="0.01" readonly> 
+                                            <input type="number" name="selling_price" id="selling_price" value="<?php echo $selling_price; ?>" class="form-control select2" min="0" step="0.01" <?= $disabled; ?>> 
                                             <small class="form-text text-muted">Please enter a valid selling price.</small> 
                                         </div> 
                                     </div>
@@ -411,21 +423,21 @@ $role = $sess_login_data['role'];
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Major Item Group</label>
-                                            <input type="text" name="major_item_group" id="major_item_group" value="<?php echo $major_item_group; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="major_item_group" id="major_item_group" value="<?php echo $major_item_group; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Item Sub. Group</label>
-                                            <input type="text" name="item_sub_group" id="item_sub_group" value="<?php echo $item_sub_group; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="item_sub_group" id="item_sub_group" value="<?php echo $item_sub_group; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Account Type</label>
-                                            <input type="text" name="account_type" id="account_type" value="<?php echo $account_type; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="account_type" id="account_type" value="<?php echo $account_type; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
@@ -440,56 +452,56 @@ $role = $sess_login_data['role'];
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Sales</label>
-                                            <input type="text" name="sales" id="sales" value="<?php echo $sales; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="sales" id="sales" value="<?php echo $sales; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Sales Return</label>
-                                            <input type="text" name="sales_return" id="sales_return" value="<?php echo $sales_return; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="sales_return" id="sales_return" value="<?php echo $sales_return; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Purchases</label>
-                                            <input type="text" name="purchases" id="purchases" value="<?php echo $purchases; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="purchases" id="purchases" value="<?php echo $purchases; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Purchase Return</label>
-                                            <input type="text" name="purchase_return" id="purchase_return" value="<?php echo $purchase_return; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="purchase_return" id="purchase_return" value="<?php echo $purchase_return; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>CGS</label>
-                                            <input type="text" name="cgs" id="cgs" value="<?php echo $cgs; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="cgs" id="cgs" value="<?php echo $cgs; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Inventory</label>
-                                            <input type="text" name="inventory" id="inventory" value="<?php echo $inventory; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="inventory" id="inventory" value="<?php echo $inventory; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Sales Disc.</label>
-                                            <input type="text" name="sales_disc" id="sales_disc" value="<?php echo $sales_disc; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="sales_disc" id="sales_disc" value="<?php echo $sales_disc; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>GL Department</label>
-                                            <input type="text" name="gl_dept" id="gl_dept" value="<?php echo $gl_department; ?>" class="form-control select2" readonly> 
+                                            <input type="text" name="gl_dept" id="gl_dept" value="<?php echo $gl_department; ?>" class="form-control select2" <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
@@ -509,12 +521,13 @@ $role = $sess_login_data['role'];
                                                 <?php if (!empty($checkbox_data2)): ?>
                                                     <?php foreach ($checkbox_data2 as $index => $row): ?>
                                                         <tr>
-                                                            <td><input type="text" class="form-control" name="rows_gl[<?= $index; ?>][uom]" value="<?= $row['uom']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_gl[<?= $index; ?>][barcode]" value="<?= $row['barcode']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $index; ?>][length]" value="<?= $row['length']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $index; ?>][height]" value="<?= $row['height']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $index; ?>][width]" value="<?= $row['width']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $index; ?>][weight]" value="<?= $row['weight']; ?>" placeholder="" readonly></td>
+                                                            <td style="display:none"><input type="hidden" name="rows_gl[<?= $index; ?>][recid]" value="<?= $row['recid']; ?>"></td>
+                                                            <td><input type="text" class="form-control" name="rows_gl[<?= $index; ?>][uom]" value="<?= $row['uom']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_gl[<?= $index; ?>][barcode]" value="<?= $row['barcode']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $index; ?>][length]" value="<?= $row['length']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $index; ?>][height]" value="<?= $row['height']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $index; ?>][width]" value="<?= $row['width']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="number" class="form-control" name="rows_gl[<?= $index; ?>][weight]" value="<?= $row['weight']; ?>" placeholder="" <?= $disabled; ?>></td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 <?php else: ?>
@@ -537,7 +550,7 @@ $role = $sess_login_data['role'];
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Capacity per Pallet <small style="font-size:0.8em;">(Smallest OUM (PCS))</small></label>
-                                            <input type="text" name="capacity_per_pallet" id="capacity_per_pallet" value="<?php echo $capacity_per_pallet; ?>" class="form-control select2" readonly>  
+                                            <input type="text" name="capacity_per_pallet" id="capacity_per_pallet" value="<?php echo $capacity_per_pallet; ?>" class="form-control select2" <?= $disabled; ?>>  
                                         </div>
                                     </div>
 
@@ -570,17 +583,18 @@ $role = $sess_login_data['role'];
                                                 <?php if (!empty($checkbox_data3)): ?>
                                                     <?php foreach ($checkbox_data3 as $index => $row): ?>
                                                         <tr>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][warehouse]" value="<?= $row['warehouse']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][warehouse_no]" value="<?= $row['warehouse_no']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][storage_location]" value="<?= $row['storage_location']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][storage_type]" value="<?= $row['storage_type']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][fixed_bin]" value="<?= $row['fixed_bin']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][min_qty]" value="<?= $row['min_qty']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][max_qty]" value="<?= $row['max_qty']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][replen_qty]" value="<?= $row['replen_qty']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][control_qty]" value="<?= $row['control_qty']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][round_qty]" value="<?= $row['round_qty']; ?>" placeholder="" readonly></td>
-                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][uom]" value="<?= $row['uom']; ?>" placeholder="" readonly></td>
+                                                            <td style="display:none;"><input type="hidden" name="rows_whs[<?= $index; ?>][recid]" value="<?= $row['recid']; ?>"></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][warehouse]" value="<?= $row['warehouse']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][warehouse_no]" value="<?= $row['warehouse_no']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][storage_location]" value="<?= $row['storage_location']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][storage_type]" value="<?= $row['storage_type']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][fixed_bin]" value="<?= $row['fixed_bin']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][min_qty]" value="<?= $row['min_qty']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][max_qty]" value="<?= $row['max_qty']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][replen_qty]" value="<?= $row['replen_qty']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][control_qty]" value="<?= $row['control_qty']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][round_qty]" value="<?= $row['round_qty']; ?>" placeholder="" <?= $disabled; ?>></td>
+                                                            <td><input type="text" class="form-control" name="rows_whs[<?= $index; ?>][uom]" value="<?= $row['uom']; ?>" placeholder="" <?= $disabled; ?>></td>
                                                         </tr>
                                                     <?php endforeach; ?>
                                                 <?php else: ?>
@@ -612,21 +626,30 @@ $role = $sess_login_data['role'];
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label>Approved By</label>
-                                            <input type="text" name="approved_by" id="approved_by" value="<?php echo $approved_by; ?>" class="form-control select2" <?php echo ($role === 'L3') ? 'readonly' : ''; ?>> 
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <div class="box-body pad">
-                                                <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?php echo ($role === 'L3') ? 'disabled' : ''; ?>>Approved</button>
+                                    <?php if($role == "L3"): ?>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Approved By</label>
+                                                <input type="text" name="approved_by" id="approved_by" value="<?php echo $approved_by; ?>" class="form-control select2" <?php echo ($role === 'L3') ? 'readonly' : ''; ?>> 
                                             </div>
                                         </div>
-                                    </div>
+                                    <?php endif; ?>
+
+                                    <?php if($role == "L2" && $user_id): ?>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <button class="btn btn-primary">Edit</button>
+                                            </div>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <div class="box-body pad">
+                                                    <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?php echo ($role === 'L3') ? 'disabled' : ''; ?>>Approved</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
 
                                 </form>
                             </div>
