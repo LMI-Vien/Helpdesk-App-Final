@@ -2,7 +2,7 @@
     <div class="container">
         <section class="content-header">
 			<h1>
-				TRACC Concern Creationsss
+				TRACC Concern Creations
 				<small>Ticket</small>
 			</h1>
 			<ol class="breadcrumb">
@@ -26,7 +26,7 @@
                                             <div class="col-md-12">
 			                    				<div class="form-group">
 			                    					<label>Control Number</label>
-                                                    <input type="text" name="control_number" id="control_number" value="<?= $trc; ?>" class="form-control" value="" required pattern=".*-.*" title="Control number must contain a hyphen (-)" oninput="this.value = this.value.toUpperCase().trim().replace(/\s+/g, '');" disabled>
+                                                    <input type="text" name="control_number" id="control_number" value="<?= $trc; ?>" class="form-control" required readonly>
 			                    				</div>                                               
 			                    			</div>
                                             <div class="col-md-6">

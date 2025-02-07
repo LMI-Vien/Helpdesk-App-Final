@@ -23,9 +23,10 @@ class AdminMSRF_controller extends CI_Controller {
         $newNumber = $lastNumber + 1;
 
         // Format the new MSRF number
-        $newMSRFNumber = 'MSRF-' . sprintf('%03d', $newNumber) . '-' . date("Y");
+        $newMSRFNumber = 'MSRF-' . date("Y") . '-' . sprintf('%03d', $newNumber);
 
         return $newMSRFNumber;
+		// return $lastNumber;
 	}
 
 	// DATATABLE na nakikita ni Admin (MSRF)
@@ -249,10 +250,10 @@ class AdminMSRF_controller extends CI_Controller {
 	
 			if ($process[0] == 1) {
 				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'sys/admin/list/ticket/msrf');
+				redirect(base_url().'sys/admin/list/creation_tickets/msrf');
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'sys/admin/list/ticket/msrf');
+				redirect(base_url().'sys/admin/list/creation_tickets/msrf');
 			}
 		}
 	}

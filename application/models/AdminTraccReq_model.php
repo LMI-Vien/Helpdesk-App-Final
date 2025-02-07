@@ -1114,7 +1114,7 @@ class AdminTraccReq_model extends CI_Model {
 		$this->db->update('tracc_req_supplier_req_form_checkboxes', $checkboxes_sup_req_form, ['recid' => $id]);
 
 		// $this->db->trans_commit();
-		return array(1, "Successfully CreatedItem Request Form for: " . $data['ticket_id']);
+		return array(1, "Successfully Updated Supplier Request Form for: " . $data['ticket_id']);
 		// if ($this->db->affected_rows() > 0) {
 		// } else {
 		// 	$this->db->trans_rollback();

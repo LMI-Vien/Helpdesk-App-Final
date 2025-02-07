@@ -117,9 +117,9 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Approval Status</label>
-                                                    <select class="form-control select2" name="app_stat" id="app_stat" <?= $approval_disabled; ?>>
+                                                    <select class="form-control select2" name="app_stat" id="app_stat" <?= $approval_disabled; ?> required>
                                                     <?php if ($tracc_con['approval_status'] == 'Approved' || $tracc_con['approval_status'] == 'Rejected') echo 'disabled'; ?>
-                                                        <option value=""disabled selected>Approval Status</option>
+                                                        <option value="" disabled selected>Approval Status</option>
                                                         <option value="Approved"<?php if ($tracc_con['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
                                                         <option value="Rejected"<?php if ($tracc_con['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
                                                         <option value="Returned"<?php if ($tracc_con['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
