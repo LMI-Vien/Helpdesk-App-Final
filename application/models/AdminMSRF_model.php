@@ -13,6 +13,9 @@ class AdminMSRF_model extends CI_Model {
 		$assign_staff = $this->input->post('assign_to', true);
 		$approval_stat = $this->input->post('approval_stat', true);
 		$reject_reason = $this->input->post('rejecttix', true);
+
+		// print_r($reject_reason);
+		// die();
 	
 		$this->db->trans_start();
 
@@ -26,6 +29,7 @@ class AdminMSRF_model extends CI_Model {
 			if ($approval_stat == 'Rejected') {
 				$this->db->set('approval_status', 'Rejected');
 				$this->db->set('status', 'Rejected'); 
+				$this->db->set('remarks_ict', $reject_reason); 
 				$fields_to_update = true;
 			} else if ($approval_stat == 'Approved') {
 				$this->db->set('approval_status', 'Approved');

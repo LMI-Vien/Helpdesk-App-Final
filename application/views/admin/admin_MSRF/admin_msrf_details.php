@@ -10,12 +10,8 @@
         $department_head_status = $msrf['approval_status'];
         
         $status_msrf = $msrf['status'];
-        // print_r($department_head_status);
-        // die();
 
-        if(($status_msrf === "In Progress" || $status_msrf === 'Approved' || $status_msrf === 'Closed')) {
-            // echo "try";
-            // die();
+        if(($status_msrf === "In Progress" || $status_msrf === 'Approved' || $status_msrf === 'Closed' || $status_msrf === 'Rejected')) {
             $disabled = "disabled";
             $readonly = "readonly";
             $btn_label = "Update Ticket";

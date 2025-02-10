@@ -276,8 +276,6 @@ class AdminMSRF_controller extends CI_Controller {
 	
 				$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu'];
 				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'system_tickets_list';
-				// print_r($active_menu);
-				// die();
 	
 				$data['active_menu'] = $active_menu;
 	
