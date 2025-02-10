@@ -2,7 +2,6 @@
     $sess_login_data = $this->session->userdata('login_data');
     $role = $sess_login_data['role'];
     $department_id = $sess_login_data['dept_id'];
-    // print_r($sess_login_data);
     $disabled = "";
     $readonly = "";
     $btn_label = "Submit Ticket";
@@ -10,12 +9,8 @@
         $department_head_status = $msrf['approval_status'];
         
         $status_msrf = $msrf['status'];
-        // print_r($department_head_status);
-        // die();
 
         if(($status_msrf === "In Progress" || $status_msrf === 'Approved' || $status_msrf === 'Closed')) {
-            // echo "try";
-            // die();
             $disabled = "disabled";
             $readonly = "readonly";
             $btn_label = "Update Ticket";
@@ -216,9 +211,6 @@
         </section>
     </div>
 </div>
-
-<!-- jQuery -->
-<script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 
 <script>
     $(document).ready(function() {

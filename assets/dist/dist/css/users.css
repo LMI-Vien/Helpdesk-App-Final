@@ -172,3 +172,8 @@
     transform: rotate(270deg); /* Rotate the caret to point left */
     display: inline-block;
 }
+
+.swal-wide {
+    width: 400px !important;
+    font-size: 1.4rem; 
+}

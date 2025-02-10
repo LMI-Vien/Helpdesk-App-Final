@@ -212,9 +212,6 @@
     </div>
 </div>
 
-<!-- jQuery -->
-<script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
-
 <script>
     $(document).ready(function() {
 		$("#reason").hide();
@@ -235,11 +232,8 @@
 		});
 
 		toggleReasonField();
-	});
 
-
-    $(document).ready(function() {
-		if ($('#it_approval_stat').val() == 'Approved') {
+        if ($('#it_approval_stat').val() == 'Approved') {
 			$('#ictassign').show();
 		}
 
@@ -252,9 +246,7 @@
 				$('#ictassign').hide();  
 			}
 		});
-	});
 
-    $(document).ready(function() {
         if($('#category').val() == 'others') {
             $('#specify-container').show();
         } else {
@@ -268,6 +260,5 @@
                 $('#specify-container').hide();
             }
         });
-    });
-
+	});
 </script>

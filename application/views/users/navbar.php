@@ -54,7 +54,7 @@
         			<ul class="dropdown-menu">
                 		<li class="user-footer">
                   			<div class="pull-right">
-                    			<a href="<?= site_url('Main/logout'); ?>" class="btn btn-default btn-flat">Sign out</a>
+                    			<a href="<?= site_url('Main/logout'); ?>" id="logout" class="btn btn-default btn-flat">Sign out</a>
                   			</div>
                 		</li>
         			</ul>
@@ -63,3 +63,31 @@
         </div>
 	</div>
 </nav>
+
+<script>
+	$("#logout").on("click", function(e) {
+		e.preventDefault();
+
+		var logoutUrl = $(this).attr("href");
+
+		Swal.fire({
+			title: "Are you sure?",
+			text: "You will be logged out of your session.",
+			icon: "warning",
+			showCancelButton: true,
+			allowOutsideClick: false,
+			allowEscapeKey: false,
+			confirmButtonColor: "#d33",
+			cancelButtonColor: "#3085d6",
+			confirmButtonText: "Yes, log me out!",
+			cancelButtonText: "Cancel",
+			customClass: {
+				popup: 'swal-wide' 
+			},
+		}).then((result) => {
+			if (result.isConfirmed) {
+				window.location.href = logoutUrl;
+			}
+		});
+	});
+</script>
