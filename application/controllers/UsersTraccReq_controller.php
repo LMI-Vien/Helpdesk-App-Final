@@ -75,10 +75,10 @@ class UsersTraccReq_controller extends CI_Controller {
 
 			if ($process[0] == 1){
 				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'sys/users/dashboard');
+				redirect(base_url().'users/dashboard');
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'sys/users/dashboard');
+				redirect(base_url().'users/dashboard');
 			}
 
 		}
@@ -130,11 +130,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/users/list/tickets/tracc_request');
+					redirect('users/list/tickets/tracc_request');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/list/tickets/tracc_request');
+				redirect('users/list/tickets/tracc_request');
 			}
 		} else {
 			$file_path = null;
@@ -148,7 +148,7 @@ class UsersTraccReq_controller extends CI_Controller {
 	
 				if (!$this->upload->do_upload('uploaded_files')) {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
-					redirect(base_url() . 'sys/users/create/tickets/tracc_request');
+					redirect(base_url() . 'users/create/tickets/tracc_request');
 				} else {
 					$file_data = $this->upload->data();
 					$file_path = $file_data['file_name'];
@@ -209,10 +209,10 @@ class UsersTraccReq_controller extends CI_Controller {
 					'expires_at' => time() + (5 * 60),
 					'recid' => $user_details[1]['recid'],
 				]);
-				redirect(base_url() . 'sys/users/list/tickets/tracc_request');
+				redirect(base_url() . 'users/list/tickets/tracc_request');
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url() . 'sys/users/create/tickets/tracc_request');
+				redirect(base_url() . 'users/create/tickets/tracc_request');
 			}
 		}
 	}
@@ -282,10 +282,10 @@ class UsersTraccReq_controller extends CI_Controller {
 
 					if ($process[0] == 1 || $process1[0] == 1 || $process2[0] == 1 || $process3[0] == 1) {
 						$this->session->set_flashdata('success', $process[1]);
-						redirect(base_url()."sys/users/list/tickets/tracc_request");
+						redirect(base_url()."users/list/tickets/tracc_request");
 					} else {
 						$this->session->set_flashdata('error', $process[0]);
-						redirect(base_url()."sys/users/list/tickets/tracc_request");
+						redirect(base_url()."users/list/tickets/tracc_request");
 					}
 
 				}  elseif ($action == 'acknowledge') {
@@ -305,11 +305,11 @@ class UsersTraccReq_controller extends CI_Controller {
 						$this->session->set_flashdata('error', 'Failed to acknowledge ticket as resolved.');
 					}
 	
-					redirect(base_url() . "sys/users/list/tickets/tracc_request");
+					redirect(base_url() . "users/list/tickets/tracc_request");
 				}
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->set_flashdata('error', 'Error fetching user information');
@@ -344,12 +344,12 @@ class UsersTraccReq_controller extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -395,11 +395,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/users/list/tickets/tracc_request');
+					redirect('users/list/tickets/tracc_request');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/list/tickets/tracc_request');
+				redirect('users/list/tickets/tracc_request');
 			}
 
 			// if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
@@ -450,10 +450,10 @@ class UsersTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/users/create/tickets/trf_customer_request_form_tms');  
+			redirect(base_url().'users/create/tickets/trf_customer_request_form_tms');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/users/create/tickets/trf_customer_request_form_tms'); 
+			redirect(base_url().'users/create/tickets/trf_customer_request_form_tms'); 
 		}
 	}
 
@@ -499,11 +499,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/users/list/tickets/tracc_request');
+					redirect('users/list/tickets/tracc_request');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/list/tickets/tracc_request');
+				redirect('users/list/tickets/tracc_request');
 			}
 
 			// if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
@@ -549,10 +549,10 @@ class UsersTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/users/create/tickets/trf_customer_shipping_setup');  
+			redirect(base_url().'users/create/tickets/trf_customer_shipping_setup');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/users/create/tickets/trf_customer_shipping_setup');  
+			redirect(base_url().'users/create/tickets/trf_customer_shipping_setup');  
 		}
 	}
 
@@ -604,11 +604,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/users/list/tickets/tracc_request');
+					redirect('users/list/tickets/tracc_request');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/list/tickets/tracc_request');
+				redirect('users/list/tickets/tracc_request');
 			}
 
 			// if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
@@ -640,10 +640,10 @@ class UsersTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/users/create/tickets/trf_employee_request_form');  
+			redirect(base_url().'users/create/tickets/trf_employee_request_form');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/users/create/tickets/trf_employee_request_form');  
+			redirect(base_url().'users/create/tickets/trf_employee_request_form');  
 		}
 	}
 
@@ -694,11 +694,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/users/list/tickets/tracc_request');
+					redirect('users/list/tickets/tracc_request');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/list/tickets/tracc_request');
+				redirect('users/list/tickets/tracc_request');
 			}
 
 			// if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
@@ -806,10 +806,10 @@ class UsersTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/users/dashboard');  
+			redirect(base_url().'users/dashboard');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/users/create/tickets/trf_item_request_form');  
+			redirect(base_url().'users/create/tickets/trf_item_request_form');  
 		}
 	}
 
@@ -859,11 +859,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/users/list/tickets/tracc_request');
+					redirect('users/list/tickets/tracc_request');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/users/list/tickets/tracc_request');
+				redirect('users/list/tickets/tracc_request');
 			}
 
 			// if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
@@ -924,10 +924,10 @@ class UsersTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/users/create/tickets/trf_supplier_request_form_tms');  
+			redirect(base_url().'users/create/tickets/trf_supplier_request_form_tms');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/users/create/tickets/trf_supplier_request_form_tms');  
+			redirect(base_url().'users/create/tickets/trf_supplier_request_form_tms');  
 		}
 	}
 
@@ -961,12 +961,12 @@ class UsersTraccReq_controller extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -991,12 +991,12 @@ class UsersTraccReq_controller extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -1022,15 +1022,15 @@ class UsersTraccReq_controller extends CI_Controller {
 	
 				if ($process[0] == 1) {
 					$this->session->set_flashdata('success', $process[1]);
-					redirect(base_url().'sys/users/details/concern/customer_req_ship_setup/' . $id);  
+					redirect(base_url().'users/details/concern/customer_req_ship_setup/' . $id);  
 				} else {
 					$this->session->set_flashdata('error', $process[1]);
-					redirect(base_url().'sys/users/details/concern/customer_req_ship_setup/' . $id);  
+					redirect(base_url().'users/details/concern/customer_req_ship_setup/' . $id);  
 				} 
 			} else {
 				$this->session->sess_destroy();
 				$this->session->set_flashdata('error', 'Session expired. Please login again.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		}
 	}
@@ -1060,12 +1060,12 @@ class UsersTraccReq_controller extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -1090,12 +1090,12 @@ class UsersTraccReq_controller extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -1120,20 +1120,20 @@ class UsersTraccReq_controller extends CI_Controller {
 					
 					if ($process[0] == 1) {
 						$this->session->set_flashdata('success', $process[1]);
-						redirect("sys/users/details/concern/customer_req_employee_req/" . $id);
+						redirect("users/details/concern/customer_req_employee_req/" . $id);
 					} else {
 						$this->session->set_flashdata('error', $process[1]);
-						redirect("sys/users/details/concern/customer_req_employee_req/" . $id);
+						redirect("users/details/concern/customer_req_employee_req/" . $id);
 					}
 	
 				} else {
 					$this->session->set_flashdata('error', 'Error fetching user information.');
-					redirect("sys/authentication");
+					redirect("authentication");
 				}
 			} else {
 				$this->session->sess_destroy();
 				$this->session->set_flashdata('error', 'Session expired. Please login again.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		}
 	}
@@ -1159,12 +1159,12 @@ class UsersTraccReq_controller extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -1205,15 +1205,15 @@ class UsersTraccReq_controller extends CI_Controller {
 	
 				if($process[0] == 1) {
 					$this->session->set_flashdata('success', $process[1]);
-					redirect(base_url().'sys/users/details/concern/customer_req_supplier_req/' . $id);
+					redirect(base_url().'users/details/concern/customer_req_supplier_req/' . $id);
 				} else {
 					$this->session->set_flashdata('error', $process[1]);
-					redirect(base_url().'sys/users/details/concern/customer_req_supplier_req/' . $id);
+					redirect(base_url().'users/details/concern/customer_req_supplier_req/' . $id);
 				}
 			} else {
 				$this->session->sess_destroy();
 				$this->session->set_flashdata('error', 'Session expired. Please login again.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		}
 	}
@@ -1245,10 +1245,10 @@ class UsersTraccReq_controller extends CI_Controller {
 	
 			if ($process[0] == 1) {
 				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'sys/users/details/concern/customer_req_form/'.$recid);  
+				redirect(base_url().'users/details/concern/customer_req_form/'.$recid);  
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'sys/users/details/concern/customer_req_form/'.$recid); 
+				redirect(base_url().'users/details/concern/customer_req_form/'.$recid); 
 			}
 		}
 	}
@@ -1381,10 +1381,10 @@ class UsersTraccReq_controller extends CI_Controller {
 	
 			if ($process[0] == 1) {
 				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'sys/users/details/concern/customer_req_item_req/'.$recid);  
+				redirect(base_url().'users/details/concern/customer_req_item_req/'.$recid);  
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'sys/users/details/concern/customer_req_item_req/'.$recid); 
+				redirect(base_url().'users/details/concern/customer_req_item_req/'.$recid); 
 			}
 		}
 	}

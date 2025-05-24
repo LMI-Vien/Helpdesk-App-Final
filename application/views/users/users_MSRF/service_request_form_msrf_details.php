@@ -267,37 +267,4 @@
         });
     });
 
-    // $(document).on('click', '#form-add-submit-button', function(e) {
-    //     e.preventDefault();
-    //     var ticket_id = '<?= $this->uri->segment(6)?>';
-    //     ticket_id = ticket_id.trim();
-    //     var ict_approval = $('#it_approval_stat').val();
-    //     var reason_rejected = $('#rejecttix').val();
-
-    //     var data = {
-    //         ict_approval: ict_approval,
-    //         reason_rejected: reason_rejected,
-    //         data_id: ticket_id,
-    //         module:"msrf"
-    //     };
-
-    //     $.ajax({
-    //         url: base_url + "Main/update_ticket",
-    //         type: "POST",
-    //         data: data,
-    //         success: function(response) {
-    //             var response = JSON.parse(response);
-    //             if (response.message === "success") {
-    //                 location.href = '<?=base_url("sys/users/list/tickets/msrf") ?>';
-    //             } else {
-    //                 //change this and add error message or redirect to main listing page
-    //                 location.href = '<?=base_url("sys/users/list/tickets/msrf") ?>';
-    //             }
-    //         },
-    //         error: function(xhr, status, error) {
-    //             //console.error("AJAX Error: " + error);
-    //         }
-    //     });
-    // });
-
 </script>

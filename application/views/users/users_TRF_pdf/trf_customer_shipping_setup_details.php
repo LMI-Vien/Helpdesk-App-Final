@@ -109,7 +109,7 @@
                             <div class="tab-pane active" id="msrf">
                                 <section id="new">
                                     <div class="row">
-                                        <form action="<?= site_url('sys/users/details/concern/customer_req_shipping_setup/update/' . $reqForm['recid']); ?>" method="POST">
+                                        <form action="<?= site_url('users/details/concern/customer_req_shipping_setup/update/' . $reqForm['recid']); ?>" method="POST">
                                             <div class="col-md-12">
                                                 <input type="text" value="<?= $reqForm['ticket_id']; ?>" name="trf_number" class="form-control" readonly>
                                             </div>
