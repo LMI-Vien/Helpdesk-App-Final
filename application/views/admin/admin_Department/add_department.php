@@ -28,12 +28,6 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Department Code</label>
-                                <input type="text" name="dept_code" id="dept_code" class="form-control" required>
-                            </div>
-                        </div>  
-                        <div class="col-md-12">
-                            <div class="form-group">
                                 <label>Manager ID</label>
                                 <input type="text" name="manager_id" id="manager_id" class="form-control">
                             </div>
@@ -48,7 +42,7 @@
                 </div>
                 <div class="box-footer">
                     <button class="btn btn-info float-left">Submit</button>
-                    <a href="<?= base_url(); ?>admin/team" class="btn btn-danger float-left">Cancel</a>
+                    <a href="<?= base_url(); ?>sys/admin/team" class="btn btn-danger float-left">Cancel</a>
                 </div>
             </form>
         </div>
@@ -118,6 +112,7 @@ $(document).ready(function() {
                         confirmButtonText: 'OK',
                         width: '30%',
                         heightAuto: false,
+                        timer: 2000,
                         customClass: {
                             popup: 'swal-custom-popup',
                             title: 'swal-custom-title',
@@ -127,7 +122,7 @@ $(document).ready(function() {
                         }
                     }).then(() => {
                         // Optionally redirect after success
-                        window.location.href = '<?= base_url("admin/team"); ?>'; // Adjust as needed
+                        window.location.href = '<?= base_url("sys/admin/team"); ?>'; // Adjust as needed
                     });
                 } else if (response.status === 'error') {
                     // Error alert
@@ -138,6 +133,7 @@ $(document).ready(function() {
                         confirmButtonText: 'OK',
                         width: '30%',
                         heightAuto: false,
+                        timer: 2000,
                         customClass: {
                             popup: 'swal-custom-popup',
                             title: 'swal-custom-title',

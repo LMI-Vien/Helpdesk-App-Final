@@ -40,12 +40,12 @@ class AdminGenerateReport_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->setflashdata('error', 'Error fetching user information.');
-				redirect('authentication');
+				redirect('sys/authentication');
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect('authentication');
+			redirect('sys/authentication');
 		}
 	}
 

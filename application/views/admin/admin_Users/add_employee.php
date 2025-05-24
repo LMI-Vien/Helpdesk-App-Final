@@ -89,7 +89,7 @@
 					</div>
 					<div class="box-footer">
 						<button class="btn btn-info float-left">Submit</button>
-						<a href="<?= base_url(); ?>admin/users" class="btn btn-danger float-left">Cancel</a>
+						<a href="<?= base_url(); ?>sys/admin/users" class="btn btn-danger float-left">Cancel</a>
 					</div>
 				</div>
 			</form>
@@ -175,7 +175,7 @@ $(document).ready(function() {
                         }
                     }).then(() => {
                         // Redirect or perform other actions after success
-                        window.location.href = '<?= base_url("admin/users"); ?>';
+                        window.location.href = '<?= base_url("sys/admin/users"); ?>';
                     });
                 } else {
                     Swal.fire({

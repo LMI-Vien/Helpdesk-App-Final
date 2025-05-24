@@ -71,10 +71,10 @@ class UsersTraccCon_controller extends CI_Controller {
 
 			if ($process[0] == 1) { 
 				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'users/dashboard'); 
+				redirect(base_url().'sys/users/dashboard'); 
 			} else {
 				$this->session->set_flashdata('error', $process[1]); 
-				redirect(base_url().'users/dashboard');
+				redirect(base_url().'sys/users/dashboard');
 			}
 		}
 	}
@@ -125,11 +125,11 @@ class UsersTraccCon_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('users/list/tickets/tracc_concern');
+					redirect('sys/users/list/tickets/tracc_concern');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('users/list/tickets/tracc_concern');
+				redirect('sys/users/list/tickets/tracc_concern');
 			}
 
 			// if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
@@ -163,7 +163,7 @@ class UsersTraccCon_controller extends CI_Controller {
 	
 				if (!$this->upload->do_upload('uploaded_photo')) {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
-					redirect(base_url().'users/create/tickets/tracc_concern');  
+					redirect(base_url().'sys/users/create/tickets/tracc_concern');  
 				} else {
 					$file_data = $this->upload->data();
 					$file_path = $file_data['file_name']; 
@@ -174,10 +174,10 @@ class UsersTraccCon_controller extends CI_Controller {
 	
 			if ($process[0] == 1) {
 				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'users/list/tickets/tracc_concern');  
+				redirect(base_url().'sys/users/list/tickets/tracc_concern');  
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'users/create/tickets/tracc_concern');  
+				redirect(base_url().'sys/users/create/tickets/tracc_concern');  
 			}
 		}
 	}
@@ -210,12 +210,12 @@ class UsersTraccCon_controller extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("authentication");
+				redirect("sys/authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("authentication");
+			redirect("sys/authentication");
 		}
 	}
 
@@ -250,7 +250,7 @@ class UsersTraccCon_controller extends CI_Controller {
 						$this->session->set_flashdata('error', 'Failed to update data.');
 					}
 	
-					redirect(base_url() . "users/list/tickets/tracc_concern");
+					redirect(base_url() . "sys/users/list/tickets/tracc_concern");
 	
 				} elseif ($action == 'acknowledge') {
 					$acknowledge_data = [
@@ -266,14 +266,14 @@ class UsersTraccCon_controller extends CI_Controller {
 						$this->session->set_flashdata('error', 'Failed to acknowledge ticket as resolved.');
 					}
 	
-					redirect(base_url() . "users/list/tickets/tracc_concern");
+					redirect(base_url() . "sys/users/list/tickets/tracc_concern");
 				} else {
 					$this->session->set_flashdata('error', 'Invalid action.');
-					redirect(base_url() . "users/list/tickets/tracc_concern");
+					redirect(base_url() . "sys/users/list/tickets/tracc_concern");
 				}
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("authentication");
+				redirect("sys/authentication");
 			}
 		} else {
 			$this->session->set_flashdata('error', 'Error fetching user information');

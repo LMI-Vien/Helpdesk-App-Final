@@ -148,7 +148,7 @@
                             <div class="tab-pane active" id="msrf">
                                 <section id="new">
                                     <div class="row">
-                                        <form action="<?= site_url('users/details/concern/customer_req_item_req/update/' . $reqForm['recid']); ?>" method="POST">
+                                        <form action="<?= site_url('sys/users/details/concern/customer_req_item_req/update/' . $reqForm['recid']); ?>" method="POST">
                                             <div class="col-md-12">
                                                 <input type="text" class="form-control" name="ticket_id" value="<?= $reqForm['ticket_id']; ?>" readonly />
                                             </div>

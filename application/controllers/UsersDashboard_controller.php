@@ -41,12 +41,12 @@ class UsersDashboard_controller extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("authentication");
+				redirect("sys/authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
         	$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("authentication");
+			redirect("sys/authentication");
 		}
 	}
 }

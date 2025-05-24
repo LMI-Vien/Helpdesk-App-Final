@@ -76,10 +76,10 @@ class UsersMSRF_controller extends CI_Controller {
 
 			if ($process[0] == 1) { 
 				$this->session->set_flashdata('success', $process[1]); 
-				redirect(base_url().'users/dashboard');
+				redirect(base_url().'sys/users/dashboard');
 			} else {
 				$this->session->set_flashdata('error', $process[1]); 
-				redirect(base_url().'users/dashboard'); 
+				redirect(base_url().'sys/users/dashboard'); 
 			}
 		}
 	}
@@ -134,12 +134,40 @@ class UsersMSRF_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('users/list/tickets/msrf');
+					redirect('sys/users/list/tickets/msrf');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('users/list/tickets/msrf');
+				redirect('sys/users/list/tickets/msrf');
 			}
+
+			// if (($timecomparison1 && $timecomparison2) || $cutoff->bypass == 1) {	
+			// 	$this->load->view('users/header', $data);
+			// 	$this->load->view('users/users_MSRF/service_request_form_msrf_creation', $data);
+			// 	$this->load->view('users/footer');
+			// } else {
+			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			// 	redirect('sys/users/list/tickets/msrf');
+			// }
+
+			// echo $timecomparison2; 
+			// if ($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
+			// 	$users_department = $users_det[1]['dept_id'];       
+			// 	$get_department = $this->Main_model->UsersDepartment($users_department); 
+			// 	$data['get_department'] = $get_department;
+				
+			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
+			// 	redirect('sys/users/list/tickets/msrf');
+			// } else {
+			// 	$users_department = $users_det[1]['dept_id'];       
+			// 	$get_department = $this->Main_model->UsersDepartment($users_department); 
+			// 	$data['get_department'] = $get_department;
+				
+			// 	$this->load->view('users/header', $data);
+			// 	$this->load->view('users/users_MSRF/service_request_form_msrf_creation', $data);
+			// 	$this->load->view('users/footer');
+			// }
+	
 		} else {
 			$file_path = null; // Initialize file path
 			if (!empty($_FILES['uploaded_file']['name'])) {
@@ -154,7 +182,7 @@ class UsersMSRF_controller extends CI_Controller {
 	
 				if (!$this->upload->do_upload('uploaded_file')) {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
-					redirect(base_url().'users/create/tickets/msrf');  
+					redirect(base_url().'sys/users/create/tickets/msrf');  
 				} else {
 					$file_data = $this->upload->data();
 					$file_path = $file_data['file_name']; 
@@ -165,10 +193,10 @@ class UsersMSRF_controller extends CI_Controller {
 	
 			if ($process[0] == 1) {
 				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'users/list/tickets/msrf');
+				redirect(base_url().'sys/users/list/tickets/msrf');
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'users/list/tickets/msrf');
+				redirect(base_url().'sys/users/list/tickets/msrf');
 			}
 		}
 	}
@@ -191,12 +219,12 @@ class UsersMSRF_controller extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("authentication");
+				redirect("sys/authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
         	$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("authentication");
+			redirect("sys/authentication");
 		}
 	}
 
@@ -223,14 +251,14 @@ class UsersMSRF_controller extends CI_Controller {
 
 				if ($process[0] == 1) {
 					$this->session->set_flashdata('success', $process[1]);
-					redirect(base_url()."users/list/tickets/msrf");
+					redirect(base_url()."sys/users/list/tickets/msrf");
 				} else {
 					$this->session->set_flashdata('error', $process[0]);
-					redirect(base_url()."users/list/tickets/msrf");
+					redirect(base_url()."sys/users/list/tickets/msrf");
 				}
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("authentication");
+				redirect("sys/authentication");
 			}
 		} else {
 			$this->session->set_flashdata('error', 'Error fetching user information');

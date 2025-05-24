@@ -16,7 +16,7 @@
     <section class="content">
         <div class="row">
             <!-- Total Tickets MSRF -->
-            <a href="<?= base_url(); ?>admin/list/ticket/msrf" class="small-box-link">
+            <a href="<?= base_url(); ?>sys/admin/list/ticket/msrf" class="small-box-link">
                 <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-light-blue">
                         <div class="inner">
@@ -31,7 +31,7 @@
                 </div>
             </a>
             <!-- Total Tickets TRACC CONCERN -->
-            <a href="<?= base_url(); ?>admin/list/ticket/msrf" class="small-box-link">
+            <a href="<?= base_url(); ?>sys/admin/list/ticket/msrf" class="small-box-link">
                 <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-olive">
                         <div class="inner">
@@ -46,7 +46,7 @@
                 </div>
             </a>
             <!-- Total Tickets TRACC REQUEST -->
-            <a href="<?= base_url(); ?>admin/list/ticket/tracc_concern" class="small-box-link">
+            <a href="<?= base_url(); ?>sys/admin/list/ticket/tracc_concern" class="small-box-link">
                 <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-maroon">
                         <div class="inner">
@@ -61,7 +61,7 @@
                 </div>
             </a>
             <!-- Total Users -->
-            <a href="<?= $role !== 'L2' ? base_url() . 'admin/users' : '#' ?>" class="small-box-link" <?= $role === 'L2' ? 'id="restricted-link"' : '' ?>>
+            <a href="<?= $role !== 'L2' ? base_url() . 'sys/admin/users' : '#' ?>" class="small-box-link" <?= $role === 'L2' ? 'id="restricted-link"' : '' ?>>
                 <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-green">
                         <div class="inner">
@@ -76,7 +76,7 @@
                 </div>
             </a>
             <!-- Total Departments -->
-            <a href="<?= $role !== 'L2' ? base_url() . 'admin/team' : '#' ?>" class="small-box-link" <?= $role === 'L2' ? 'id="restricted-departments-link"' : '' ?>>
+            <a href="<?= $role !== 'L2' ? base_url() . 'sys/admin/team' : '#' ?>" class="small-box-link" <?= $role === 'L2' ? 'id="restricted-departments-link"' : '' ?>>
                 <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-yellow">
                         <div class="inner">

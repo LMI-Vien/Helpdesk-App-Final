@@ -88,10 +88,10 @@ class AdminMSRF_controller extends CI_Controller {
 
 			if ($process[0] == 1) { 
 				$this->session->set_flashdata('success', $process[1]); 
-				redirect(base_url().'users/dashboard');
+				redirect(base_url().'sys/users/dashboard');
 			} else {
 				$this->session->set_flashdata('error', $process[1]); 
-				redirect(base_url().'users/dashboard'); 
+				redirect(base_url().'sys/users/dashboard'); 
 			}
 		}
 	}
@@ -121,12 +121,12 @@ class AdminMSRF_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("authentication");
+				redirect("sys/authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
         	$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("authentication");
+			redirect("sys/authentication");
 		}
 	}
 
@@ -152,14 +152,14 @@ class AdminMSRF_controller extends CI_Controller {
 
 				if ($process[0] == 1) {
 					$this->session->set_flashdata('success', $process[1]);
-					redirect(base_url()."admin/list/creation_tickets/msrf");
+					redirect(base_url()."sys/admin/list/creation_tickets/msrf");
 				} else {
 					$this->session->set_flashdata('error', $process[0]);
-					redirect(base_url()."admin/list/creation_tickets/msrf");
+					redirect(base_url()."sys/admin/list/creation_tickets/msrf");
 				}
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("authentication");
+				redirect("sys/authentication");
 			}
 		} else {
 			$this->session->set_flashdata('error', 'Error fetching user information');
@@ -219,11 +219,11 @@ class AdminMSRF_controller extends CI_Controller {
 					$this->load->view('admin/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('admin/list/creation_tickets/msrf');
+					redirect('sys/admin/list/creation_tickets/msrf');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('admin/list/creation_tickets/msrf');
+				redirect('sys/admin/list/creation_tickets/msrf');
 			}
 		} else {
 			$file_path = null; // Initialize file path
@@ -239,7 +239,7 @@ class AdminMSRF_controller extends CI_Controller {
 	
 				if (!$this->upload->do_upload('uploaded_file')) {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
-					redirect(base_url().'admin/create/tickets/msrf');  
+					redirect(base_url().'sys/admin/create/tickets/msrf');  
 				} else {
 					$file_data = $this->upload->data();
 					$file_path = $file_data['file_name']; 
@@ -250,10 +250,10 @@ class AdminMSRF_controller extends CI_Controller {
 	
 			if ($process[0] == 1) {
 				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'admin/list/creation_tickets/msrf');
+				redirect(base_url().'sys/admin/list/creation_tickets/msrf');
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'admin/list/creation_tickets/msrf');
+				redirect(base_url().'sys/admin/list/creation_tickets/msrf');
 			}
 		}
 	}
@@ -292,7 +292,7 @@ class AdminMSRF_controller extends CI_Controller {
 					} else {
 						$this->session->set_flashdata('error', 'Update failed.');
 					}
-					redirect(base_url()."admin/list/ticket/msrf");
+					redirect(base_url()."sys/admin/list/ticket/msrf");
 				}
 	
 				$this->load->view('admin/header', $data);
@@ -301,12 +301,12 @@ class AdminMSRF_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("authentication");
+				redirect("sys/authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("authentication");
+			redirect("sys/authentication");
 		}
 	}
     
@@ -337,7 +337,7 @@ class AdminMSRF_controller extends CI_Controller {
 			}
 		} else {
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("authentication");
+			redirect("sys/authentication");
 		}
 	}
 }

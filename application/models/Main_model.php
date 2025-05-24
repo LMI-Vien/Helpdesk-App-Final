@@ -970,7 +970,7 @@ class Main_model extends CI_Model {
 			$this->session->set_flashdata('error', 'Error acknowledging ticket as resolved.');
 		}
 
-		redirect(base_url(). "users/list/tickets/tracc_request");
+		redirect(base_url(). "sys/users/list/tickets/tracc_request");
 	}
 
 	public function get_cutoff() {

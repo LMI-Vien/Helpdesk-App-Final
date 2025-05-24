@@ -20,8 +20,8 @@
                                     <tr>
                                         <th>Department ID</th>
                                         <th>Department</th>
-                                        <th>Department Code</th>
                                         <th>Manager ID</th>
+                                        <th>Support ID</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

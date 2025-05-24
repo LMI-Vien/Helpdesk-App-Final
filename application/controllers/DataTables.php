@@ -70,7 +70,7 @@ class DataTables extends CI_Controller {
                 } else {
                     $btn_action[] = "<button class='btn btn-warning btn-sm btn_lock unlock_btn' data-empid='".$rows->recid."'><i class='fa fa-power-off'></i> Unlock Account</button>";
                 }
-                $btn_edit[] = "<a href='".base_url()."admin/update/employee/".$rows->recid."' class='btn btn-success btn-sm btn-edit'><i class='fa fa-pencil'></i> Update Details</a>";
+                $btn_edit[] = "<a href='".base_url()."sys/admin/update/employee/".$rows->recid."' class='btn btn-success btn-sm btn-edit'><i class='fa fa-pencil'></i> Update Details</a>";
                 // $btn_delete[] = "<button class='btn btn-danger btn-sm btn-delete' data-toggle='modal' data-target='#UsersDeleteModal' data-id='".$rows->recid."'>
                 //  <i class='fa fa-trash'></i> Delete</button>";
                 $btn_active[] = "<button class='btn btn-info btn-sm btn-delete' data-toggle='modal' data-target='#UsersUpdateActiveModal' data-id='".$rows->recid."'>
@@ -149,15 +149,15 @@ class DataTables extends CI_Controller {
         if ($data_query->num_rows() > 0) {
             foreach ($data_query->result() as $row) {
                 // Create Edit and Delete buttons
-                $btn_edit = "<a href='".base_url()."admin/update/department/".$row->recid."' class='btn btn-success btn-sm btn-edit'><i class='fa fa-pencil'></i> Edit</a>";
+                $btn_edit = "<a href='".base_url()."sys/admin/update/department/".$row->recid."' class='btn btn-success btn-sm btn-edit'><i class='fa fa-pencil'></i> Edit</a>";
                 $btn_delete = "<button class='btn btn-danger btn-sm btn-delete' data-toggle='modal' data-target='#deleteModal' data-id='".$row->recid."'>
                <i class='fa fa-trash'></i> Delete</button>";
 
                 $data[] = array(
                     $row->recid,
                     $row->dept_desc,
-                    $row->dept_code,
                     $row->manager_id,
+                    $row->sup_id,
                     $btn_edit . " " . $btn_delete
                 );
             }
@@ -316,7 +316,7 @@ class DataTables extends CI_Controller {
                 }
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
     
-                $tickets[] = "<a href='" . base_url() . "users/details/concern/msrf/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
+                $tickets[] = "<a href='" . base_url() . "sys/users/details/concern/msrf/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
                 $name[] = $rows->requestor_name;
                 $subject[] = $rows->subject;
                 
@@ -416,7 +416,7 @@ class DataTables extends CI_Controller {
                     $status[] = "<b>" . $rows->status . "</b>";
                     
                     // Generate a clickable link for the ticket ID.
-                    $tickets[] = "<a href='" . base_url() . "admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'><b>" . $rows->ticket_id . "</b></a>";
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'><b>" . $rows->ticket_id . "</b></a>";
                 } else {
                     $date_requested[] = date('M-d-Y', strtotime($rows->date_requested));
                     $name[] = $rows->requestor_name;
@@ -424,7 +424,7 @@ class DataTables extends CI_Controller {
                     $status[] = $rows->status; 
                     
                     // Generate a clickable link for the ticket ID.
-                    $tickets[] = "<a href='" . base_url() . "admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
                 }
 
                 $bid[] = $rows->recid;
@@ -702,7 +702,7 @@ class DataTables extends CI_Controller {
                 $priority_label[] = '<span class="label ' . $priority_class . '">' . $rows->priority . '</span>';
     
                 // Ticket data
-                $control_number[] = "<a href='" . base_url() . "users/details/concern/tracc_concern/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
+                $control_number[] = "<a href='" . base_url() . "sys/users/details/concern/tracc_concern/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
                 $name[] = $rows->reported_by;
                 $subject[] = $rows->subject;
             }
@@ -914,12 +914,12 @@ class DataTables extends CI_Controller {
                 $opened = explode(',', $rows->opened);
 
                 if(!in_array($user_id, $opened)) {
-                    $tickets[] = "<a href='" . base_url() . "admin/approved/" . $rows->subject . "/" . $rows->control_number . "'><b>" . $rows->control_number . "</b></a>";
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->control_number . "'><b>" . $rows->control_number . "</b></a>";
                     $name[] = "<b>" . $rows->reported_by . "</b>";
                     $subject[] = "<b>" . $rows->subject . "</b>";
                     $reported_date[] = "<b>" . date('M-d-Y', strtotime($rows->reported_date)) . "</b>";
                 } else {
-                    $tickets[] = "<a href='" . base_url() . "admin/approved/" . $rows->subject . "/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
                     $name[] = $rows->reported_by;
                     $subject[] = $rows->subject;
                     $reported_date[] = date('M-d-Y', strtotime($rows->reported_date));
@@ -1103,7 +1103,7 @@ class DataTables extends CI_Controller {
                 }
                 $priority_label[] = '<span class="label ' . $priority_class . '">' . $rows->priority . '</span>';
                 // Ticket data
-                $trf_ticket[] = "<a href='" . base_url() . "users/details/concern/tracc_request/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
+                $trf_ticket[] = "<a href='" . base_url() . "sys/users/details/concern/tracc_request/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
                 $name[] = $rows->requested_by;
                 $subject[] = $rows->subject;
             }
@@ -1287,12 +1287,12 @@ class DataTables extends CI_Controller {
                 $opened = explode(',', $rows->opened);
 
                 if(!in_array($user_id, $opened)) {
-                    $tickets[] = "<a href='" . base_url() . "admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'><b>" . $rows->ticket_id ."</b></a>";
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'><b>" . $rows->ticket_id ."</b></a>";
                     $name[] = "<b>" . $rows->requested_by . "</b>";
                     $subject[] = "<b>" . $rows->subject . "</b>";
                     $date_requested[] = "<b>" . date('M-d-Y', strtotime($rows->date_requested)) . "</b>";
                 } else {
-                    $tickets[] = "<a href='" . base_url() . "admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'>" . $rows->ticket_id ."</a>";
+                    $tickets[] = "<a href='" . base_url() . "sys/admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'>" . $rows->ticket_id ."</a>";
                     $name[] = $rows->requested_by;
                     $subject[] = $rows->subject;
                     $date_requested[] = date('M-d-Y', strtotime($rows->date_requested));
@@ -1529,7 +1529,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach($data as $row) {
-            $row['ticket_id'] = "<a href='" . base_url() . "users/details/concern/msrf/" . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
+            $row['ticket_id'] = "<a href='" . base_url() . "sys/users/details/concern/msrf/" . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
             switch ($row['status']) {
                 case 'Open':
                     $label_class = 'label-primary';
@@ -1596,7 +1596,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach($data as $row) {
-            $row['control_number'] = "<a href='" . base_url() . "users/details/concern/tracc_concern/" . $row['control_number'] . "'>" . $row['control_number'] . "</a>";
+            $row['control_number'] = "<a href='" . base_url() . "sys/users/details/concern/tracc_concern/" . $row['control_number'] . "'>" . $row['control_number'] . "</a>";
             switch ($row['status']) {
                 case 'Open':
                     $label_class = 'label-primary';
@@ -1663,7 +1663,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach($data as $row) {
-            $row['ticket_id'] = "<a href='" . base_url() . "users/details/concern/tracc_request/" . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
+            $row['ticket_id'] = "<a href='" . base_url() . "sys/users/details/concern/tracc_request/" . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
             switch ($row['status']) {
                 case 'Open':
                     $label_class = 'label-primary';
@@ -1732,7 +1732,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach($data as $row) {
-            $row['ticket_id'] = "<a href='" . base_url() . "users/details/concern/customer_req_form/" . $row['recid'] . "'>" . $row['ticket_id'] . "</a>";
+            $row['ticket_id'] = "<a href='" . base_url() . "sys/users/details/concern/customer_req_form/" . $row['recid'] . "'>" . $row['ticket_id'] . "</a>";
             $formattedData[] = $row;
         }
 
@@ -1773,7 +1773,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach($data as $row) {
-            $row['ticket_id'] = "<a href='" . base_url() . "users/details/concern/customer_req_ship_setup/" . $row['recid'] . "'>" . $row['ticket_id'] . "</a>";
+            $row['ticket_id'] = "<a href='" . base_url() . "sys/users/details/concern/customer_req_ship_setup/" . $row['recid'] . "'>" . $row['ticket_id'] . "</a>";
             $formattedData[] = $row;
         }
 
@@ -1814,7 +1814,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach($data as $row) {
-            $row['ticket_id'] = "<a href='" . base_url() . "users/details/concern/customer_req_item_req/" . $row['recid'] . "'>" . $row['ticket_id'] . "</a>";
+            $row['ticket_id'] = "<a href='" . base_url() . "sys/users/details/concern/customer_req_item_req/" . $row['recid'] . "'>" . $row['ticket_id'] . "</a>";
             $formattedData[] = $row;
         }
 
@@ -1855,7 +1855,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach($data as $row) {
-            $row['ticket_id'] = "<a href='" . base_url() . "users/details/concern/customer_req_employee_req/" . $row['recid'] . "'>" . $row['ticket_id'] . "</a>";
+            $row['ticket_id'] = "<a href='" . base_url() . "sys/users/details/concern/customer_req_employee_req/" . $row['recid'] . "'>" . $row['ticket_id'] . "</a>";
             $formattedData[] = $row;
         }
 
@@ -1896,7 +1896,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach($data as $row) {
-            $row['ticket_id'] = "<a href='" . base_url() . "users/details/concern/customer_req_supplier_req/" . $row['recid'] . "'>" . $row['ticket_id'] . "</a>";
+            $row['ticket_id'] = "<a href='" . base_url() . "sys/users/details/concern/customer_req_supplier_req/" . $row['recid'] . "'>" . $row['ticket_id'] . "</a>";
             $formattedData[] = $row;
         }
 
@@ -1947,7 +1947,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach($data as $row) {
-            $row['ticket_id'] = "<a href='" . base_url('admin/list/closed_tickets/MSRF/') . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
+            $row['ticket_id'] = "<a href='" . base_url('sys/admin/list/closed_tickets/MSRF/') . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
             switch ($row['status']) {
                 case 'Open':
                     $label_class = 'label-primary';
@@ -2071,7 +2071,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach($data as $row) {
-            $row['control_number'] = "<a href='" . base_url('admin/list/closed_tickets/TRACC_CONCERN/') . $row['control_number'] . "'>" . $row['control_number'] . "</a>";
+            $row['control_number'] = "<a href='" . base_url('sys/admin/list/closed_tickets/TRACC_CONCERN/') . $row['control_number'] . "'>" . $row['control_number'] . "</a>";
             switch ($row['status']) {
                 case 'Open':
                     $label_class = 'label-primary';
@@ -2199,7 +2199,7 @@ class DataTables extends CI_Controller {
 
         $formattedData = [];
         foreach ($data as $row) {
-            $row['ticket_id'] = "<a href='" . base_url('admin/list/closed_tickets/TRACC_REQUEST/') . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
+            $row['ticket_id'] = "<a href='" . base_url('sys/admin/list/closed_tickets/TRACC_REQUEST/') . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
 
             switch ($row['status']) {
                 case 'Open':
@@ -2431,7 +2431,7 @@ class DataTables extends CI_Controller {
                 }
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
     
-                $tickets[] = "<a href='" . base_url() . "admin/details/concern/msrf/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
+                $tickets[] = "<a href='" . base_url() . "sys/admin/details/concern/msrf/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
                 $name[] = $rows->requestor_name;
                 $subject[] = $rows->subject;
                 
@@ -2622,7 +2622,7 @@ class DataTables extends CI_Controller {
                 $priority_label[] = '<span class="label ' . $priority_class . '">' . $rows->priority . '</span>';
     
                 // Ticket data
-                $control_number[] = "<a href='" . base_url() . "admin/details/concern/tracc_concern/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
+                $control_number[] = "<a href='" . base_url() . "sys/admin/details/concern/tracc_concern/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
                 $name[] = $rows->reported_by;
                 $subject[] = $rows->subject;
             }
@@ -2796,7 +2796,7 @@ class DataTables extends CI_Controller {
                 }
                 $priority_label[] = '<span class="label ' . $priority_class . '">' . $rows->priority . '</span>';
                 // Ticket data
-                $trf_ticket[] = "<a href='" . base_url() . "admin/details/concern/tracc_request/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
+                $trf_ticket[] = "<a href='" . base_url() . "sys/admin/details/concern/tracc_request/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
                 $name[] = $rows->requested_by;
                 $subject[] = $rows->subject;
             }

@@ -39,39 +39,24 @@ class AdminCutoff_controller extends CI_Controller {
                 $this->load->view('admin/footer');
             } else {
                 $this->session->Set_flashdata('error', 'Error fetching user information');
-                redirect("authentication");
+                redirect("sys/authentication");
             }
         } else {
             $this->session->sess_destroy();
             $this->session->Set_flashdata('error', 'Session expired. Please login again.');
-            redirect("authentication");
+            redirect("sys/authentication");
         }
 
     }
 
     public function set_cutoff() {
         $this->AdminCutoff_model->set_cutoff();
-        redirect('admin/cutoff');
+        redirect('sys/admin/cutoff');
     }
     
     public function bypass() {
         $this->AdminCutoff_model->bypass();
-        redirect('admin/cutoff');
-    }
-
-    public function schedule_cutoff() {
-        $this->AdminCutoff_model->schedule_cutoff();
-        redirect('admin/cutoff');
-    }
-
-    public function edit_schedule($recid) {
-        $this->AdminCutoff_model->edit_schedule($recid);
-        redirect('admin/cutoff');
-    }
-
-    public function delete_schedule($recid) {
-        $this->AdminCutoff_model->delete_schedule($recid);
-        redirect('admin/cutoff');
+        redirect('sys/admin/cutoff');
     }
 
     public function schedule_cutoff() {

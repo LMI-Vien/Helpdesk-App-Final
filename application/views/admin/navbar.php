@@ -1,4 +1,4 @@
-<a href="<?= base_url('admin/dashboard')?>" class="logo">
+<a href="<?= base_url('sys/admin/dashboard')?>" class="logo">
 	<span class="logo-mini"><b>L</b>MI</span>
     <span class="logo-lg"><b>ICT</b> Helpdesk</span>
 </a>
@@ -19,7 +19,7 @@
                 <ul class="dropdown-menu">
                     <li class="user-footer">
                         <div class="pull-right">
-                            <a href="<?= base_url(); ?>logout" id="logout" class="btn btn-danger btn-flat">Sign out</a>
+                            <a href="<?= base_url(); ?>sys/logout" id="logout" class="btn btn-danger btn-flat">Sign out</a>
                         </div>
                     </li>
                 </ul>

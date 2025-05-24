@@ -42,7 +42,7 @@
                 </div>
                 <div class="box-footer">
                     <button class="btn btn-info float-left">Update</button>
-                    <a href="<?= base_url(); ?>admin/team" class="btn btn-danger float-left">Cancel</a>
+                    <a href="<?= base_url(); ?>sys/admin/team" class="btn btn-danger float-left">Cancel</a>
                 </div>
             </form>
         </div>
@@ -125,7 +125,7 @@ $(document).ready(function() {
                             confirmButton: 'swal-custom-confirm-btn'
                         }
                     }).then(() => {
-                        window.location.href = '<?= base_url("admin/team"); ?>';
+                        window.location.href = '<?= base_url("sys/admin/team"); ?>';
                     });
                 } else {
                     Swal.fire({

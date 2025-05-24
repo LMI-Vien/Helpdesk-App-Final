@@ -90,7 +90,7 @@ class UsersTraccCon_model extends CI_Model {
 			$this->session->set_flashdata('error', 'Error acknowledging ticket as resolved.');
 		}
 
-		redirect(base_url(). "users/list/tickets/tracc_concern");
+		redirect(base_url(). "sys/users/list/tickets/tracc_concern");
 
 	}
 }
