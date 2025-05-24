@@ -63,7 +63,7 @@ class AdminTraccReq_controller extends CI_Controller {
 						$this->session->set_flashdata('error', 'Update failed.');
 					}
 
-					redirect(base_url()."sys/admin/list/ticket/tracc_request");
+					redirect(base_url()."admin/list/ticket/tracc_request");
 				}
 				$this->load->view('admin/header', $data);
 				$this->load->view('admin/sidebar', $data);
@@ -73,7 +73,7 @@ class AdminTraccReq_controller extends CI_Controller {
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -101,7 +101,7 @@ class AdminTraccReq_controller extends CI_Controller {
 			}
 		} else {
 			$this->session->flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -129,12 +129,12 @@ class AdminTraccReq_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->setflashdata('error', 'Error fetching user information.');
-				redirect('sys/authentication');
+				redirect('authentication');
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect('sys/authentication');
+			redirect('authentication');
 		}
 	}
 
@@ -242,12 +242,12 @@ class AdminTraccReq_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->setflashdata('error', 'Error fetching user information.');
-				redirect('sys/authentication');
+				redirect('authentication');
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect('sys/authentication');
+			redirect('authentication');
 		}
 	}
 
@@ -347,12 +347,12 @@ class AdminTraccReq_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->setflashdata('error', 'Error fetching user information.');
-				redirect('sys/authentication');
+				redirect('authentication');
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect('sys/authentication');
+			redirect('authentication');
 		}
 	}
 
@@ -444,12 +444,12 @@ class AdminTraccReq_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->setflashdata('error', 'Error fetching user information.');
-				redirect('sys/authentication');
+				redirect('authentication');
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect('sys/authentication');
+			redirect('authentication');
 		}
 	}
 
@@ -574,12 +574,12 @@ class AdminTraccReq_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->setflashdata('error', 'Error fetching user information.');
-				redirect('sys/authentication');
+				redirect('authentication');
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect('sys/authentication');
+			redirect('authentication');
 		}
 	}
 
@@ -684,7 +684,7 @@ class AdminTraccReq_controller extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('error', 'Update failed.');
 		}
-		redirect(base_url()."sys/admin/customer_request_form_pdf");
+		redirect(base_url()."admin/customer_request_form_pdf");
 	}
 
 	// Approve Customer Shipping Setup
@@ -699,7 +699,7 @@ class AdminTraccReq_controller extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('error', 'Update failed.');
 		}
-		redirect(base_url()."sys/admin/customer_shipping_setup_pdf");
+		redirect(base_url()."admin/customer_shipping_setup_pdf");
 	}
 
 	// Approve Employee Request Form
@@ -714,7 +714,7 @@ class AdminTraccReq_controller extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('error', 'Update failed.');
 		}
-		redirect(base_url()."sys/admin/employee_request_form_pdf");
+		redirect(base_url()."admin/employee_request_form_pdf");
 	}
 
 	// Approve Item Request Form
@@ -729,7 +729,7 @@ class AdminTraccReq_controller extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('error', 'Update failed.');
 		}
-		redirect(base_url()."sys/admin/item_request_form_pdf");
+		redirect(base_url()."admin/item_request_form_pdf");
 	}
 
 	// Approve Supplier Request Form
@@ -744,7 +744,7 @@ class AdminTraccReq_controller extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('error', 'Update failed.');
 		}
-		redirect(base_url()."sys/admin/supplier_request_form_pdf");
+		redirect(base_url()."admin/supplier_request_form_pdf");
 	}
 
 	 // DATATABLE na makikita ni Admin sa get_tracc_request_form
@@ -802,10 +802,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 			if ($process[0] == 1){
 				$this->session->set_flashdata('success', $process[1]);
-				redirect(base_url().'sys/users/dashboard');
+				redirect(base_url().'users/dashboard');
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url().'sys/users/dashboard');
+				redirect(base_url().'users/dashboard');
 			}
 
 		}
@@ -860,21 +860,12 @@ class AdminTraccReq_controller extends CI_Controller {
 					$this->load->view('admin/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/admin/list/creation_tickets/tracc_request');
+					redirect('admin/list/creation_tickets/tracc_request');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/admin/list/creation_tickets/tracc_request');
+				redirect('admin/list/creation_tickets/tracc_request');
 			}
-			
-			// if($timecomparison1 && $timecomparison2 && $cutoff->bypass == 0) {
-			// 	$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-			// 	redirect('sys/users/dashboard');
-			// } else {
-			// 	$this->load->view('users/header', $data);
-			// 	$this->load->view('users/users_TRF/tracc_request_form_creation', $data);
-			// 	$this->load->view('users/footer');
-			// }
 		} else {
 			$file_path = null;
 			if (!empty($_FILES['uploaded_files']['name'])) {
@@ -887,7 +878,7 @@ class AdminTraccReq_controller extends CI_Controller {
 	
 				if (!$this->upload->do_upload('uploaded_files')) {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
-					redirect(base_url() . 'sys/admin/create/tickets/tracc_request');
+					redirect(base_url() . 'admin/create/tickets/tracc_request');
 				} else {
 					$file_data = $this->upload->data();
 					$file_path = $file_data['file_name'];
@@ -948,10 +939,10 @@ class AdminTraccReq_controller extends CI_Controller {
 					'expires_at' => time() + (5 * 60),
 					'recid' => $user_details[1]['recid'],
 				]);
-				redirect(base_url() . 'sys/admin/list/creation_tickets/tracc_request');
+				redirect(base_url() . 'admin/list/creation_tickets/tracc_request');
 			} else {
 				$this->session->set_flashdata('error', $process[1]);
-				redirect(base_url() . 'sys/admin/list/creation_tickets/tracc_request');
+				redirect(base_url() . 'admin/list/creation_tickets/tracc_request');
 			}
 		}
 	}
@@ -993,12 +984,12 @@ class AdminTraccReq_controller extends CI_Controller {
 				
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -1066,10 +1057,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 					if ($process[0] == 1 || $process1[0] == 1 || $process2[0] == 1 || $process3[0] == 1) {
 						$this->session->set_flashdata('success', $process[1]);
-						redirect(base_url()."sys/admin/list/creation_tickets/tracc_request");
+						redirect(base_url()."admin/list/creation_tickets/tracc_request");
 					} else {
 						$this->session->set_flashdata('error', $process[0]);
-						redirect(base_url()."sys/admin/list/creation_tickets/tracc_request");
+						redirect(base_url()."admin/list/creation_tickets/tracc_request");
 					}
 
 				}  elseif ($action == 'acknowledge') {
@@ -1089,11 +1080,11 @@ class AdminTraccReq_controller extends CI_Controller {
 						$this->session->set_flashdata('error', 'Failed to acknowledge ticket as resolved.');
 					}
 	
-					redirect(base_url() . "sys/admin/list/creation_tickets/tracc_request");
+					redirect(base_url() . "admin/list/creation_tickets/tracc_request");
 				}
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->set_flashdata('error', 'Error fetching user information');
@@ -1135,17 +1126,17 @@ class AdminTraccReq_controller extends CI_Controller {
 					$this->load->view('admin/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/admin/dashboard');
+					redirect('admin/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/admin/dashboard');
+				redirect('admin/dashboard');
 			}
 
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -1174,10 +1165,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/admin/create/tickets/tracc_request/customer_request');  
+			redirect(base_url().'admin/create/tickets/tracc_request/customer_request');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/admin/create/tickets/tracc_request/customer_request'); 
+			redirect(base_url().'admin/create/tickets/tracc_request/customer_request'); 
 		}
 	}
 
@@ -1206,10 +1197,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/admin/customer_request_form_pdf');  
+			redirect(base_url().'admin/customer_request_form_pdf');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/admin/customer_request_form_pdf'); 
+			redirect(base_url().'admin/customer_request_form_pdf'); 
 		}
 	}
 
@@ -1246,17 +1237,17 @@ class AdminTraccReq_controller extends CI_Controller {
 					$this->load->view('admin/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/admin/dashboard');
+					redirect('admin/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/admin/dashboard');
+				redirect('admin/dashboard');
 			}
 	
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -1280,10 +1271,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/admin/create/tickets/tracc_request/shipping_setup');  
+			redirect(base_url().'admin/create/tickets/tracc_request/shipping_setup');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/admin/create/tickets/tracc_request/shipping_setup');  
+			redirect(base_url().'admin/create/tickets/tracc_request/shipping_setup');  
 		}
 	}
 
@@ -1308,10 +1299,10 @@ class AdminTraccReq_controller extends CI_Controller {
 		// echo print_r($imploded_values);
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/admin/customer_shipping_setup_pdf');  
+			redirect(base_url().'admin/customer_shipping_setup_pdf');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/admin/customer_shipping_setup_pdf');  
+			redirect(base_url().'admin/customer_shipping_setup_pdf');  
 		}
 	}
 
@@ -1350,16 +1341,16 @@ class AdminTraccReq_controller extends CI_Controller {
 					$this->load->view('admin/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/admin/dashboard');
+					redirect('admin/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/admin/dashboard');
+				redirect('admin/dashboard');
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -1370,10 +1361,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/admin/create/tickets/tracc_request/employee_request');  
+			redirect(base_url().'admin/create/tickets/tracc_request/employee_request');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/admin/create/tickets/tracc_request/employee_request');  
+			redirect(base_url().'admin/create/tickets/tracc_request/employee_request');  
 		}
 	}
 
@@ -1383,10 +1374,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 		if($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/admin/employee_request_form_pdf');
+			redirect(base_url().'admin/employee_request_form_pdf');
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/admin/employee_request_form_pdf');
+			redirect(base_url().'admin/employee_request_form_pdf');
 		}
 		
 	}
@@ -1424,17 +1415,17 @@ class AdminTraccReq_controller extends CI_Controller {
 					$this->load->view('admin/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/admin/dashboard');
+					redirect('admin/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/admin/dashboard');
+				redirect('admin/dashboard');
 			}
 
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -1520,10 +1511,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/admin/create/tickets/tracc_request/item_request');  
+			redirect(base_url().'admin/create/tickets/tracc_request/item_request');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/admin/create/tickets/tracc_request/item_request');  
+			redirect(base_url().'admin/create/tickets/tracc_request/item_request');  
 		}
 	}
 
@@ -1612,10 +1603,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/admin/item_request_form_pdf');  
+			redirect(base_url().'admin/item_request_form_pdf');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/admin/item_request_form_pdf');  
+			redirect(base_url().'admin/item_request_form_pdf');  
 		}
 	}
 
@@ -1654,17 +1645,17 @@ class AdminTraccReq_controller extends CI_Controller {
 					$this->load->view('admin/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('sys/admin/dashboard');
+					redirect('admin/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('sys/admin/dashboard');
+				redirect('admin/dashboard');
 			}
 
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -1703,10 +1694,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/admin/create/tickets/tracc_request/supplier_request');  
+			redirect(base_url().'admin/create/tickets/tracc_request/supplier_request');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/admin/create/tickets/tracc_request/supplier_request');  
+			redirect(base_url().'admin/create/tickets/tracc_request/supplier_request');  
 		}
 	}
 
@@ -1745,10 +1736,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 		if ($process[0] == 1) {
 			$this->session->set_flashdata('success', $process[1]);
-			redirect(base_url().'sys/admin/supplier_request_form_pdf');  
+			redirect(base_url().'admin/supplier_request_form_pdf');  
 		} else {
 			$this->session->set_flashdata('error', $process[1]);
-			redirect(base_url().'sys/admin/supplier_request_form_pdf');  
+			redirect(base_url().'admin/supplier_request_form_pdf');  
 		}
 	}
 

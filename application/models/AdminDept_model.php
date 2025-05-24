@@ -12,10 +12,12 @@ class AdminDept_model extends CI_Model {
 	
 		$dept_desc = $this->input->post('dept_desc', true);
 		$manager_id = $this->input->post('manager_id', true);
+		$dept_code = $this->input->post('dept_code', true);
 		$sup_id = $this->input->post('sup_id', true);
 	
 		$data = array(
 			'dept_desc' => $dept_desc,
+			'dept_code' => $dept_code,
 			'manager_id' => $manager_id,
 			'sup_id' => $sup_id
 		);

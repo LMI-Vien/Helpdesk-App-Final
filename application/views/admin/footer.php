@@ -282,7 +282,7 @@
                     className: 'btn btn-info',
                     action: function (e, dt, node, config) {
                         // $("#modal-add-users").modal("show");
-                        window.location.href = '<?= base_url(); ?>' + 'sys/admin/add/employee';
+                        window.location.href = '<?= base_url(); ?>' + 'admin/add/employee';
                     }
                 }],
                 "columnDefs": [{
@@ -317,19 +317,6 @@
                 "responsive": true,
                 "autoWidth": false,
                 "lengthChange": false,
-                // 'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
-                // buttons: [
-                //     {
-                //         text: 'Create Ticket', 
-                //         className: 'btn btn-primary',
-                //         action: function (e, dt, node, config) {
-                //             window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/msrf';
-                //         },
-                //         attr: {
-                //             style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
-                //         }
-                //     }
-                // ]
             });
 
 
@@ -343,19 +330,6 @@
                 "responsive": true,
                 "autoWidth": false,
                 "lengthChange": false,
-                // 'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
-                // buttons: [
-                //     {
-                //         text: 'Create Ticket', 
-                //         className: 'btn btn-primary',
-                //         action: function (e, dt, node, config) {
-                //             window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/tracc_concern';
-                //         },
-                //         attr: {
-                //             style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
-                //         }
-                //     }
-                // ]
             });
 
             $('#tblTicketsTraccRequest').DataTable({
@@ -368,19 +342,6 @@
                 "responsive": true,
                 "autoWidth": false,
                 "lengthChange": false,
-                // 'dom': "<'row'<'col-sm-6'B><'col-sm-6'f>>" + 'rltip',
-                // buttons: [
-                //     {
-                //         text: 'Create Ticket', 
-                //         className: 'btn btn-primary',
-                //         action: function (e, dt, node, config) {
-                //             window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/tracc_request';
-                //         },
-                //         attr: {
-                //             style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
-                //         }
-                //     }
-                // ]
             });
             
 
@@ -400,7 +361,7 @@
                     className: 'btn btn-info',
                     action: function (e, dt, node, config) {
                         // $("#modal-add-users").modal("show"); 
-                        window.location.href = '<?= base_url(); ?>' + 'sys/admin/add/department';
+                        window.location.href = '<?= base_url(); ?>' + 'admin/add/department';
                     }
                 }],
                 "columnDefs": [{
@@ -539,7 +500,7 @@
                     text: 'Create Tickets',
                     className: 'btn btn-primary',
                     action: function (e, dt, node, config){
-                        window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/msrf';
+                        window.location.href = '<?= base_url(); ?>admin/create/tickets/msrf';
                     },
                     attr: {
                             style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
@@ -579,7 +540,7 @@
                     text: 'Create Tickets',
                     className: 'btn btn-primary',
                     action: function (e, dt, node, config){
-                        window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/tracc_concern';
+                        window.location.href = '<?= base_url(); ?>admin/create/tickets/tracc_concern';
                     },
                     attr: {
                             style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
@@ -619,7 +580,7 @@
                     text: 'Create Tickets',
                     className: 'btn btn-primary',
                     action: function (e, dt, node, config){
-                        window.location.href = '<?= base_url(); ?>sys/admin/create/tickets/tracc_request';
+                        window.location.href = '<?= base_url(); ?>admin/create/tickets/tracc_request';
                     },
                     attr: {
                             style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'

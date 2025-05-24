@@ -38,12 +38,12 @@ class AdminUsers_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
         	$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -79,12 +79,12 @@ class AdminUsers_controller extends CI_Controller {
 				$this->load->view('admin/footer');
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -194,12 +194,12 @@ class AdminUsers_controller extends CI_Controller {
 	
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 

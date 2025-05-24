@@ -390,39 +390,6 @@
         $('#tcr_solution').each(autoResizeTextarea);
     });
 
-    // $(document).on('click', '#form-add-submit-button', function(e) {
-    //     e.preventDefault();
-    //     var control_number = '<?= $this->uri->segment(6)?>';
-    //     control_number = control_number.trim();
-    //     var ict_approval = $('#it_app_stat').val();
-    //     var reason_rejected = $('#reason_rejected').val();
-
-    //     var data = {
-    //         ict_approval: ict_approval,
-    //         reason_rejected: reason_rejected,
-    //         data_id: control_number,
-    //         module:"tracc-concern"
-    //     };
-
-    //     $.ajax({
-    //         url: base_url + "Main/update_ticket",
-    //         type: "POST",
-    //         data: data,
-    //         success: function(response) {
-    //             var response = JSON.parse(response);
-    //             if (response.message === "success") {
-    //                 location.href = '<?=base_url("sys/users/list/tickets/tracc_concern") ?>';
-    //             } else {
-    //                 //change this and add error message or redirect to main listing page
-    //                 location.href = '<?=base_url("sys/users/list/tickets/tracc_concern") ?>';
-    //             }
-    //         },
-    //         error: function(xhr, status, error) {
-    //             //console.error("AJAX Error: " + error);
-    //         }
-    //     });
-    // });
-
     function setAcknowledgeFieldsRequired() {
         // Get the acknowledge fields
         var ackAsResBy = document.getElementById('ack_as_res_by');

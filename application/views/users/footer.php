@@ -187,26 +187,13 @@
 				var selectedValue = $('#concern').val();
 
 				if (selectedValue == "MSRF") {
-					window.location.href = "<?= base_url(); ?>sys/users/create/tickets/msrf";
+					window.location.href = "<?= base_url(); ?>users/create/tickets/msrf";
 				} else if (selectedValue == "TRACC") {
-					window.location.href = "<?= base_url(); ?>sys/users/create/tickets/tracc_concern";
+					window.location.href = "<?= base_url(); ?>users/create/tickets/tracc_concern";
 				} else {
 					alert("Please Selected for creation of tickets");
 				}
 			});
-
-			/*var buttonsConfig = [];
-			if (dept_id == 1) {
-                console.log(dept_id);
-            } else {
-				buttonsConfig.push({
-                    text: 'Create Tickets',
-                    className: 'btn btn-info',
-                    action: function (e, dt, node, config) {
-                        //window.location.href = '<?= base_url(); ?>' + 'sys/users/create/tickets/msrf';
-                    }
-                });
-			}*/
 
 			$('#tblMsrfConcern').DataTable({
 				"serverSide": true,
@@ -230,7 +217,7 @@
 							text: 'Create Tickets',
 							className: 'btn btn-primary',
 							action: function (e, dt, node, config){
-								window.location.href = '<?= base_url(); ?>sys/users/create/tickets/msrf';
+								window.location.href = '<?= base_url(); ?>users/create/tickets/msrf';
 							},
 							attr: {
 									style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
@@ -270,7 +257,7 @@
 							text: 'Create Tickets',
 							className: 'btn btn-primary',
 							action: function (e, dt, node, config){
-								window.location.href = '<?= base_url(); ?>sys/users/create/tickets/tracc_concern';
+								window.location.href = '<?= base_url(); ?>users/create/tickets/tracc_concern';
 							},
 							attr: {
 									style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'
@@ -308,7 +295,7 @@
 							text: 'Create Tickets',
 							className: 'btn btn-primary',
 							action: function (e, dt, node, config){
-								window.location.href = '<?= base_url(); ?>sys/users/create/tickets/tracc_request';
+								window.location.href = '<?= base_url(); ?>users/create/tickets/tracc_request';
 							},
 							attr: {
 									style: 'background-color: #9a1b1e; color: #ffffff; border: none; height: 35px; border-radius: 4px; padding: 6px 12px;'

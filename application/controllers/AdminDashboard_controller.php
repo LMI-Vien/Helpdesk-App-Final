@@ -53,13 +53,13 @@ class AdminDashboard_controller extends CI_Controller {
 
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 
 		} else {
 			$this->session->sess_destroy();
         	$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 

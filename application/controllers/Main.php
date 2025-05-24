@@ -37,13 +37,12 @@ class Main extends CI_Controller {
 					$this->session->set_userdata(array('login_data' => $process[1]));
 	
 					// Set redirect URL based on role
-					//$redirect_url = ($role == "L2") ? base_url().'sys/admin/dashboard' : base_url().'sys/users/dashboard';
 					if ($role == "L2"){
-						$redirect_url = base_url().'sys/admin/dashboard';
+						$redirect_url = base_url().'admin/dashboard';
 					} else if ($role == "L3"){
-						$redirect_url = base_url().'sys/admin/dashboard';
+						$redirect_url = base_url().'admin/dashboard';
 					} else {
-						$redirect_url = base_url().'sys/users/dashboard';
+						$redirect_url = base_url().'users/dashboard';
 					}
 					$response = array(
 						'status' => 'success',
@@ -141,18 +140,18 @@ class Main extends CI_Controller {
 				$process = $this->Main_model->updated_lock();
 				
 				if ($process[0] == 1) {
-                    redirect(base_url()."sys/admin/users");
+                    redirect(base_url()."admin/users");
                 } else {
-                    redirect(base_url()."sys/admin/users");
+                    redirect(base_url()."admin/users");
                 }
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
         	$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -172,18 +171,18 @@ class Main extends CI_Controller {
 				$process = $this->Main_model->updated_unlock();
 
 				if ($process[0] == 1) {
-                    redirect(base_url()."sys/admin/users");
+                    redirect(base_url()."admin/users");
                 } else {
-                    redirect(base_url()."sys/admin/users");
+                    redirect(base_url()."admin/users");
                 }
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
         	$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
    	
@@ -299,7 +298,7 @@ class Main extends CI_Controller {
 	
 					default:
 						$this->session->set_flashdata('error', 'Invalid subject provided.');
-						redirect("sys/authentication");
+						redirect("authentication");
 				}
 	
 				if ($user_role == "L2") {
@@ -308,11 +307,11 @@ class Main extends CI_Controller {
 	
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->set_flashdata('error', 'Error fetching user information');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -331,10 +330,10 @@ class Main extends CI_Controller {
 				$process = $this->Main_model->status_approval_msrf();
 				if ($process[0] == 1) {
 					$this->session->set_flashdata('success', 'Tickets Approved');
-					redirect(base_url()."sys/admin/list/ticket");
+					redirect(base_url()."admin/list/ticket");
 				} else {
 					$this->session->set_flashdata('error', 'Update failed.');
-					redirect(base_url()."sys/admin/list/ticket");
+					redirect(base_url()."admin/list/ticket");
 				}
 				
 			} else {
@@ -525,12 +524,12 @@ class Main extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -558,12 +557,12 @@ class Main extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -587,12 +586,12 @@ class Main extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -616,12 +615,12 @@ class Main extends CI_Controller {
 				$this->load->view('users/footer', $data);
 			} else {
 				$this->session->set_flashdata('error', 'Error fetching user information.');
-				redirect("sys/authentication");
+				redirect("authentication");
 			}
 		} else {
 			$this->session->sess_destroy();
 			$this->session->set_flashdata('error', 'Session expired. Please login again.');
-			redirect("sys/authentication");
+			redirect("authentication");
 		}
 	}
 
@@ -687,7 +686,7 @@ class Main extends CI_Controller {
 					default:
 						{
 							$this->session->flashdata('error', 'nvalid subject provided');
-							redirect("sys/authentication");
+							redirect("authentication");
 						}
 				}
 			}

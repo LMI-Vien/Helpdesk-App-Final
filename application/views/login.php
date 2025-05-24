@@ -80,7 +80,7 @@
             </form>
             <div class="row">
                 <div class="col-12">
-                    <a href="sys/registration" class="btn btn-outline-warning btn-block mt-1"><span style="color: #000000">Register</span></a>
+                    <a href="registration" class="btn btn-outline-warning btn-block mt-1"><span style="color: #000000">Register</span></a>
                 </div>
             </div>
         </div>
