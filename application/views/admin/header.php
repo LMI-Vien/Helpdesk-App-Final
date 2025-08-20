@@ -6,7 +6,7 @@
 	<title>ICT Helpdesk Application</title>
   	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<link rel="icon" href="<?= base_url(); ?>assets/images/lifestrong-logo.png" type="image/png">
+	<link rel="icon" href="<?= base_url(); ?>assets/images/ict-logo-png.png" type="image/png">
   	<link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
   	<link rel="stylesheet" href="<?= base_url(); ?>/assets/bower_components/font-awesome/css/font-awesome.min.css">
   	<link rel="stylesheet" href="<?= base_url(); ?>/assets/bower_components/Ionicons/css/ionicons.min.css">
@@ -24,8 +24,8 @@
 	<!-- Font Awesome CDN -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-	<script href="<?= base_url(); ?>/assets/toast/jqm.js"></script>
-	<script href="<?= base_url(); ?>>/assets/toast/toast.js"></script>
+	<script src="<?= base_url(); ?>/assets/toast/jqm.js"></script>
+	<script src="<?= base_url(); ?>/assets/toast/toast.js"></script>
 
 	<!-- SweetAlert CSS -->
 	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"> -->
@@ -44,7 +44,7 @@
 	<!-- <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script> -->
 	<script src="<?= base_url(); ?>/assets/dist/dist/js/external/jquery/jquery.js"></script>
 	<script src="<?= base_url(); ?>/assets/dist/dist/js/jquery-ui.js"></script>
-	<script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
+	<script src="<?= base_url(); ?>/assets/plugins/jquery/jquery.min.js"></script>
 
 	<!-- for sweetalert in JQuery Tabs -->
 	<link rel="stylesheet" href="<?= base_url(); ?>assets/dist/dist/css/custom-popup.css">

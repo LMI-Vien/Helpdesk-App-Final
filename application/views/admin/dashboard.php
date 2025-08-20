@@ -31,7 +31,7 @@
                 </div>
             </a>
             <!-- Total Tickets TRACC CONCERN -->
-            <a href="<?= base_url(); ?>admin/list/ticket/msrf" class="small-box-link">
+            <a href="<?= base_url(); ?>admin/list/ticket/tracc_concern" class="small-box-link">
                 <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-olive">
                         <div class="inner">
@@ -46,7 +46,7 @@
                 </div>
             </a>
             <!-- Total Tickets TRACC REQUEST -->
-            <a href="<?= base_url(); ?>admin/list/ticket/tracc_concern" class="small-box-link">
+            <a href="<?= base_url(); ?>admin/list/ticket/tracc_request" class="small-box-link">
                 <div class="col-lg-4 col-xs-6">
                     <div class="small-box bg-maroon">
                         <div class="inner">

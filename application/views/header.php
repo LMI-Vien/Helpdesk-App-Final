@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ICT Helpdesk Application</title>
 
-    <link rel="icon" href="<?= base_url(); ?>assets/images/lifestrong-logo.png" type="image/png">
+    <link rel="icon" href="<?= base_url(); ?>assets/images/ict-logo-png.png" type="image/png">
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
@@ -28,8 +28,8 @@
      <!-- jQuery -->
     <script src="<?= base_url(); ?>/assets/dist/dist/js/external/jquery/jquery.js"></script>
     <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
-    <script href="<?= base_url();?>/assets/toast/jqm.js"></script>
-	<script href="<?= base_url();?>/assets/toast/toast.js"></script>
+    <script src="<?= base_url();?>/assets/toast/jqm.js"></script>
+	<script src="<?= base_url();?>/assets/toast/toast.js"></script>
 
 </head>
 <body class="hold-transition login-page">
