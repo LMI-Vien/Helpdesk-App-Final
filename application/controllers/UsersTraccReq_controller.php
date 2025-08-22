@@ -94,7 +94,6 @@ class UsersTraccReq_controller extends CI_Controller {
 		$this->form_validation->set_rules('trf_number', 'Ticket Number', 'trim|required');
 	
 		$user_details = $this->Main_model->user_details();
-		// print_r($user_details); die();
 		$getdepartment = $this->Main_model->GetDepartmentID();
 		$users_det = $this->Main_model->users_details_put($id);
 	
@@ -107,6 +106,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 		$timecomparison1 = $currenttime < $cutofftime;
 		$timecomparison2 = $opentime < $currenttime;
+		$bypass = (int)($cutoff->bypass ?? 0);
 
 		if ($this->form_validation->run() == FALSE) {
 			$trf = $this->GenerateTRFNo();
@@ -123,8 +123,8 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF/tracc_request_form_creation', $data);
 					$this->load->view('users/footer');
@@ -373,6 +373,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 		$timecomparison1 = $currenttime < $cutofftime;
 		$timecomparison2 = $opentime < $currenttime;
+		$bypass = (int)($cutoff->bypass ?? 0);
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['user_details'] = $user_details[1];
@@ -388,8 +389,8 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF_pdf/trf_customer_request_form_creation', $data);
 					$this->load->view('users/footer');
@@ -459,6 +460,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 		$timecomparison1 = $currenttime < $cutofftime;
 		$timecomparison2 = $opentime < $currenttime;
+		$bypass = (int)($cutoff->bypass ?? 0);
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['user_details'] = $user_details[1];
@@ -474,8 +476,8 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF_pdf/trf_customer_shipping_setup_creation', $data);
 					$this->load->view('users/footer');
@@ -540,6 +542,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 		$timecomparison1 = $currenttime < $cutofftime;
 		$timecomparison2 = $opentime < $currenttime;
+		$bypass = (int)($cutoff->bypass ?? 0);
 
 		// New: Fetch all departments for the dropdown
 		$departments_result = $this->Main_model->getDepartment();
@@ -561,8 +564,8 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF_pdf/trf_employee_request_form_creation', $data);
 					$this->load->view('users/footer');
@@ -617,6 +620,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 		$timecomparison1 = $currenttime < $cutofftime;
 		$timecomparison2 = $opentime < $currenttime;
+		$bypass = (int)($cutoff->bypass ?? 0);
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['user_details'] = $user_details[1];
@@ -634,8 +638,8 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF_pdf/trf_item_request_form_creation', $data);
 					$this->load->view('users/footer');
@@ -765,6 +769,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 		$timecomparison1 = $currenttime < $cutofftime;
 		$timecomparison2 = $opentime < $currenttime;
+		$bypass = (int)($cutoff->bypass ?? 0);
 
 		if ($this->form_validation->run() == FALSE) {
 			$data['user_details'] = $user_details[1];
@@ -781,8 +786,8 @@ class UsersTraccReq_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRF_pdf/trf_supplier_request_form_creation', $data);
 					$this->load->view('users/footer');

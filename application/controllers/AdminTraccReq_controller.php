@@ -851,9 +851,10 @@ class AdminTraccReq_controller extends CI_Controller {
 			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 			$timecomparison1 = $currenttime < $cutofftime;
 			$timecomparison2 = $opentime < $currenttime;
+			$bypass = (int)($cutoff->bypass ?? 0);
 	
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('admin/header', $data);
 					$this->load->view('admin/sidebar', $data);
 					$this->load->view('admin/admin_TRF/trf_creation', $data);
@@ -1117,9 +1118,10 @@ class AdminTraccReq_controller extends CI_Controller {
 			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 			$timecomparison1 = $currenttime < $cutofftime;
 			$timecomparison2 = $opentime < $currenttime;
+			$bypass = (int)($cutoff->bypass ?? 0);
 	
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('admin/header', $data);
 					$this->load->view('admin/sidebar', $data);
 					$this->load->view('admin/admin_TRF_pdf/trf_customer_request_form_creation', $data);
@@ -1228,9 +1230,10 @@ class AdminTraccReq_controller extends CI_Controller {
 			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 			$timecomparison1 = $currenttime < $cutofftime;
 			$timecomparison2 = $opentime < $currenttime;
+			$bypass = (int)($cutoff->bypass ?? 0);
 	
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('admin/header', $data);
 					$this->load->view('admin/sidebar', $data);
 					$this->load->view('admin/admin_TRF_pdf/trf_customer_shipping_setup_creation', $data);
@@ -1332,9 +1335,10 @@ class AdminTraccReq_controller extends CI_Controller {
 			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 			$timecomparison1 = $currenttime < $cutofftime;
 			$timecomparison2 = $opentime < $currenttime;
+			$bypass = (int)($cutoff->bypass ?? 0);
 	
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('admin/header', $data);
 					$this->load->view('admin/sidebar', $data);
 					$this->load->view('admin/admin_TRF_pdf/trf_employee_request_form_creation', $data);
@@ -1406,9 +1410,10 @@ class AdminTraccReq_controller extends CI_Controller {
 			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 			$timecomparison1 = $currenttime < $cutofftime;
 			$timecomparison2 = $opentime < $currenttime;
+			$bypass = (int)($cutoff->bypass ?? 0);
 	
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('admin/header', $data);
 					$this->load->view('admin/sidebar', $data);
 					$this->load->view('admin/admin_TRF_pdf/trf_item_request_form_creation', $data);
@@ -1636,9 +1641,10 @@ class AdminTraccReq_controller extends CI_Controller {
 			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 			$timecomparison1 = $currenttime < $cutofftime;
 			$timecomparison2 = $opentime < $currenttime;
+			$bypass = (int)($cutoff->bypass ?? 0);
 	
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('admin/header', $data);
 					$this->load->view('admin/sidebar', $data);
 					$this->load->view('admin/admin_TRF_pdf/trf_supplier_request_form_creation', $data);

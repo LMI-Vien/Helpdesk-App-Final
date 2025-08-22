@@ -97,6 +97,30 @@
         padding-left: 5px;
         font-size: 16px;
     }
+
+    .checkbox-alert {
+        background-color: #dc3545;
+        color: #fff;
+        border: 1px solid #b02a37;
+        padding: 8px 12px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+        margin: 10px auto;  
+        width: 300px;     
+
+        text-shadow: 
+        -1px -1px 0 #000,  
+         1px -1px 0 #000,
+        -1px  1px 0 #000,
+         1px  1px 0 #000;
+    }
+
+    .swal-wide {
+        width: 400px !important;
+        font-size: 1.4rem; 
+    }
 </style>
 
 <div class="content-wrapper">
@@ -181,6 +205,9 @@
                                                         <input type="checkbox" name="comp_checkbox_value[]" value="SV" id="checkbox_sv">
                                                         <label for="checkbox_sv" class="checkbox-label">SV</label>
                                                     </div>
+                                                    <div id="checkbox-warning" class="checkbox-alert" style="display:none;">
+                                                        ⚠️ Please select at least one option.
+                                                    </div>
                                                 </div>
                                             </div>
 
@@ -198,74 +225,74 @@
                                                     <div class="form-group d-flex flex-column align-items-center" style="margin-left: 80px;">
                                                         <label for="" style="font-size: 21px;">New/Add</label>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_item" id="checkbox_item" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_item" id="checkbox_item" value="1">
                                                             <label for="checkbox_item">Item</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_customer" id="checkbox_customer" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_customer" id="checkbox_customer" value="1">
                                                             <label for="checkbox_customer">Customer</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_supplier" id="checkbox_supplier" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_supplier" id="checkbox_supplier" value="1">
                                                             <label for="checkbox_supplier">Supplier</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_whs" id="checkbox_whs" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_whs" id="checkbox_whs" value="1">
                                                             <label for="checkbox_whs">Warehouse</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_bin" id="checkbox_bin" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_bin" id="checkbox_bin" value="1">
                                                             <label for="checkbox_bin">Bin No.</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_cus_ship_setup" id="checkbox_cus_ship_setup" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_cus_ship_setup" id="checkbox_cus_ship_setup" value="1">
                                                             <label for="checkbox_cus_ship_setup">Customer Shipping Setup</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_employee_req_form" id="checkbox_employee_req_form" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_employee_req_form" id="checkbox_employee_req_form" value="1">
                                                             <label for="checkbox_employee_req_form">Employee Request Form</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2 d-flex align-items-center">
-                                                            <input type="checkbox" name="checkbox_others_newadd" id="checkbox_others_newadd" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_others_newadd" id="checkbox_others_newadd" value="1">
                                                             <label for="checkbox_others_newadd">Others</label><br>
 
-                                                            <input type="text" name="others_text_newadd" id="others_text_newadd" placeholder="Specific Concern" style="border: none; border-bottom: 1px solid #000; background: none; min-width: 150px;" oninput="resizeInput(this);"> <!-- Line input style with min-width -->
+                                                            <input type="text" class="tracc-checkbox" name="others_text_newadd" id="others_text_newadd" placeholder="Specific Concern" style="border: none; border-bottom: 1px solid #000; background: none; min-width: 150px;" oninput="resizeInput(this);"> <!-- Line input style with min-width -->
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-4 text-left"">
+                                                <div class="col-md-4 text-left">
                                                     <div class="form-group d-flex flex-column align-items-center" style="margin-left: 80px;">
                                                         <label for="" style="font-size: 21px;">Update</label>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_system_date_lock" id="checkbox_system_date_lock" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_system_date_lock" id="checkbox_system_date_lock" value="1">
                                                             <label for="checkbox_system_date_lock">System Date Lock</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_user_file_access" id="checkbox_user_file_access" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_user_file_access" id="checkbox_user_file_access" value="1">
                                                             <label for="checkbox_user_file_access">User File Access</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_item_dets" id="checkbox_item_dets" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_item_dets" id="checkbox_item_dets" value="1">
                                                             <label for="checkbox_item_dets">Item Details</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_customer_dets" id="checkbox_customer_dets" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_customer_dets" id="checkbox_customer_dets" value="1">
                                                             <label for="checkbox_customer_dets">Customer Details</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_supplier_dets" id="checkbox_supplier_dets" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_supplier_dets" id="checkbox_supplier_dets" value="1">
                                                             <label for="checkbox_supplier_dets">Supplier Details</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_employee_dets" id="checkbox_employee_dets" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_employee_dets" id="checkbox_employee_dets" value="1">
                                                             <label for="checkbox_employee_dets">Employee Details</label>
                                                         </div>
                                                         <div class="circle-checkbox mb-2 d-flex align-items-center">
-                                                            <input type="checkbox" name="checkbox_others_update" id="checkbox_others_update" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_others_update" id="checkbox_others_update" value="1">
                                                             <label for="checkbox_others_update">Others</label><br>
                                                             
-                                                            <input type="text" name="others_text_update" id="others_text_update" placeholder="Specific Concern" style="border: none; border-bottom: 1px solid #000; background: none; min-width: 150px;" oninput="resizeInput(this);">
+                                                            <input type="text" class="tracc-checkbox" name="others_text_update" id="others_text_update" placeholder="Specific Concern" style="border: none; border-bottom: 1px solid #000; background: none; min-width: 150px;" oninput="resizeInput(this);">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -273,7 +300,7 @@
                                                 <div class="col-md-4 text-left">
                                                     <div class="form-group d-flex flex-column align-items-start" style="margin-left: 80px;">
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_tracc_orien" id="checkbox_tracc_orien" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_tracc_orien" id="checkbox_tracc_orien" value="1">
                                                             <label for="checkbox_tracc_orien">Tracc Orientation</label>
                                                         </div>
                                                         <label for="" style="font-size: 21px;">Create TRACC Account</label>
@@ -281,37 +308,40 @@
                                                         <!-- Use CSS Grid for precise alignment -->
                                                         <div class="d-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1px; width: 100%;">
                                                             <div class="circle-checkbox mb-2">
-                                                                <input type="checkbox" name="checkbox_create_lmi" id="checkbox_create_lmi" value="1">
+                                                                <input type="checkbox" class="tracc-checkbox" name="checkbox_create_lmi" id="checkbox_create_lmi" value="1">
                                                                 <label for="checkbox_create_lmi">LMI</label>
                                                             </div>
                                                             <div class="circle-checkbox mb-2">
-                                                                <input type="checkbox" name="checkbox_create_lpi" id="checkbox_create_lpi" value="1">
+                                                                <input type="checkbox" class="tracc-checkbox" name="checkbox_create_lpi" id="checkbox_create_lpi" value="1">
                                                                 <label for="checkbox_create_lpi">LPI</label>
                                                             </div>
                                                             <div class="circle-checkbox mb-2">
-                                                                <input type="checkbox" name="checkbox_create_rgdi" id="checkbox_create_rgdi" value="1">
+                                                                <input type="checkbox" class="tracc-checkbox" name="checkbox_create_rgdi" id="checkbox_create_rgdi" value="1">
                                                                 <label for="checkbox_create_rgdi">RGDI</label>
                                                             </div>
                                                             <div class="circle-checkbox mb-2">
-                                                                <input type="checkbox" name="checkbox_create_sv" id="checkbox_create_sv" value="1">
+                                                                <input type="checkbox" class="tracc-checkbox" name="checkbox_create_sv" id="checkbox_create_sv" value="1">
                                                                 <label for="checkbox_create_sv">SV</label>
                                                             </div>
                                                         </div>
                                                         
                                                         <div class="circle-checkbox mb-2">
-                                                            <input type="checkbox" name="checkbox_gps_account" id="checkbox_gps_account" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_gps_account" id="checkbox_gps_account" value="1">
                                                             <label for="checkbox_gps_account">GPS Account</label>
                                                         </div>
                                                         
                                                         <div class="circle-checkbox mb-2 d-flex align-items-center">
-                                                            <input type="checkbox" name="checkbox_others_account" id="checkbox_others_account" value="1">
+                                                            <input type="checkbox" class="tracc-checkbox" name="checkbox_others_account" id="checkbox_others_account" value="1">
                                                             <label for="checkbox_others_account">Others</label><br>
 
                                                             <input type="text" name="others_text_account" id="others_text_account" placeholder="Specific Concern" style="border: none; border-bottom: 1px solid #000; background: none; min-width: 150px;" oninput="resizeInput(this);">
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>     
+                                            </div>  
+                                            <div id="tracc-warning" class="checkbox-alert" style="display:none;">
+                                                ⚠️ Please select at least one option from New/Add, Update, or Create TRACC Account.
+                                            </div>       
 
                                             <hr class="divider"> 
                                             
@@ -371,14 +401,6 @@
     </div>
 </div>
 
-
-<style>
-    .swal-wide {
-        width: 400px !important;
-        font-size: 1.4rem; 
-    }
-</style>
-
 <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
@@ -422,6 +444,20 @@
 
         $('#submitBtn').click(function (e) {
             e.preventDefault();
+
+            if ($('input[name="comp_checkbox_value[]"]:checked').length === 0) {
+                $("#checkbox-warning").show();
+                return;
+            } else {
+                $("#checkbox-warning").hide();
+            }
+
+            if ($('.tracc-checkbox:checked').length === 0) {
+                $("#tracc-warning").show();
+                return;
+            } else {
+                $("#tracc-warning").hide();
+            }
 
             var form = document.getElementById('TRF_form');
             if (!form.checkValidity()) {

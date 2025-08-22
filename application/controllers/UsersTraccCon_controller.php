@@ -104,6 +104,7 @@ class UsersTraccCon_controller extends CI_Controller {
 			$currenttime = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('H:i:s');
 			$timecomparison1 = $currenttime < $cutofftime;
 			$timecomparison2 = $opentime < $currenttime;
+			$bypass = (int)($cutoff->bypass ?? 0);
 
 			$data['trc'] = $trc;
 			$data['user_details'] = $user_details[1];                   
@@ -118,8 +119,8 @@ class UsersTraccCon_controller extends CI_Controller {
 				$enddate = $startdate;
 			}
 
-			if (($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
-				if ($opentime <= $currenttime && $currenttime <= $cutofftime) {
+			if ($bypass === 1 || ($startdate <= date("Y-m-d") && date("Y-m-d") <= $enddate) || empty($startdate)) {
+				if ($bypass === 1 || ($opentime <= $currenttime && $currenttime <= $cutofftime)) {
 					$this->load->view('users/header', $data);
 					$this->load->view('users/users_TRC/tracc_concern_form_creation', $data);
 					$this->load->view('users/footer');

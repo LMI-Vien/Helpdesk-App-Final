@@ -51,7 +51,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Details Concern</label>
-                                                        <textarea class="form-control" name="details_concern" id="details_concern" placeholder="Place the details concern here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;"></textarea>
+                                                        <textarea class="form-control" name="details_concern" id="details_concern" placeholder="Place the details concern here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" required></textarea>
                                                 </div>
                                             </div>
 
