@@ -386,7 +386,8 @@
                .end();
         })
         $(document).on('click','.approve-ticket', function(e){
-            var module_name = '<?=$this->uri->segment(5);?>';
+            // var module_name = '<?=$this->uri->segment(5);?>';
+            var module_name = String($(this).data('module') || '').toLowerCase().replace(/-/g,'_');
             console.log(module_name);
             data_id = $(this).attr('data-id');
             
