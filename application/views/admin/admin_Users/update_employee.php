@@ -68,8 +68,8 @@
 								<select name="role" id="role" class="form-control" required>
 									<option value="" disabled <?php echo ($users_det['role'] == '') ? 'selected' : ''; ?>>Please choose the designated role</option>
 									<option value="L1" <?php echo ($users_det['role'] == 'L1') ? 'selected' : ''; ?>>L1 (Regular Employees)</option>
-									<option value="L2" <?php echo ($users_det['role'] == 'L2') ? 'selected' : ''; ?>>L2 (Supervisor/Admin)</option>
-									<option value="L3" <?php echo ($users_det['role'] == 'L3') ? 'selected' : ''; ?>>L3 (Department Head)</option>
+									<option value="L2" <?php echo ($users_det['role'] == 'L2') ? 'selected' : ''; ?>>L2 (Supervisor/Head)</option>
+									<option value="L3" <?php echo ($users_det['role'] == 'L3') ? 'selected' : ''; ?>>L3 (Superadmin - ICT)</option>
 								</select>
 							</div>
 							<div class="form-group">
