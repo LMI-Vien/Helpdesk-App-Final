@@ -26,6 +26,7 @@ class AdminDept_controller extends CI_Controller {
 				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
 				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
 				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
+				$data['departments'] = $this->AdminDept_model->get_active_departments();
 
 				$allowed_menus = ['dashboard', 'system_administration', 'users', 'team'];
 				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'system_administration';
@@ -135,11 +136,13 @@ class AdminDept_controller extends CI_Controller {
 
 		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$dept_desc = $this->input->post('dept_desc');
+			$dept_code = $this->input->post('dept_code');
 			$manager_id = $this->input->post('manager_id');
 			$sup_id = $this->input->post('sup_id');
 	
 			$update_data = array(
 				'dept_desc' => $dept_desc,
+				'dept_code'	=> $dept_code,
 				'manager_id' => $manager_id,
 				'sup_id' => $sup_id,
 			);

@@ -26,6 +26,12 @@
                                 <input type="text" name="dept_desc" id="dept_desc" value="<?php echo $dept_details['dept_desc']; ?>" class="form-control">
                             </div>
                         </div>
+                         <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Department Code</label>
+                                <input type="text" name="dept_code" id="dept_code" value="<?php echo $dept_details['dept_code']; ?>" class="form-control">
+                            </div>
+                        </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Manager ID</label>

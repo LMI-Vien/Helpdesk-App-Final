@@ -122,11 +122,15 @@ class DataTables extends CI_Controller {
         $valid_columns = array(
             0 => 'recid',         
             1 => 'dept_desc',
-            2 => 'manager_id',
-            3 => 'sup_id'
+            2 => 'dept_code',
+            3 => 'manager_id',
+            4 => 'sup_id',
+            5 => 'status'
         );
     
         $order = isset($valid_columns[$col]) ? $valid_columns[$col] : 'recid';
+
+        $base_where = "WHERE status = 1";
     
         $search_query = "";
         if (!empty($search)) {
@@ -134,15 +138,15 @@ class DataTables extends CI_Controller {
         }
     
         // Get the total number of records in the 'departments' table
-        $count_query = $this->db->query("SELECT COUNT(*) AS count FROM departments");
+        $count_query = $this->db->query("SELECT COUNT(*) AS count FROM departments {$base_where}");
         $total_records = $count_query->row()->count;
     
         // Get the total number of records that match the search criteria
-        $filtered_query = $this->db->query("SELECT COUNT(*) AS count FROM departments " . $search_query);
+        $filtered_query = $this->db->query("SELECT COUNT(*) AS count FROM departments {$base_where} " . $search_query);
         $filtered_records = $filtered_query->row()->count;
     
         // Fetch the records based on search, order, and pagination parameters
-        $data_query = $this->db->query("SELECT * FROM departments " . $search_query . " ORDER BY " . $order . " " . $dir . " LIMIT " . $start . ", " . $length);
+        $data_query = $this->db->query("SELECT * FROM departments {$base_where} " . $search_query . " ORDER BY " . $order . " " . $dir . " LIMIT " . $start . ", " . $length);
     
         $data = array();
     

@@ -19,7 +19,8 @@ class AdminDept_model extends CI_Model {
 			'dept_desc' => $dept_desc,
 			'dept_code' => $dept_code,
 			'manager_id' => $manager_id,
-			'sup_id' => $sup_id
+			'sup_id' => $sup_id,
+			'status' => '1'
 		);
 	
 		$query = $this->db->insert('departments', $data);
@@ -59,7 +60,7 @@ class AdminDept_model extends CI_Model {
 
     public function delete_department($id) {
         $this->db->where('recid', $id);
-        $this->db->delete('departments');
+         $this->db->update('departments', ['status' => 0]);
     
         if ($this->db->affected_rows() >= 0) {
             return array(1, "Department deleted successfully.");
@@ -67,4 +68,14 @@ class AdminDept_model extends CI_Model {
             return array(0, "No changes were made to the department.");
         }
     }
+
+
+	public function get_active_departments()
+	{
+		return $this->db
+			->from('departments')
+			->where('status', 1)              // only active
+			->get()
+			->result();
+	}
 }
