@@ -148,7 +148,7 @@
 									<div class="col-md-12" id="reason" style="display: none;">
 										<div class="form-group">
 											<label>Reason for Reject Tickets</label>
-											<textarea class="form-control" name="rejecttix" id="rejecttix" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; text-align: left; resize: vertical;" <?= $is_disable; ?>><?= isset($msrf['remarks_ict']) ? htmlspecialchars($msrf['remarks_ict']) : ''; ?></textarea>
+											<textarea class="form-control" name="rejecttix" id="rejecttix" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; text-align: left; resize: vertical;"><?= isset($msrf['remarks_ict']) ? htmlspecialchars($msrf['remarks_ict']) : ''; ?></textarea>
 										</div>
 									</div>
 									<!-- REJECTED TIX -->	
@@ -175,22 +175,6 @@
 <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 
 <script>
-	/*$(document).ready(function() {
-		$("#reason").hide();
-
-		$('#it_approval_stat').on('change', function() {
-			var approvalStatus = $(this).val();
-			if (approvalStatus === 'Rejected') {
-				$("#reason").show();  // Show the reason textarea
-			} else {
-				$("#reason").hide();  // Hide the reason textarea
-			}
-		});
-
-		// Trigger the change event to handle the case where the page is loaded with "Rejected" already selected
-		$('#it_approval_stat').trigger('change');
-	});*/
-
 	$(document).ready(function() {
 		$("#reason").hide();
 
@@ -212,11 +196,7 @@
 
 		// Call the function on page load to check the initial state
 		toggleReasonField();
-	});
 
-
-	$(document).ready(function() {
-		// Temporarily enable the disabled dropdown
 		$('#category').prop('disabled', false);
 		$('#category').change(function() {
 			var status = $(this).val();
@@ -230,9 +210,8 @@
 
 		$('#category').trigger('change');
 		$('#category').prop('disabled', true);
-	});
 
-	$(document).ready(function() {
+
 		if ($('#it_approval_stat').val() == 'Approved') {
 			$('#ictassign').show();
 		}
@@ -247,10 +226,8 @@
 				$('#ictassign').hide();  // Hide it otherwise
 			}
 		});
-	});
 
-	$(document).ready(function() {
-        function autoResizeTextarea() {
+		function autoResizeTextarea() {
             $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
             $(this).height(this.scrollHeight); // Set height based on content
         }
@@ -262,6 +239,5 @@
         // Trigger the resize on page load if there's existing content in the textarea
         //$('#rejecttix').each(autoResizeTextarea);
         $('#concern').each(autoResizeTextarea);
-    });
-
+	});
 </script>

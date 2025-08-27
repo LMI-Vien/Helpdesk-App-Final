@@ -10,7 +10,7 @@
         
         $status_msrf = $msrf['status'];
 
-        if(($status_msrf === "In Progress" || $status_msrf === 'Approved' || $status_msrf === 'Closed')) {
+        if(($status_msrf === "In Progress" || $status_msrf === 'Approved' || $status_msrf === 'Closed' || $status_msrf === 'Rejected')) {
             $disabled = "disabled";
             $readonly = "readonly";
             $btn_label = "Update Ticket";
@@ -153,6 +153,7 @@
                                                         <option value="Approved"<?php if ($msrf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
                                                         <option value="Pending"<?php if ($msrf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
                                                         <option value="Rejected"<?php if ($msrf['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+                                                        <option value="Returned"<?php if ($msrf['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -166,6 +167,7 @@
                                                         <option value="Approved"<?php if ($msrf['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
                                                         <option value="Pending"<?php if ($msrf['it_approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
                                                         <option value="Rejected"<?php if ($msrf['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+                                                        <option value="Returned"<?php if ($msrf['it_approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -232,11 +234,8 @@
 		});
 
 		toggleReasonField();
-	});
 
-
-    $(document).ready(function() {
-		if ($('#it_approval_stat').val() == 'Approved') {
+        if ($('#it_approval_stat').val() == 'Approved') {
 			$('#ictassign').show();
 		}
 
@@ -249,9 +248,7 @@
 				$('#ictassign').hide();  
 			}
 		});
-	});
 
-    $(document).ready(function() {
         if($('#category').val() == 'others') {
             $('#specify-container').show();
         } else {
@@ -265,5 +262,5 @@
                 $('#specify-container').hide();
             }
         });
-    });
+	});
 </script>

@@ -86,41 +86,36 @@ class UsersMSRF_model extends CI_Model {
 		$status_requestor = $this->input->post('status_requestor', true);
 		
 		$qry = $this->db->query('SELECT * FROM service_request_msrf WHERE ticket_id = ?', [$ticket_id]);
-	
-		if ($qry->num_rows() > 0) {
-			$row = $qry->row();
-	
-			// Determine which status to set based on the current status
-			/*if ($row->status == 'In Progress') {
-				$this->db->set('status', $status);
-			} else if ($row->status == 'Resolved') {
-				$this->db->set('status', $status_requestor);
-			} else {
-				$this->db->set('status', $status_users);
-			}*/
-			
-			// Update the additional fields
-			$this->db->set('date_needed', $date_needed);
-			$this->db->set('asset_code', $asset_code);
-			$this->db->set('category', $request_category);
-			$this->db->set('specify', $specify);
-			$this->db->set('details_concern', $details_concern);
-	
-			// Update only status and additional fields in the database
-			$this->db->where('ticket_id', $ticket_id);
-			$this->db->update('service_request_msrf');
-		
-			if ($this->db->affected_rows() > 0) {
-				$this->db->trans_commit();
-				return array(1, "Successfully Updating Tickets: " . $ticket_id);
-			} else {
-				$this->db->trans_rollback();
-				return array(0, "Error updating Keywords's status. Please try again.");
-			}
-		} else {
-			return array(0, "Service request not found for ticket: " . $ticket_id);
+
+		if ($qry->num_rows() === 0) {
+			return [0, "Service request not found for ticket: " . $ticket_id];
 		}
-		
+
+		$row = $qry->row();
+
+		$this->db->trans_begin();
+
+		if (isset($row->approval_status) && $row->approval_status === 'Returned') {
+			$this->db->set('status', 'Open');
+			$this->db->set('approval_status', 'Pending');
+		}
+
+		$this->db->set('date_needed', $date_needed);
+		$this->db->set('asset_code', $asset_code);
+		$this->db->set('category', $request_category);
+		$this->db->set('specify', $specify);
+		$this->db->set('details_concern', $details_concern);
+
+		$this->db->where('ticket_id', $ticket_id);
+		$this->db->update('service_request_msrf');
+
+		if ($this->db->trans_status() === FALSE) {
+			$this->db->trans_rollback();
+			return [0, "Error updating ticket. Please try again."];
+		} else {
+			$this->db->trans_commit();
+			return [1, "Successfully updated ticket: " . $ticket_id];
+		}
 	}
 
 }

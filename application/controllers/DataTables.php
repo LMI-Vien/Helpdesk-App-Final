@@ -226,8 +226,8 @@ class DataTables extends CI_Controller {
     
         $count_array = $this->db->query("
             SELECT * FROM service_request_msrf 
-            WHERE (status IN ('Open', 'In Progress', 'Resolved', 'Approved') AND assigned_it_staff = " . $string_emp . ") 
-            OR (status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved') AND requester_id = " . $user_id . ") " 
+            WHERE (status IN ('Open', 'In Progress', 'Resolved', 'Approved', 'Returned') AND assigned_it_staff = " . $string_emp . ") 
+            OR (status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') AND requester_id = " . $user_id . ") " 
             . $search_query
         );
         $length_count = $count_array->num_rows();  
@@ -235,8 +235,8 @@ class DataTables extends CI_Controller {
         $data = array();
         $strQry = $this->db->query("
             SELECT * FROM service_request_msrf 
-            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved') AND assigned_it_staff = " . $string_emp . ") 
-            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Approved') AND requester_id = " . $user_id . ") " 
+            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved', 'Returned') AND assigned_it_staff = " . $string_emp . ") 
+            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Approved', 'Returned') AND requester_id = " . $user_id . ") " 
             . $search_query . 
             " ORDER BY recid DESC LIMIT " . $start . ", " . $length
         );
