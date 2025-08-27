@@ -62,6 +62,11 @@ class AdminMSRF_model extends CI_Model {
 				$fields_to_update = true;
 			}
 	
+			if ($reject_reason !== null) {             
+				$this->db->set('remarks_ict', $reject_reason);
+				$fields_to_update = true;
+			}
+
 			if ($fields_to_update) {
 				$this->db->where('ticket_id', $ticket_id);
 				$this->db->update('service_request_msrf');

@@ -63,7 +63,22 @@ class DataTables extends CI_Controller {
                 $email[] = $rows->email;
                 $position[] = $rows->position;
                 $username[] = $rows->username;
-                $role[] = $rows->role;
+
+                $rawRole = strtoupper(trim($rows->role)); 
+                switch ($rawRole) {
+                    case 'L1':
+                        $mapped_role = 'User';
+                        break;
+                    case 'L2':
+                        $mapped_role = 'Supervisors/Managers';
+                        break;
+                    case 'L3':
+                        $mapped_role = 'ICT';
+                        break;
+                    default:
+                        $mapped_role = $rows->role;
+                }
+                $role[] = $mapped_role;
     
                 if ($rows->status == 1) {
                     $btn_action[] = "<button class='btn btn-warning btn-sm btn_lock lock_btn' data-empid='".$rows->recid."'><i class='fa fa-power-off'></i> Lock Account</button>";
