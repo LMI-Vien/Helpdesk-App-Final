@@ -12,7 +12,7 @@
         // print_r($status_tcf);
         // die();
 
-        if(($status_tcf === "In Progress" || $status_tcf === 'Approved' || $status_tcf === 'Done' || $status_tcf === 'Rejected' || $status_tcf === 'Closed' || $status_tcf === 'Returned')) {
+        if(($status_tcf === "In Progress" || $status_tcf === 'Approved' || $status_tcf === 'Done' || $status_tcf === 'Rejected' || $status_tcf === 'Closed')) {
             // echo "try";
             // die();
             $disabled = "disabled";
@@ -22,7 +22,7 @@
             $readonly = "";
             $btn_label = "Update Ticket";
         }
-        $open_disabled = ($status_tcf === "Open" || $status_tcf === "Closed") ? "disabled" : "";
+        $open_disabled = ($status_tcf === "Open" || $status_tcf === "Closed" || $status_tcf === "Returned") ? "disabled" : "";
     }
     // if($role === "L1" && $department_id === "1"){
     //     $department_status = $msrf['approval_status'];
@@ -315,7 +315,7 @@
                                                 <div class="form-group">
                                                     <div class="box-body pad">
                                                         <button type="submit" class="btn btn-primary" name="edit" <?=$disabled?>><?=$btn_label?></button>
-                                                        <button type="submit" class="btn btn-success" name="acknowledge" onclick="setAcknowledgeFieldsRequired(); document.querySelector('[name=action]').value='acknowledge';" <?= ($status_tcf === 'Open' || $status_tcf === 'Rejected' || $status_tcf === 'Approved' || $status_tcf === 'Closed') ? 'disabled' : '' ?>>Acknowledge as Resolved</button>
+                                                        <button type="submit" class="btn btn-success" name="acknowledge" onclick="setAcknowledgeFieldsRequired(); document.querySelector('[name=action]').value='acknowledge';" <?= ($status_tcf === 'Open' || $status_tcf === 'Rejected' || $status_tcf === 'Approved' || $status_tcf === 'Closed' || $status_tcf === 'Returned') ? 'disabled' : '' ?>>Acknowledge as Resolved</button>
                                                     </div>
                                                 </div>
                                             </div>

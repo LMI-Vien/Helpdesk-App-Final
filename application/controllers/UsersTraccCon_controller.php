@@ -222,7 +222,9 @@ class UsersTraccCon_controller extends CI_Controller {
 					$edit_data = [
 						'module_affected' => $this->input->post('module_affected', true),
 						'company' => $this->input->post('company', true),
-						'tcr_details' => $this->input->post('concern', true)
+						'tcr_details' => $this->input->post('concern', true),
+						'approval_status' => 'Pending',
+						'status' => 'Open'
 					];
 	
 					$update_process = $this->UsersTraccCon_model->update_tracc_concern($control_number, $edit_data);
