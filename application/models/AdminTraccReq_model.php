@@ -14,6 +14,7 @@ class AdminTraccReq_model extends CI_Model {
 		$it_approval_stat = $this->input->post('it_app_stat', true);
 		$approval_stat = $this->input->post('app_stat', true);
 		$reject_reason = $this->input->post('reason_rejected', true);
+		$returnedTicket = $this->input->post('returnedReason', true);
 
 		$this->db->trans_start();
 
@@ -21,6 +22,8 @@ class AdminTraccReq_model extends CI_Model {
 
 		if ($qry->num_rows() > 0){
 			$row = $qry->row();
+
+			$fields_to_update = '';
 
 			if ($approval_stat == 'Rejected'){
 				$this->db->set('approval_status', 'Rejected');
@@ -31,6 +34,7 @@ class AdminTraccReq_model extends CI_Model {
 			} else if ($approval_stat == 'Returned') {
 				$this->db->set('approval_status', 'Returned');
 				$this->db->set('status', 'Returned');
+				$this->db->set('returned_ticket_reason', $returnedTicket);
 			}
 
 			if ($it_approval_stat == 'Resolved'){
@@ -51,6 +55,11 @@ class AdminTraccReq_model extends CI_Model {
 			$this->db->set('accomplished_by', $accomplished_by);
 			$this->db->set('accomplished_by_date', $accomplished_by_date);
 			$this->db->set('reason_reject_ticket', $reject_reason);
+
+			if ($returnedReason !== null) {             
+				$this->db->set('returned_ticket_reason', $returnedReason);
+				$fields_to_update = true;
+			}
 
 			$this->db->where('ticket_id', $ticket_id);
 			$this->db->update('service_request_tracc_request');

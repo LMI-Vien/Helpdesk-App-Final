@@ -23,7 +23,8 @@
             $readonly = "";
             $btn_label = "Update Ticket";
         }
-        $open_disabled = ($status_trf === "Open") ? "disabled" : "";
+        // $open_disabled = ($status_trf === "Open") ? "disabled" : "";
+        $open_disabled = in_array($status_trf, ['Open', 'Returned'], true) ? 'disabled' : '';
     }
     // if($role === "L1" && $department_id === "1"){
     //     $department_status = $msrf['approval_status'];
@@ -403,6 +404,7 @@
                                                         <option value="Approved"<?php if ($trf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
                                                         <option value="Pending"<?php if ($trf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
                                                         <option value="Rejected"<?php if ($trf['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+                                                        <option value="Returned"<?php if ($trf['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
                                                     </select>       
                                                 </div>
                                             </div>
@@ -426,6 +428,13 @@
                                                 <div class="form-group">
                                                     <label>Reason for Rejected Ticket</label>
                                                     <textarea class="form-control" id="reason_rejected" name="reason_rejected" placeholder="Place the reason here" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" <?= $disabled?>><?= isset($trf['reason_reject_ticket']) ? htmlspecialchars($trf['reason_reject_ticket']) : ''; ?></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12" id="returnedReason">
+                                                <div class="form-group">
+                                                    <label>Reason for Returned Ticket</label>
+                                                    <textarea class="form-control" id="returnedReason" name="returnedReason" placeholder="Place the reason here" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" readonly><?= isset($trf['returned_ticket_reason']) ? htmlspecialchars($trf['returned_ticket_reason']) : ''; ?></textarea>
                                                 </div>
                                             </div>
 
@@ -508,18 +517,6 @@ $(document).ready(function() {
 
     $("#reason_rejected_ticket").hide();
     
-    function checkApprovalStatus() {
-        var itApprovalStatus = $('#it_app_stat').val();
-        var appStatus = $('#app_stat').val();
-
-        if (itApprovalStatus === 'Rejected' || appStatus === 'Rejected'){
-            $("#reason_rejected_ticket").show();
-        } else {
-            $("#reason_rejected_ticket").hide();
-        }
-    }
-
-    $('#it_app_stat, #app_stat').on('change', checkApprovalStatus);
 
     checkApprovalStatus();
 
@@ -550,6 +547,8 @@ $(document).ready(function() {
         toggleInputField(this, '#others_text_acc');
     });
 
+});
+
     function setAcknowledge() {
         // Get the acknowledge fields
         var ackBy = document.getElementById('acknowledge_by');
@@ -559,5 +558,27 @@ $(document).ready(function() {
         ackBy.setAttribute('required', 'required');
         ackByDate.setAttribute('required', 'required');
     }
-});
+
+    function checkApprovalStatus() {
+        var itApprovalStatus = $('#it_app_stat').val();
+        var appStatus = $('#app_stat').val();
+
+        if (itApprovalStatus === 'Rejected' || appStatus === 'Rejected'){
+            $("#reason_rejected_ticket").show();
+        } else {
+            $("#reason_rejected_ticket").hide();
+        }
+    }
+    $('#it_app_stat, #app_stat').on('change', checkApprovalStatus);
+
+    function checkReturnTicket() {
+        var appStatus = $('#app_stat').val();
+
+        if (appStatus === 'Returned'){
+            $("#returnedReason").show();
+        } else {
+            $("#returnedReason").hide();
+        }
+    }
+    $('#app_stat').on('change', checkReturnTicket);
 </script>

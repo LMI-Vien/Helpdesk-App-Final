@@ -514,6 +514,7 @@ class Main_model extends CI_Model {
 			$this->db->set('date_needed', $date_need);
 			$this->db->set('complete_details', $complete_details);
 			$this->db->set('status', 'Open');
+			$this->db->set('approval_status', 'Pending');
 
 			if (!empty($selected_companies)) {
 				$this->db->set('company', implode(',', $selected_companies));
