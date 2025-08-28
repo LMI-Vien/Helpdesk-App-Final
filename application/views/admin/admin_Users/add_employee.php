@@ -1,3 +1,42 @@
+<style>
+	.swal-custom-popup {
+		padding: 20px; 
+	}
+
+	.swal-custom-title {
+		font-size: 3em; 
+		font-weight: bold; 
+	}
+
+	.swal-custom-content {
+		font-size: 5.5em;
+		line-height: 1.6; 
+	}
+
+	.swal-custom-confirm-btn {
+		font-size: 1.6em; 
+		padding: 10px 20px; 
+	}
+
+	.swal-custom-confirm-btn, .swal-custom-cancel-btn {
+		border-radius: 8px; 
+		background-color: #007bff; 
+		color: #fff; 
+	}
+
+	.swal-custom-confirm-btn:hover, .swal-custom-cancel-btn:hover {
+		background-color: #0056b3; 
+	}
+
+	.swal-custom-text {
+		font-size: 2em; 
+	}
+
+	.swal2-html-container {
+		font-size: 2em !important; 
+	}
+</style>
+
 <div class="content-wrapper">
 	<section class="content-header">
 		<h1>
@@ -23,7 +62,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Employee No.</label>
-								<input type="text" name="emp_id" id="emp_id" class="form-control" required>
+								<input type="text" name="emp_id" id="emp_id" class="form-control" minlength="10" maxlength="10" required>
 							</div>
 							<div class="form-group">
 								<label>Firstname</label>
@@ -99,52 +138,6 @@
 
 <!-- Include jQuery -->
 <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
-
-<style>
-	/* Popup: Overall container */
-	.swal-custom-popup {
-		padding: 20px; /* Adjust padding */
-	}
-
-	/* Title: Customize font size and weight */
-	.swal-custom-title {
-		font-size: 3em; /* Larger title */
-		font-weight: bold; /* Make the title bold */
-	}
-
-	/* Content: Customize font size and line spacing */
-	.swal-custom-content {
-		font-size: 5.5em; /* Larger content text */
-		line-height: 1.6; /* Adjust line spacing */
-	}
-
-	/* Confirm Button: Customize size and padding */
-	.swal-custom-confirm-btn {
-		font-size: 1.6em; /* Larger button text */
-		padding: 10px 20px; /* Adjust padding for the button */
-	}
-
-	/* Optional: Increase button border radius and background color */
-	.swal-custom-confirm-btn, .swal-custom-cancel-btn {
-		border-radius: 8px; /* Make the buttons more rounded */
-		background-color: #007bff; /* Change button color */
-		color: #fff; /* Ensure text is white */
-	}
-
-	.swal-custom-confirm-btn:hover, .swal-custom-cancel-btn:hover {
-		background-color: #0056b3; /* Darker color on hover */
-	}
-
-	.swal-custom-text {
-		font-size: 2em; /* Adjust the size as needed */
-	}
-
-	/* Optional: To ensure the custom styles are applied correctly */
-	.swal2-html-container {
-		font-size: 2em !important; /* Use !important if necessary to override defaults */
-	}
-</style>
-
 <script>
 $(document).ready(function() {
     $('#employeeAddForm').on('submit', function(e) {
