@@ -249,7 +249,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?= $disabled; ?>>Submit Tickets</button>
+                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary" <?= $disabled; ?>>Submit Ticket</button>
                                                     </div>
                                                 </div>
                                             </div>

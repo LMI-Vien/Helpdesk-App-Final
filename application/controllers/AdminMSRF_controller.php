@@ -284,8 +284,12 @@ class AdminMSRF_controller extends CI_Controller {
 					$msrf_number = $this->input->post('msrf_number');
 					$approval_stat = $this->input->post('approval_stat');
 					$rejecttix = $this->input->post('rejecttix');
+					$reasonReturnedTix = $this->input->post('returnedReason');
+
+					// print_r($reasonReturnedTix);
+					// die();
 					
-					$process = $this->AdminMSRF_model->status_approval_msrf($msrf_number, $approval_stat, $rejecttix);
+					$process = $this->AdminMSRF_model->status_approval_msrf($msrf_number, $approval_stat, $rejecttix, $reasonReturnedTix);
 					
 					if (isset($process[0]) && $process[0] == 1) {
 						//Tickets Approved

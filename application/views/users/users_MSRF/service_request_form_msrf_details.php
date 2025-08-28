@@ -194,6 +194,13 @@
                                             </div>
                                             <!-- REASON WHY REJECTED in db remarks_ict -->
                                           
+                                            <div class="col-md-12" id="returnedReason" style="display: none;">
+                                                <div class="form-group">
+                                                    <label>Reason for Returned Tickets</label>
+                                                    <textarea class="form-control" name="returnedReason" id="returnedReason" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; text-align: left; resize: vertical;" readonly><?= isset($msrf['returned_ticket_reason']) ? htmlspecialchars($msrf['returned_ticket_reason']) : ''; ?></textarea>
+                                                </div>
+                                            </div>
+
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
@@ -229,11 +236,27 @@
 			}
 		}
 
+        function toggleReturnedReasonField() {
+			var manApprovalStatus = $('#approval_stat').val();
+			console.log(manApprovalStatus);
+
+			if (manApprovalStatus === 'Returned') {
+				$("#returnedReason").show(); 
+			} else {
+				$("#returnedReason").hide();
+			}
+		}
+
 		$('#it_approval_stat, #approval_stat').on('change', function() {
 			toggleReasonField();
 		});
 
+        $('#approval_stat').on('change', function() {
+			toggleReturnedReasonField();
+		});
+
 		toggleReasonField();
+        toggleReturnedReasonField();
 
         if ($('#it_approval_stat').val() == 'Approved') {
 			$('#ictassign').show();

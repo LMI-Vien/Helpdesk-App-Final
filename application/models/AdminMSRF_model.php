@@ -13,8 +13,9 @@ class AdminMSRF_model extends CI_Model {
 		$assign_staff = $this->input->post('assign_to', true);
 		$approval_stat = $this->input->post('approval_stat', true);
 		$reject_reason = $this->input->post('rejecttix', true);
+		$returnedReason = $this->input->post('returnedReason', true);
 
-		// print_r($reject_reason);
+		// print_r($returnedReason);
 		// die();
 	
 		$this->db->trans_start();
@@ -38,6 +39,7 @@ class AdminMSRF_model extends CI_Model {
 			} else if ($approval_stat == 'Returned') {
 				$this->db->set('approval_status', 'Returned');
 				$this->db->set('status', 'Returned');
+				$this->db->set('returned_ticket_reason', $returnedReason);
 				$fields_to_update = true;
 			}
 	
@@ -64,6 +66,11 @@ class AdminMSRF_model extends CI_Model {
 	
 			if ($reject_reason !== null) {             
 				$this->db->set('remarks_ict', $reject_reason);
+				$fields_to_update = true;
+			}
+
+			if ($returnedReason !== null) {             
+				$this->db->set('returned_ticket_reason', $returnedReason);
 				$fields_to_update = true;
 			}
 

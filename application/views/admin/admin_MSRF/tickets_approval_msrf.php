@@ -86,7 +86,7 @@
 			                        <div class="col-md-12">
 			                            <div class="form-group">
 			                                <label>Details Concern</label>
-												<textarea class="form-control" name="concern" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" disabled><?php echo $msrf['details_concern']; ?></textarea>
+												<textarea class="form-control" id="concern" name="concern" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" disabled><?php echo $msrf['details_concern']; ?></textarea>
 			                            </div>
 			                        </div>
 
@@ -152,6 +152,13 @@
 										</div>
 									</div>
 									<!-- REJECTED TIX -->	
+
+									<div class="col-md-12" id="returnedReason" style="display: none;">
+										<div class="form-group">
+											<label>Reason for Returned Tickets</label>
+											<textarea class="form-control" name="returnedReason" id="returnedReason" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; text-align: left; resize: vertical;"><?= isset($msrf['returned_ticket_reason']) ? htmlspecialchars($msrf['returned_ticket_reason']) : ''; ?></textarea>
+										</div>
+									</div>
 									
 			                        <div class="col-md-12">
 			                            <div class="form-group">
@@ -189,13 +196,29 @@
 			}
 		}
 
+		function toggleReturnedReasonField() {
+			var manApprovalStatus = $('#approval_stat').val();
+			console.log(manApprovalStatus);
+
+			if (manApprovalStatus === 'Returned') {
+				$("#returnedReason").show(); 
+			} else {
+				$("#returnedReason").hide();
+			}
+		}
+
 		// Trigger the change event to handle the case where the page is loaded with "Rejected" already selected
 		$('#it_approval_stat, #approval_stat').on('change', function() {
 			toggleReasonField();
 		});
 
+		$('#approval_stat').on('change', function() {
+			toggleReturnedReasonField();
+		});
+
 		// Call the function on page load to check the initial state
 		toggleReasonField();
+		toggleReturnedReasonField();
 
 		$('#category').prop('disabled', false);
 		$('#category').change(function() {
@@ -226,11 +249,6 @@
 				$('#ictassign').hide();  // Hide it otherwise
 			}
 		});
-
-		function autoResizeTextarea() {
-            $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
-            $(this).height(this.scrollHeight); // Set height based on content
-        }
         
         // Apply the resize function to the textarea on input
         //$('#rejecttix').on('input', autoResizeTextarea);
@@ -240,4 +258,9 @@
         //$('#rejecttix').each(autoResizeTextarea);
         $('#concern').each(autoResizeTextarea);
 	});
+
+	function autoResizeTextarea() {
+		$(this).css('height', 'auto'); // Reset the height to auto to calculate new height
+		$(this).height(this.scrollHeight); // Set height based on content
+	}
 </script>

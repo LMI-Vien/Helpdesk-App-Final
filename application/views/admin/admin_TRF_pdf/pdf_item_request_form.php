@@ -105,9 +105,9 @@
         
             if (!lmiItemCode) { // Check if lmi_item_code is empty
                 Swal.fire({
-                    title: 'Error!',
+                    title: 'Warning!',
                     text: 'LMI Item Code is required.',
-                    icon: 'error',
+                    icon: 'warning',
                     confirmButtonText: 'OK',
                     customClass: {
                         popup: 'large-popup', 

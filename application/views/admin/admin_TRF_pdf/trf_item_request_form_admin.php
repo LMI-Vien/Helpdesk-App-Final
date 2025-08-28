@@ -13,11 +13,17 @@ $role = $sess_login_data['role'];
     //     $readonly = "";
     // }
 
-    $disabled = "";
-
-    if(!$user_id) {
+    if ($role === "L3") {
+        $disabled = "";
+    } else {
         $disabled = "disabled";
     }
+
+    // $disabled = "";
+
+    // if(!$user_id) {
+    //     $disabled = "disabled";
+    // }
 ?>
 
 <style>
