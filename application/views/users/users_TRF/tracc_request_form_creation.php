@@ -406,6 +406,7 @@
     $(document).ready(function() {
         // Set the current date in YYYY-MM-DD format
         $('#date_req').val(new Date().toISOString().split('T')[0]);
+        $('#date_needed').val(new Date().toISOString().split('T')[0]);
 
         function autoResizeTextarea() {
             $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
