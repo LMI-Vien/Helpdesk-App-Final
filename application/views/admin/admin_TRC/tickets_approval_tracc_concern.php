@@ -88,18 +88,6 @@
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="col-md-12">
-                                                <div class="form-group">
-			                    					<label>Priority</label>
-                                                    <select class="form-control select2" name="priority" id="priority">
-                                                        <option value=""disabled selected>Priority</option>
-                                                        <option value="Low"<?php if ($tracc_con['priority'] == 'Low') echo ' selected'; ?>>Low</option>
-                                                        <option value="Medium"<?php if ($tracc_con['priority'] == 'Medium') echo ' selected'; ?>>Medium</option>
-                                                        <option value="High"<?php if ($tracc_con['priority'] == 'High') echo ' selected'; ?>>High</option>
-                                                    </select>                    
-			                    				</div>                                             
-			                                </div> -->
-
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Reported by</label>
@@ -147,29 +135,12 @@
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="col-md-6">
+                                            <div class="col-md-12" id="returnedReason" style="display: none;">
                                                 <div class="form-group">
-                                                    <label>Received by</label>
-                                                    <select class="form-control select2" name="received_by" id="received_by" <?= $disabled; ?>>
-                                                        <option value=""disabled selected>Received By</option>
-                                                        <?php foreach($ict_dept as $ict): ?>
-                                                            <option value="<?= $ict['fname']; ?>" <?= $ict['fname'] == $tracc_con['received_by'] ? 'selected' : ''; ?>><?= $ict['fname']; ?></option>
-                                                        <?php endforeach; ?>
-                                                    </select>       
+                                                    <label>Reason for Returned Tickets</label>
+                                                    <textarea class="form-control" name="returnedReason" id="returnedReason" placeholder="Place some text here" style="width: 100%; height: 100px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; text-align: left; resize: vertical;"><?= isset($tracc_con['returned_ticket_reason']) ? htmlspecialchars($tracc_con['returned_ticket_reason']) : ''; ?></textarea>
                                                 </div>
                                             </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Noted by</label>
-                                                    <select class="form-control select2" name="noted_by" id="noted_by" <?= $disabled; ?>>
-                                                        <option value=""disabled selected>Noted By</option>
-                                                            <?php foreach($ict_dept as $ict): ?>
-                                                        <option value="<?= $ict['fname']; ?>" <?= $ict['fname'] == $tracc_con['resolved_by'] ? 'selected' : ''; ?>><?= $ict['fname']; ?></option>
-												<?php endforeach; ?> 
-                                                    </select>  
-                                                </div>
-                                            </div> -->
 
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -210,48 +181,6 @@
                                                     <input type="date" name="ack_as_res_date" id="ack_as_res_date" class="form-control select2" value="<?= $tracc_con['ack_as_resolved_date']; ?>" style="width: 100%;" readonly>
                                                 </div>
                                             </div>
-
-                                            <!--<div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>To be filled by MIS</label>
-                                                    <div>
-                                                        <div style="display: inline-block; margin-right: 20px;">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="checkbox_mis" id="checkbox_mis"> For MIS Concern
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div style="display: inline-block; margin-right: 20px;">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="checkbox_lst" id="checkbox_lst"> For LST Concern
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div style="display: inline-block; margin-right: 20px;">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="checkbox_system_error" id="checkbox_system_error"> System Error
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div style="display: inline-block;">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="checkbox_user_error" id="checkbox_user_error"> User Error
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group" style="margin-top: -5px;">
-                                                    <label>Received by</label>
-                                                    <input type="text" name="received_by_lst" value="" class="form-control select2" placeholder="LST Coordinator">
-                                                </div>
-
-                                            </div>-->
                                                             
                                             <!-- Checkbox -->
                                             <div class="col-md-6">
@@ -339,6 +268,7 @@
 <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
+        var userRole = "<?= $user_role ?>";
         var reportedDate = "<?= isset($tracc_con['reported_date']) ? $tracc_con['reported_date'] : ''; ?>";
         var resolutionDate = "<?= isset($tracc_con['resolved_date']) ? $tracc_con['resolved_date'] : ''; ?>";
         
@@ -400,9 +330,6 @@
         $('#tcr_solution').on('input', autoResizeTextarea);
         $('#tcr_solution').each(autoResizeTextarea);
         // Dynamic Rezising of tcr_solution - end 
-   
-
-        var userRole = "<?= $user_role ?>";
 
         // ICT Approval Disable field - start
         function ICTApproval() {
@@ -457,6 +384,23 @@
         // Run ICTApproval on page load and when #it_app_stat changes
         ICTApproval();
         $('#it_app_stat').on('change', ICTApproval);
+
+        function toggleReturnedReasonField() {
+			var manApprovalStatus = $('#app_stat').val();
+			console.log(manApprovalStatus);
+
+			if (manApprovalStatus === 'Returned') {
+				$("#returnedReason").show(); 
+			} else {
+				$("#returnedReason").hide();
+			}
+		}
+
+        $('#app_stat').on('change', function() {
+			toggleReturnedReasonField();
+		});
+
+        toggleReturnedReasonField();
 
     });
         

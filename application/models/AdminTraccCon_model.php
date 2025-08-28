@@ -15,6 +15,7 @@ class AdminTraccCon_model extends CI_Model {
 		$approval_stat = $this->input->post('app_stat', true);
 		$it_approval_stat = $this->input->post('it_app_stat', true);
 		$reject_ticket_traccCon = $this->input->post('reason_rejected', true);
+		$returnedTicket = $this->input->post('returnedReason', true);
 		$solution = $this->input->post('tcr_solution', true);
 		$resolved_by = $this->input->post('resolved_by', true);
 		$resolved_date = $this->input->post('res_date', true);
@@ -28,6 +29,8 @@ class AdminTraccCon_model extends CI_Model {
 	
 		if ($qry->num_rows() > 0) {
 			$row = $qry->row();
+
+			$fields_to_update = '';
 			
 			if ($approval_stat == 'Rejected') {
 				$this->db->set('approval_status', 'Rejected');
@@ -38,6 +41,7 @@ class AdminTraccCon_model extends CI_Model {
 			} else if ($approval_stat == 'Returned') {
 				$this->db->set('approval_status', 'Returned');
 				$this->db->set('status', 'Returned'); 
+				$this->db->set('returned_ticket_reason', $returnedTicket);
 			}
 	
 			if ($it_approval_stat == 'Resolved') {
@@ -61,6 +65,11 @@ class AdminTraccCon_model extends CI_Model {
 			// } else if ($priority == 'High') {
 			// 	$this->db->set('priority', 'High');
 			// }
+
+			if ($returnedReason !== null) {             
+				$this->db->set('returned_ticket_reason', $returnedReason);
+				$fields_to_update = true;
+			}
 
 			if (!empty($received_by)) {
 				$this->db->set('received_by', $received_by);

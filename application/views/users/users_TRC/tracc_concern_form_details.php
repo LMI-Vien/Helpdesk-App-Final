@@ -12,7 +12,7 @@
         // print_r($status_tcf);
         // die();
 
-        if(($status_tcf === "In Progress" || $status_tcf === 'Approved' || $status_tcf === 'Done' || $status_tcf === 'Rejected' || $status_tcf === 'Closed')) {
+        if(($status_tcf === "In Progress" || $status_tcf === 'Approved' || $status_tcf === 'Done' || $status_tcf === 'Rejected' || $status_tcf === 'Closed' || $status_tcf === 'Returned')) {
             // echo "try";
             // die();
             $disabled = "disabled";
@@ -142,6 +142,7 @@
                                                         <option value="Approved"<?php if ($tracc_con['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
                                                         <option value="Pending"<?php if ($tracc_con['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
                                                         <option value="Rejected"<?php if ($tracc_con['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+                                                        <option value="Returned"<?php if ($tracc_con['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
                                                     </select>       
                                                 </div>
                                             </div>
@@ -165,6 +166,13 @@
                                                 <div class="form-group">
                                                     <label>Reason for Rejected Ticket</label>
                                                     <textarea class="form-control" id="reason_rejected" name="reason_rejected" placeholder="Place the reason here" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" <?= $disabled;?>><?= isset($tracc_con['reason_reject_tickets']) ? htmlspecialchars($tracc_con['reason_reject_tickets']) : ''; ?></textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12" id="returnedReason">
+                                                <div class="form-group">
+                                                    <label>Reason for Returned Ticket</label>
+                                                    <textarea class="form-control" id="returnedReason" name="returnedReason" placeholder="Place the reason here" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" <?= $disabled;?>><?= isset($tracc_con['returned_ticket_reason']) ? htmlspecialchars($tracc_con['returned_ticket_reason']) : ''; ?></textarea>
                                                 </div>
                                             </div>
 
@@ -332,6 +340,23 @@
             var today = new Date().toISOString().split('T')[0];
             $('#date_req').val(today);
         }
+
+        toggleLstFields(); 
+        $('#checkbox_lst').change(toggleLstFields);
+
+        $("#reason_rejected_ticket").hide();
+        $('#returnedReason').hide();
+
+        checkApprovalStatus();
+        checkReturnTicket();
+
+        // Apply the resize function to the textarea on input
+        $('#reason_rejected').on('input', autoResizeTextarea);
+        $('#tcr_solution').on('input', autoResizeTextarea);
+        
+        // Trigger the resize on page load if there's existing content in the textarea
+        $('#reason_rejected').each(autoResizeTextarea);
+        $('#tcr_solution').each(autoResizeTextarea);
     });
 
     function toggleLstFields() {
@@ -348,47 +373,10 @@
         }
     }
 
-    $(document).ready(function() {
-        toggleLstFields(); 
-
-        $('#checkbox_lst').change(toggleLstFields);
-    });
-
-
-    $(document).ready(function() {
-        $("#reason_rejected_ticket").hide();
-        
-        function checkApprovalStatus() {
-            var itApprovalStatus = $('#it_app_stat').val();
-            var appStatus = $('#app_stat').val();
-
-            if (itApprovalStatus === 'Rejected' || appStatus === 'Rejected'){
-                $("#reason_rejected_ticket").show();
-            } else {
-                $("#reason_rejected_ticket").hide();
-            }
-        }
-
-        $('#it_app_stat, #app_stat').on('change', checkApprovalStatus);
-
-        checkApprovalStatus();
-        
-    });
-
-    $(document).ready(function() {
-        function autoResizeTextarea() {
-            $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
-            $(this).height(this.scrollHeight); // Set height based on content
-        }
-        
-        // Apply the resize function to the textarea on input
-        $('#reason_rejected').on('input', autoResizeTextarea);
-        $('#tcr_solution').on('input', autoResizeTextarea);
-        
-        // Trigger the resize on page load if there's existing content in the textarea
-        $('#reason_rejected').each(autoResizeTextarea);
-        $('#tcr_solution').each(autoResizeTextarea);
-    });
+    function autoResizeTextarea() {
+        $(this).css('height', 'auto');
+        $(this).height(this.scrollHeight); 
+    }
 
     function setAcknowledgeFieldsRequired() {
         // Get the acknowledge fields
@@ -399,5 +387,29 @@
         ackAsResBy.setAttribute('required', 'required');
         ackAsResDate.setAttribute('required', 'required');
     }
+
+    function checkApprovalStatus() {
+        var itApprovalStatus = $('#it_app_stat').val();
+        var appStatus = $('#app_stat').val();
+
+        if (itApprovalStatus === 'Rejected' || appStatus === 'Rejected'){
+            $("#reason_rejected_ticket").show();
+        } else {
+            $("#reason_rejected_ticket").hide();
+        }
+    }
+    $('#it_app_stat, #app_stat').on('change', checkApprovalStatus);
+
+
+    function checkReturnTicket() {
+        var appStatus = $('#app_stat').val();
+
+        if (appStatus === 'Returned'){
+            $("#returnedReason").show();
+        } else {
+            $("#returnedReason").hide();
+        }
+    }
+    $('#app_stat').on('change', checkReturnTicket);
 
 </script>

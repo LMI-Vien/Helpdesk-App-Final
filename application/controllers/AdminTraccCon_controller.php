@@ -156,6 +156,9 @@ class AdminTraccCon_controller extends CI_Controller {
 					$priority = $this->input->post('priority');
 					$approval_stat = $this->input->post('app_stat');
 					$reject_ticket = $this->input->post('reason_rejected');
+					$returnedTicket = $this->input->post('returnedReason');
+					// print_r($returnedTicket);
+					// die();
 					$solution = $this->input->post('solution');
 					$resolved_by = $this->input->post('resolved_by');
 					$resolved_date = $this->input->post('res_date');
