@@ -124,46 +124,52 @@
 
 
 <script>
-$(document).ready(function() {
-    $('#category').change(function () {
-        if ($(this).val() === 'others') {
-            $('#specifyDiv').show();
-        } else {
-            $('#specifyDiv').hide();
-        }
-    }).trigger('change');
-
-    $('#date_req').val(new Date().toISOString().split('T')[0]);
-    $('#date_need').val(new Date().toISOString().split('T')[0]);
-    
-    $('#msrf_concern').on('input', autoResizeTextarea);
-    $('#msrf_concern').each(autoResizeTextarea);
-
-    $('#submitBtn').click(function (e) {
-        e.preventDefault();
-
-        var form = document.getElementById('MSRF_form');
-        if (!form.checkValidity()) {
-            form.reportValidity(); 
-            return;
-        }
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, submit it!',
-            customClass: {
-                popup: 'swal-wide' 
-            },
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $('#MSRF_form').submit(); 
+    $(document).ready(function() {
+        $('#category').change(function () {
+            if ($(this).val() === 'others') {
+                $('#specifyDiv').show();
+            } else {
+                $('#specifyDiv').hide();
             }
+        }).trigger('change');
+
+        $('#date_req').val(new Date().toISOString().split('T')[0]);
+        $('#date_need').val(new Date().toISOString().split('T')[0]);
+        
+        $('#msrf_concern').on('input', autoResizeTextarea);
+        $('#msrf_concern').each(autoResizeTextarea);
+
+        $('#submitBtn').click(function (e) {
+            e.preventDefault();
+
+            var form = document.getElementById('MSRF_form');
+            if (!form.checkValidity()) {
+                form.reportValidity(); 
+                return;
+            }
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, submit it!',
+                customClass: {
+                    popup: 'swal-wide' 
+                },
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $('#MSRF_form').submit(); 
+                }
+            });
         });
     });
-});
+
+    function autoResizeTextarea() {
+        $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
+        $(this).height(this.scrollHeight); // Set height based on content
+    }
+
 </script>
