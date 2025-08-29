@@ -516,9 +516,11 @@ $(document).ready(function() {
 
 
     $("#reason_rejected_ticket").hide();
+    $("returnedReason").hide();
     
 
     checkApprovalStatus();
+    checkReturnTicket();
 
     // Function to toggle visibility of related input fields
     function toggleInputField(checkbox, inputField) {
