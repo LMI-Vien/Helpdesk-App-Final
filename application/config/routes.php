@@ -182,5 +182,5 @@ $route['admin/create/tickets/tracc_request/supplier_request'] = 'AdminTraccReq_c
 $route['logout'] = 'main/logout';
 
 $route['default_controller'] = 'main/login';
-$route['404_override'] = '';
+$route['404_override'] = 'main/login';
 $route['translate_uri_dashes'] = FALSE;

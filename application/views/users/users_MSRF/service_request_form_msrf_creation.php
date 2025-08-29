@@ -134,11 +134,7 @@ $(document).ready(function() {
     }).trigger('change');
 
     $('#date_req').val(new Date().toISOString().split('T')[0]);
-
-    function autoResizeTextarea() {
-        $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
-        $(this).height(this.scrollHeight); // Set height based on content
-    }
+    $('#date_need').val(new Date().toISOString().split('T')[0]);
     
     $('#msrf_concern').on('input', autoResizeTextarea);
     $('#msrf_concern').each(autoResizeTextarea);
