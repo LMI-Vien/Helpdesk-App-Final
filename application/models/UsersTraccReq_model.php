@@ -62,8 +62,8 @@ class UsersTraccReq_model extends CI_Model {
 				'priority' 					            => $priority,
 				// 'acknowledge_by' 			            => $acknowledge_by,
 				// 'acknowledge_by_date'		            => $acknowledge_by_date,
-				'status' 					            => 'Open',
-				'approval_status' 			            => 'Pending',
+				'status' 					            => 'Approved',
+				'approval_status' 			            => 'Approved',
 				'it_approval_status' 		            => 'Pending',
 				'created_at' 				            => date("Y-m-d H:i:s")
 			);
