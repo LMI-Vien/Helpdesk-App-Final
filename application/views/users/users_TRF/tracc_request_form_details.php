@@ -496,31 +496,49 @@
 
 <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 <script>
-$(document).ready(function() {
+    $(document).ready(function() { 
+        // Apply the resize function to the textarea on input
+        $('#complete_details').on('input', autoResizeTextarea);
+        
+        // Trigger the resize on page load if there's existing content in the textarea
+        $('#complete_details').each(autoResizeTextarea);
+
+        $("#reason_rejected_ticket").hide();
+        $("#returnedReason").hide();
+        
+
+        checkApprovalStatus();
+        checkReturnTicket();
+
+        // Initially toggle visibility based on checkbox states
+        toggleInputField('#checkbox_others_newadd', '#others_text_newadd');
+        toggleInputField('#checkbox_others_update', '#others_text_update');
+        toggleInputField('#checkbox_others', '#others_text_acc');
+
+        // Event listeners for each checkbox
+        $('#checkbox_others_newadd').change(function () {
+            toggleInputField(this, '#others_text_newadd');
+        });
+
+        $('#checkbox_others_update').change(function () {
+            toggleInputField(this, '#others_text_update');
+        });
+
+        $('#checkbox_others').change(function () {
+            toggleInputField(this, '#others_text_acc');
+        });
+
+    });
+
     function autoResizeTextarea() {
         $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
         $(this).height(this.scrollHeight); // Set height based on content
     }
-    
-    // Apply the resize function to the textarea on input
-    $('#complete_details').on('input', autoResizeTextarea);
-    
-    // Trigger the resize on page load if there's existing content in the textarea
-    $('#complete_details').each(autoResizeTextarea);
-    
 
     function resizeInput(input) {
         input.style.width = 'auto';
         input.style.width = (input.value.length + 1) + 'ch'; // Adjusting based on character length
     }
-
-
-    $("#reason_rejected_ticket").hide();
-    $("returnedReason").hide();
-    
-
-    checkApprovalStatus();
-    checkReturnTicket();
 
     // Function to toggle visibility of related input fields
     function toggleInputField(checkbox, inputField) {
@@ -530,26 +548,6 @@ $(document).ready(function() {
             $(inputField).hide();
         }
     }
-
-    // Initially toggle visibility based on checkbox states
-    toggleInputField('#checkbox_others_newadd', '#others_text_newadd');
-    toggleInputField('#checkbox_others_update', '#others_text_update');
-    toggleInputField('#checkbox_others', '#others_text_acc');
-
-    // Event listeners for each checkbox
-    $('#checkbox_others_newadd').change(function () {
-        toggleInputField(this, '#others_text_newadd');
-    });
-
-    $('#checkbox_others_update').change(function () {
-        toggleInputField(this, '#others_text_update');
-    });
-
-    $('#checkbox_others').change(function () {
-        toggleInputField(this, '#others_text_acc');
-    });
-
-});
 
     function setAcknowledge() {
         // Get the acknowledge fields
