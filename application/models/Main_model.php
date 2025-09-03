@@ -76,7 +76,7 @@ class Main_model extends CI_Model {
 				"password" 						=> $hashed_password,
 				"api_password" 					=> $hashed_password,
 				"role" 							=> 'L1',
-				'status' 						=> 1,
+				'status' 						=> 0,
 				'failed_attempts' 				=> 1,
 				'active'						=> 1,
 				'created_at' 					=> date("Y-m-d H:i:s")
