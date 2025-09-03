@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="firstname" class="form-label">First Name &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
-                                    <input type="text" class="form-control letters-only" id="firstname" name="firstname" pattern="^[A-Za-z]+$" required>
+                                    <input type="text" class="form-control letters-only" id="firstname" name="firstname" required>
                                     
                                 </div>
                                 <div class="mb-3">
