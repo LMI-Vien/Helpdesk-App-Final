@@ -62,7 +62,7 @@
 						<div class="col-md-6">
 							<div class="form-group">
 								<label>Employee No.</label>
-								<input type="text" name="emp_id" id="emp_id" class="form-control" minlength="10" maxlength="10" required>
+								<input type="text" name="emp_id" id="emp_id" class="form-control" required>
 							</div>
 							<div class="form-group">
 								<label>Firstname</label>
