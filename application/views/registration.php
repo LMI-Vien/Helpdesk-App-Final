@@ -171,17 +171,17 @@
             }
         });
 
-        $('#employee_id').on('keydown', function (e) {
-        if (
-            !(e.key >= '0' && e.key <= '9') && 
-            e.key !== '-' &&          
-            e.key !== 'Backspace' &&     
-            e.key !== 'Shift' &&       
-            e.key !== '*'
-        ) {
-            e.preventDefault();
-        }
-    });
+        // $('#employee_id').on('keydown', function (e) {
+        //     if (
+        //         !(e.key >= '0' && e.key <= '9') && 
+        //         e.key !== '-' &&          
+        //         e.key !== 'Backspace' &&     
+        //         e.key !== 'Shift' &&       
+        //         e.key !== '*'
+        //     ) {
+        //         e.preventDefault();
+        //     }
+        // });
 
     });
 </script>
