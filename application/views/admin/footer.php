@@ -2,7 +2,7 @@
 			<div class="pull-right hidden-xs">
 	            <b>Version</b> 1.0.0
 	        </div>
-	        <strong>Copyright &copy; 2024 ICT - Lifestrong Marketing Inc. All rights reserved.</strong>
+	        <strong>Copyright &copy; <span id="year"></span> ICT - Lifestrong Marketing Inc. All rights reserved.</strong>
 		</footer>
 		<div id="sidebar-overlay"></div>
 	</div>
@@ -206,6 +206,7 @@
         var base_url = '<?= base_url();?>';
         $(document).ready(function() {
 
+            $("#year").text(new Date().getFullYear());
             const savedFilter = localStorage.getItem('datatable_filter') || '';
 
             

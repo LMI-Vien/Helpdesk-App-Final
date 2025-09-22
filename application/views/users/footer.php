@@ -3,7 +3,7 @@
       			<div class="pull-right hidden-xs">
         			<b>Version</b> 1.0.0
       			</div>
-      			<strong>Copyright &copy; 2024-2025 <a href="#"><span style="color: #9a1a1f">ICT Helpdesk</span></a>.</strong> All rights
+      			<strong>Copyright &copy; <span id="year"></span> <a href="#"><span style="color: #9a1a1f">ICT Helpdesk</span></a>.</strong> All rights
       			reserved.
     		</div>
   		</footer>
@@ -142,6 +142,7 @@
         // });
 
 		$(document).ready(function() {
+			$("#year").text(new Date().getFullYear());
 			let status = '';
 
 			<?php if($this->session->flashdata('success')): ?>
