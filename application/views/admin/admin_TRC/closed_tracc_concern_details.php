@@ -137,10 +137,10 @@
                                                     <label>Received by</label>
                                                     <select class="form-control select2" name="received_by" id="received_by" disabled readonly>
                                                         <option value=""disabled selected>Received By</option>
-                                                        <option value="ERIC" <?php if ($trc['received_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
-                                                        <option value="CK" <?php if ($trc['received_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="HANNA" <?php if ($trc['received_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($trc['received_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>
+                                                        <option value="ERIC" <?php if ($trc['received_by'] == 'Eric') echo ' selected'; ?>>Sir. Eric</option>
+                                                        <option value="CK" <?php if ($trc['received_by'] == 'Calvin') echo ' selected'; ?>>Sir. CK</option>
+                                                        <option value="HANNA" <?php if ($trc['received_by'] == 'Hanna') echo ' selected'; ?>>Ms. Hanna</option>
+                                                        <option value="DAN" <?php if ($trc['received_by'] == 'Dan Mark') echo ' selected'; ?>>Sir. Dan</option>
                                                     </select>       
                                                 </div>
                                             </div>
@@ -150,10 +150,10 @@
                                                     <label>Noted by</label>
                                                     <select class="form-control select2" name="noted_by" id="noted_by" disabled readonly>
                                                         <option value=""disabled selected>Noted By</option>
-                                                        <option value="ERIC" <?php if ($trc['noted_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
-                                                        <option value="CK" <?php if ($trc['noted_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="HANNA" <?php if ($trc['noted_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($trc['noted_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>    
+                                                        <option value="ERIC" <?php if ($trc['noted_by'] == 'Eric') echo ' selected'; ?>>Sir. Eric</option>
+                                                        <option value="CK" <?php if ($trc['noted_by'] == 'Calvin') echo ' selected'; ?>>Sir. CK</option>
+                                                        <option value="HANNA" <?php if ($trc['noted_by'] == 'Hanna') echo ' selected'; ?>>Ms. Hanna</option>
+                                                        <option value="DAN" <?php if ($trc['noted_by'] == 'Dan Mark') echo ' selected'; ?>>Sir. Dan</option>    
                                                     </select>  
                                                 </div>
                                             </div>
@@ -170,10 +170,10 @@
                                                     <label>Resolved by</label>
                                                     <select class="form-control select2" name="resolved_by" id="resolved_by" disabled>
                                                         <option value=""disabled selected>Resolved By</option>
-                                                        <option value="ERIC" <?php if ($trc['resolved_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
-                                                        <option value="CK" <?php if ($trc['resolved_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="HANNA" <?php if ($trc['resolved_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($trc['resolved_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>
+                                                        <option value="ERIC" <?php if ($trc['resolved_by'] == 'Eric') echo ' selected'; ?>>Sir. Eric</option>
+                                                        <option value="CK" <?php if ($trc['resolved_by'] == 'Calvin') echo ' selected'; ?>>Sir. CK</option>
+                                                        <option value="HANNA" <?php if ($trc['resolved_by'] == 'Hanna') echo ' selected'; ?>>Ms. Hanna</option>
+                                                        <option value="DAN" <?php if ($trc['resolved_by'] == 'Dan Mark') echo ' selected'; ?>>Sir. Dan</option>
                                                     </select>  
                                                 </div>
                                             </div>
