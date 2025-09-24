@@ -23,7 +23,7 @@ class AdminMSRF_controller extends CI_Controller {
         $newNumber = $lastNumber + 1;
 
         // Format the new MSRF number
-        $newMSRFNumber = 'MSRF-' . date("Y") . '-' . sprintf('%03d', $newNumber);
+        $newMSRFNumber = 'MSRF-' . sprintf('%03d', $newNumber);
 
         return $newMSRFNumber;
 		// return $lastNumber;

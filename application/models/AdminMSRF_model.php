@@ -135,7 +135,7 @@ class AdminMSRF_model extends CI_Model {
 				'category' => $category,
 				'specify' => $spec,
 				'details_concern' => $concern,
-				'status' => 'Open',
+				'status' => 'Approved',
 				'approval_status' => 'Approved',
 				'priority' => $categ,
 				'requester_id' => $user_id,
