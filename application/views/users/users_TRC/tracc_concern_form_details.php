@@ -181,10 +181,10 @@
                                                     <label>Received by <span style = "color:red;">*</span></label>
                                                     <select class="form-control select2" name="received_by" id="received_by" value="" disabled>
                                                         <option value=""disabled selected>Received By</option>
-                                                        <option value="HANNA" <?php if ($tracc_con['received_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($tracc_con['received_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>
-                                                        <option value="CK" <?php if ($tracc_con['received_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="ERIC" <?php if ($tracc_con['received_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>                                                       
+                                                        <option value="HANNA" <?php if ($tracc_con['received_by'] == 'Hanna') echo ' selected'; ?>>Ms. Hanna</option>
+                                                        <option value="DAN" <?php if ($tracc_con['received_by'] == 'Dan Mark') echo ' selected'; ?>>Sir. Dan</option>
+                                                        <option value="CK" <?php if ($tracc_con['received_by'] == 'Calvin') echo ' selected'; ?>>Sir. CK</option>
+                                                        <option value="ERIC" <?php if ($tracc_con['received_by'] == 'Eric') echo ' selected'; ?>>Sir. Eric</option>                                                       
                                                     </select>       
                                                 </div>  
                                             </div>
@@ -194,10 +194,10 @@
                                                     <label>Noted by <span style = "color:red;">*</span></label>
                                                     <select class="form-control select2" name="noted_by" id="noted_by" value="" disabled>
                                                         <option value=""disabled selected>Noted By</option>
-                                                        <option value="HANNA" <?php if ($tracc_con['noted_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option> 
-                                                        <option value="DAN" <?php if ($tracc_con['noted_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>  
-                                                        <option value="CK" <?php if ($tracc_con['noted_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="ERIC" <?php if ($tracc_con['noted_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
+                                                        <option value="HANNA" <?php if ($tracc_con['noted_by'] == 'Hanna') echo ' selected'; ?>>Ms. Hanna</option> 
+                                                        <option value="DAN" <?php if ($tracc_con['noted_by'] == 'Dan Mark') echo ' selected'; ?>>Sir. Dan</option>  
+                                                        <option value="CK" <?php if ($tracc_con['noted_by'] == 'Calvin') echo ' selected'; ?>>Sir. CK</option>
+                                                        <option value="ERIC" <?php if ($tracc_con['noted_by'] == 'Eric') echo ' selected'; ?>>Sir. Eric</option>
                                                           
                                                     </select>  
                                                 </div>
@@ -215,10 +215,10 @@
                                                     <label>Resolved by <span style = "color:red;">*</span></label>
                                                     <select class="form-control select2" name="resolved_by" id="resolved_by" disabled>
                                                         <option value=""disabled selected>Resolved By</option>
-                                                        <option value="HANNA" <?php if ($tracc_con['resolved_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($tracc_con['resolved_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>
-                                                        <option value="CK" <?php if ($tracc_con['resolved_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="ERIC" <?php if ($tracc_con['resolved_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
+                                                        <option value="HANNA" <?php if ($tracc_con['resolved_by'] == 'Hanna') echo ' selected'; ?>>Ms. Hanna</option>
+                                                        <option value="DAN" <?php if ($tracc_con['resolved_by'] == 'Dan Mark') echo ' selected'; ?>>Sir. Dan</option>
+                                                        <option value="CK" <?php if ($tracc_con['resolved_by'] == 'Calvin') echo ' selected'; ?>>Sir. CK</option>
+                                                        <option value="ERIC" <?php if ($tracc_con['resolved_by'] == 'Eric') echo ' selected'; ?>>Sir. Eric</option>
                                                         
                                                     </select>  
                                                 </div>

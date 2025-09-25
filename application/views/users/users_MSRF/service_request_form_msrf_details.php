@@ -179,8 +179,8 @@
                                                         <option value="" disabled selected>Select ICT</option>
                                                         <option value="ChristianJ" <?php if ($msrf['assigned_it_staff'] == 'ChristianJ') echo ' selected'; ?>>Sir Chinchan</option>
                                                         <option value="Michael" <?php if ($msrf['assigned_it_staff'] == 'Michael') echo ' selected'; ?>>Sir Michael</option>
-                                                        <option value="Louise" <?php if ($msrf['assigned_it_staff'] == 'Louise') echo ' selected'; ?>>Sir Louise</option>
-                                                        <option value="ChristanA" <?php if ($msrf['assigned_it_staff'] == 'Louise') echo ' selected'; ?>>Sir Bok</option>
+                                                        <option value="Louise" <?php if ($msrf['assigned_it_staff'] == 'Louise Christian') echo ' selected'; ?>>Sir Louise</option>
+                                                        <option value="ChristanA" <?php if ($msrf['assigned_it_staff'] == 'Christian Rey') echo ' selected'; ?>>Sir Bok</option>
                                                     </select>
                                                 </div>
                                             </div>

@@ -443,10 +443,10 @@
                                                     <label>Accomplished by<span style = "color:red;">*</span></label>
                                                     <select class="form-control select2" name="accomplished_by" id="accomplished_by" disabled>
                                                         <option value=""disabled selected>Accomplished by</option>
-                                                        <option value="HANNA" <?php if ($trf['accomplished_by'] == 'HANNA') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($trf['accomplished_by'] == 'DAN') echo ' selected'; ?>>Sir. Dan</option>
-                                                        <option value="CK" <?php if ($trf['accomplished_by'] == 'CK') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="ERIC" <?php if ($trf['accomplished_by'] == 'ERIC') echo ' selected'; ?>>Sir. Eric</option>
+                                                        <option value="HANNA" <?php if ($trf['accomplished_by'] == 'Hanna') echo ' selected'; ?>>Ms. Hanna</option>
+                                                        <option value="DAN" <?php if ($trf['accomplished_by'] == 'Dan Mark') echo ' selected'; ?>>Sir. Dan</option>
+                                                        <option value="CK" <?php if ($trf['accomplished_by'] == 'Calvin') echo ' selected'; ?>>Sir. CK</option>
+                                                        <option value="ERIC" <?php if ($trf['accomplished_by'] == 'Eric') echo ' selected'; ?>>Sir. Eric</option>
                                                     </select>  
                                                 </div>
                                             </div>
