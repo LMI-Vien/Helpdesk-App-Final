@@ -129,6 +129,9 @@
                                 <th>Date Requested</th>
                                 <th>Date Needed</th>
                                 <th>Asset Code</th>
+                                <th>Request Category</th>
+                                <th>Details Concern</th>
+                                <th>ICT Assign To</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -140,9 +143,13 @@
                         <thead>
                             <tr>
                                 <th>Control Number</th>
+                                <th>Module Affected</th>
+                                <th>Concern Details</th>
                                 <th>Reported By</th>
+                                <th>Department</th>
                                 <th>Reported Date</th>
                                 <th>Resolved Date</th>
+                                <th>Resolved By</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -161,6 +168,7 @@
                                 <th>Complete Details</th>
                                 <th>Accomplished By</th>
                                 <th>Accomplished Date</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                     </table>
@@ -264,6 +272,9 @@
                     { "data": "date_requested" },
                     { "data": "date_needed" },
                     { "data": "asset_code" },
+                    { "data": "category"},
+                    { "data": "details_concern"},
+                    { "data": "assigned_it_staff"},
                     { "data": "status" }
                 ],
                 "responsive": true,
@@ -277,7 +288,7 @@
                         className: 'btn-export',
                         action: function () {
                             // Instantiate jsPDF.
-                            var doc = new jsPDF();
+                            var doc = new jsPDF({ orientation: 'landscape' });
 
                             // Set page number
                             var page = 1;
@@ -293,19 +304,32 @@
                                     fillColor: 'white',
                                     textColor: 'black',
                                     fontStyle: 'bold',
-                                    fontSize: 10,
+                                    fontSize: 8,
                                     lineWidth: 0.5,
                                 },
                                 bodyStyles: {
                                     fillColor: 'white',
                                     textColor: 'black',
-                                    fontSize: 10,
+                                    fontSize: 8,
                                     lineWidth: 0.5,
                                 },
                                 styles: {
-                                    cellPadding: 2,
-                                    fontSize: 12,
+                                    cellPadding: 1,
+                                    fontSize: 8,
                                     bordered: true,
+                                    overflow: 'hidden'
+                                },
+                                columnStyles: {        // ← optional but helps keep columns stable
+                                    0: { cellWidth: 20 },   // Ticket ID
+                                    1: { cellWidth: 20 },   // Requestor Name
+                                    2: { cellWidth: 38 },   // Department
+                                    3: { cellWidth: 25 },   // Date Requested
+                                    4: { cellWidth: 25 },   // Date Needed
+                                    5: { cellWidth: 25 },   // Asset Code
+                                    6: { cellWidth: 28 },   // Category
+                                    7: { cellWidth: 40 },   // Details Concern
+                                    8: { cellWidth: 28 },   // ICT Assign To
+                                    9: { cellWidth: 25 }    // Status
                                 },
                                 margin: {
                                     top: 30
@@ -346,7 +370,7 @@
                         className: 'btn-export',
                         extend: 'excel',
                         filename: '(' + formatDate(date) + ') MSRF Concern (' + dateRange + ')',
-                        title: 'Open MSRF Tickets (' + dateRange + ')',
+                        title: 'MSRF Tickets (' + dateRange + ')',
                     },
                     {
                         // Export table to a CSV document.
@@ -357,7 +381,7 @@
                         customize: function(csv) {
                             var rows = csv.split('\n');
 
-                            var title = 'Open MSRF Tickets (' + dateRange + ')';
+                            var title = 'MSRF Tickets (' + dateRange + ')';
                             rows.unshift(title);
 
                             return rows.join('\n');
@@ -389,9 +413,13 @@
                 // Since we are not outputing all the columns, we need to define the columns.
                 "columns": [
                     { "data": "control_number" },
+                    { "data": "module_affected" },
+                    { "data": "tcr_details" },
                     { "data": "reported_by" },
+                    { "data": "department" },
                     { "data": "reported_date" },
                     { "data": "resolved_date" },
+                    { "data": "resolved_by" },
                     { "data": "status" },
                 ],
                 "responsive": true,
@@ -406,7 +434,7 @@
                         action: function () {
 
                             // Instantiate the jsPDF class.
-                            var doc = new jsPDF();
+                            var doc = new jsPDF({ orientation: 'landscape' });
 
                             // Set page number
                             var page = 1;
@@ -421,20 +449,32 @@
                                 headStyles: {
                                     fillColor: 'white',
                                     textColor: 'black',
-                                    fontSize: 10,
+                                    fontSize: 8,
                                     fontStyle: 'bold',
                                     lineWidth: 0.5,
                                 },
                                 bodyStyles: {
                                     fillColor: 'white',
                                     textColor: 'black',
-                                    fontSize: 10,
+                                    fontSize: 8,
                                     lineWidth: 0.5,
                                 },
                                 styles: {
-                                    cellPadding: 4,
-                                    fontSize: 12,
+                                    cellPadding: 1,
+                                    fontSize: 8,
                                     bordered: true,
+                                    overflow: 'hidden'
+                                },
+                                columnStyles: {        // ← optional but helps keep columns stable
+                                    0: { cellWidth: 25 },   // control number
+                                    1: { cellWidth: 25 },   // module affected
+                                    2: { cellWidth: 40 },   // tcr details
+                                    3: { cellWidth: 25 },   // reported by
+                                    4: { cellWidth: 30 },   // department
+                                    5: { cellWidth: 25 },   // reported date
+                                    6: { cellWidth: 25 },   // reseolved date
+                                    7: { cellWidth: 25 },   // resolved by
+                                    8: { cellWidth: 28 },   // status
                                 },
                                 margin: {
                                     top: 30
@@ -472,7 +512,7 @@
                         className: 'btn-export',
                         extend: 'excel',
                         filename: '(' + formatDate(date) + ') Tracc Concern (' + dateRange + ')',
-                        title: 'Open Tracc Concern Tickets (' + dateRange + ')'
+                        title: 'Tracc Concern Tickets (' + dateRange + ')'
                     },
                     {
                         // Export the table to a CSV file.
@@ -480,11 +520,11 @@
                         className: 'btn-export',
                         extend: 'csv',
                         filename: '(' + formatDate(date) + ') Tracc Concern (' + dateRange + ')',
-                        title: 'Open Tracc Concern Tickets (' + dateRange + ')',
+                        title: 'Tracc Concern Tickets (' + dateRange + ')',
                         customize: function(csv) {
                             var rows = csv.split('\n');
 
-                            var title = 'Open Tracc Concern Tickets (' + dateRange + ')';
+                            var title = 'Tracc Concern Tickets (' + dateRange + ')';
                             rows.unshift(title);
 
                             return rows.join('\n');
@@ -521,7 +561,8 @@
                     { "data": "company" },
                     { "data": "complete_details" },
                     { "data": "accomplished_by" },
-                    { "data": "accomplished_by_date" }
+                    { "data": "accomplished_by_date" },
+                    { "data": "status"}
                 ],
                 "responsive": true,
                 "autoWidth": false,
@@ -534,7 +575,7 @@
                         className: 'btn-export',
                         action: function () {
                             // Instantiate jsPDF.
-                            var doc = new jsPDF();
+                            var doc = new jsPDF({ orientation: 'landscape' });
 
                             // Set page number.
                             var page = 1;
@@ -550,19 +591,31 @@
                                     fillColor: 'white',
                                     textColor: 'black',
                                     fontStyle: 'bold',
-                                    fontSize: 10,
+                                    fontSize: 8,
                                     lineWidth: 0.5,
                                 },
                                 bodyStyles: {
                                     fillColor: 'white',
                                     textColor: 'black',
-                                    fontSize: 10,
+                                    fontSize: 8,
                                     lineWidth: 0.5,
                                 },
                                 styles: {
                                     cellPadding: 2,
-                                    fontSize: 12,
+                                    fontSize: 8,
                                     bordered: true,
+                                    overflow: 'hidden'
+                                },
+                                columnStyles: {        // ← optional but helps keep columns stable
+                                    0: { cellWidth: 25 },   // ticket id
+                                    1: { cellWidth: 25 },   // requested by
+                                    2: { cellWidth: 30 },   // department
+                                    3: { cellWidth: 25 },   // date requested
+                                    4: { cellWidth: 25 },   // company
+                                    5: { cellWidth: 40 },   // complete details
+                                    6: { cellWidth: 28 },   // accomplished by
+                                    7: { cellWidth: 28 },   // accomplished by date
+                                    8: { cellWidth: 28 },   // status
                                 },
                                 margin: {
                                     top: 30
@@ -603,7 +656,7 @@
                         className: 'btn-export',
                         extend: 'excel',
                         filename: '(' + formatDate(date) + ') Tracc Request (' + dateRange + ')',
-                        title: 'Open Tracc Requests (' + dateRange + ')',
+                        title: 'Tracc Requests (' + dateRange + ')',
                     },
                     {
                         // Export the table to csv
@@ -614,7 +667,7 @@
                         customize: function(csv) {
                             var rows = csv.split('\n');
 
-                            var title = 'Open Tracc Requests (' + dateRange + ')';
+                            var title = 'Tracc Requests (' + dateRange + ')';
                             rows.unshift(title);
 
                             return rows.join('\n');

@@ -1359,7 +1359,7 @@ class DataTables extends CI_Controller {
         $status = $this->input->post('status');
 
         // Get columns ticket_id, requestor_name, department, date_requested, date_needed, asset_code, and status from service_request_msrf table.
-        $this->db->select('ticket_id, requestor_name, department, date_requested, date_needed, asset_code, status');
+        $this->db->select('ticket_id, requestor_name, department, date_requested, date_needed, asset_code, status, category, details_concern, assigned_it_staff');
         $this->db->from('service_request_msrf');
 
         // Check if status variable has a value.
@@ -1418,7 +1418,7 @@ class DataTables extends CI_Controller {
         $status = $this->input->post('status');
 
         // Get columns control_number, reported_by, reported_date, resolved_date, and status from service_request_tracc_concern.
-        $this->db->select('control_number, reported_by, reported_date, resolved_date, status');
+        $this->db->select('control_number, module_affected, tcr_details, reported_by, department, reported_date, resolved_by, resolved_date, status');
         $this->db->from('service_request_tracc_concern');
 
         // Check if status variable is not null.
@@ -1475,7 +1475,7 @@ class DataTables extends CI_Controller {
         $endDate = $this->input->post('end_date');
 
         // Get columns ticet_id, requested_by, department, date_requested, company, complete_details, accomplished_by, accomplished_by_date from service_request_tracc_request table.
-        $this->db->select('ticket_id, requested_by, department, date_requested, company, complete_details, accomplished_by, accomplished_by_date');
+        $this->db->select('ticket_id, requested_by, department, date_requested, company, complete_details, accomplished_by, accomplished_by_date, status');
         $this->db->from('service_request_tracc_request');
 
         // Check if start and end date exists
