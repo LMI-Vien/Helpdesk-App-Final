@@ -180,12 +180,14 @@ class UsersMSRF_controller extends CI_Controller {
 			$user_details = $this->Main_model->user_details();
 			$getdepartment = $this->Main_model->GetDepartmentID();
 			$getMsrf = $this->Main_model->getTicketsMSRF($id);
+			$ict_dept = $this->Main_model->get_ict();
 
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
 				$data['getdept'] = $getdepartment[1];
 				$data['msrf'] = $getMsrf[1];
+				$data['ict_dept'] = $ict_dept;
 
 				$this->load->view('users/header', $data);
 				$this->load->view('users/users_MSRF/service_request_form_msrf_details', $data);

@@ -178,27 +178,24 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Received by <span style = "color:red;">*</span></label>
-                                                    <select class="form-control select2" name="received_by" id="received_by" value="" disabled>
-                                                        <option value=""disabled selected>Received By</option>
-                                                        <option value="HANNA" <?php if ($tracc_con['received_by'] == 'Hanna') echo ' selected'; ?>>Ms. Hanna</option>
-                                                        <option value="DAN" <?php if ($tracc_con['received_by'] == 'Dan Mark') echo ' selected'; ?>>Sir. Dan</option>
-                                                        <option value="CK" <?php if ($tracc_con['received_by'] == 'Calvin') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="ERIC" <?php if ($tracc_con['received_by'] == 'Eric') echo ' selected'; ?>>Sir. Eric</option>                                                       
-                                                    </select>       
-                                                </div>  
+                                                    <label>Resolved by</label>
+                                                    <select class="form-control select2" name="resolved_by" id="resolved_by" disabled>
+                                                        <option value=""disabled selected>Resolved By</option>
+                                                        <?php foreach($ict_dept as $ict): ?>
+                                                            <option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $tracc_con['resolved_by'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>  
+                                                </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Noted by <span style = "color:red;">*</span></label>
-                                                    <select class="form-control select2" name="noted_by" id="noted_by" value="" disabled>
-                                                        <option value=""disabled selected>Noted By</option>
-                                                        <option value="HANNA" <?php if ($tracc_con['noted_by'] == 'Hanna') echo ' selected'; ?>>Ms. Hanna</option> 
-                                                        <option value="DAN" <?php if ($tracc_con['noted_by'] == 'Dan Mark') echo ' selected'; ?>>Sir. Dan</option>  
-                                                        <option value="CK" <?php if ($tracc_con['noted_by'] == 'Calvin') echo ' selected'; ?>>Sir. CK</option>
-                                                        <option value="ERIC" <?php if ($tracc_con['noted_by'] == 'Eric') echo ' selected'; ?>>Sir. Eric</option>
-                                                          
+                                                    <label>Resolved by</label>
+                                                    <select class="form-control select2" name="resolved_by" id="resolved_by" disabled>
+                                                        <option value=""disabled selected>Resolved By</option>
+                                                        <?php foreach($ict_dept as $ict): ?>
+                                                            <option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $tracc_con['resolved_by'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
+                                                        <?php endforeach; ?>
                                                     </select>  
                                                 </div>
                                             </div>
@@ -210,7 +207,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Resolved by <span style = "color:red;">*</span></label>
                                                     <select class="form-control select2" name="resolved_by" id="resolved_by" disabled>
@@ -220,6 +217,18 @@
                                                         <option value="CK" <?php if ($tracc_con['resolved_by'] == 'Calvin') echo ' selected'; ?>>Sir. CK</option>
                                                         <option value="ERIC" <?php if ($tracc_con['resolved_by'] == 'Eric') echo ' selected'; ?>>Sir. Eric</option>
                                                         
+                                                    </select>  
+                                                </div>
+                                            </div> -->
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Resolved by</label>
+                                                    <select class="form-control select2" name="resolved_by" id="resolved_by" disabled>
+                                                        <option value=""disabled selected>Resolved By</option>
+                                                        <?php foreach($ict_dept as $ict): ?>
+                                                            <option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $tracc_con['resolved_by'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
+                                                        <?php endforeach; ?>
                                                     </select>  
                                                 </div>
                                             </div>

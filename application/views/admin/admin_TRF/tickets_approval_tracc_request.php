@@ -420,7 +420,7 @@
                                                     <select class="form-control select2" name="accomplished_by" id="accomplished_by" <?= $is_disable?>>
                                                         <option value=""disabled selected>Accomplished by</option>
                                                         <?php foreach($ict_dept as $ict): ?>
-                                                            <option value="<?= $ict['fname']; ?>" <?= $ict['fname'] == $trf['accomplished_by'] ? 'selected' : ''; ?>><?= $ict['fname']; ?></option>
+                                                            <option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $trf['accomplished_by'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
                                                         <?php endforeach; ?>
                                                                 
                                                     </select>  

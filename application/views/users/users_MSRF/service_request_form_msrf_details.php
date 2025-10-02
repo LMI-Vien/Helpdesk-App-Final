@@ -175,12 +175,10 @@
                                             <div class="col-md-12" id="ictassign" style="display:none;">
                                                 <div class="form-group">
                                                     <label>ICT Assign To</label>
-                                                    <select name="assign_to" class="form-control select2" <?=$disabled?>>
-                                                        <option value="" disabled selected>Select ICT</option>
-                                                        <option value="ChristianJ" <?php if ($msrf['assigned_it_staff'] == 'ChristianJ') echo ' selected'; ?>>Sir Chinchan</option>
-                                                        <option value="Michael" <?php if ($msrf['assigned_it_staff'] == 'Michael') echo ' selected'; ?>>Sir Michael</option>
-                                                        <option value="Louise" <?php if ($msrf['assigned_it_staff'] == 'Louise Christian') echo ' selected'; ?>>Sir Louise</option>
-                                                        <option value="ChristanA" <?php if ($msrf['assigned_it_staff'] == 'Christian Rey') echo ' selected'; ?>>Sir Bok</option>
+                                                    <select name="assign_to" id="assign_to" class="form-control select2" <?= $disabled ?>>
+                                                        <?php foreach($ict_dept as $ict): ?>
+                                                            <option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $msrf['assigned_it_staff'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
+                                                        <?php endforeach; ?>
                                                     </select>
                                                 </div>
                                             </div>

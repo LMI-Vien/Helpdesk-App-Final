@@ -326,6 +326,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$getCheckboxDataNewAdd = $this->Main_model->getCheckboxDataNewAdd($id);
 			$getCheckeboxDataUpdate = $this->Main_model->getCheckboxDataUpdate($id);
 			$getCheckboxDataAccount = $this->Main_model->getCheckboxDataAccount($id);
+			$ict_dept = $this->Main_model->get_ict();
 
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
@@ -335,6 +336,7 @@ class UsersTraccReq_controller extends CI_Controller {
 				$data['checkbox_data_newadd'] = $getCheckboxDataNewAdd;
 				$data['checkbox_data_update'] = $getCheckeboxDataUpdate;
 				$data['checkbox_data_account'] = $getCheckboxDataAccount;
+				$data['ict_dept'] = $ict_dept;
 
 				$selected_companies = isset($data['trf']['company']) ? explode(',', $data['trf']['company']) : [];
 				$data['selected_companies'] = $selected_companies; 

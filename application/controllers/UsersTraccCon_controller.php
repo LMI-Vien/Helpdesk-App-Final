@@ -171,12 +171,14 @@ class UsersTraccCon_controller extends CI_Controller {
 			$user_details = $this->Main_model->user_details();
 			$getdepartment = $this->Main_model->GetDepartmentID();
 			$getTraccCon = $this->Main_model->getTraccConcernByID($id);
+			$ict_dept = $this->Main_model->get_ict();
 	
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
 				$data['getdept'] = $getdepartment[1];
 				$data['tracc_con'] = $getTraccCon[1];
+				$data['ict_dept'] = $ict_dept;
 
 				if (isset($getTraccCon[1])) {
 					$control_number = $getTraccCon[1]['control_number'];

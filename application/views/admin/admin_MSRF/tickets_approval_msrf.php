@@ -138,7 +138,7 @@
 											<label>ICT Assign To</label>
 											<select name="assign_to" id="assign_to" class="form-control select2" <?= $is_disable ?>>
 												<?php foreach($ict_dept as $ict): ?>
-													<option value="<?= $ict['fname']; ?>" <?= $ict['fname'] == $msrf['assigned_it_staff'] ? 'selected' : ''; ?>><?= $ict['fname']; ?></option>
+													<option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $msrf['assigned_it_staff'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
 												<?php endforeach; ?>
 											</select>
 										</div>

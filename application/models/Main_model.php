@@ -997,8 +997,9 @@ class Main_model extends CI_Model {
 	}
 
 	public function get_ict() {
-		$this->db->select("fname");
+		$this->db->select("CONCAT(fname, ' ', lname) AS full_name");
 		$this->db->where('dept_id', 1);
+		$this->db->order_by('fname', 'ASC');
 		return $this->db->get('users')->result_array();
 	}
 }
