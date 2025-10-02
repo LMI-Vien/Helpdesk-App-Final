@@ -8,7 +8,7 @@
    
     $disabled = "";
     $readonly = "";
-    $btn_label = "Update  Ticket";
+    $btn_label = "Update Ticket";
     
     $approved_by = isset($reqForm['approved_by']) ? $reqForm['approved_by'] : null;
 
@@ -123,7 +123,6 @@
                                                             $availableCompanies = ['LMI', 'RGDI', 'LPI', 'SV'];
                                                             echo '<script>';
                                                             echo 'console.log("Available Companies: ", ' . json_encode($availableCompanies) . ');'; 
-                                                            echo 'console.log("Companies: ", ' . json_encode($companies) . ');';
                                                             echo '</script>'
                                                             ?>
                                                             <?php foreach ($availableCompanies as $company): ?>
