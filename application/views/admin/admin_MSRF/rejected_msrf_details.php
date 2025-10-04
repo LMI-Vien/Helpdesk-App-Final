@@ -1,7 +1,7 @@
 <div class="content-wrapper">
     <section class="content-header">
 		<h1>
-			MSRF Closed Ticket
+			MSRF Rejected Ticket
 			<small>Ticket</small>
 		</h1>
 		<ol class="breadcrumb">

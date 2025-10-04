@@ -416,11 +416,11 @@ class DataTables extends CI_Controller {
             $search_query = "AND (ticket_id LIKE '%" . $search . "%' OR requestor_name LIKE '%" . $search . "%' OR subject LIKE '%" . $search . "%' OR department LIKE '%" . $search . "%')";
         }
         
-        $count_query = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') " . $search_query . $dept . " ORDER BY recid";
+        $count_query = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Approved', 'Returned') " . $search_query . $dept . " ORDER BY recid";
         $count_array = $this->db->query($count_query);
         $length_count = $count_array->num_rows();
     
-        $strQry = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Approved', 'Returned') " . $search_query . $dept . " ORDER BY recid DESC LIMIT " . $start . ", " . $length;
+        $strQry = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Approved', 'Returned') " . $search_query . $dept . " ORDER BY recid DESC LIMIT " . $start . ", " . $length;
         $data_query = $this->db->query($strQry);
         $data = array();
 
@@ -805,8 +805,8 @@ class DataTables extends CI_Controller {
         
         $count_array = $this->db->query("
             SELECT * FROM service_request_tracc_concern 
-            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Approved', 'Returned') AND reported_by = " . $user_id . ") 
-            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned')) 
+            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved', 'Returned') AND reported_by = " . $user_id . ") 
+            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Done', 'Approved', 'Returned')) 
             " . $search_query . $dept
         );
         $length_count = $count_array->num_rows();
@@ -816,7 +816,7 @@ class DataTables extends CI_Controller {
         $strQry = $this->db->query("
             SELECT * FROM service_request_tracc_concern 
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved', 'Returned') AND reported_by = " . $user_id . ") 
-            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned')) 
+            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Done', 'Approved', 'Returned')) 
             " . $search_query . $dept . " 
             ORDER BY recid DESC LIMIT " . $start . ", " . $length
         );
@@ -1205,8 +1205,8 @@ class DataTables extends CI_Controller {
 
         $count_array = $this->db->query("
             SELECT * FROM service_request_tracc_request
-            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Returned', 'Approved') AND requested_by = " . $user_id . ") 
-            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Returned', 'Approved')) 
+            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Returned', 'Approved') AND requested_by = " . $user_id . ") 
+            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Returned', 'Approved')) 
             " . $search_query . $dept
         );
         $length_count = $count_array->num_rows();
@@ -1215,7 +1215,7 @@ class DataTables extends CI_Controller {
         $strQry = $this->db->query("
             SELECT * FROM service_request_tracc_request 
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Returned', 'Approved') AND requested_by = " . $user_id . ") 
-            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Rejected', 'Returned', 'Approved')) 
+            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Returned', 'Approved')) 
             " . $search_query . $dept . " 
             ORDER BY recid DESC LIMIT " . $start . ", " . $length
         );
@@ -2843,4 +2843,383 @@ class DataTables extends CI_Controller {
         echo json_encode($output);
         exit();
     }
+
+    public function get_rejected_msrf() {
+        $user_id = $this->session->userdata('login_data')['user_id'];
+
+        $draw = intval($this->input->post('draw'));
+        $start = intval($this->input->post('start'));
+        $length = intval($this->input->post('length'));
+        $search = $this->input->post('search');
+        $search = $this->db->escape_str($search['value']);
+
+        $order = $this->input->post('order');
+        $columns = $this->input->post('columns');
+        $columnIndex = isset($order[0]['column']) ? intval($order[0]['column']) : 0;
+        $columnName = isset($columns[$columnIndex]['data']) ? $columns[$columnIndex]['data'] : 'ticket_id';
+        $columnSortOrder = isset($order[0]['dir']) ? $order[0]['dir'] : 'asc';
+
+        $this->db->select('*');
+        $this->db->from('service_request_msrf');
+        $this->db->where('status', 'Rejected');
+        
+        if (!empty($search)) {
+            $this->db->group_start();
+            $this->db->like('ticket_id', $search);
+            $this->db->or_like('requestor_name', $search);
+            $this->db->or_like('priority', $search);
+            $this->db->or_like('status', $search);
+            $this->db->group_end();
+        }
+
+        $totalRecords = $this->db->count_all_results('', false);
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($length, $start);
+        $data = $this->db->get()->result_array();
+
+        $formattedData = [];
+        foreach($data as $row) {
+            $row['ticket_id'] = "<a href='" . base_url('admin/list/rejected_tickets/MSRF/') . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
+            switch ($row['status']) {
+                case 'Open':
+                    $label_class = 'label-primary';
+                    break;
+                case 'In Progress':
+                    $label_class = 'label-warning';
+                    break;
+                case 'Resolved':
+                    $label_class = 'label-success';
+                    break;
+                case 'Closed': 
+                    $label_class = 'label-danger';
+                    break;
+                case 'Rejected':
+                    $label_class = 'label-danger';
+                    break;
+                case 'Approved':
+                    $label_class = 'label-success';
+                    break;
+                case 'Returned':
+                    $label_class = 'label-warning';
+                    break;
+            }
+            $row['status'] = "<span class='label " . $label_class . "'>" . $row['status'] . "</span>";
+
+            switch ($row['priority']) {
+                case 'High':
+                    $priority_class = 'label-danger';
+                    break;
+                case 'Medium':
+                    $priority_class = 'label-warning';
+                    break;
+                case 'Low':
+                    $priority_class = 'label-info';
+                    break;
+            }
+            $row['priority'] = '<span class="label ' . $priority_class . '">' . $row['priority'] . '</span>';
+
+            switch ($row['approval_status']){
+                case 'Approved':
+                    $app_stat_class = 'label-success';
+                    break;
+                case 'Pending':
+                    $app_stat_class = 'label-warning';
+                    break;
+                case 'Rejected':
+                    $app_stat_class = 'label-danger';
+                    break;
+                case 'Returned':
+                    $app_stat_class = 'label-info';
+                    break;
+            }
+            $row['approval_status'] = '<span class="label ' . $app_stat_class . '">' . $row['approval_status'] . '</span>';
+
+            switch ($row['it_approval_status']){
+                case 'Approved':
+                    $it_stat_class = 'label-success';
+                    break;
+                case 'Pending':
+                    $it_stat_class = 'label-warning';
+                    break;
+                case 'Rejected':
+                    $it_stat_class = 'label-danger';
+                    break;
+                case 'Resolved':
+                    $it_stat_class = 'label-primary';
+                    break;
+                case 'Closed':
+                    $it_stat_class = 'label-info';
+                    break;
+            }
+            $row['it_approval_status'] = '<span class="label ' . $it_stat_class . '">' . $row['it_approval_status'] . '</span>';
+
+            $formattedData[] = $row;
+        }
+
+        $output = array(
+            'draw' => $draw,
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalRecords,
+            'data' => $formattedData
+        );
+
+        echo json_encode($output);
+        exit();
+    }
+
+        public function get_rejected_tracc_concern() {
+        $user_id = $this->session->userdata('login_data')['user_id'];
+
+        $draw = intval($this->input->post('draw'));
+        $start = intval($this->input->post('start'));
+        $length = intval($this->input->post('length'));
+        $search = $this->input->post('search');
+        $search = $this->db->escape_str($search['value']);
+
+        $order = $this->input->post('order');
+        $columns = $this->input->post('columns');
+        $columnIndex = isset($order[0]['column']) ? intval($order[0]['column']) : 0;
+        $columnName = isset($columns[$columnIndex]['data']) ? $columns[$columnIndex]['data'] : 'ticket_id';
+        $columnSortOrder = isset($order[0]['dir']) ? $order[0]['dir'] : 'asc';
+
+        $this->db->select('*');
+        $this->db->from('service_request_tracc_concern');
+        $this->db->where('status', 'Rejected');
+        $this->db->order_by('resolved_date', 'desc');
+        
+        if (!empty($search)) {
+            $this->db->group_start();
+            $this->db->like('control_number', $search);
+            $this->db->or_like('reported_by', $search);
+            $this->db->or_like('priority', $search);
+            $this->db->or_like('approval_status', $search);
+            $this->db->group_end();
+        }
+
+        $totalRecords = $this->db->count_all_results('', false);
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($length, $start);
+        $data = $this->db->get()->result_array();
+
+        $formattedData = [];
+        foreach($data as $row) {
+            $row['control_number'] = "<a href='" . base_url('admin/list/rejected_tickets/TRACC_CONCERN/') . $row['control_number'] . "'>" . $row['control_number'] . "</a>";
+            switch ($row['status']) {
+                case 'Open':
+                    $label_class = 'label-primary';
+                    break;
+                case 'In Progress':
+                case 'On going':
+                    $label_class = 'label-warning';
+                    break;
+                case 'Resolved':
+                    $label_class = 'label-success';
+                    break;
+                case 'Closed': 
+                    $label_class = 'label-danger';
+                    break;
+                case 'Rejected':
+                    $label_class = 'label-danger';
+                    break;
+                case 'On Going':
+                    $label_class = 'label-success';
+                    break;
+                case 'Approved':
+                    $label_class = 'label-success';
+                    break;
+                case 'Returned':
+                    $label_class = 'label-warning';
+                    break;
+            }
+            $row['status'] = "<span class='label " . $label_class . "'>" . $row['status'] . "</span>";
+
+            switch ($row['priority']) {
+                case 'High':
+                    $priority_class = 'label-danger';
+                    break;
+                case 'Medium':
+                    $priority_class = 'label-warning';
+                    break;
+                case 'Low':
+                    $priority_class = 'label-info';
+                    break;
+            }
+            $row['priority'] = '<span class="label ' . $priority_class . '">' . $row['priority'] . '</span>';
+
+            switch ($row['approval_status']){
+                case 'Approved':
+                    $app_stat_class = 'label-success';
+                    break;
+                case 'Pending':
+                    $app_stat_class = 'label-warning';
+                    break;
+                case 'Rejected':
+                    $app_stat_class = 'label-danger';
+                    break;
+                case 'Returned':
+                    $app_stat_class = 'label-info';
+                    break;
+            }
+            $row['approval_status'] = '<span class="label ' . $app_stat_class . '">' . $row['approval_status'] . '</span>';
+
+            switch ($row['it_approval_status']){
+                case 'Approved':
+                    $it_stat_class = 'label-success';
+                    break;
+                case 'Pending':
+                    $it_stat_class = 'label-warning';
+                    break;
+                case 'Rejected':
+                    $it_stat_class = 'label-danger';
+                    break;
+                case 'Resolved':
+                    $it_stat_class = 'label-primary';
+                    break;
+                case 'Closed':
+                    $it_stat_class = 'label-info';
+                    break;
+            }
+            $row['it_approval_status'] = '<span class="label ' . $it_stat_class . '">' . $row['it_approval_status'] . '</span>';
+            
+            $formattedData[] = $row;
+        }
+
+        $output = array(
+            'draw' => $draw,
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalRecords,
+            'data' => $formattedData
+        );
+
+        echo json_encode($output);
+        exit();
+    }
+
+    public function get_rejected_tracc_request() {
+        $user_id = $this->session->userdata('login_data')['user_id'];
+
+        $draw = intval($this->input->post('draw'));
+        $start = intval($this->input->post('start'));
+        $length = intval($this->input->post('length'));
+        $search = $this->input->post('search');
+        $search = $this->db->escape_str($search['value']);
+
+        $order = $this->input->post('order');
+        $columns = $this->input->post('columns');
+        $columnIndex = isset($order[0]['column']) ? intval($order[0]['column']) : 0;
+        $columnName = isset($columns[$columnIndex]['data']) ? $columns[$columnIndex]['data'] : 'ticket_id';
+        $columnSortOrder = isset($order[0]['dir']) ? $order[0]['dir'] : 'asc';
+
+        $this->db->select('*');
+        $this->db->from('service_request_tracc_request');
+        $this->db->where('status', 'Rejected');
+        $this->db->order_by('accomplished_by_date', 'desc');
+        
+        if (!empty($search)) {
+            $this->db->group_start();
+            $this->db->like('ticket_id', $search);
+            $this->db->or_like('requested_by', $search);
+            $this->db->or_like('priority', $search);
+            $this->db->or_like('approval_status', $search);
+            $this->db->group_end();
+        }
+
+        $totalRecords = $this->db->count_all_results('', false);
+        $this->db->order_by($columnName, $columnSortOrder);
+        $this->db->limit($length, $start);
+        $data = $this->db->get()->result_array();
+
+        $formattedData = [];
+        foreach ($data as $row) {
+            $row['ticket_id'] = "<a href='" . base_url('admin/list/rejected_tickets/TRACC_REQUEST/') . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
+
+            switch ($row['status']) {
+                case 'Open':
+                    $label_class = 'label-primary';
+                    break;
+                case 'In Progress':
+                    $label_class = 'label-warning';
+                    break;
+                case 'Resolved':
+                    $label_class = 'label-success';
+                    break;
+                case 'Closed': 
+                    $label_class = 'label-danger';
+                    break;
+                case 'Rejected':
+                    $label_class = 'label-danger';
+                    break;
+                case 'On Going':
+                    $label_class = 'label-success';
+                    break;
+                case 'Approved':
+                    $label_class = 'label-success';
+                    break;
+                case 'Returned':
+                    $label_class = 'label-warning';
+                    break;
+            }
+            $row['status'] = "<span class='label " . $label_class . "'>" . $row['status'] . "</span>";
+
+            switch ($row['priority']) {
+                case 'High':
+                    $priority_class = 'label-danger';
+                    break;
+                case 'Medium':
+                    $priority_class = 'label-warning';
+                    break;
+                case 'Low':
+                    $priority_class = 'label-info';
+                    break;
+            }
+            $row['priority'] = '<span class="label ' . $priority_class . '">' . $row['priority'] . '</span>';
+
+            switch ($row['approval_status']){
+                case 'Approved':
+                    $app_stat_class = 'label-success';
+                    break;
+                case 'Pending':
+                    $app_stat_class = 'label-warning';
+                    break;
+                case 'Rejected':
+                    $app_stat_class = 'label-danger';
+                    break;
+                case 'Returned':
+                    $app_stat_class = 'label-info';
+                    break;
+            }
+            $row['approval_status'] = '<span class="label ' . $app_stat_class . '">' . $row['approval_status'] . '</span>';
+
+            switch ($row['it_approval_status']){
+                case 'Approved':
+                    $it_stat_class = 'label-success';
+                    break;
+                case 'Pending':
+                    $it_stat_class = 'label-warning';
+                    break;
+                case 'Rejected':
+                    $it_stat_class = 'label-danger';
+                    break;
+                case 'Resolved':
+                    $it_stat_class = 'label-primary';
+                    break;
+                case 'Closed':
+                    $it_stat_class = 'label-danger';
+                    break;
+            }
+            $row['it_approval_status'] = '<span class="label ' . $it_stat_class . '">' . $row['it_approval_status'] . '</span>';
+
+            $formattedData[] = $row;
+        }
+        $output = array(
+            'draw' => $draw,
+            'recordsTotal' => $totalRecords,
+            'recordsFiltered' => $totalRecords,
+            'data' => $formattedData
+        );
+
+        echo json_encode($output);
+        exit();
+    }
+
 }

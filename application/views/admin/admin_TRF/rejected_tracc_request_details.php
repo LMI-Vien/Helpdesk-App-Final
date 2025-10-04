@@ -483,12 +483,7 @@
 
 <script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
 <script>
-    $(document).ready(function() {
-        function autoResizeTextarea() {
-            $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
-            $(this).height(this.scrollHeight); // Set height based on content
-        }
-        
+    $(document).ready(function() {        
         // Apply the resize function to the textarea on input
         $('#complete_details').on('input', autoResizeTextarea);
         $('#reason_rejected').on('input', autoResizeTextarea);
@@ -499,23 +494,28 @@
 
         // --- 
         $("#reason_rejected_ticket").hide();
-        
-        function checkApprovalStatus() {
-            var itApprovalStatus = $('#it_app_stat').val();
-            var appStatus = $('#app_stat').val();
-
-            if (itApprovalStatus === 'Rejected' || appStatus === 'Rejected'){
-                $("#reason_rejected_ticket").show();
-            } else {
-                $("#reason_rejected_ticket").hide();
-            }
-        }
 
         $('#it_app_stat, #app_stat').on('change', checkApprovalStatus);
 
         checkApprovalStatus();
         
     });
+
+    function autoResizeTextarea() {
+        $(this).css('height', 'auto'); // Reset the height to auto to calculate new height
+        $(this).height(this.scrollHeight); // Set height based on content
+    }
+
+    function checkApprovalStatus() {
+        var itApprovalStatus = $('#it_app_stat').val();
+        var appStatus = $('#app_stat').val();
+
+        if (itApprovalStatus === 'Rejected' || appStatus === 'Rejected'){
+            $("#reason_rejected_ticket").show();
+        } else {
+            $("#reason_rejected_ticket").hide();
+        }
+    }
 
     function resizeInput(input) {
         input.style.width = 'auto';

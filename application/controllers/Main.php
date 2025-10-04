@@ -630,6 +630,7 @@ class Main extends CI_Controller {
 			$msrf = $this->Main_model->getTicketsMSRF($id);
 			$trc = $this->Main_model->getTraccConcernByID($id);
 			$trf = $this->Main_model->getTicketsTRF($id);
+			$ict_dept = $this->Main_model->get_ict();
 
 			if($user_details[0] == "ok") {
 				$data['user_details'] = $user_details[1];
@@ -637,6 +638,7 @@ class Main extends CI_Controller {
 				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
 				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
 				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
+				$data['ict_dept'] = $ict_dept;
 				
 				$allowed_menus = ['dashboard', 'closed_tickets_list', 'open_tickets', 'other_menu'];
 				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'closed_tickets_list';
@@ -663,6 +665,77 @@ class Main extends CI_Controller {
 							$this->load->view('admin/header', $data);
 							$this->load->view('admin/sidebar', $data);
 							$this->load->view('admin/admin_TRC/closed_tracc_concern_details', $data);
+							$this->load->view('admin/footer');
+						}
+						break;
+
+					case "TRACC_REQUEST":
+						{
+							$data['trf'] = $trf[1];
+							$data['checkbox_newadd'] = $this->Main_model->getCheckboxDataNewAdd($id);
+							$data['checkbox_update'] = $this->Main_model->getCheckboxDataUpdate($id);
+							$data['checkbox_account'] = $this->Main_model->getCheckboxDataAccount($id);
+
+							$data['company'] = explode(',', $trf['1']['company']);
+
+							$this->load->view('admin/header', $data);
+							$this->load->view('admin/sidebar', $data);
+							$this->load->view('admin/admin_TRF/closed_tracc_req_details', $data);
+							$this->load->view('admin/footer');
+						}
+						break;
+
+					default:
+						{
+							$this->session->flashdata('error', 'nvalid subject provided');
+							redirect("authentication");
+						}
+				}
+			}
+		}
+	}
+
+	public function get_rejected_tickets($subject, $id) {
+		if($this->session->userdata('login_data')) {
+			$user_details = $this->Main_model->user_details();
+			$msrf = $this->Main_model->getTicketsMSRF($id);
+			$trc = $this->Main_model->getTraccConcernByID($id);
+			$trf = $this->Main_model->getTicketsTRF($id);
+			$ict_dept = $this->Main_model->get_ict();
+
+			if($user_details[0] == "ok") {
+				$data['user_details'] = $user_details[1];
+
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
+				$data['ict_dept'] = $ict_dept;
+				
+				$allowed_menus = ['dashboard', 'open_tickets', 'rejected_tickets_list', 'other_menu'];
+				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'rejected_tickets_list';
+				
+				$data['active_menu'] = $active_menu;
+
+				switch ($subject) {
+					case "MSRF":
+						{
+							$data['msrf'] = $msrf[1];
+							$this->load->view('admin/header', $data);
+							$this->load->view('admin/sidebar', $data);
+							$this->load->view('admin/admin_MSRF/rejected_msrf_details', $data);
+							$this->load->view('admin/footer');
+
+						}
+						break;
+
+					case "TRACC_CONCERN":
+						{
+							$data['trc'] = $trc[1];
+							$data['checkboxes'] = $this->Main_model->get_checkbox_values($trc[1]['control_number']);
+							
+							$this->load->view('admin/header', $data);
+							$this->load->view('admin/sidebar', $data);
+							$this->load->view('admin/admin_TRC/rejected_tracc_concern_details', $data);
 							$this->load->view('admin/footer');
 						}
 						break;

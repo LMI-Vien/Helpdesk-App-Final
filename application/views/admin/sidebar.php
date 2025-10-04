@@ -78,6 +78,24 @@
             </li>
             <?php endif; ?>
 
+            <?php if ($this->session->userdata('login_data')['role'] !== 'L2'): ?>
+            <li class="treeview <?= ($active_menu == 'rejected_tickets_list') ? 'active' : ''; ?>">
+                <a href="#">
+                    <i class="fa fa-ticket"></i> <span>Rejected Tickets</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="<?= ($active_menu == 'admin_list_msrf') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>admin/list/ticket/msrf_rejected"><i class="fa fa-circle-o"></i> MSRF Form List</a></li>
+                    
+                    <li class="<?= ($active_menu == 'admin_list_tracc_concern') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>admin/list/ticket/tracc_concerns_rejected"><i class="fa fa-circle-o"></i> TRACC Concern List</a></li>
+                    
+                    <li class="<?= ($active_menu == 'admin_list_tracc_request') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>admin/list/ticket/tracc_request_rejected"><i class="fa fa-circle-o"></i> TRACC Request List</a></li>
+                </ul>
+            </li>
+            <?php endif; ?>
+
             <!-- Try -->
             <li class="treeview <?= ($active_menu == 'customer_request_form_pdf' || $active_menu == 'customer_shipping_setup_pdf' || $active_menu == 'employee_request_form_pdf' || $active_menu == 'item_request_form_pdf' || $active_menu == 'supplier_request_form_pdf') ? 'active' : ''; ?>">
                 <a href="#">

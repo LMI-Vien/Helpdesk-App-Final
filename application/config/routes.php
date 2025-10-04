@@ -82,6 +82,14 @@ $route['admin/list/ticket/tracc_concerns_closed'] = 'AdminTraccCon_controller/ad
 //--- DATATABLE of ADMIN for Tracc Request Closed Ticket
 $route['admin/list/ticket/tracc_request_closed'] = 'AdminTraccReq_controller/admin_closed_tickets';
 
+//--- DATATABLE OF ADMIN FOR REJECTED TICKETS
+//--- MSRF Rejected
+$route['admin/list/ticket/msrf_rejected'] = 'AdminMSRF_controller/admin_rejected_tickets';
+//--- Tracc Concern Rejected
+$route['admin/list/ticket/tracc_concerns_rejected'] = 'AdminTraccCon_controller/admin_rejected_tickets';
+//--- Tracc Request Rejected 
+$route['admin/list/ticket/tracc_request_rejected'] = 'AdminTraccReq_controller/admin_rejected_tickets';
+
 //--- ADMIN for PRINT REPORTS
 $route['admin/print'] = 'AdminGenerateReport_controller/admin_print_report';
 
@@ -110,6 +118,8 @@ $route['admin/supplier_request_form_pdf'] = 'AdminTraccReq_controller/supplier_r
 $route['admin/approved/(:any)/(:any)'] = 'main/admin_approval_list/$1/$2';
 
 $route['admin/list/closed_tickets/(:any)/(:any)'] = 'main/get_closed_tickets/$1/$2';
+
+$route['admin/list/rejected_tickets/(:any)/(:any)'] = 'main/get_rejected_tickets/$1/$2';
 
 
 //--- Admin CREATION of EMPLOYEE

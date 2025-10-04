@@ -2,7 +2,7 @@
     <div class="container">
         <section class="content-header">
 			<h1>
-				Closed TRACC Concern
+				Rejected TRACC Concern
 				<small>Ticket</small>
 			</h1>
 			<ol class="breadcrumb">
@@ -195,48 +195,6 @@
                                                     <input type="date" name="ack_as_res_date" id="ack_as_res_date" class="form-control select2" value="<?= $trc['ack_as_resolved_date']; ?>" style="width: 100%;" readonly>
                                                 </div>
                                             </div>
-
-                                            <!--<div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>To be filled by MIS</label>
-                                                    <div>
-                                                        <div style="display: inline-block; margin-right: 20px;">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="checkbox_mis" id="checkbox_mis"> For MIS Concern
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div style="display: inline-block; margin-right: 20px;">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="checkbox_lst" id="checkbox_lst"> For LST Concern
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div style="display: inline-block; margin-right: 20px;">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="checkbox_system_error" id="checkbox_system_error"> System Error
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div style="display: inline-block;">
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input type="checkbox" name="checkbox_user_error" id="checkbox_user_error"> User Error
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group" style="margin-top: -5px;">
-                                                    <label>Received by</label>
-                                                    <input type="text" name="received_by_lst" value="" class="form-control select2" placeholder="LST Coordinator">
-                                                </div>
-
-                                            </div>-->
                                                             
                                             <!-- Checkbox -->
                                             <div class="col-md-6">
@@ -410,6 +368,7 @@
                 $('#checkbox_user_error').prop('disabled', true);
                 $('#received_by_lst').prop('disabled', true);
                 $('#date_lst').prop('disabled', true);
+                $('#reason_rejected').prop('disabled',true);
             }
         }
 

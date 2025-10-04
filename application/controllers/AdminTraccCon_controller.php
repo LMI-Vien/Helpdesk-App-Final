@@ -157,8 +157,6 @@ class AdminTraccCon_controller extends CI_Controller {
 					$approval_stat = $this->input->post('app_stat');
 					$reject_ticket = $this->input->post('reason_rejected');
 					$returnedTicket = $this->input->post('returnedReason');
-					// print_r($returnedTicket);
-					// die();
 					$solution = $this->input->post('solution');
 					$resolved_by = $this->input->post('resolved_by');
 					$resolved_date = $this->input->post('res_date');
@@ -208,10 +206,12 @@ class AdminTraccCon_controller extends CI_Controller {
 
 		if ($this->session->userdata('login_data')) {
 			$user_details = $this->Main_model->user_details();
+			$ict_dept = $this->Main_model->get_ict();
 
 			if($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
 				$data['user_details'] = $user_details[1];
+				$data['ict_dept'] = $ict_dept;
 
 				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
 				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
@@ -401,6 +401,39 @@ class AdminTraccCon_controller extends CI_Controller {
 		} else {
 			$this->session->set_flashdata('error', 'Error fetching user information');
 			redirect(base_url() . "admin/login");
+		}
+	}
+
+	public function admin_rejected_tickets($active_menu = 'rejected_tickets_list') {
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
+		if ($this->session->userdata('login_data')) {
+			$user_details = $this->Main_model->user_details();
+			$ict_dept = $this->Main_model->get_ict();
+
+			if($user_details[0] == "ok") {
+				$sid = $this->session->session_id;
+				$data['user_details'] = $user_details[1];
+				$data['ict_dept'] = $ict_dept;
+
+				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
+				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
+				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
+
+				$allowed_menus = ['dashboard', 'rejected_tickets_list', 'open_tickets', 'other_menu'];
+				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'rejected_tickets_list';
+
+				$data['active_menu'] = $active_menu;
+
+				$this->load->view('admin/header', $data);
+				$this->load->view('admin/sidebar', $data);
+				$this->load->view('admin/admin_TRC/rejected_tracc_concern', $data);
+				$this->load->view('admin/footer');
+			}
+		} else {
+			$this->session->flashdata('error', 'Session expired. Please login again.');
+			redirect("authentication");
 		}
 	}
 }
