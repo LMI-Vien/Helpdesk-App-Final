@@ -364,6 +364,9 @@
                     $('#checkbox_user_error').prop('disabled', false);
                     $('#received_by_lst').prop('disabled', false);
                     $('#date_lst').prop('disabled', false);
+                } else if (ictApprovalStatus === 'Rejected') {
+                    $('#resolved_by').prop('disabled', false);
+                    $('#res_date').prop('disabled', false);
                 } else {
                     $('#received_by').prop('disabled', true);
                     $('#noted_by').prop('disabled', true);
