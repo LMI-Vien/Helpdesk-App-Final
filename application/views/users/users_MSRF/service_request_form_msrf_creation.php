@@ -99,7 +99,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Upload File</label>
-                                                    <input type="file" name="uploaded_file" id="uploaded_file" class="form-control" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                                                    <input type="file" name="uploaded_file" id="uploaded_file" class="form-control">
                                                 </div>
                                             </div>                                         
 
@@ -165,6 +165,23 @@
                 }
             });
         });
+
+        $('#uploaded_file').attr(
+            'accept',
+            [
+                'image/*',
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                '.xls',
+                '.xlsx',
+                'text/plain',
+                'text/csv',
+                '.csv'
+            ].join(',')
+        );
     });
 
     function autoResizeTextarea() {
