@@ -22,6 +22,7 @@ class AdminTraccCon_model extends CI_Model {
 		$others = $this->input->post('others', true);
 		$received_by_lst = $this->input->post('received_by_lst', true);
 		$date_lst = $this->input->post('date_lst', true);
+		$ictAssigned = $this->input->post('ictAssigned', true);
 	
 		$this->db->trans_start();
 	
@@ -97,6 +98,10 @@ class AdminTraccCon_model extends CI_Model {
 			}
 			if (!empty($date_lst)) {
 				$this->db->set('date_lst', $date_lst);
+			}
+
+			if (!empty($ictAssigned)) {
+				$this->db->set('ict_assigned', $ictAssigned);
 			}
 
 			$this->db->where('control_number', $control_number);

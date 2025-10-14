@@ -416,6 +416,19 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
+                                                    <label>ICT Assigned<span style = "color:red;">*</span></label>
+                                                    <select class="form-control select2" name="ictAssigned" id="ictAssigned" <?= $is_disable?>>
+                                                        <option value=""disabled selected>ICT Assigned</option>
+                                                        <?php foreach($ict_dept as $ict): ?>
+                                                            <option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $trf['ict_assigned'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
+                                                        <?php endforeach; ?>
+                                                                
+                                                    </select>  
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
                                                     <label>Accomplished by<span style = "color:red;">*</span></label>
                                                     <select class="form-control select2" name="accomplished_by" id="accomplished_by" <?= $is_disable?>>
                                                         <option value=""disabled selected>Accomplished by</option>

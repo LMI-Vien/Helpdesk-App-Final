@@ -136,8 +136,6 @@ class AdminTraccCon_controller extends CI_Controller {
 	
 				$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu'];
 				$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'system_tickets_list';
-				// print_r($active_menu);
-				// die();
 
 				$data['active_menu'] = $active_menu;
 				
@@ -163,6 +161,7 @@ class AdminTraccCon_controller extends CI_Controller {
 					$others = $this->input->post('others');
 					$received_by_lst = $this->input->post('received_by_lst');
 					$date_lst = $this->input->post('date_lst');
+					$ictAssigned = $this->input->post('ictAssigned');
 
 					$checkbox_data = [
 						'control_number'    => $control_number,
@@ -172,7 +171,7 @@ class AdminTraccCon_controller extends CI_Controller {
 						'user_error'        => $this->input->post('checkbox_user_error') ? 1 : 0,
 					];
 
-					$process = $this->AdminTraccCon_model->status_approval_tracc_concern($control_number, $received_by, $noted_by, $priority, $approval_stat, $reject_ticket, $solution, $resolved_by, $resolved_date, $others, $received_by_lst, $date_lst);
+					$process = $this->AdminTraccCon_model->status_approval_tracc_concern($control_number, $received_by, $noted_by, $priority, $approval_stat, $reject_ticket, $solution, $resolved_by, $resolved_date, $others, $received_by_lst, $date_lst, $ictAssigned);
 					$process_checkbox = $this->AdminTraccCon_model->insert_checkbox_data($checkbox_data);
 	
 					if ($process[0] == 1 && $process_checkbox[0] == 1) {

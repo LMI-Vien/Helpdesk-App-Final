@@ -151,6 +151,18 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
+                                                    <label>ICT Assigned</label>
+                                                    <select class="form-control select2" id="ictAssigned" name="ictAssigned">
+                                                        <option value=""disabled selected>ICT Assigned</option>
+                                                        <?php foreach($ict_dept as $ict): ?>
+                                                            <option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $tracc_con['ict_assigned'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>  
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
                                                     <label>Resolved by</label>
                                                     <select class="form-control select2" name="resolved_by" id="resolved_by" >
                                                         <option value=""disabled selected>Resolved By</option>
@@ -349,6 +361,7 @@
                 $('#checkbox_user_error').prop('disabled', true);
                 $('#received_by_lst').prop('disabled', true);
                 $('#date_lst').prop('disabled', true);
+                $('#ictAssigned').prop('disabled', true);
             } else {
                 // Normal behavior for other roles based on ICT approval status
                 if (ictApprovalStatus === 'Approved' || ictApprovalStatus === 'Resolved') {
@@ -390,7 +403,6 @@
 
         function toggleReturnedReasonField() {
 			var manApprovalStatus = $('#app_stat').val();
-			console.log(manApprovalStatus);
 
 			if (manApprovalStatus === 'Returned') {
 				$("#returnedReason").show(); 
