@@ -15,6 +15,7 @@ class AdminTraccReq_model extends CI_Model {
 		$approval_stat = $this->input->post('app_stat', true);
 		$reject_reason = $this->input->post('reason_rejected', true);
 		$returnedTicket = $this->input->post('returnedReason', true);
+		$ictAssigned = $this->input->post('ictAssigned');
 
 		$this->db->trans_start();
 
@@ -55,6 +56,7 @@ class AdminTraccReq_model extends CI_Model {
 			$this->db->set('accomplished_by', $accomplished_by);
 			$this->db->set('accomplished_by_date', $accomplished_by_date);
 			$this->db->set('reason_reject_ticket', $reject_reason);
+			$this->db->set('ict_assigned', $ictAssigned);
 
 			if ($returnedReason !== null) {             
 				$this->db->set('returned_ticket_reason', $returnedReason);
