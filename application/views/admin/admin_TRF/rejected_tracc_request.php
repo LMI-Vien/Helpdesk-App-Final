@@ -83,7 +83,7 @@ $(document).ready(function() {
                         });
                         return formattedDate;
                     }
-                    return ""; // Return empty string if no date
+                    return "No Accomplished Date"; // Return empty string if no date
                 }
             }
         ],
