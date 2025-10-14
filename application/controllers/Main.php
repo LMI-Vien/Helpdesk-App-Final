@@ -751,7 +751,7 @@ class Main extends CI_Controller {
 
 							$this->load->view('admin/header', $data);
 							$this->load->view('admin/sidebar', $data);
-							$this->load->view('admin/admin_TRF/closed_tracc_req_details', $data);
+							$this->load->view('admin/admin_TRF/rejected_tracc_request_details', $data);
 							$this->load->view('admin/footer');
 						}
 						break;
