@@ -758,6 +758,8 @@ class DataTables extends CI_Controller {
         $emp_id = $this->session->userdata('login_data')['emp_id'];  
         $string_emp = $this->db->escape($emp_id);  
 
+        $include_assignee = isset($user_details[1]['role']) && $user_details[1]['role'] === 'L3';
+
         $draw = intval($this->input->post("draw")); 
         $start = intval($this->input->post("start"));  
         $length = intval($this->input->post("length"));  
@@ -929,6 +931,12 @@ class DataTables extends CI_Controller {
                         break;
                 }
                 $priority_label[] = '<span class="label ' . $priority_class . '">' . $rows->priority . '</span>';
+
+                if (!empty($rows->ict_assigned)) {
+                    $ict_assigned_label[] = '<span class="label label-default">' . htmlspecialchars($rows->ict_assigned) . '</span>';
+                } else {
+                    $ict_assigned_label[] = '<span class="label label-default">Unassigned</span>';
+                }
     
                 $opened = explode(',', $rows->opened);
 
@@ -952,19 +960,28 @@ class DataTables extends CI_Controller {
             }
     
             for ($i = 0; $i < count($tickets); $i++) {
-                $data[] = array(
+                $row = array(
                     $tickets[$i],
-                    $reported_date[$i],     
-                    $name[$i],          
-                    $subject[$i],     
+                    $reported_date[$i],
+                    $name[$i],
+                    $subject[$i],
                     $priority_label[$i],
-                    $comp_label[$i],    
-                    $status_label[$i],  
+                    $comp_label[$i],
+                    $status_label[$i],
                     $app_stat_label[$i],
-                    $it_stat_label[$i], 
-                    $action[$i] //Action
+                    $it_stat_label[$i]
                 );
-            }   
+
+                if ($include_assignee) {
+                    $row[] = $ict_assigned_label[$i];
+                }
+
+                // always append Action last
+                $row[] = $action[$i];
+
+                // push row into data
+                $data[] = $row;
+            }
         }
 
         $output = array(
@@ -1158,6 +1175,8 @@ class DataTables extends CI_Controller {
         $emp_id = $this->session->userdata('login_data')['emp_id'];
         $string_emp = $this->db->escape($emp_id);
 
+        $include_assignee = isset($user_details[1]['role']) && $user_details[1]['role'] === 'L3';
+
         $draw = intval($this->input->post("draw"));
         $start = intval($this->input->post("start"));
         $length = intval($this->input->post("length"));
@@ -1303,6 +1322,12 @@ class DataTables extends CI_Controller {
                 }
                 $priority_label[] = '<span class="label ' . $priority_class . '">' . $rows->priority . '</span>';
 
+                if (!empty($rows->ict_assigned)) {
+                    $ict_assigned_label[] = '<span class="label label-default">' . htmlspecialchars($rows->ict_assigned) . '</span>';
+                } else {
+                    $ict_assigned_label[] = '<span class="label label-default">Unassigned</span>';
+                }
+
                 $opened = explode(',', $rows->opened);
 
                 if(!in_array($user_id, $opened)) {
@@ -1325,7 +1350,7 @@ class DataTables extends CI_Controller {
             }
 
             for ($i = 0; $i < count($tickets); $i++){
-                $data[] = array(
+                $row = array(
                     $tickets[$i],
                     $date_requested[$i],
                     $name[$i],
@@ -1334,8 +1359,15 @@ class DataTables extends CI_Controller {
                     $status_label[$i],
                     $app_stat_label[$i],
                     $it_stat_label[$i],
-                    $action[$i]
                 );
+
+                if ($include_assignee) {
+                    $row[] = $ict_assigned_label[$i];
+                }
+
+                $row[] = $action[$i];
+
+                $data[] = $row;
             }
         }
 
