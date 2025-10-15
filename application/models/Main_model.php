@@ -1005,9 +1005,11 @@ class Main_model extends CI_Model {
 		}
 	}
 
-	public function get_ict() {
+	public function get_ict($dept_id = 1) {
 		$this->db->select("CONCAT(fname, ' ', lname) AS full_name");
-		$this->db->where('dept_id', 1);
+		$this->db->where('dept_id', $dept_id);
+		$this->db->where('status', 1);
+		$this->db->where('active', 1);
 		$this->db->order_by('fname', 'ASC');
 		return $this->db->get('users')->result_array();
 	}
