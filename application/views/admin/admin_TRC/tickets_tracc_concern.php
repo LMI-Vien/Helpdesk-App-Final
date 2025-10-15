@@ -1,3 +1,8 @@
+<?php 
+	$login = $this->session->userdata('login_data');
+	$isL3  = isset($login['role']) && $login['role'] === 'L3';
+?>
+
 <div class="content-wrapper">
     <section class="content-header">
 		<h1>
@@ -27,6 +32,9 @@
 										<th>Status</th>
 										<th>Dept. Head Approval Status</th>
 										<th>ICT Approval Status</th>
+										<?php if ($isL3): ?>
+											<th>ICT Assigned</th>
+										<?php endif; ?>
 										<th>Action</th>
 									</tr>
 								</thead>
