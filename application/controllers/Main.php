@@ -25,14 +25,22 @@ class Main extends CI_Controller {
 				$response = array(
 					'status' => 'error',
 					'message' => 'It seems that I can\'t find your credentials',
-					'errors' => $this->form_validation->error_array()
+					'errors' => $this->form_validation->error_array(),
+					'attempts_remaining' => null
 				);
 				echo json_encode($response);
 				exit;
 			} else {
 				$process = $this->Main_model->login();
 	
-				if ($process[0] == 1 && $process[1]['status'] == 1) {
+				if (
+					is_array($process) &&
+					isset($process[0], $process[1]) &&
+					is_array($process[1]) &&
+					isset($process[1]['status']) &&
+					(int)$process[0] === 1 &&
+					(int)$process[1]['status'] === 1
+				) {
 					$role = $process[1]['role'];
 					$this->session->set_userdata(array('login_data' => $process[1]));
 	
@@ -47,13 +55,17 @@ class Main extends CI_Controller {
 					$response = array(
 						'status' => 'success',
 						'message' => 'Login successful',
-						'redirect_url' => $redirect_url
+						'redirect_url' => $redirect_url,
+						'attempts_remaining' => null
 					);
 					echo json_encode($response);
 				} else {
+					$remaining = isset($process['attempts_remaining']) ? $process['attempts_remaining'] : null;
+
 					$response = array(
 						'status' => 'error',
-						'message' => isset($process['message']) ? $process['message'] : 'Invalid Login Credentials'
+						'message' => isset($process['message']) ? $process['message'] : 'Invalid Login Credentials',
+						'attempts_remaining' => $remaining
 					);
 					echo json_encode($response);
 				}

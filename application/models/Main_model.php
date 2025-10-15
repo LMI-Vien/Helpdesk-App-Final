@@ -119,6 +119,8 @@ class Main_model extends CI_Model {
 			$sup_id = $t['sup_id'];
 	        $sid = $this->session->session_id;
 
+			$MAX_ATTEMPTS = 4;
+
 			// Early status checks before password verification
 			if (isset($t['status']) && (int)$t['status'] === -2) {
 				return array(0, 'message' => 'Your registration has been successfully submitted to ICT Helpdesk. Please wait for ICT Approval Thank you.');
@@ -130,6 +132,9 @@ class Main_model extends CI_Model {
 			// Check if password matches
 	        if (password_verify($input_pw, $stored_pw)) {
 
+				$this->db->set('failed_attempts', 0)->where('username', $username)->update('users');
+
+				
 				// If passwords match, the whole row would be retrieved.
 				$query = $this->db->where('username', $username)->get('users')->row();
 
@@ -158,19 +163,23 @@ class Main_model extends CI_Model {
 					$row = $query->row();
 
 					// Check if the user has 3 failed attempts
-					if ($row->failed_attempts == 3) {
-						$this->db->set('status', 0);
-						$this->db->where('username', $username);
-						$this->db->update('users');
+					$attempts = (int)$row->failed_attempts + 1;
+					$this->db->set('failed_attempts', $attempts)
+							->where('username', $username)
+							->update('users');
 
-						return array(0, 'message' => "Your Account is Locked.");
+					if ($attempts >= $MAX_ATTEMPTS) {
+						// lock account
+						$this->db->set('status', 0)->where('username', $username)->update('users');
+
+						return array(0, 'message' => "Your Account is Locked.", 'attempts_remaining' => 0);
 					} else {
-						$attempts = $this->db->where('username', $username)->get('users')->row()->failed_attempts;
-						$this->db->where('username', $username);
-						$this->db->set('failed_attempts', ($attempts + 1), FALSE);
-						$this->db->update('users');
-
-						return array('status' => 0, 'message' => "Your Username/Password is Invalid Please Try Again.");
+						$remaining = max(0, $MAX_ATTEMPTS - $attempts);
+						return array(
+							'status' => 0,
+							'message' => "Your Username/Password is Invalid Please Try Again.",
+							'attempts_remaining' => $remaining
+						);
 					}
 				} else {
 					return array('status' => 0, 'message' => "User not found");

@@ -83,6 +83,7 @@
                     <a href="registration" class="btn btn-outline-warning btn-block mt-1"><span style="color: #000000">Register</span></a>
                 </div>
             </div>
+            <div id="attempts-info" style="text-align:center;margin-top:8px;font-size:0.9rem;"></div>
         </div>
     </div>
 </div>
@@ -90,49 +91,59 @@
 
 <?php $this->load->view('footer'); ?>
 
-<!-- AJAX form submission with SweetAlert2 -->
 <script>
     $('#loginForm').on('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
+        e.preventDefault();
 
         const username = $("#username").val().trim();
         
-        $.ajax({
-            type: 'POST',
-            url: $(this).attr('action'), // Form action URL
-            data: $(this).serialize(), // Serialize form data
-            dataType: 'json',
-            success: function(response) {
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(response) {
                 if (response.status === 'success') {
-                    // Redirect on success
-                        Swal.fire({
-                            icon: "success",
-                            title: "Login Successful",
-                            text: "Welcome " + username + " !",
-                            timer: 2000,
-                            showConfirmButton: false,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            }
-                        }).then(() => {
-                            window.location.href = response.redirect_url;
-                        });
+                    // ADD: clear attempts display on success
+                    renderAttempts(null);
+
+                    Swal.fire({
+                        icon: "success",
+                        title: "Login Successful",
+                        text: "Welcome " + username + " !",
+                        timer: 2000,
+                        showConfirmButton: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    }).then(() => {
+                        window.location.href = response.redirect_url;
+                    });
+
                 } else if(response.status === 'error') {
+                    renderAttempts(response.attempts_remaining);
+
                     let errorMessage = response.message;
                     if (response.errors) {
                         for (let key in response.errors) {
                             errorMessage += `\n${response.errors[key]}`;
                         }
                     }
+
+                    const suffix = (response.attempts_remaining !== undefined && response.attempts_remaining !== null)
+                        ? ` (${response.attempts_remaining} attempt${response.attempts_remaining === 1 ? '' : 's'} remaining)`
+                        : '';
+
                     Swal.fire({
                         icon: 'error',
                         title: 'Login Failed',
                         allowOutsideClick: false,
                         allowEscapeKey: false,
-                        text: response.message
+                        text: errorMessage + suffix
                     });
+
                 } else {
-                    // Show validation errors if any
+                    renderAttempts(response.attempts_remaining);
                     let errorMessage = response.message;
                     if (response.errors) {
                         for (let key in response.errors) {
@@ -146,14 +157,17 @@
                     });
                 }
             },
-            error: function() {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Username or password is incorrect'
-                });
-            }
         });
     });
+
+    function renderAttempts(remaining) {
+        const el = $('#attempts-info');
+        if (remaining === undefined || remaining === null) {
+            el.text('');
+            return;
+        }
+        el.text(`Attempts remaining: ${remaining} / 3`)
+        .css('color', remaining <= 1 ? '#dc3545' : '#6c757d');
+    }
 </script>
 
