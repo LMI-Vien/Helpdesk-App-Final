@@ -60,7 +60,7 @@
                                                 <div class="form-group">
                                                     <label>View File</label><br>
                                                     <?php if (!empty($trc['file'])): ?>
-                                                        <a href="<?= site_url('uploads/trccern/' . $trc['file']); ?>" target="_blank" class="btn btn-primary">
+                                                        <a href="<?= site_url('uploads/tracc_concern/' . $trc['file']); ?>" target="_blank" class="btn btn-primary">
                                                             <i class="fa fa-eye"></i> View Uploaded File
                                                         </a>
                                                     <?php else: ?>
