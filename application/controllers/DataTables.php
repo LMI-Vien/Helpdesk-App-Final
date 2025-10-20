@@ -404,11 +404,21 @@ class DataTables extends CI_Controller {
         }
     
         $valid_columns = array(
-            0 => 'disable_date',
-            1 => 'stamp'
+            0 => 'ticket_id',
+            1 => 'date_requested',
+            2 => 'requestor_name',
+            3 => 'subject',
+            4 => 'priority',
+            5 => 'status',
+            6 => 'approval_status',
+            7 => 'it_approval_status',
         );
 
-        $order = isset($valid_columns[$col]) ? $valid_columns[$col] : null;
+        $order_col = isset($valid_columns[$col]) ? $valid_columns[$col] : 'recid';
+        if ($order_col === null) { 
+            $order_col = 'recid';
+            $dir = 'desc';
+        }
     
         // SEARCH 
         $search_query = "";
@@ -420,7 +430,13 @@ class DataTables extends CI_Controller {
         $count_array = $this->db->query($count_query);
         $length_count = $count_array->num_rows();
     
-        $strQry = "SELECT * FROM service_request_msrf WHERE status IN ('Open', 'In Progress', 'Resolved', 'Approved', 'Returned') " . $search_query . $dept . " ORDER BY recid DESC LIMIT " . $start . ", " . $length;
+        $strQry = "SELECT * FROM service_request_msrf 
+           WHERE status IN ('Open', 'In Progress', 'Resolved', 'Approved', 'Returned') " 
+           . $search_query . $dept . 
+           " ORDER BY " . $order_col . " " . $dir . ", recid DESC 
+             LIMIT " . $start . ", " . $length;
+
+
         $data_query = $this->db->query($strQry);
         $data = array();
 
@@ -789,9 +805,27 @@ class DataTables extends CI_Controller {
         }
     
         $valid_columns = array(
-            0 => 'disable_date',  
-            1 => 'stamp'  
+            0 => 'control_number', 
+            1 => 'reported_date',
+            2 => 'reported_by',
+            3 => 'subject',
+            4 => 'priority',
+            5 => 'company',
+            6 => 'status',
+            7 => 'approval_status',
+            8 => 'it_approval_status',
         );
+
+        if ($include_assignee) {
+            $valid_columns[9] = 'ict_assigned';
+        }
+
+        $action_index = $include_assignee ? 10 : 9;
+
+        $order_col = 'recid';
+        if (isset($valid_columns[$col]) && $col !== $action_index) {
+            $order_col = $valid_columns[$col];
+        }
     
         if (!isset($valid_columns[$col])) {
             $order = null;
@@ -820,7 +854,8 @@ class DataTables extends CI_Controller {
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved', 'Returned') AND reported_by = " . $user_id . ") 
             OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Done', 'Approved', 'Returned')) 
             " . $search_query . $dept . " 
-            ORDER BY recid DESC LIMIT " . $start . ", " . $length
+            ORDER BY " . $order_col . " " . $dir . ", recid DESC 
+            LIMIT " . $start . ", " . $length
         );
 
 
@@ -1206,14 +1241,25 @@ class DataTables extends CI_Controller {
         }
 
         $valid_columns = array(
-            0 => 'disable_date',  
-            1 => 'stamp'
+            0 => 'ticket_id',  
+            1 => 'date_requested',
+            2 => 'requested_by',
+            3 => 'subject',
+            4 => 'priority',
+            5 => 'status',
+            6 => 'approval_status',
+            7 => 'it_approval_status',
         );
 
-        if (!isset($valid_columns[$col])) {
-            $order = null;
-        } else {
-            $order = $valid_columns[$col];  
+        if ($include_assignee) {
+            $valid_columns[8] = 'ict_assigned';
+        }
+
+        $action_index = $include_assignee ? 9 : 8;
+
+        $order_col = 'recid';
+        if (isset($valid_columns[$col]) && $col !== $action_index) {
+            $order_col = $valid_columns[$col];
         }
 
         if (!empty($search)) {
@@ -1236,7 +1282,8 @@ class DataTables extends CI_Controller {
             WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Returned', 'Approved') AND requested_by = " . $user_id . ") 
             OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Returned', 'Approved')) 
             " . $search_query . $dept . " 
-            ORDER BY recid DESC LIMIT " . $start . ", " . $length
+            ORDER BY " . $order_col . " " . $dir . ", recid DESC 
+            LIMIT " . $start . ", " . $length
         );
 
         if ($strQry->num_rows() > 0){
