@@ -544,7 +544,7 @@ class DataTables extends CI_Controller {
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
 
                 if($rows->approval_status === "Pending" || $rows->approval_status === "Returned"){
-                    $action[] = '<span class="label">' . '<a class="approve-ticket" data-id="'.$rows->recid.'" data-module="msrf" data-requestor="'.$rows->requestor_name.'" data-department="'.$rows->department.'" data-concern="'.$rows->details_concern.'" data-date-needed="'.$rows->date_needed.'"><i class="fa fa-check"></i></a>' . '</span>';
+                    $action[] = '<span class="label">' . '<a class="approve-ticket" data-id="'.$rows->recid.'" data-module="msrf" data-requestor="'.$rows->requestor_name.'" data-department="'.$rows->department.'" data-concern="'.htmlentities($rows->details_concern).'" data-date-needed="'.$rows->date_needed.'"><i class="fa fa-check"></i></a>' . '</span>';
                 }else{
                     $action[] = '<span class="label"></span>';
                 }
@@ -988,7 +988,7 @@ class DataTables extends CI_Controller {
                 }
 
                 if($rows->approval_status === "Pending" || $rows->approval_status === "Returned"){
-                    $action[] = '<span class="label">' . '<a class="approve-ticket" data-id="'.$rows->recid.'" data-module="tracc_concern" data-reported-by="'.$rows->reported_by.'" data-concern="'.$rows->tcr_details.'"><i class="fa fa-check"></i></a>' . '</span>';
+                    $action[] = '<span class="label">' . '<a class="approve-ticket" data-id="'.$rows->recid.'" data-module="tracc_concern" data-reported-by="'.$rows->reported_by.'" data-concern="'.htmlentities($rows->tcr_details).'"><i class="fa fa-check"></i></a>' . '</span>';
                 }else{
                     $action[] = '<span class="label"></span>';
                 }
@@ -1390,7 +1390,7 @@ class DataTables extends CI_Controller {
                 }
 
                 if($rows->approval_status === "Pending" || $rows->approval_status === "Returned"){
-                    $action[] = '<span class="label">' . '<a class="approve-ticket" data-id="'.$rows->recid.'" data-module="tracc_request" data-requestor="'.$rows->requested_by.'" data-department="'.$rows->department.'" data-concern="'.$rows->complete_details.'"><i class="fa fa-check"></i></a>' . '</span>';
+                    $action[] = '<span class="label">' . '<a class="approve-ticket" data-id="'.$rows->recid.'" data-module="tracc_request" data-requestor="'.$rows->requested_by.'" data-department="'.$rows->department.'" data-concern="'.htmlentities($rows->complete_details).'"><i class="fa fa-check"></i></a>' . '</span>';
                 }else{
                     $action[] = '<span class="label"></span>';
                 }
