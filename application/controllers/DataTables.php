@@ -801,7 +801,7 @@ class DataTables extends CI_Controller {
         }
     
         if ($dir != "asc" && $dir != "desc") {
-            $dir = "DESC";
+            $dir = "asc";
         }
     
         $valid_columns = array(
@@ -822,20 +822,20 @@ class DataTables extends CI_Controller {
 
         $action_index = $include_assignee ? 10 : 9;
 
-        $order_col = 'reported_date';
+        $order_col = 'recid';
         if (isset($valid_columns[$col]) && $col !== $action_index) {
             $order_col = $valid_columns[$col];
         }
 
-        if (empty($order)) {
-            $order_col = 'reported_date';
-            $dir = 'DESC';
-        }
+        // if (empty($order)) {
+        //     $order_col = 'reported_date';
+        //     $dir = 'DESC';
+        // }
 
-        if ($order_col === 'control_number') {
-            $order_col = 'reported_date';
-            $dir = 'DESC';
-        }
+        // if ($order_col === 'control_number') {
+        //     $order_col = 'reported_date';
+        //     $dir = 'DESC';
+        // }
     
         if (!isset($valid_columns[$col])) {
             $order = null;
