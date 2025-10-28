@@ -112,6 +112,10 @@
                                 </select>
                             </td>
                         </tr>
+                        <tr id="system_error_cb">
+                            <td colspan=2><input type="checkbox"> System Error</td>
+                        </tr>
+
                         <tr>
                             <td colspan=2><button id="filter" class="report_button">Filter</button></td>
                         </tr>
@@ -186,6 +190,7 @@
         $('#tblTraccBox').hide();
         $('#tblTraccRequest').hide();
         $('#usersTable').hide();
+        $('#system_error_cb').hide();
 
         // Kevin's codes: format date from yyyy-mm-dd to mm-dd-yyyy
         function formatDate(date) {
@@ -201,10 +206,19 @@
             }
         }
 
+        $('#ticket').change(function() {
+            if($('#ticket').val() == "tracc") {
+                $("#system_error_cb").show();
+            } else {
+                $("#system_error_cb").hide();
+            }
+        });
+
         // Upon clicking of the #filter button, the program will get the start date, end date, the status, and the ticket type to filter the results based on these dates and would populate the table based on the results.
         $('#filter').click(function() {
             // importing the jsPDF function.
             const {jsPDF} = window.jspdf;
+            let sys_err = $('#system_error_cb input[type="checkbox"]').is(':checked') ? 1 : 0;
 
             // Get value from the element with an id of 'start_date', 'end_date', 'status', and 'ticket'.
             var startDate = $('#start_date').val();
@@ -243,7 +257,7 @@
             } else {
                 dateRange = formatDate(startDate) + ' to ' + formatDate(endDate);
             }
-
+            
             // Table MSRF Concern creation
             // "destroy" - allows reinstantiation of the table
             // "searching" - enables/disables search functionality
@@ -394,6 +408,8 @@
             // "destroy" - enables the reinstantiation of the table.
             // "searching" - enables/disables searching functionality.
             // "paging" - enables/disables limiting of the data displayed in the table.
+            let is_sys_err = sys_err == 1 ? " (System Error)" : "";
+
             var tableTracc = $('#tblTicketsTraccConcernPrint').DataTable({
                 "info": false,
                 "destroy": true,
@@ -407,7 +423,8 @@
                     "data": {
                         start_date: startDate,
                         end_date: endDate,
-                        status: status
+                        status: status,
+                        system_error: sys_err,
                     },
                 },
                 // Since we are not outputing all the columns, we need to define the columns.
@@ -432,13 +449,13 @@
                         text: 'PDF',
                         className: 'btn-export',
                         action: function () {
-
+                            
                             // Instantiate the jsPDF class.
                             var doc = new jsPDF({ orientation: 'landscape' });
-
+                            
                             // Set page number
                             var page = 1;
-
+                            
                             // Get the data from table.
                             var tableContent = $('#tblTicketsTraccConcernPrint')[0];
 
@@ -486,7 +503,7 @@
                                     
                                     // Set the font size and the text to the title of the document.
                                     doc.setFontSize(20);
-                                    doc.text('Generated Report For Tracc Concern', 28, 10);
+                                    doc.text('Generated Report For Tracc Concern' + is_sys_err, 28, 10);
                                     
                                     // Set the font size and the text to the filtered start and end date of the report.
                                     doc.setFontSize(12);
@@ -501,9 +518,10 @@
                                     page++;
                                 }
                             });
+
                             
-                            doc.output('dataurlnewwindow', 'Tracc Concern ' + '(' + dateRange + ')');
-                            doc.save('Tracc Concern ' + '(' + dateRange + ')');
+                            doc.output('dataurlnewwindow', 'Tracc Concern ' + '(' + dateRange + ')' + is_sys_err);
+                            doc.save('Tracc Concern ' + '(' + dateRange + ')' + is_sys_err);
                         }
                     },
                     {
@@ -511,20 +529,20 @@
                         text: 'Excel',
                         className: 'btn-export',
                         extend: 'excel',
-                        filename: '(' + formatDate(date) + ') Tracc Concern (' + dateRange + ')',
-                        title: 'Tracc Concern Tickets (' + dateRange + ')'
+                        filename: '(' + formatDate(date) + ') Tracc Concern (' + dateRange + ')' + is_sys_err,
+                        title: 'Tracc Concern Tickets (' + dateRange + ')' + is_sys_err
                     },
                     {
                         // Export the table to a CSV file.
                         text: 'CSV',
                         className: 'btn-export',
                         extend: 'csv',
-                        filename: '(' + formatDate(date) + ') Tracc Concern (' + dateRange + ')',
-                        title: 'Tracc Concern Tickets (' + dateRange + ')',
+                        filename: '(' + formatDate(date) + ') Tracc Concern (' + dateRange + ')' + is_sys_err,
+                        title: 'Tracc Concern Tickets (' + dateRange + ')' + is_sys_err,
                         customize: function(csv) {
                             var rows = csv.split('\n');
 
-                            var title = 'Tracc Concern Tickets (' + dateRange + ')';
+                            var title = 'Tracc Concern Tickets (' + dateRange + ')' + is_sys_err;
                             rows.unshift(title);
 
                             return rows.join('\n');

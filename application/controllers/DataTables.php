@@ -1505,17 +1505,38 @@ class DataTables extends CI_Controller {
         $startDate = $this->input->post('start_date');
         $endDate = $this->input->post('end_date');
         $status = $this->input->post('status');
+        $system_error = $this->input->post('system_error');
 
-        // Get columns control_number, reported_by, reported_date, resolved_date, and status from service_request_tracc_concern.
-        $this->db->select('control_number, module_affected, tcr_details, reported_by, department, reported_date, resolved_by, resolved_date, status');
-        $this->db->from('service_request_tracc_concern');
+        if($system_error == 1) {
+            $this->db->select('service_request_tracc_concern.control_number,
+                                service_request_tracc_concern.module_affected,
+                                service_request_tracc_concern.tcr_details,
+                                service_request_tracc_concern.reported_by,
+                                service_request_tracc_concern.department,
+                                service_request_tracc_concern.reported_date,
+                                service_request_tracc_concern.resolved_by,
+                                service_request_tracc_concern.resolved_date,
+                                service_request_tracc_concern.status');
+            $this->db->from('service_request_tracc_concern');
+            $this->db->join('filled_by_mis', 'filled_by_mis.control_number = service_request_tracc_concern.control_number', 'left');
+            $this->db->where('filled_by_mis.system_error = 1');
+        } else {
+            $this->db->select('control_number,
+                                module_affected,
+                                tcr_details,
+                                reported_by,
+                                department,
+                                reported_date,
+                                resolved_by,
+                                resolved_date,
+                                status');
+            $this->db->from('service_request_tracc_concern');
+        }
 
-        // Check if status variable is not null.
         if($status) {
             $this->db->where('status', $status);
         }
 
-        // If start and end date input exists, an additional where clause is added to the query.
         if($startDate && $endDate) {
             $this->db->where('created_at >=', $startDate);
             $this->db->where('created_at <=', $endDate);
@@ -1525,7 +1546,6 @@ class DataTables extends CI_Controller {
             $this->db->where('created_at <=', $endDate);
         }
 
-        // Place the values from the query to a variable.
         $query = $this->db->get();
         $data = $query->result_array();
 
