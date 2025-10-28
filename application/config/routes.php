@@ -113,6 +113,12 @@ $route['admin/employee_request_form_pdf'] = 'AdminTraccReq_controller/employee_r
 $route['admin/item_request_form_pdf'] = 'AdminTraccReq_controller/item_request_form_pdf_view';
 $route['admin/supplier_request_form_pdf'] = 'AdminTraccReq_controller/supplier_request_form_pdf_view';
 
+//--- CLOSED PDF REPORTS VIEWING ADMIN ---//
+$route['admin/closed_customer_request_form_pdf'] = 'AdminTraccReq_controller/closed_customer_request_form_pdf_view';
+$route['admin/closed_customer_shipping_setup_pdf'] = 'AdminTraccReq_controller/closed_customer_shipping_setup_pdf_view';
+$route['admin/closed_employee_request_form_pdf'] = 'AdminTraccReq_controller/closed_employee_request_form_pdf_view';
+$route['admin/closed_item_request_form_pdf'] = 'AdminTraccReq_controller/closed_item_request_form_pdf_view';
+$route['admin/closed_supplier_request_form_pdf'] = 'AdminTraccReq_controller/closed_supplier_request_form_pdf_view';
 
 //--- TICKET APPROVAL for MSRF and TRACC CONCERN and TRACC REQUEST
 $route['admin/approved/(:any)/(:any)'] = 'main/admin_approval_list/$1/$2';

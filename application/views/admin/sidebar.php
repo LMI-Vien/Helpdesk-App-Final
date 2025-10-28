@@ -116,6 +116,28 @@
                     <li class="<?= ($active_menu == 'supplier_request_form_pdf') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>admin/supplier_request_form_pdf"><i class="fa fa-circle-o"></i> Supplier Request Form</a></li>            
                 </ul>
             </li>
+
+            <!-- Try -->
+            <li class="treeview <?= ($active_menu == 'closed_customer_request_form_pdf' || $active_menu == 'closed_customer_shipping_setup_pdf' || $active_menu == 'closed_employee_request_form_pdf' || $active_menu == 'closed_item_request_form_pdf' || $active_menu == 'closed_supplier_request_form_pdf') ? 'active' : ''; ?>">
+                <a href="#">
+                    <i class="fa-solid fa-file-pdf" style="margin-right: 5px;"></i> <span> Closed PDF Request</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="<?= ($active_menu == 'closed_customer_request_form_pdf') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>admin/closed_customer_request_form_pdf"><i class="fa fa-circle-o"></i> Customer Request Form</a></li>
+
+                    <li class="<?= ($active_menu == 'closed_customer_shipping_setup_pdf') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>admin/closed_customer_shipping_setup_pdf"><i class="fa fa-circle-o"></i> Customer Shipping Setup</a></li>
+
+                    <li class="<?= ($active_menu == 'closed_employee_request_form_pdf') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>admin/closed_employee_request_form_pdf"><i class="fa fa-circle-o"></i> Employee Request Form</a></li>
+
+                    <li class="<?= ($active_menu == 'closed_item_request_form_pdf') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>admin/closed_item_request_form_pdf"><i class="fa fa-circle-o"></i> Item Request Form</a></li>
+
+                    <li class="<?= ($active_menu == 'closed_supplier_request_form_pdf') ? 'active' : ''; ?>"><a href="<?= base_url(); ?>admin/closed_supplier_request_form_pdf"><i class="fa fa-circle-o"></i> Supplier Request Form</a></li>            
+                </ul>
+            </li>
+
             <!-- Try -->
 
             <?php if ($this->session->userdata('login_data')['role'] !== 'L2'): ?>

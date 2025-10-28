@@ -58,7 +58,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Upload File</label>
-                                                    <input type="file" name="uploaded_photo" id="uploaded_photo" class="form-control" accept="image/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                                                    <input type="file" name="uploaded_photo" id="uploaded_photo" class="form-control">
                                                 </div>
                                             </div>
 
@@ -130,7 +130,7 @@
         $('#details_concern').each(autoResizeTextarea);
     
 
-    $('#submitBtn').click(function (e) {
+        $('#submitBtn').click(function (e) {
             e.preventDefault();
 
             var form = document.getElementById('TRC_form');
@@ -156,6 +156,23 @@
                 }
             });
         });
+
+        $('#uploaded_photo').attr(
+            'accept',
+            [
+                'image/*',
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/vnd.ms-excel',
+                'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                '.xls',
+                '.xlsx',
+                'text/plain',
+                'text/csv',
+                '.csv'
+            ].join(',')
+        );
     });
 
 </script>

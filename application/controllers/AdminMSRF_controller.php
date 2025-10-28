@@ -231,7 +231,7 @@ class AdminMSRF_controller extends CI_Controller {
 			if (!empty($_FILES['uploaded_file']['name'])) {
 				// File upload configuration
 				$config['upload_path'] = FCPATH . 'uploads/msrf/';
-				$config['allowed_types'] = 'pdf|jpg|png|doc|docx|jpeg'; 
+				$config['allowed_types'] = 'pdf|jpg|jpeg|png|doc|docx|xls|xlsx|csv|txt'; 
 				$config['max_size'] = 5048; 
 				$config['file_name'] = time() . '_' . $_FILES['uploaded_file']['name']; 
 	
