@@ -901,7 +901,7 @@ class AdminTraccReq_controller extends CI_Controller {
 			$file_path = null;
 			if (!empty($_FILES['uploaded_files']['name'])) {
 				$config['upload_path'] = FCPATH . 'uploads/tracc_request/';
-				$config['allowed_types'] = 'pdf|jpg|png|doc|docx|jpeg';
+				$config['allowed_types'] = 'pdf|jpg|jpeg|png|doc|docx|xls|xlsx|csv|txt'; 
 				$config['max_size'] = 5048;
 				$config['file_name'] = time() . '_' . $_FILES['uploaded_files']['name'];
 	

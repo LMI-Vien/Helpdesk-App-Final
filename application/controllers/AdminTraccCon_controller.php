@@ -50,8 +50,6 @@ class AdminTraccCon_controller extends CI_Controller {
 
 			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu'];
 			$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_ticket';
-			// print_r($active_menu);
-			// die();
 
 			$data['active_menu'] = $active_menu;
 
@@ -91,7 +89,7 @@ class AdminTraccCon_controller extends CI_Controller {
 			if (!empty($_FILES['uploaded_photo']['name'])) {
 				// File upload configuration
 				$config['upload_path'] = FCPATH . 'uploads/tracc_concern/';
-				$config['allowed_types'] = 'pdf|jpg|png|doc|docx|jpeg'; 
+				$config['allowed_types'] = 'pdf|jpg|jpeg|png|doc|docx|xls|xlsx|csv|txt'; 
 				$config['max_size'] = 5048; 
 				$config['file_name'] = time() . '_' . $_FILES['uploaded_photo']['name']; 
 
