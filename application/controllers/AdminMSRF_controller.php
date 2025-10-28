@@ -18,15 +18,19 @@ class AdminMSRF_controller extends CI_Controller {
 	public function GenerateMSRFNo() {
 		$lastMSRF = $this->Main_model->getLastMSRFNumber();
 
-        // Increment the last MSRF number
-        $lastNumber = (int) substr($lastMSRF, -3);
-        $newNumber = $lastNumber + 1;
+		if ($lastMSRF === null) {
+			$newNumber = 1;
+		} else {
+			$parts = explode('-', $lastMSRF);
 
-        // Format the new MSRF number
-        $newMSRFNumber = 'MSRF-' . sprintf('%03d', $newNumber);
+			$lastNumber = (int) end($parts); 
 
-        return $newMSRFNumber;
-		// return $lastNumber;
+			$newNumber = $lastNumber + 1;   
+		}
+
+		$newMSRFNumber = 'MSRF-' . sprintf('%03d', $newNumber);
+
+		return $newMSRFNumber;
 	}
 
 	// DATATABLE na nakikita ni Admin (MSRF)

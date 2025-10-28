@@ -19,10 +19,19 @@ class AdminTraccCon_controller extends CI_Controller {
 		$lastTRC = $this->Main_model->getLastTRCNumber();
 		$dept_code = $this->Main_model->get_department_code($dept_id);
 
-        $lastcode = (int) substr($lastTRC, -4);
-		$newNumber = $lastcode + 1;
+		$year = date("Y");
 
-		$newTRCNumber = $dept_code . '-' . date("Y") . '-' . sprintf('%04d', $newNumber);
+		if ($lastTRC === null) {
+			$newNumber = 1;
+		} else {
+			$parts = explode('-', $lastTRC);
+			$lastCode = (int) end($parts);
+			$newNumber = $lastCode + 1;
+		}
+
+		$counterStr = sprintf('%04d', $newNumber);
+
+		$newTRCNumber = $dept_code . '-' . $year . '-' . $counterStr;
 
 		return $newTRCNumber;
 	}

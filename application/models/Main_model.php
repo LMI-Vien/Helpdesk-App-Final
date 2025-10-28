@@ -227,7 +227,7 @@ class Main_model extends CI_Model {
 			$row = $query->row();
 			return $row->ticket_id;
 		} else {
-			return 'MSRF-000';
+			return null;
 		}
 	}
 
@@ -240,7 +240,7 @@ class Main_model extends CI_Model {
 			$row = $query->row();
 			return $row->ticket_id;
 		} else {
-			return 'TRN-0000';
+			return null;
 		}
 	}
 
@@ -253,7 +253,7 @@ class Main_model extends CI_Model {
 			$row = $query->row();
 			return $row->control_number;
 		} else {
-			return 'TRC-0000';
+			return null;
 		}
 	}
 
