@@ -19,14 +19,19 @@ class UsersTraccReq_controller extends CI_Controller {
 	public function GenerateTRFNo() {
 		$lastTRF = $this->Main_model->getLastTRFNumber();
 
-        // Increment the last MSRF number
-        $lastNumber = (int) substr($lastTRF, -4);
-        $newNumber = $lastNumber + 1;
+		if ($lastTRF === null) {
+			$newNumber = 1;
+		} else {
+			$parts = explode('-', $lastTRF);
 
-        // Format the new MSRF number
-        $newTRFNumber = 'TRF-' . sprintf('%04d', $newNumber);
+			$lastNumber = (int) end($parts); 
 
-        return $newTRFNumber;
+			$newNumber = $lastNumber + 1;
+		}
+
+		$newTRFNumber = 'TRF-' . sprintf('%04d', $newNumber);
+
+		return $newTRFNumber;
 	}
 
     // DATATABLE na makikita ni USERS sa get_tracc_request_form
