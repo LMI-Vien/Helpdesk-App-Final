@@ -1,3 +1,10 @@
+<style>
+    .checkbox-alert {
+        font-weight: bold;
+        color: #d9534f; 
+    }
+</style>
+
 <?php
     $user_role = $this->session->userdata('user_role'); 
     // $is_disabled_forL3 = ($user_role == 'L3') ? 'disabled' : ''; 
@@ -39,7 +46,7 @@
                             <div class="tab-pane active" id="tracc_concern">
                                 <section id="new">
                                     <div class="row">
-                                        <form action="<?= site_url('AdminTraccCon_controller/admin_list_tracc_concern'); ?>" method="POST">
+                                        <form id="traccConcernForm" action="<?= site_url('AdminTraccCon_controller/admin_list_tracc_concern'); ?>" method="POST">
                                             <div class="col-md-12">
 			                    				<div class="form-group">
 			                    					<label>Control Number</label>
@@ -235,6 +242,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div id="checkbox-warning" class="checkbox-alert" style="display:none;">
+                                                        ⚠️ Please select at least one option.
+                                                    </div>
                                                 </div>
 
                                                 <!-- Received by and Date fields (initially hidden) -->
@@ -416,6 +426,23 @@
 		});
 
         toggleReturnedReasonField();
+
+
+        $('#traccConcernForm').on('submit', function (e) {
+            var anyChecked =
+                $('#checkbox_mis').is(':checked') ||
+                $('#checkbox_lst').is(':checked') ||
+                $('#checkbox_system_error').is(':checked') ||
+                $('#checkbox_user_error').is(':checked');
+
+            if (!anyChecked) {
+                e.preventDefault();
+
+                $('#checkbox-warning').show();
+            } else {
+                $('#checkbox-warning').hide();
+            }
+        });
 
     });
         
