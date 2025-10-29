@@ -293,7 +293,7 @@ if($user_id) {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Shipping Code</label>
-                                            <input type="text" name="shipping_code" id="shipping_code" value="<?php echo $shipping_code; ?>" class="form-control select2" required<?= $disabled; ?>> 
+                                            <input type="text" name="shipping_code" id="shipping_code" value="<?php echo $shipping_code; ?>" class="form-control select2" required <?= $remarks == "Done" ? "disabled" : "" ?>> 
                                         </div>
                                     </div>
 
