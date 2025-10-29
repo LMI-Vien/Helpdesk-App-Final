@@ -18,15 +18,19 @@ class AdminMSRF_controller extends CI_Controller {
 	public function GenerateMSRFNo() {
 		$lastMSRF = $this->Main_model->getLastMSRFNumber();
 
-        // Increment the last MSRF number
-        $lastNumber = (int) substr($lastMSRF, -3);
-        $newNumber = $lastNumber + 1;
+		if ($lastMSRF === null) {
+			$newNumber = 1;
+		} else {
+			$parts = explode('-', $lastMSRF);
 
-        // Format the new MSRF number
-        $newMSRFNumber = 'MSRF-' . sprintf('%03d', $newNumber);
+			$lastNumber = (int) end($parts); 
 
-        return $newMSRFNumber;
-		// return $lastNumber;
+			$newNumber = $lastNumber + 1;   
+		}
+
+		$newMSRFNumber = 'MSRF-' . sprintf('%03d', $newNumber);
+
+		return $newMSRFNumber;
 	}
 
 	// DATATABLE na nakikita ni Admin (MSRF)
@@ -231,7 +235,7 @@ class AdminMSRF_controller extends CI_Controller {
 			if (!empty($_FILES['uploaded_file']['name'])) {
 				// File upload configuration
 				$config['upload_path'] = FCPATH . 'uploads/msrf/';
-				$config['allowed_types'] = 'pdf|jpg|png|doc|docx|jpeg'; 
+				$config['allowed_types'] = 'pdf|jpg|jpeg|png|doc|docx|xls|xlsx|csv|txt'; 
 				$config['max_size'] = 5048; 
 				$config['file_name'] = time() . '_' . $_FILES['uploaded_file']['name']; 
 	

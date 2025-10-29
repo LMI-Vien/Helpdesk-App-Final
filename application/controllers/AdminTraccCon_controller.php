@@ -19,10 +19,19 @@ class AdminTraccCon_controller extends CI_Controller {
 		$lastTRC = $this->Main_model->getLastTRCNumber();
 		$dept_code = $this->Main_model->get_department_code($dept_id);
 
-        $lastcode = (int) substr($lastTRC, -4);
-		$newNumber = $lastcode + 1;
+		$year = date("Y");
 
-		$newTRCNumber = $dept_code . '-' . date("Y") . '-' . sprintf('%04d', $newNumber);
+		if ($lastTRC === null) {
+			$newNumber = 1;
+		} else {
+			$parts = explode('-', $lastTRC);
+			$lastCode = (int) end($parts);
+			$newNumber = $lastCode + 1;
+		}
+
+		$counterStr = sprintf('%04d', $newNumber);
+
+		$newTRCNumber = $dept_code . '-' . $year . '-' . $counterStr;
 
 		return $newTRCNumber;
 	}
@@ -50,8 +59,6 @@ class AdminTraccCon_controller extends CI_Controller {
 
 			$allowed_menus = ['dashboard', 'system_tickets_list', 'open_tickets', 'other_menu'];
 			$active_menu = ($this->uri->segment(3) && in_array($this->uri->segment(3), $allowed_menus)) ? $this->uri->segment(3) : 'admin_creation_ticket';
-			// print_r($active_menu);
-			// die();
 
 			$data['active_menu'] = $active_menu;
 
@@ -91,7 +98,7 @@ class AdminTraccCon_controller extends CI_Controller {
 			if (!empty($_FILES['uploaded_photo']['name'])) {
 				// File upload configuration
 				$config['upload_path'] = FCPATH . 'uploads/tracc_concern/';
-				$config['allowed_types'] = 'pdf|jpg|png|doc|docx|jpeg'; 
+				$config['allowed_types'] = 'pdf|jpg|jpeg|png|doc|docx|xls|xlsx|csv|txt'; 
 				$config['max_size'] = 5048; 
 				$config['file_name'] = time() . '_' . $_FILES['uploaded_photo']['name']; 
 

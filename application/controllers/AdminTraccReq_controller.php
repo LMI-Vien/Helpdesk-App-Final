@@ -19,14 +19,19 @@ class AdminTraccReq_controller extends CI_Controller {
 	public function GenerateTRFNo() {
 		$lastTRF = $this->Main_model->getLastTRFNumber();
 
-        // Increment the last MSRF number
-        $lastNumber = (int) substr($lastTRF, -4);
-        $newNumber = $lastNumber + 1;
+		if ($lastTRF === null) {
+			$newNumber = 1;
+		} else {
+			$parts = explode('-', $lastTRF);
 
-        // Format the new MSRF number
-        $newTRFNumber = 'TRF-' . sprintf('%04d', $newNumber);
+			$lastNumber = (int) end($parts); 
 
-        return $newTRFNumber;
+			$newNumber = $lastNumber + 1;
+		}
+
+		$newTRFNumber = 'TRF-' . sprintf('%04d', $newNumber);
+
+		return $newTRFNumber;
 	}
 
 
@@ -1391,7 +1396,7 @@ class AdminTraccReq_controller extends CI_Controller {
 			$file_path = null;
 			if (!empty($_FILES['uploaded_files']['name'])) {
 				$config['upload_path'] = FCPATH . 'uploads/tracc_request/';
-				$config['allowed_types'] = 'pdf|jpg|png|doc|docx|jpeg';
+				$config['allowed_types'] = 'pdf|jpg|jpeg|png|doc|docx|xls|xlsx|csv|txt'; 
 				$config['max_size'] = 5048;
 				$config['file_name'] = time() . '_' . $_FILES['uploaded_files']['name'];
 	
