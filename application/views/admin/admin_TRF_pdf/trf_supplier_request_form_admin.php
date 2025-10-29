@@ -325,14 +325,14 @@ if(!$user_id) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Supplier Code</label>
-                                        <input type="text" name="supplier_code" id="supplier_code" value="<?php echo $supplier_code; ?>" class="form-control select2" <?= $disabled; ?>> 
+                                        <input type="text" name="supplier_code" id="supplier_code" value="<?php echo $supplier_code; ?>" class="form-control select2" <?= $remarks == "Done" ? "disabled" : "" ?> <?= $user_details['role'] == "L3" ? "" : "disabled"; ?>>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Supplier Account Group</label>
-                                        <input type="text" name="supplier_account_group" id="supplier_account_group" value="<?php echo $supplier_account_group; ?>" class="form-control select2" <?= $disabled; ?>> 
+                                        <input type="text" name="supplier_account_group" id="supplier_account_group" value="<?php echo $supplier_account_group; ?>" class="form-control select2" <?= $remarks == "Done" ? "disabled" : "" ?> <?= $user_details['role'] == "L3" ? "" : "disabled"; ?>> 
                                     </div>
                                 </div>
                                 
@@ -359,7 +359,7 @@ if(!$user_id) {
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label>Office Tel. No:</label>
+                                        <label>Contact No:</label>
                                         <input type="text" name="office_tel_no" id="office_tel_no" value="<?php echo $office_tel; ?>" class="form-control select2" <?= $disabled; ?>> 
                                     </div>
                                 </div>
@@ -395,7 +395,7 @@ if(!$user_id) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Pricelist:</label>
-                                        <input type="number" name="pricelist" id="pricelist" value="<?php echo $pricelist; ?>" class="form-control select2" <?= $disabled; ?>>  
+                                        <input type="text" name="pricelist" id="pricelist" value="<?php echo $pricelist; ?>" class="form-control select2" <?= $disabled; ?>>  
                                     </div>
                                 </div>
 
@@ -425,7 +425,7 @@ if(!$user_id) {
                                         <label for="item_classification">VAT:</label>
                                         <div class="d-flex align-items-center">
                                             <!-- Textbox -->
-                                            <input type="number" name="vat" id="vat" value="<?php echo $vat; ?>" class="form-control" style="flex: 1;" <?= $disabled; ?>>
+                                            <input type="text" name="vat" id="vat" value="<?php echo $vat; ?>" class="form-control" style="flex: 1;" <?= $disabled; ?>>
                                             <!-- Checkbox -->
                                             <div class="form-check ms-auto d-flex align-items-center" style="margin-left: auto; margin-top: 10px;">
                                                 <label for="non_vat" class="form-check-label me-2" style="font-size: 20px; line-height: 1.5;">Non-VAT</label>

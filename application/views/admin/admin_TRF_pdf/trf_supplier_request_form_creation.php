@@ -422,15 +422,15 @@
                                             
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Supplier Code</label>
-                                                    <input type="text" name="supplier_code" id="supplier_code" value="" class="form-control select2"> 
+                                                    <?= $user_details['role'] == "L3" ? "<label>Supplier Code</label>" : ""; ?>
+                                                    <input type="<?= $user_details['role'] == "L3" ? "text" : "hidden" ?>" name="supplier_code" id="supplier_code" value="-" class="form-control select2"> 
                                                 </div>
                                             </div>
-
+                                            
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Supplier Account Group</label>
-                                                    <input type="text" name="supplier_account_group" id="supplier_account_group" value="" class="form-control select2"> 
+                                                    <?= $user_details['role'] == "L3" ? "<label>Supplier Account Group</label>" : ""; ?>
+                                                    <input type="<?= $user_details['role'] == "L3" ? "text" : "hidden" ?>" name="supplier_account_group" id="supplier_account_group" value="-" class="form-control select2"> 
                                                 </div>
                                             </div>
                                             
@@ -457,7 +457,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>Office Tel. No:</label>
+                                                    <label>Contact No:</label>
                                                     <input type="text" name="office_tel_no" id="office_tel_no" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
@@ -493,7 +493,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Pricelist:</label>
-                                                    <input type="number" name="pricelist" id="pricelist" value="" min=0.01 step="0.01" class="form-control select2">  
+                                                    <input type="text" name="pricelist" id="pricelist" value="" min=0.01 step="0.01" class="form-control select2">  
                                                 </div>
                                             </div>
 
@@ -523,7 +523,7 @@
                                                     <label for="item_classification">VAT:</label>
                                                     <div class="d-flex align-items-center">
                                                         <!-- Textbox -->
-                                                        <input type="number" name="vat" id="vat" class="form-control" min=0 style="flex: 1;">
+                                                        <input type="text" name="vat" id="vat" class="form-control" min=0 style="flex: 1;">
                                                         <!-- Checkbox -->
                                                         <div class="form-check ms-auto d-flex align-items-center" style="margin-left: auto; margin-top: 10px;">
                                                             <label for="non_vat" class="form-check-label me-2" style="font-size: 20px; line-height: 1.5;">Non-VAT</label>

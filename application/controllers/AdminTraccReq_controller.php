@@ -256,6 +256,7 @@ class AdminTraccReq_controller extends CI_Controller {
 					'checkbox_data'		 			=> $checkbox_data,
 					'user_id'						=> $ticket['requested_by_id'] == $this->session->userdata('login_data')['user_id'],
 					'user_details'					=> $user_details,
+					'remarks'						=> $ticket['remarks']
 				];
 
 				$formHtml = $this->load->view('admin/admin_TRF_pdf/trf_customer_request_form_admin', $formData, TRUE);			
@@ -323,6 +324,7 @@ class AdminTraccReq_controller extends CI_Controller {
 					'checkbox_data'		 			=> $checkbox_data,
 					'user_id'						=> $ticket['requested_by_id'] == $this->session->userdata('login_data')['user_id'],
 					'user_details'					=> $user_details,
+					'remarks'						=> $ticket['remarks']
 				];
 
 				$formHtml = $this->load->view('admin/admin_TRF_pdf/trf_customer_request_form_admin', $formData, TRUE);			
@@ -342,8 +344,10 @@ class AdminTraccReq_controller extends CI_Controller {
 
 	// Update CRF Ticket Remarks
 	public function update_crf_ticket_remarks() {
-		$recid = $this->input->post('recid'); 
-		$result = $this->AdminTraccReq_model->update_crf_ticket_remarks($recid, 'Done'); 
+		$recid = $this->input->post('recid');
+		$shippingCode = $this->input->post('shipping');
+
+		$result = $this->AdminTraccReq_model->update_crf_ticket_remarks($recid, 'Done', $shippingCode); 
 	
 		if ($result) {
 			echo json_encode(['message' => 'success']);
@@ -1090,6 +1094,7 @@ class AdminTraccReq_controller extends CI_Controller {
 					'checkbox_data' 				=> $checkbox_data,
 					'user_details'					=> $user_details,
 					'user_id'						=> $this->session->userdata('login_data')['user_id'] == $ticket['requested_by_id'],
+					'remarks'						=> $ticket['remarks']
 				];
 				
 				$formHtml = $this->load->view('admin/admin_TRF_pdf/trf_supplier_request_form_admin', $formData, TRUE);
@@ -1162,6 +1167,7 @@ class AdminTraccReq_controller extends CI_Controller {
 					'checkbox_data' 				=> $checkbox_data,
 					'user_details'					=> $user_details,
 					'user_id'						=> $this->session->userdata('login_data')['user_id'] == $ticket['requested_by_id'],
+					'remarks'						=> $ticket['remarks']
 				];
 				
 				$formHtml = $this->load->view('admin/admin_TRF_pdf/trf_supplier_request_form_admin', $formData, TRUE);
@@ -1184,8 +1190,10 @@ class AdminTraccReq_controller extends CI_Controller {
 	// SRF
 	public function update_srf_ticket_remarks() {
 		$recid = $this->input->post('recid'); 
+		$code = $this->input->post('code'); 
+		$group = $this->input->post('group'); 
 
-		$result = $this->AdminTraccReq_model->update_srf_ticket_remarks($recid, 'Done'); 
+		$result = $this->AdminTraccReq_model->update_srf_ticket_remarks($recid, 'Done', $code, $group); 
 	
 		if ($result) {
 			echo json_encode(['message' => 'success']);

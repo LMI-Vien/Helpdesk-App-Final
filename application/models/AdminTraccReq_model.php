@@ -114,8 +114,8 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// CRF
-	public function update_crf_ticket_remarks($recid, $remarks){
-		$this->db->set('remarks', $remarks); 
+	public function update_crf_ticket_remarks($recid, $remarks, $shipping){
+		$this->db->set(['remarks' => $remarks, 'shipping_code' => $shipping]);
 		$this->db->where('recid', $recid); 
 		return $this->db->update('tracc_req_customer_req_form');
 	}
@@ -288,8 +288,8 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// SRF
-	public function update_srf_ticket_remarks($recid, $remarks){
-		$this->db->set('remarks', $remarks);
+	public function update_srf_ticket_remarks($recid, $remarks, $code, $group){
+		$this->db->set(['remarks' => $remarks, 'supplier_code' => $code, 'supplier_account_group' => $group]);
 		$this->db->where('recid', $recid);
 		return $this->db->update('tracc_req_supplier_req_form');
 	}

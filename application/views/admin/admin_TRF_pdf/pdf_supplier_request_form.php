@@ -101,6 +101,10 @@
         $('#tabs').on('click', '.close-tab-btn', function () {
             const $tab = $(this).closest('li'); // Get the tab element
             const recid = $tab.data('recid'); // Fetch the unique recid
+            const supplierCode = $('#supplier_code').val();
+            const supplierAccountGroup = $('#supplier_account_group').val();
+
+            console.log(supplierCode, supplierAccountGroup);
 
                 Swal.fire({
                     title: 'Are you Done?',
@@ -129,7 +133,11 @@
                     $.ajax({
                         url: base_url + 'AdminTraccReq_controller/update_srf_ticket_remarks',
                         type: 'POST',
-                        data: { recid: recid },
+                        data: {
+                            recid: recid,
+                            code: supplierCode,
+                            group: supplierAccountGroup
+                        },
                         success: function (response) {
                             const res = JSON.parse(response);
                             if (res.message === 'success') {
