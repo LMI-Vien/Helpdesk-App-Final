@@ -102,94 +102,134 @@ class Main_model extends CI_Model {
 	}
 	
 	public function login() {
-	    $username = trim($this->input->post('username', true));
-	    $input_pw = $this->input->post('password');
-	    $new_pw = substr(sha1($input_pw), 0, 200);
+		$username = trim($this->input->post('username', true));
+		$input_pw = $this->input->post('password');
 
-	    $sql = "SELECT * FROM users WHERE BINARY username = ?";
+		$MAX_ATTEMPTS = 4;
+
+		// 1. Get the user by username ONLY (do not filter by status/active here)
+		$sql = "SELECT * FROM users WHERE BINARY username = ?";
 		$res = $this->db->query($sql, array($username));
-	    if ($res->num_rows() > 0) {
-	        $t = $res->row_array();
-	        $user_id = $t['recid'];
-			$emp_id = $t['emp_id'];
-	        $session_id = $t['api_password'];
-	        $stored_pw = $t['password'];
-	        $role = $t['role'];
-	        $dept_id = $t['dept_id'];
-			$sup_id = $t['sup_id'];
-	        $sid = $this->session->session_id;
 
-			$MAX_ATTEMPTS = 4;
-
-			// Early status checks before password verification
-			if (isset($t['status']) && (int)$t['status'] === -2) {
-				return array(0, 'message' => 'Your registration has been successfully submitted to ICT Helpdesk. Please wait for ICT Approval Thank you.');
-			}
-			if (isset($t['status']) && (int)$t['status'] === 0) {
-				return array(0, 'message' => 'Your Account is Locked. Contact ICT Department for assistance.');
-			}
-
-			// Check if password matches
-	        if (password_verify($input_pw, $stored_pw)) {
-
-				$this->db->set('failed_attempts', 0)->where('username', $username)->update('users');
-
-				
-				// If passwords match, the whole row would be retrieved.
-				$query = $this->db->where('username', $username)->get('users')->row();
-
-				// (kept as-is, though the lock check is now redundant)
-				if($query->status == 0) {
-					return array(0, 'message' => 'You Account is Locked. Contact ICT Department for assistance.');
-				} else {
-					// Reset failed attempts
-					$this->db->set('failed_attempts', 1);
-					$this->db->where('username', $username);
-					$this->db->update('users');
-
-					return array(1, array(
-						'emp_id'  => $emp_id,
-						'user_id' => $user_id,
-						'role'    => $role,
-						'status'  => 1,
-						'dept_id' => $dept_id,
-						'sup_id'  => $sup_id
-					));
-				}
-			} else {
-				$query = $this->db->where('username', $username)->get('users');
-
-				if ($query->num_rows() > 0) {
-					$row = $query->row();
-
-					// Check if the user has 3 failed attempts
-					$attempts = (int)$row->failed_attempts + 1;
-					$this->db->set('failed_attempts', $attempts)
-							->where('username', $username)
-							->update('users');
-
-					if ($attempts >= $MAX_ATTEMPTS) {
-						// lock account
-						$this->db->set('status', 0)->where('username', $username)->update('users');
-
-						return array(0, 'message' => "Your Account is Locked.", 'attempts_remaining' => 0);
-					} else {
-						$remaining = max(0, $MAX_ATTEMPTS - $attempts);
-						return array(
-							'status' => 0,
-							'message' => "Your Username/Password is Invalid Please Try Again.",
-							'attempts_remaining' => $remaining
-						);
-					}
-				} else {
-					return array('status' => 0, 'message' => "User not found");
-				}
-			}
-		} else {
-			log_message("error", "[Login] - Callback passed but can't retrieve data.");
-			return array('status' => 0, 'message' => "Failed to retrieve your data. Please try again or reset your account.");
+		// username not found at all
+		if ($res->num_rows() === 0) {
+			return array(
+				'status'  => 0,
+				'message' => 'Invalid Login Credentials',
+				'attempts_remaining' => null
+			);
 		}
+
+		// user record
+		$t = $res->row_array();
+
+		$user_id        = $t['recid'];
+		$emp_id         = $t['emp_id'];
+		$stored_pw      = $t['password'];
+		$role           = $t['role'];
+		$dept_id        = $t['dept_id'];
+		$sup_id         = $t['sup_id'];
+		$status_flag    = isset($t['status']) ? (int)$t['status'] : null;
+		$active_flag    = isset($t['active']) ? (int)$t['active'] : null;
+		$failed_attempts = isset($t['failed_attempts']) ? (int)$t['failed_attempts'] : 0;
+
+		// 2. Check password first
+		if (!password_verify($input_pw, $stored_pw)) {
+
+			// bad password -> increment attempts
+			$attempts = $failed_attempts + 1;
+
+			$this->db->set('failed_attempts', $attempts)
+					->where('username', $username)
+					->update('users');
+
+			if ($attempts >= $MAX_ATTEMPTS) {
+				// lock the account by setting status = 0
+				$this->db->set('status', 0)
+						->where('username', $username)
+						->update('users');
+
+				return array(
+					'status'  => 0,
+					'message' => 'Your Account is Locked.',
+					'attempts_remaining' => 0
+				);
+			} else {
+				$remaining = max(0, $MAX_ATTEMPTS - $attempts);
+
+				return array(
+					'status'  => 0,
+					'message' => 'Your Username/Password is Invalid Please Try Again.',
+					'attempts_remaining' => $remaining
+				);
+			}
+		}
+
+		// 3. Password is correct. Now apply business rules:
+		//    User can only log in if:
+		//    - status == 1
+		//    - active == 1
+
+		// pending approval?
+		if ($status_flag === -2) {
+			return array(
+				'status'  => 0,
+				'message' => 'Your registration has been submitted to ICT Helpdesk. Please wait for ICT approval. Thank you.',
+				'attempts_remaining' => null
+			);
+		}
+
+		// locked / disabled account?
+		if ($status_flag === 0) {
+			return array(
+				'status'  => 0,
+				'message' => 'Your Account is Locked. Contact ICT Department for assistance.',
+				'attempts_remaining' => 0
+			);
+		}
+
+		// inactive flag?
+		if ($active_flag !== 1) {
+			return array(
+				'status'  => 0,
+				'message' => 'Your account is inactive. Please contact ICT.',
+				'attempts_remaining' => null
+			);
+		}
+
+		// status must be 1
+		if ($status_flag !== 1) {
+			return array(
+				'status'  => 0,
+				'message' => 'Your account is not active for login.',
+				'attempts_remaining' => null
+			);
+		}
+
+		// 4. At this point:
+		//    - password is correct
+		//    - status_flag === 1
+		//    - active_flag === 1
+		//    => GOOD LOGIN
+
+		// reset failed attempts after successful login
+		$this->db->set('failed_attempts', 0)
+				->where('username', $username)
+				->update('users');
+
+		return array(
+			1,
+			array(
+				'emp_id'  => $emp_id,
+				'user_id' => $user_id,
+				'role'    => $role,
+				'status'  => 1,          // let controller know you're good
+				'dept_id' => $dept_id,
+				'sup_id'  => $sup_id
+			)
+		);
 	}
+
 	
 	//fetch details of the currently logged-in user from 'user' table
 	public function user_details() {
