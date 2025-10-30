@@ -141,6 +141,7 @@
         }).trigger('change');
 
         $('#date_req').val(new Date().toISOString().split('T')[0]);
+        $('#date_need').val(new Date().toISOString().split('T')[0]);
 
         function autoResizeTextarea() {
             $(this).css('height', 'auto'); // Reset the height to auto to calculate new height

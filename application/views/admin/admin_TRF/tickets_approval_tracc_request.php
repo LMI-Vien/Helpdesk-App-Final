@@ -443,7 +443,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Accomplished by Date <span style = "color:red;">*</span></label>
-                                                    <input type="date" name="accomplished_by_date" id="accomplished_by_date" class="form-control select2" value="<?= $trf['accomplished_by_date']; ?>" style="width: 100%;" <?= $is_disable?>>
+                                                    <input type="date" name="accomplished_by_date" id="accomplished_by_date" class="form-control select2" min="<?= date('Y-m-d'); ?>" value="<?= $trf['accomplished_by_date']; ?>" style="width: 100%;" <?= $is_disable?>>
                                                 </div>
                                             </div>
 

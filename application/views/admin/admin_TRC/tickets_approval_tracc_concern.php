@@ -183,7 +183,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Resolved Date</label>
-                                                    <input type="date" name="res_date" id="res_date" class="form-control select2" value="<?= $tracc_con['resolved_date']; ?>" style="width: 100%;" <?= $disabled; ?>>
+                                                    <input type="date" name="res_date" id="res_date" class="form-control select2" value="<?= $tracc_con['resolved_date']; ?>" min="<?= date('Y-m-d'); ?>" style="width: 100%;" <?= $disabled; ?>>
                                                 </div>
                                             </div>
 
