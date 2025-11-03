@@ -429,6 +429,8 @@
 
 
         $('#traccConcernForm').on('submit', function (e) {
+            if (userRole !== 'L3') return;
+
             var anyChecked =
                 $('#checkbox_mis').is(':checked') ||
                 $('#checkbox_lst').is(':checked') ||
