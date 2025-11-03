@@ -48,6 +48,7 @@ class UsersTraccReq_controller extends CI_Controller {
 		$department_data = $this->Main_model->getDepartment();
 		$users_det = $this->Main_model->users_details_put($id);
 		$getdepartment = $this->Main_model->GetDepartmentID();
+		$this->Main_model->auto_acknowledge_all_due_trf();
 
 		if ($this->form_validation->run() == FALSE){
 			$trfNumber = $this->GenerateTRFNo();
@@ -332,6 +333,7 @@ class UsersTraccReq_controller extends CI_Controller {
 			$getCheckeboxDataUpdate = $this->Main_model->getCheckboxDataUpdate($id);
 			$getCheckboxDataAccount = $this->Main_model->getCheckboxDataAccount($id);
 			$ict_dept = $this->Main_model->get_ict();
+			$this->Main_model->auto_acknowledge_all_due_trf();
 
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;

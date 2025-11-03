@@ -1053,5 +1053,45 @@ class Main_model extends CI_Model {
 		$this->db->order_by('fname', 'ASC');
 		return $this->db->get('users')->result_array();
 	}
+
+	public function auto_acknowledge_all_due_tc() {
+		$sql = "
+			UPDATE service_request_tracc_concern
+			SET 
+				ack_as_resolved      = 'auto-acknowledge',
+				ack_as_resolved_date = NOW(),
+				status               = 'Closed'
+			WHERE 
+				(ack_as_resolved IS NULL OR ack_as_resolved = '')
+				AND it_approval_status = 'Resolved'
+				AND resolved_date IS NOT NULL
+				AND TIMESTAMPDIFF(HOUR, resolved_date, NOW()) >= 24
+				AND (status IS NULL OR status NOT IN ('Closed','Rejected','Returned'))
+		";
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+	// AND TIMESTAMPDIFF(MINUTE, resolved_date, NOW()) >= 1
+	// AND TIMESTAMPDIFF(HOUR, resolved_date, NOW()) >= 24
+
+	public function auto_acknowledge_all_due_trf() {
+		$sql = "
+			UPDATE service_request_tracc_request
+			SET 
+				acknowledge_by        = 'auto-acknowledge',
+				acknowledge_by_date  = NOW(),
+				status               = 'Closed'
+			WHERE 
+				(acknowledge_by IS NULL OR acknowledge_by = '')
+				AND it_approval_status = 'Resolved'
+				AND accomplished_by_date IS NOT NULL
+				AND TIMESTAMPDIFF(HOUR, accomplished_by_date, NOW()) >= 24
+				AND (status IS NULL OR status NOT IN ('Closed','Rejected','Returned'))
+		";
+		$this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+	// AND TIMESTAMPDIFF(MINUTE, accomplished_by_date, NOW()) >= 1
+	// AND TIMESTAMPDIFF(HOUR, accomplished_by_date, NOW()) >= 24
 }
 ?>

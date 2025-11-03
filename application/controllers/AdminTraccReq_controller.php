@@ -42,6 +42,7 @@ class AdminTraccReq_controller extends CI_Controller {
 
 		if ($this->session->userdata('login_data')) {
 			$user_details = $this->Main_model->user_details();
+			$this->Main_model->auto_acknowledge_all_due_trf();
 
 			if ($user_details[0] == "ok"){
 				$sid = $this->session->session_id;
@@ -1490,6 +1491,7 @@ class AdminTraccReq_controller extends CI_Controller {
 			$getCheckboxDataNewAdd = $this->Main_model->getCheckboxDataNewAdd($id);
 			$getCheckeboxDataUpdate = $this->Main_model->getCheckboxDataUpdate($id);
 			$getCheckboxDataAccount = $this->Main_model->getCheckboxDataAccount($id);
+			$this->Main_model->auto_acknowledge_all_due_trf();
 
 			if ($user_details[0] == "ok") {
 				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();

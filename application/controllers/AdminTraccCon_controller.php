@@ -9,6 +9,7 @@ class AdminTraccCon_controller extends CI_Controller {
     	$this->load->helper('form'); // Load form helper
 		$this->load->library('session');
         $this->load->model('AdminTraccCon_model');
+		$this->load->model('Main_model');
 
 		if($this->session->userdata('login_data')['role'] == 'L1') {
 			show_404();
@@ -132,6 +133,7 @@ class AdminTraccCon_controller extends CI_Controller {
 
 		if ($this->session->userdata('login_data')) {
 			$user_details = $this->Main_model->user_details();
+			$this->Main_model->auto_acknowledge_all_due_tc();
 	
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
@@ -307,6 +309,7 @@ class AdminTraccCon_controller extends CI_Controller {
 			$user_details = $this->Main_model->user_details();
 			$getdepartment = $this->Main_model->GetDepartmentID();
 			$getTraccCon = $this->Main_model->getTraccConcernByID($id);
+			$this->Main_model->auto_acknowledge_all_due_tc();
 	
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;

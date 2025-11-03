@@ -8,6 +8,7 @@ class UsersTraccCon_controller extends CI_Controller {
     	$this->load->helper('form'); // Load form helper
 		$this->load->library('session');
         $this->load->model('UsersTraccCon_model');
+		$this->load->model('Main_model');
 
 		if($this->session->userdata('login_data')['role'] != 'L1') {
 			show_404();
@@ -49,6 +50,7 @@ class UsersTraccCon_controller extends CI_Controller {
 		$department_data = $this->Main_model->getDepartment(); 
 		$users_det = $this->Main_model->users_details_put($id); 
 		$getdepartment = $this->Main_model->GetDepartmentID(); 
+		$this->Main_model->auto_acknowledge_all_due_tc();
 	
 		if ($this->form_validation->run() == FALSE) { 
 			
@@ -181,6 +183,7 @@ class UsersTraccCon_controller extends CI_Controller {
 			$getdepartment = $this->Main_model->GetDepartmentID();
 			$getTraccCon = $this->Main_model->getTraccConcernByID($id);
 			$ict_dept = $this->Main_model->get_ict();
+			$this->Main_model->auto_acknowledge_all_due_tc();
 	
 			if ($user_details[0] == "ok") {
 				$sid = $this->session->session_id;
