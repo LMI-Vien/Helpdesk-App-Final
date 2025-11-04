@@ -447,7 +447,7 @@ class DataTables extends CI_Controller {
                 if(!in_array($user_id, $opened)) {
                     $date_requested[] = "<b>" . date('M-d-Y', strtotime($rows->date_requested)) . "</b>";
                     $name[] = "<b>" . $rows->requestor_name . "</b>";
-                    $date_req[] = "<b>" . $rows->date_requested . "</b>";
+                    $date_req[] = "<b>" . (new DateTime($rows->date_requested))->format('Y-m-d h:i:s A') . "</b>";
                     $status[] = "<b>" . $rows->status . "</b>";
                     
                     // Generate a clickable link for the ticket ID.
@@ -455,7 +455,7 @@ class DataTables extends CI_Controller {
                 } else {
                     $date_requested[] = date('M-d-Y', strtotime($rows->date_requested));
                     $name[] = $rows->requestor_name;
-                    $date_req[] = $rows->date_requested->format('Y-m-d h:i:s A');
+                    $date_req[] = (new DateTime($rows->date_requested))->format('Y-m-d h:i:s A');
                     $status[] = $rows->status; 
                     
                     // Generate a clickable link for the ticket ID.
@@ -988,12 +988,12 @@ class DataTables extends CI_Controller {
                     $tickets[] = "<a href='" . base_url() . "admin/approved/" . $rows->subject . "/" . $rows->control_number . "'><b>" . $rows->control_number . "</b></a>";
                     $name[] = "<b>" . $rows->reported_by . "</b>";
                     $subject[] = "<b>" . $rows->subject . "</b>";
-                    $reported_date[] = "<b>" . date('M-d-Y', strtotime($rows->reported_date)) . "</b>";
+                    $reported_date[] = "<b>" . (new DateTime($rows->reported_date))->format('Y-m-d h:i:s A') . "</b>";
                 } else {
                     $tickets[] = "<a href='" . base_url() . "admin/approved/" . $rows->subject . "/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
                     $name[] = $rows->reported_by;
                     $subject[] = $rows->subject;
-                    $reported_date[] = date('M-d-Y', strtotime($rows->reported_date));
+                    $reported_date[] = (new DateTime($rows->reported_date))->format('Y-m-d h:i:s A');
                 }
 
                 if($rows->approval_status === "Pending" || $rows->approval_status === "Returned"){
@@ -1390,12 +1390,12 @@ class DataTables extends CI_Controller {
                     $tickets[] = "<a href='" . base_url() . "admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'><b>" . $rows->ticket_id ."</b></a>";
                     $name[] = "<b>" . $rows->requested_by . "</b>";
                     $subject[] = "<b>" . $rows->subject . "</b>";
-                    $date_requested[] = "<b>" . date('M-d-Y', strtotime($rows->date_requested)) . "</b>";
+                    $date_requested[] = "<b>" . (new DateTime($rows->date_requested))->format('Y-m-d h:i:s A') . "</b>";
                 } else {
                     $tickets[] = "<a href='" . base_url() . "admin/approved/" . $rows->subject . "/" . $rows->ticket_id . "'>" . $rows->ticket_id ."</a>";
                     $name[] = $rows->requested_by;
                     $subject[] = $rows->subject;
-                    $date_requested[] = date('M-d-Y', strtotime($rows->date_requested));
+                    $date_requested[] = (new DateTime($rows->date_requested))->format('Y-m-d h:i:s A');
                 }
 
                 if($rows->approval_status === "Pending" || $rows->approval_status === "Returned"){
