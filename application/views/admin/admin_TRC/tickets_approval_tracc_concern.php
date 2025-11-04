@@ -204,14 +204,14 @@
                                             <!-- Checkbox -->
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>To be filled by MIS</label>
+                                                    <label>To be filled by ICT</label>
                                                     <div>
                                                         <div style="display: inline-block; margin-right: 20px;">
                                                             <div class="checkbox">
                                                                 <label>
                                                                     <input type="checkbox" name="checkbox_mis" id="checkbox_mis" value="1"
                                                                     <?= isset($checkboxes['for_mis_concern']) && $checkboxes['for_mis_concern'] ? 'checked' : ''; ?> <?= $disabled; ?>> 
-                                                                    For MIS Concern
+                                                                    For ICT Concern
                                                                 </label>
                                                             </div>
                                                         </div>
