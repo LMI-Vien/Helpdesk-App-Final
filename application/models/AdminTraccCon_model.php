@@ -67,8 +67,8 @@ class AdminTraccCon_model extends CI_Model {
 			// 	$this->db->set('priority', 'High');
 			// }
 
-			if ($returnedReason !== null) {             
-				$this->db->set('returned_ticket_reason', $returnedReason);
+			if ($returnedTicket !== null) {             
+				$this->db->set('returned_ticket_reason', $returnedTicket);
 				$fields_to_update = true;
 			}
 

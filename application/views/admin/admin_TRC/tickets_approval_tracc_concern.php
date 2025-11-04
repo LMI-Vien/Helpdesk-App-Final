@@ -431,7 +431,13 @@
         $('#traccConcernForm').on('submit', function (e) {
             if (userRole !== 'L3') return;
 
-            var anyChecked =
+            const ictStatus = $('#it_app_stat').val();
+            if (ictStatus !== 'Resolved') {           
+                $('#checkbox-warning').hide();
+                return;                                      
+            }
+
+            const anyChecked =
                 $('#checkbox_mis').is(':checked') ||
                 $('#checkbox_lst').is(':checked') ||
                 $('#checkbox_system_error').is(':checked') ||
