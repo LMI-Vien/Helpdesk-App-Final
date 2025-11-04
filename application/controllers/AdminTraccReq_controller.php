@@ -1506,6 +1506,7 @@ class AdminTraccReq_controller extends CI_Controller {
 				$data['user_details'] = $user_details[1];
 				$data['getdept'] = $getdepartment[1];
 				$data['trf'] = $getTRF[1];
+
 				$data['checkbox_data_newadd'] = $getCheckboxDataNewAdd;
 				$data['checkbox_data_update'] = $getCheckeboxDataUpdate;
 				$data['checkbox_data_account'] = $getCheckboxDataAccount;
