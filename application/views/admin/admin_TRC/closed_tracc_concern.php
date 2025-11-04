@@ -24,7 +24,6 @@
                                     <tr>
                                         <th>Control Number</th>
                                         <th>Reported By</th>
-                                        <th>Subject</th>
                                         <th>Priority</th>
                                         <th>Status</th>
                                         <th>ICT Approval Status</th>
@@ -56,7 +55,6 @@ $(document).ready(function() {
         "columns": [
             { "data": "control_number" },
             { "data": "reported_by" },
-            { "data": "subject" },
             { "data": "priority" },
             { "data": "status" },
             { "data": "it_approval_status" },

@@ -26,7 +26,6 @@
 										<th>Control Number</th>
 										<th>Date Reported</th>
 										<th>Reported By</th>
-										<th>Subject</th>
 										<th>Priority</th>
 										<th>Company</th>
 										<th>Status</th>

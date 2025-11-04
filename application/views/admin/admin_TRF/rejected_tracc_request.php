@@ -20,7 +20,6 @@
                                     <tr>
                                         <th>Ticket ID</th>
                                         <th>Requested By</th>
-                                        <th>Subject</th>
                                         <th>Priority</th>
                                         <th>Status</th>
                                         <th>ICT Approval Status</th>
@@ -52,7 +51,6 @@ $(document).ready(function() {
         "columns": [
             { "data": "ticket_id" },
             { "data": "requested_by" },
-            { "data": "subject" },
             { "data": "priority" },
             { "data": "status" },
             { "data": "it_approval_status" },

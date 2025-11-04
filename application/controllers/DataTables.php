@@ -407,11 +407,10 @@ class DataTables extends CI_Controller {
             0 => 'ticket_id',
             1 => 'date_requested',
             2 => 'requestor_name',
-            3 => 'subject',
-            4 => 'priority',
-            5 => 'status',
-            6 => 'approval_status',
-            7 => 'it_approval_status',
+            3 => 'priority',
+            4 => 'status',
+            5 => 'approval_status',
+            6 => 'it_approval_status',
         );
 
         $order_col = isset($valid_columns[$col]) ? $valid_columns[$col] : 'recid';
@@ -807,12 +806,11 @@ class DataTables extends CI_Controller {
             0 => 'control_number', 
             1 => 'reported_date',
             2 => 'reported_by',
-            3 => 'subject',
-            4 => 'priority',
-            5 => 'company',
-            6 => 'status',
-            7 => 'approval_status',
-            8 => 'it_approval_status',
+            3 => 'priority',
+            4 => 'company',
+            5 => 'status',
+            6 => 'approval_status',
+            7 => 'it_approval_status',
         );
 
         if ($include_assignee) {
@@ -1008,7 +1006,6 @@ class DataTables extends CI_Controller {
                     $tickets[$i],
                     $reported_date[$i],
                     $name[$i],
-                    $subject[$i],
                     $priority_label[$i],
                     $comp_label[$i],
                     $status_label[$i],
@@ -1253,11 +1250,10 @@ class DataTables extends CI_Controller {
             0 => 'ticket_id',  
             1 => 'date_requested',
             2 => 'requested_by',
-            3 => 'subject',
-            4 => 'priority',
-            5 => 'status',
-            6 => 'approval_status',
-            7 => 'it_approval_status',
+            3 => 'priority',
+            4 => 'status',
+            5 => 'approval_status',
+            6 => 'it_approval_status',
         );
 
         if ($include_assignee) {
@@ -1410,7 +1406,6 @@ class DataTables extends CI_Controller {
                     $tickets[$i],
                     $date_requested[$i],
                     $name[$i],
-                    $subject[$i],
                     $priority_label[$i],
                     $status_label[$i],
                     $app_stat_label[$i],
