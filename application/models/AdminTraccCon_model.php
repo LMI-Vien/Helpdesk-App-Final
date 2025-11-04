@@ -139,7 +139,6 @@ class AdminTraccCon_model extends CI_Model {
 		$company = $this->input->post('company');
 		$concern = $this->input->post('details_concern');
 		$reported_by = $this->input->post('name');
-		$date_rep = $this->input->post('date_rep');
 		$department_description = $this->input->post('department_description', true);
 		$department_id = $this->input->post('dept_id', true);
 
@@ -157,14 +156,14 @@ class AdminTraccCon_model extends CI_Model {
 			'company' 					=> $company,
 			'tcr_details' 				=> $concern,
 			'reported_by' 				=> $reported_by,
-			'reported_date' 			=> $date_rep,
+			'reported_date' 			=> (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('Y-m-d H:i:s'),
 			'status' 					=> 'Approved',
 			'approval_status' 			=> 'Approved',
 			'it_approval_status' 		=> 'Pending',
 			'reported_by_id' 			=> $user_id,
 			'department' 				=> $department_description,
 			'dept_id' 					=> $department_id,
-			'created_at' 				=> date("Y-m-d H:i:s"),
+			'created_at' 				=> (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('Y-m-d H:i:s'),
 			'priority'					=> 'Medium'
 		);
 

@@ -98,7 +98,7 @@ class AdminMSRF_model extends CI_Model {
 		$fullname = $this->input->post('name', true);
 		$department_description = $this->input->post('department_description', true);
 		$department_id = $this->input->post('dept_id', true);
-		$date_req = $this->input->post('date_req', true);
+		$date_req = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('Y-m-d H:i:s');
 		$date_need = $this->input->post('date_need', true);
 		$asset_code = $this->input->post('asset_code', true);
 		$category = $this->input->post('category', true);

@@ -76,7 +76,7 @@
                                             <div class="col-md-6">
 			                                    <div class="form-group">
 			                                        <label>Date Requested</label>
-			                                        <input type="date" name="date_req" id="date_req" class="form-control select2" value="<?= $msrf['date_requested']; ?>" style="width: 100%;" readonly>
+			                                        <input type="text" name="date_req" id="date_req" class="form-control select2" value="" style="width: 100%;" readonly>
 			                                    </div>
 			                                    <div class="form-group">
 			                                        <label>Date Needed</label>
@@ -215,6 +215,12 @@
 <script>
     $(document).ready(function() {
 		$("#reason").hide();
+
+        let date_req = new Date("<?= $msrf['date_requested'] ?>");
+        let date_req_month = (date_req.getMonth() + 1).toString().padStart(2, '0');
+        let date_req_date = date_req.getDate().toString().padStart(2, '0');
+        let date_req_year = date_req.getFullYear().toString();
+        $('#date_req').val(`${date_req_month}/${date_req_date}/${date_req_year}`);
 
 		function toggleReasonField() {
 			var itApprovalStatus = $('#it_approval_stat').val();

@@ -101,7 +101,7 @@ class UsersMSRF_controller extends CI_Controller {
 
 		$user_details = $this->Main_model->user_details();        
 		$getdepartment = $this->Main_model->GetDepartmentID();     
-		$users_det = $this->Main_model->users_details_put($id); 
+		$users_det = $this->Main_model->users_details_put($id);
 	
 		if ($this->form_validation->run() == FALSE) {
 			$msrf = $this->GenerateMSRFNo();

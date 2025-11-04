@@ -290,6 +290,9 @@ class Main extends CI_Controller {
 						break;
 	
 					case "MSRF":
+						$datetime = new Datetime($msrf_tickets[1]['date_requested']);
+						$data['msrf']['date_requested'] = $datetime->format('Y-m-d');
+						
 						$this->load->view('admin/header', $data);
 						$this->load->view('admin/admin_MSRF/tickets_approval_msrf', $data);
 						$this->load->view('admin/sidebar', $data);

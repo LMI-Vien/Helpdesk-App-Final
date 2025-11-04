@@ -25,7 +25,7 @@
                                         <tr>
                                             <th>Control Number</th>
                                             <th>Reported By</th>
-                                            <th>Subject</th>
+                                            <th>Date Reported</th>
                                             <th>Priority</th>
                                             <th>Company</th>
                                             <th>Status</th>

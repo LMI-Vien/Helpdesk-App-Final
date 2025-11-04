@@ -86,7 +86,7 @@
                                         <tr>
                                             <th>Ticket Number</th>
                                             <th>Requested By</th>
-                                            <th>Subject</th>
+                                            <th>Requested Date</th>
                                             <th>Priority</th>
                                             <th>Status</th>
                                             <th>Dept. Head Approval Status</th>

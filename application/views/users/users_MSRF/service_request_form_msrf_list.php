@@ -22,7 +22,7 @@
                                         <tr>
                                             <th>Ticket ID</th>
                                             <th>Requestor Name</th>
-                                            <th>Subject</th>
+                                            <th>Date Requested</th>
                                             <th>Priority</th>
                                             <th>Status</th>
                                             <th>Dept. Head Approval Status</th>

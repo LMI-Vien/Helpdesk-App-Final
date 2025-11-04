@@ -337,7 +337,7 @@ class DataTables extends CI_Controller {
     
                 $tickets[] = "<a href='" . base_url() . "users/details/concern/msrf/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
                 $name[] = $rows->requestor_name;
-                $subject[] = $rows->subject;
+                $date_req[] = (new DateTime($rows->date_requested))->format('Y-m-d h:i:s A');
                 
             }
     
@@ -345,7 +345,7 @@ class DataTables extends CI_Controller {
                 $data[] = array(
                     $tickets[$i],       
                     $name[$i],          
-                    $subject[$i],      
+                    $date_req[$i],
                     $prio_label[$i],    
                     $status_label[$i],  
                     $app_stat_label[$i],
@@ -447,7 +447,7 @@ class DataTables extends CI_Controller {
                 if(!in_array($user_id, $opened)) {
                     $date_requested[] = "<b>" . date('M-d-Y', strtotime($rows->date_requested)) . "</b>";
                     $name[] = "<b>" . $rows->requestor_name . "</b>";
-                    $subject[] = "<b>" . $rows->subject . "</b>";
+                    $date_req[] = "<b>" . $rows->date_requested . "</b>";
                     $status[] = "<b>" . $rows->status . "</b>";
                     
                     // Generate a clickable link for the ticket ID.
@@ -455,7 +455,7 @@ class DataTables extends CI_Controller {
                 } else {
                     $date_requested[] = date('M-d-Y', strtotime($rows->date_requested));
                     $name[] = $rows->requestor_name;
-                    $subject[] = $rows->subject;
+                    $date_req[] = $rows->date_requested->format('Y-m-d h:i:s A');
                     $status[] = $rows->status; 
                     
                     // Generate a clickable link for the ticket ID.
@@ -553,9 +553,8 @@ class DataTables extends CI_Controller {
             for ($i = 0; $i < count($bid); $i++) {
                 $data[] = array(
                     $tickets[$i],
-                    $date_requested[$i],
+                    $date_req[$i],
                     $name[$i],
-                    $subject[$i],
                     $prio_label[$i],
                     $status_label[$i],
                     $app_stat_label[$i],
@@ -739,14 +738,14 @@ class DataTables extends CI_Controller {
                 // Ticket data
                 $control_number[] = "<a href='" . base_url() . "users/details/concern/tracc_concern/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
                 $name[] = $rows->reported_by;
-                $subject[] = $rows->subject;
+                $date_rep[] = (new DateTime($rows->reported_date))->format('Y-m-d h:i:s A');
             }
 
             for ($i = 0; $i < count($control_number); $i++) {
                 $data[] = array(
                     $control_number[$i],  
                     $name[$i],          
-                    $subject[$i],       
+                    $date_rep[$i],       
                     $priority_label[$i],
                     $comp_label[$i],    
                     $status_label[$i],  
@@ -1186,14 +1185,14 @@ class DataTables extends CI_Controller {
                 // Ticket data
                 $trf_ticket[] = "<a href='" . base_url() . "users/details/concern/tracc_request/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
                 $name[] = $rows->requested_by;
-                $subject[] = $rows->subject;
+                $date_req[] = (new DateTime($rows->date_requested))->format('Y-m-d h:i:s A');
             }
     
             for ($i = 0; $i < count($trf_ticket); $i++) {
                 $data[] = array(
                     $trf_ticket[$i],
                     $name[$i],         
-                    $subject[$i],       
+                    $date_req[$i],       
                     $priority_label[$i],
                     $status_label[$i],  
                     $app_stat_label[$i],
@@ -2561,7 +2560,7 @@ class DataTables extends CI_Controller {
     
                 $tickets[] = "<a href='" . base_url() . "admin/details/concern/msrf/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
                 $name[] = $rows->requestor_name;
-                $subject[] = $rows->subject;
+                $date_req[] = (new DateTime($rows->date_requested))->format('Y-m-d h:i:s A');
                 
             }
     
@@ -2569,7 +2568,7 @@ class DataTables extends CI_Controller {
                 $data[] = array(
                     $tickets[$i],       
                     $name[$i],          
-                    $subject[$i],      
+                    $date_req[$i],      
                     $prio_label[$i],    
                     $status_label[$i],  
                     $app_stat_label[$i],
@@ -2752,14 +2751,14 @@ class DataTables extends CI_Controller {
                 // Ticket data
                 $control_number[] = "<a href='" . base_url() . "admin/details/concern/tracc_concern/" . $rows->control_number . "'>" . $rows->control_number . "</a>";
                 $name[] = $rows->reported_by;
-                $subject[] = $rows->subject;
+                $date_rep[] = (new DateTime($rows->reported_date))->format('Y-m-d h:i:s A');
             }
 
             for ($i = 0; $i < count($control_number); $i++) {
                 $data[] = array(
                     $control_number[$i],  
                     $name[$i],          
-                    $subject[$i],       
+                    $date_rep[$i],       
                     $priority_label[$i],
                     $comp_label[$i],    
                     $status_label[$i],  
@@ -2926,14 +2925,14 @@ class DataTables extends CI_Controller {
                 // Ticket data
                 $trf_ticket[] = "<a href='" . base_url() . "admin/details/concern/tracc_request/" . $rows->ticket_id . "'>" . $rows->ticket_id . "</a>";
                 $name[] = $rows->requested_by;
-                $subject[] = $rows->subject;
+                $date_req[] = (new DateTime($rows->date_requested))->format('Y-m-d h:i:s A');
             }
     
             for ($i = 0; $i < count($trf_ticket); $i++) {
                 $data[] = array(
                     $trf_ticket[$i],
                     $name[$i],         
-                    $subject[$i],       
+                    $date_req[$i],       
                     $priority_label[$i],
                     $status_label[$i],  
                     $app_stat_label[$i],

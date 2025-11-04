@@ -180,7 +180,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Date Requested</label>
-                                                    <input type="date" name="date_requested" id="date_requested" class="form-control select2" value="<?= $trf['date_requested'] ?>" style="width: 100%;" readonly>
+                                                    <input type="text" name="date_requested" id="date_requested" class="form-control select2" value="" style="width: 100%;" readonly>
                                                 </div>
                                             </div>
 
@@ -505,6 +505,11 @@
 
         $("#reason_rejected_ticket").hide();
         $("#returnedReason").hide();
+
+        let date_req = new Date("<?= $trf['date_requested'] ?>");
+        let date_req_date = date_req.getDate().toString().padStart(2, '0');
+        let date_req_month = (date_req.getMonth() + 1).toString().padStart(2, '0');
+        $('#date_requested').val(`${date_req_month}/${date_req_date}/${date_req.getFullYear()}`);
         
 
         checkApprovalStatus();

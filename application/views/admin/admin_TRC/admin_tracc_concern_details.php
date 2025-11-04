@@ -130,7 +130,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Date Reported</label>
-                                                    <input type="date" name="date_rep" id="date_rep" class="form-control select2" value="<?= $tracc_con['reported_date']; ?>" style="width: 100%;" readonly>
+                                                    <input type="text" name="date_rep" id="date_rep" class="form-control select2" value="" style="width: 100%;" readonly>
                                                 </div>
                                             </div>
 
@@ -330,9 +330,15 @@
         var reportedDate = "<?= $tracc_con['reported_date']; ?>";
         if (!reportedDate) {
             var today = new Date().toISOString().split('T')[0];
-            $('#date_req').val(today);
+            $('#date_rep').val(today);
         }
     });
+
+    let date_rep = new Date("<?= $tracc_con['reported_date'] ?>");
+    let date_rep_month = (date_rep.getMonth() + 1).toString().padStart(2, '0');
+    let date_rep_date = (date_rep.getDate()).toString().padStart(2, '0');
+    let date_rep_year = date_rep.getFullYear();
+    $('#date_rep').val(`${date_rep_month}/${date_rep_date}/${date_rep_year}`);
 
     function toggleLstFields() {
         var lstCheckbox = $('#checkbox_lst');

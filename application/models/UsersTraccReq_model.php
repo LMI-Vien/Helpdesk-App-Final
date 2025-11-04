@@ -13,7 +13,7 @@ class UsersTraccReq_model extends CI_Model {
 		$fullname = $this->input->post('name', true);
 		$department_description = $this->input->post('department_description', true);
 		$department_id = $this->input->post('dept_id', true);
-		$date_requested = $this->input->post('date_req', true);
+		$date_requested = (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('Y-m-d H:i:s');
 		$date_needed = $this->input->post('date_needed', true);
 		$complete_details = $this->input->post('complete_details', true);
 		$acknowledge_by = $this->input->post('acknowledge_by', true);
@@ -65,7 +65,7 @@ class UsersTraccReq_model extends CI_Model {
 				'status' 					            => 'Open',
 				'approval_status' 			            => 'Pending',
 				'it_approval_status' 		            => 'Pending',
-				'created_at' 				            => date("Y-m-d H:i:s")
+				'created_at' 				            => (new DateTime('now', new DateTimeZone('Asia/Manila')))->format('Y-m-d H:i:s')
 			);
 	
 			if ($file_path !== null) {
