@@ -621,8 +621,8 @@ class DataTables extends CI_Controller {
     
         $count_array = $this->db->query("
             SELECT * FROM service_request_tracc_concern 
-            WHERE (status IN ('Open', 'In Progress', 'Resolved', 'Approved', 'Returned') AND reported_by_id = " . $user_id . ") 
-            OR (status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned')) 
+            WHERE (status IN ('Open', 'In Progress', 'Resolved', 'Approved', 'Returned', 'For Monitoring') AND reported_by_id = " . $user_id . ") 
+            OR (status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned', 'For Monitoring')) 
             " . $search_query
         );
         $length_count = $count_array->num_rows();
@@ -631,7 +631,7 @@ class DataTables extends CI_Controller {
         
         $strQry = $this->db->query("
             SELECT * FROM service_request_tracc_concern
-            WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned')
+            WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned', 'For Monitoring')
             AND reported_by_id = " . $user_id . " " . $search_query . " ORDER BY recid DESC LIMIT " . $start . ", " . $length);
 
 
@@ -662,6 +662,9 @@ class DataTables extends CI_Controller {
                         break;
                     case 'Returned':
                         $label_class = 'label-info';
+                        break;
+                    case 'For Monitoring':
+                        $label_class = 'label-primary';
                         break;
                 }
                 $status_label[] = '<span class="label ' . $label_class . '">' . $rows->status . '</span>';
@@ -716,7 +719,10 @@ class DataTables extends CI_Controller {
                         break;
                     case 'Closed':
                         $it_stat_class = 'label-info';
-                        break;    
+                        break; 
+                    case 'For Monitoring':
+                        $it_stat_class = 'label-primary';
+                        break;   
                 }
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
 
@@ -848,8 +854,8 @@ class DataTables extends CI_Controller {
         
         $count_array = $this->db->query("
             SELECT * FROM service_request_tracc_concern 
-            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved', 'Returned') AND reported_by = " . $user_id . ") 
-            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Done', 'Approved', 'Returned')) 
+            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved', 'Returned', 'For Monitoring') AND reported_by = " . $user_id . ") 
+            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Done', 'Approved', 'Returned', 'For Monitoring')) 
             " . $search_query . $dept
         );
         $length_count = $count_array->num_rows();
@@ -858,8 +864,8 @@ class DataTables extends CI_Controller {
         $data = array();
         $strQry = $this->db->query("
             SELECT * FROM service_request_tracc_concern 
-            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved', 'Returned') AND reported_by = " . $user_id . ") 
-            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Done', 'Approved', 'Returned')) 
+            WHERE (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Approved', 'Returned', 'For Monitoring') AND reported_by = " . $user_id . ") 
+            OR (status IN ('Open', 'In Progress', 'On going', 'Resolved', 'Done', 'Approved', 'Returned', 'For Monitoring')) 
             " . $search_query . $dept . " 
             ORDER BY " . $order_col . " " . $dir . ", recid DESC 
             LIMIT " . $start . ", " . $length
@@ -897,6 +903,9 @@ class DataTables extends CI_Controller {
                         break;
                     case 'Returned':
                         $label_class = 'label-info';
+                        break;
+                    case 'For Monitoring':
+                        $label_class = 'label-primary';
                         break;
                 }
     
@@ -955,6 +964,9 @@ class DataTables extends CI_Controller {
                         break;
                     case 'Closed':
                         $it_stat_class = 'label-info';
+                        break;
+                    case 'For Monitoring':
+                        $it_stat_class = 'label-primary';
                         break;
                    
                 }
@@ -2630,8 +2642,8 @@ class DataTables extends CI_Controller {
     
         $count_array = $this->db->query("
             SELECT * FROM service_request_tracc_concern 
-            WHERE (status IN ('Open', 'In Progress', 'Resolved', 'Approved', 'Returned') AND reported_by_id = " . $user_id . ") 
-            OR (status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned')) 
+            WHERE (status IN ('Open', 'In Progress', 'Resolved', 'Approved', 'Returned', 'For Monitoring') AND reported_by_id = " . $user_id . ") 
+            OR (status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned', 'For Monitoring')) 
             " . $search_query
         );
         $length_count = $count_array->num_rows();
@@ -2640,7 +2652,7 @@ class DataTables extends CI_Controller {
         
         $strQry = $this->db->query("
             SELECT * FROM service_request_tracc_concern
-            WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned')
+            WHERE status IN ('Open', 'In Progress', 'Resolved', 'Rejected', 'Done', 'Approved', 'Returned', 'For Monitoring')
             AND reported_by_id = " . $user_id . " " . $search_query . " ORDER BY recid DESC LIMIT " . $start . ", " . $length);
 
 
@@ -2671,6 +2683,9 @@ class DataTables extends CI_Controller {
                         break;
                     case 'Returned':
                         $label_class = 'label-info';
+                        break;
+                    case 'For Monitoring':
+                        $label_class = 'label-primary';
                         break;
                 }
                 $status_label[] = '<span class="label ' . $label_class . '">' . $rows->status . '</span>';
@@ -2725,7 +2740,10 @@ class DataTables extends CI_Controller {
                         break;
                     case 'Closed':
                         $it_stat_class = 'label-info';
-                        break;    
+                        break;  
+                    case 'For Monitoring':
+                        $it_stat_class = 'label-primary';
+                        break;  
                 }
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
 

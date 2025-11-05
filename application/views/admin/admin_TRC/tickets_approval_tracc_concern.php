@@ -129,8 +129,9 @@
                                                         <option value=""disabled selected>ICT Approval Status</option>
                                                         <!-- <option value="Approved"<?php if ($tracc_con['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option> -->
                                                         <option value="Rejected"<?php if ($tracc_con['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
-                                                        <option value="Resolved"<?php if ($tracc_con['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Done</option>
+                                                        <option value="Resolved"<?php if ($tracc_con['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Resolved</option>
                                                         <option value="Closed"<?php if ($tracc_con['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
+                                                        <option value="For Monitoring"<?php if ($tracc_con['it_approval_status'] == 'For Monitoring') echo ' selected'; ?>>For Monitoring</option>
                                                     </select>       
                                                 </div>
                                             </div>
@@ -271,7 +272,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary">Validate Tickets</button>
+                                                        <button id="form-add-submit-button" type="submit" class="btn btn-primary">Validate Ticket</button>
                                                     </div>
                                                 </div>
                                             </div>

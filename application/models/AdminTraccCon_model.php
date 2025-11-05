@@ -57,6 +57,9 @@ class AdminTraccCon_model extends CI_Model {
 			} else if ($it_approval_stat == 'Approved') {
 				$this->db->set('it_approval_status', 'Approved');
 				$this->db->set('status', 'In Progress');
+			} else if ($it_approval_stat == 'For Monitoring') {
+				$this->db->set('it_approval_status', 'For Monitoring');
+				$this->db->set('status', 'For Monitoring');
 			}
 
 			// if ($priority == 'Low') {
