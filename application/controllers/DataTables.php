@@ -1733,6 +1733,7 @@ class DataTables extends CI_Controller {
             $row['control_number'] = "<a href='" . base_url() . "users/details/concern/tracc_concern/" . $row['control_number'] . "'>" . $row['control_number'] . "</a>";
             switch ($row['status']) {
                 case 'Open':
+                case 'For Monitoring':
                     $label_class = 'label-primary';
                     break;
                 case 'In Progress':

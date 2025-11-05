@@ -271,6 +271,7 @@
 								<option>Rejected</option>
 								<option>Resolved</option>
 								<option>Closed</option>
+								<option>For Monitoring</option>
 							</select>
 							<button id="filterConcern" class="status-button">Filter</button>
 							<table id="tblConcerns" class="table">
