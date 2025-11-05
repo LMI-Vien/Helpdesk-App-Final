@@ -114,8 +114,8 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// CRF
-	public function update_crf_ticket_remarks($recid, $remarks, $shipping){
-		$this->db->set(['remarks' => $remarks, 'shipping_code' => $shipping]);
+	public function update_crf_ticket_remarks($recid, $remarks, $customer, $shipping, $route){
+		$this->db->set(['remarks' => $remarks, 'shipping_code' => $shipping, 'customer_code' => $customer, 'route_code' => $route]);
 		$this->db->where('recid', $recid); 
 		return $this->db->update('tracc_req_customer_req_form');
 	}
@@ -298,8 +298,11 @@ class AdminTraccReq_model extends CI_Model {
 	// ----------------------------------- Approving of Form ----------------------------------- //
 
 	// Approve Customer Request Form
-	public function approve_crf($approved_by, $recid){
+	public function approve_crf($approved_by, $recid, $customer_code, $shipping_code, $route_code){
 		$data = [
+			'customer_code'		=> $customer_code,
+			'shipping_code'		=> $shipping_code,
+			'route_code'		=> $route_code,
 			'approved_by' 		=> $approved_by,
 			'approved_date' 	=> date('Y-m-d H:i:s')
 		];

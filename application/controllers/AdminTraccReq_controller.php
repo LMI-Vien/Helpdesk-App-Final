@@ -346,9 +346,11 @@ class AdminTraccReq_controller extends CI_Controller {
 	// Update CRF Ticket Remarks
 	public function update_crf_ticket_remarks() {
 		$recid = $this->input->post('recid');
-		$shippingCode = $this->input->post('shipping');
+		$customerCode = $this->input->post('customer_code');
+		$shippingCode = $this->input->post('shipping_code');
+		$routeCode = $this->input->post('route_code');
 
-		$result = $this->AdminTraccReq_model->update_crf_ticket_remarks($recid, 'Done', $shippingCode); 
+		$result = $this->AdminTraccReq_model->update_crf_ticket_remarks($recid, 'Done', $customerCode, $shippingCode, $routeCode); 
 	
 		if ($result) {
 			echo json_encode(['message' => 'success']);
@@ -1210,8 +1212,11 @@ class AdminTraccReq_controller extends CI_Controller {
 	public function approve_crf(){			
 		$approved_by = $this->input->post('approved');
 		$recid = $this->input->post('recid');
+		$customer_code = $this->input->post('customer_code');
+		$shipping_code = $this->input->post('shipping_code');
+		$route_code = $this->input->post('route_code');
 
-		$process = $this->AdminTraccReq_model->approve_crf($approved_by, $recid);
+		$process = $this->AdminTraccReq_model->approve_crf($approved_by, $recid, $customer_code, $shipping_code, $route_code);
 		
 		if (isset($process[0]) && $process[0] == 1) {
 			$this->session->set_flashdata('success', "It's Approved");

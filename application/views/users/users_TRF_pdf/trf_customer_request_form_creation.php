@@ -146,14 +146,9 @@
                                                         <input type="date" name="date" id="date" class="form-control" required>
                                                     </div>
                                                 </div>
-                                            </div>          
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Customer Code</label>
-                                                    <input type="text" name="customer_code" id="customer_code" value="" class="form-control select2" required> 
-                                                </div>
                                             </div>
+											
+											<input type="hidden" name="customer_code" id="customer_code" value="-" class="form-control select2" required> 
                                             
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -312,22 +307,11 @@
                                                 <b>Customer Shipping Setup</b>
                                             </div>
 
-                                            <hr class="divider"> 
+                                            <hr class="divider">
 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Shipping Code</label>
-                                                    <input type="text" name="shipping_code" id="shipping_code" value="" class="form-control select2" required> 
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Route Code</label>
-                                                    <input type="text" name="route_code" id="route_code" value="" class="form-control select2" required> 
-                                                </div>
-                                            </div>
-
+											<input type="hidden" name="shipping_code" id="shipping_code" value="-" class="form-control select2" required>
+											<input type="hidden" name="route_code" id="route_code" value="-" class="form-control select2" required>
+											
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <label>Customer Shipping Address</label>
