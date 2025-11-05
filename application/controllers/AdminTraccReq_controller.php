@@ -466,6 +466,7 @@ class AdminTraccReq_controller extends CI_Controller {
 					'approved_by' 				=> $ticket['approved_by'],
 					'approved_date' 			=> $ticket['approved_date'],
 					'user_id'					=> $ticket['requested_by_id'] == $this->session->userdata('login_data')['user_id'],
+					'remarks'					=> $ticket['remarks'],
 					'user_details'				=> $user_details,
 				];
 
@@ -525,6 +526,7 @@ class AdminTraccReq_controller extends CI_Controller {
 					'approved_by' 				=> $ticket['approved_by'],
 					'approved_date' 			=> $ticket['approved_date'],
 					'user_id'					=> $ticket['requested_by_id'] == $this->session->userdata('login_data')['user_id'],
+					'remarks'					=> $ticket['remarks'],
 					'user_details'				=> $user_details,
 				];
 
@@ -545,8 +547,11 @@ class AdminTraccReq_controller extends CI_Controller {
 
 	// Update CSS Ticket Remarks
 	public function update_css_ticket_remarks() {
-		$recid = $this->input->post('recid'); 
-		$result = $this->AdminTraccReq_model->update_css_ticket_remarks($recid, 'Done'); 
+		$recid = $this->input->post('recid');
+		$shipping_code = $this->input->post('shipping_code');
+		$route_code = $this->input->post('route_code');
+		
+		$result = $this->AdminTraccReq_model->update_css_ticket_remarks($recid, 'Done', $shipping_code, $route_code); 
 	
 		if ($result) {
 			echo json_encode(['message' => 'success']);

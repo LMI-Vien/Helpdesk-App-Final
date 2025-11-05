@@ -101,6 +101,8 @@
         $('#tabs').on('click', '.close-tab-btn', function () {
             const $tab = $(this).closest('li'); // Get the tab element
             const recid = $tab.data('recid'); // Fetch the unique recid
+			const shipping_code = $('#shipping_code').val();
+			const route_code = $('#route_code').val();
 
                 Swal.fire({
                     title: 'Are you Done?',
@@ -129,7 +131,7 @@
                     $.ajax({
                         url: base_url + 'AdminTraccReq_controller/update_css_ticket_remarks',
                         type: 'POST',
-                        data: { recid: recid },
+                        data: { recid: recid, shipping_code: shipping_code, route_code: route_code },
                         success: function (response) {
                             const res = JSON.parse(response);
                             if (res.message === 'success') {

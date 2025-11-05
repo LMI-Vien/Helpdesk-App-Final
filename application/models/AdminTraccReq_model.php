@@ -148,8 +148,8 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// CSS
-	public function update_css_ticket_remarks($recid, $remarks){
-		$this->db->set('remarks', $remarks); 
+	public function update_css_ticket_remarks($recid, $remarks, $shipping_code, $route_code){
+		$this->db->set(['remarks' => $remarks, 'shipping_code' => $shipping_code, 'route_code' => $route_code]); 
 		$this->db->where('recid', $recid); 
 		return $this->db->update('tracc_req_customer_ship_setup');
 	}

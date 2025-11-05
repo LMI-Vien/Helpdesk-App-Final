@@ -2,10 +2,14 @@
 $role = $this->session->userdata('login_data')['role'];
 
 $disabled = "disabled";
-
+$uneditable = "disabled";
 
 if($user_id) {
     $disabled = "";
+}
+
+if($role == "L3" && $remarks != "Done") {
+	$uneditable = "";
 }
 ?>
 
@@ -116,14 +120,14 @@ if($user_id) {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Shipping Code</label>
-                                            <input type="text" name="shipping_code" id="shipping_code" value="<?php echo $shipping_code ?>" class="form-control select2" <?= $disabled; ?>> 
+                                            <input type="text" name="shipping_code" id="shipping_code" value="<?php echo $shipping_code ?>" class="form-control select2" <?= $uneditable; ?>> 
                                         </div>
                                     </div>
                                     
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Route Code</label>
-                                            <input type="text" name="route_code" id="route_code" value="<?php echo $route_code ?>" class="form-control select2" <?= $disabled; ?>> 
+                                            <input type="text" name="route_code" id="route_code" value="<?php echo $route_code ?>" class="form-control select2" <?= $uneditable; ?>> 
                                         </div>
                                     </div>
 
