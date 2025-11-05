@@ -367,7 +367,7 @@ if(!$user_id) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Zip Code:</label>
-                                        <input type="number" name="zip_code" id="zip_code" value="<?php echo $zip_code; ?>" class="form-control select2" <?= $disabled; ?>> 
+                                        <input type="text" name="zip_code" id="zip_code" value="<?php echo $zip_code; ?>" class="form-control select2" <?= $disabled; ?>> 
                                     </div>
                                 </div>
 
@@ -388,7 +388,7 @@ if(!$user_id) {
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Tin No:</label>
-                                        <input type="number" name="tin_no" id="tin_no" value="<?php echo $tin_no; ?>" class="form-control select2" <?= $disabled; ?>> 
+                                        <input type="text" name="tin_no" id="tin_no" value="<?php echo $tin_no; ?>" class="form-control select2" <?= $disabled; ?>> 
                                     </div>
                                 </div>
 

@@ -1,19 +1,3 @@
-<?php 
-	set_timezone();
-	// echo set_timezone();
-	$current_time = date('H:i');
-	// print_r($current_time);
-	// die();  
-
-    $cutoff_time = '16:59';
-
-    if ($current_time >= $cutoff_time){
-        $disabled = "disabled";
-    } else {
-        $disabled = "";
-    }
-?>
-
 <style>
     .custom-checkbox {
         display: inline-flex;
@@ -470,7 +454,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Zip Code:</label>
-                                                    <input type="number" name="zip_code" id="zip_code" value="" min=0 class="form-control select2"> 
+                                                    <input type="text" name="zip_code" id="zip_code" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
@@ -491,7 +475,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Tin No:</label>
-                                                    <input type="number" name="tin_no" id="tin_no" value="" min=0 class="form-control select2"> 
+                                                    <input type="text" name="tin_no" id="tin_no" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
@@ -636,7 +620,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="submitBtn" type="submit" class="btn btn-primary" <?=$disabled?>>Submit Ticket</button>
+                                                        <button id="submitBtn" type="submit" class="btn btn-primary">Submit Ticket</button>
                                                         <!-- <button id="add-form-button" type="button" class="btn btn-primary">Create Another Form</button> -->
                                                     </div>
                                                 </div>
@@ -693,6 +677,10 @@
                 }
             });
         });
+    });
+
+    $('#tin_no, #zip_code').on('input', function () {
+        this.value = this.value.replace(/[^0-9-]/g, '');
     });
    
 </script>

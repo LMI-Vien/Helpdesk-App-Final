@@ -465,7 +465,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Zip Code:</label>
-                                                    <input type="number" name="zip_code" id="zip_code" value="" min=0 class="form-control select2"> 
+                                                    <input type="text" name="zip_code" id="zip_code" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
@@ -486,7 +486,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Tin No:</label>
-                                                    <input type="number" name="tin_no" id="tin_no" value="" min=0 class="form-control select2"> 
+                                                    <input type="text" name="tin_no" id="tin_no" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
@@ -647,3 +647,11 @@
         </section>
     </div>
 </div>
+
+<script src="<?= base_url(); ?>assets/plugins/jquery/jquery.min.js"></script>
+
+<script>
+    $('#tin_no, #zip_code').on('input', function () {
+        this.value = this.value.replace(/[^0-9-]/g, '');
+    });
+</script>
