@@ -405,11 +405,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('users/list/tickets/tracc_request');
+					redirect('users/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('users/list/tickets/tracc_request');
+				redirect('users/dashboard');
 			}
 		} else {
 			return;
@@ -492,11 +492,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('users/list/tickets/tracc_request');
+					redirect('users/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('users/list/tickets/tracc_request');
+				redirect('users/dashboard');
 			}
 		} else {
 			return;
@@ -580,11 +580,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('users/list/tickets/tracc_request');
+					redirect('users/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('users/list/tickets/tracc_request');
+				redirect('users/dashboard');
 			}
 		} else {
 			return;
@@ -654,11 +654,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('users/list/tickets/tracc_request');
+					redirect('users/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('users/list/tickets/tracc_request');
+				redirect('users/dashboard');
 			}
 		} else {
 			return;
@@ -802,11 +802,11 @@ class UsersTraccReq_controller extends CI_Controller {
 					$this->load->view('users/footer');
 				} else {
 					$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-					redirect('users/list/tickets/tracc_request');
+					redirect('users/dashboard');
 				}
 			} else {
 				$this->session->set_flashdata('error', '<strong style="color:red;">⚠️ Cutoff Alert:</strong> This is the cutoff point.');
-				redirect('users/list/tickets/tracc_request');
+				redirect('users/dashboard');
 			}
 		} else {
 			return;
