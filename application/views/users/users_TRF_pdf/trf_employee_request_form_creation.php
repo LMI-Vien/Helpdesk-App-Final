@@ -1,19 +1,3 @@
-<?php 
-	set_timezone();
-	// echo set_timezone();
-	$current_time = date('H:i');
-	// print_r($current_time);
-	// die();  
-
-    $cutoff_time = '16:59';
-
-    if ($current_time >= $cutoff_time){
-        $disabled = "disabled";
-    } else {
-        $disabled = "";
-    }
-?>
-
 <style>
     .custom-checkbox {
         display: inline-flex;
@@ -188,7 +172,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <div class="box-body pad">
-                                                        <button id="submitBtn" type="submit" class="btn btn-primary" <?=$disabled?>>Submit Ticket</button>
+                                                        <button id="submitBtn" type="submit" class="btn btn-primary">Submit Ticket</button>
                                                     </div>
                                                 </div>
                                             </div>
