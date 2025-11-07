@@ -294,7 +294,13 @@
                                             <hr class="divider">
 
 											<input type="hidden" name="shipping_code" id="shipping_code" value="-" class="form-control select2" required>
-											<input type="hidden" name="route_code" id="route_code" value="-" class="form-control select2" required>
+		
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Route Code</label>
+                                                    <input type="text" name="route_code" id="route_code" value="" class="form-control select2">
+                                                </div>
+                                            </div>
 											
                                             <div class="col-md-12">
                                                 <div class="form-group">

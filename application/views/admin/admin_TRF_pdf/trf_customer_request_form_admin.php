@@ -305,7 +305,7 @@ if($role == "L3" && $remarks != "Done") {
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Route Code</label>
-                                            <input type="text" name="route_code" id="route_code" value="<?php echo $route_code; ?>" class="form-control select2" required <?= $uneditable; ?>> 
+                                            <input type="text" name="route_code" id="route_code" value="<?php echo $route_code; ?>" class="form-control select2" required <?= $disabled; ?>> 
                                         </div>
                                     </div>
 
