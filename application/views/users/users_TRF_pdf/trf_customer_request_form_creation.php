@@ -137,7 +137,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>TIN No</label>
-                                                    <input type="text" name="tin_no" id="tin_no" value="" class="form-control select2" required> 
+                                                    <input type="text" name="tin_no" id="tin_no" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
@@ -180,42 +180,42 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Contact Person</label>
-                                                    <input type="text" name="contact_person" id="contact_person" value="" class="form-control select2" required> 
+                                                    <input type="text" name="contact_person" id="contact_person" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Price List</label>
-                                                    <input type="text" name="pricelist" id="pricelist" value="" class="form-control select2" required> 
+                                                    <input type="text" name="pricelist" id="pricelist" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Office Tel. No.</label>
-                                                    <input type="text" name="office_tel_no" id="office_tel_no" value="" class="form-control select2" required> 
+                                                    <input type="text" name="office_tel_no" id="office_tel_no" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Payment Group</label>
-                                                    <input type="text" name="payment_grp" id="payment_grp" value="" class="form-control select2" required> 
+                                                    <input type="text" name="payment_grp" id="payment_grp" value="" class="form-control select2"> 
                                                 </div>
                                             </div>            
                                             
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Contact No.</label>
-                                                    <input type="text" name="contact_no" id="contact_no" value="" class="form-control select2" required> 
+                                                    <input type="text" name="contact_no" id="contact_no" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Territory</label>
-                                                    <input type="text" name="territory" id="territory" value="" class="form-control select2" required> 
+                                                    <input type="text" name="territory" id="territory" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
@@ -229,14 +229,14 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Business Style</label>
-                                                    <input type="text" name="business_style" id="business_style" value="" class="form-control select2" required> 
+                                                    <input type="text" name="business_style" id="business_style" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Email</label>
-                                                    <input type="text" name="email" id="email" value="" class="form-control select2" required> 
+                                                    <input type="text" name="email" id="email" value="" class="form-control select2"> 
                                                 </div>
                                             </div>
 
