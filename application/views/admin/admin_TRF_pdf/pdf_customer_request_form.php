@@ -24,16 +24,16 @@
 
 
 <script>
-     $(document).ready(function() {
+    $(document).ready(function() {
         
-        console.log('AdminTraccReq_controller/cus_req_form_JTabs/' + <?= $user_details['dept_id']; ?>);
+        // console.log('AdminTraccReq_controller/cus_req_form_JTabs/' + <?= $user_details['dept_id']; ?>);
         $.ajax({
             url: base_url + 'AdminTraccReq_controller/cus_req_form_JTabs/' + <?= $user_details['dept_id']; ?>,
             type: 'GET',
             dataType: 'json',
             success: function(response) {
                 if (response.message === 'success') {
-                    console.log("User Role:", response.user_role);
+                    // console.log("User Role:", response.user_role);
                     const userRole = response.user_role; 
                     let groupedTickets = {};  // To group tickets by recid
                     let counter = 1;  
@@ -103,9 +103,12 @@
         $('#tabs').on('click', '.close-tab-btn', function () {
             const $tab = $(this).closest('li'); // Get the tab element
             const recid = $tab.data('recid'); // Fetch the unique recid
-            const shipping = $('#shipping_code').val();
-			const route = $('#route_code').val();
-			const customer = $('#customer_code').val();
+            const panelSelector = $tab.find('a').attr('href');
+            const $panel = $(panelSelector);
+
+            const shipping = $panel.find('[name="shipping_code"]').val() || $panel.find('#shipping_code').val();
+            const route    = $panel.find('[name="route_code"]').val() || $panel.find('#route_code').val();
+            const customer = $panel.find('[name="customer_code"]').val() || $panel.find('#customer_code').val();
 
                 Swal.fire({
                     title: 'Are you Done?',
@@ -134,7 +137,7 @@
                     $.ajax({
                         url: base_url + 'AdminTraccReq_controller/update_crf_ticket_remarks',
                         type: 'POST',
-                        data: { recid: recid, shipping_code: shipping, customer_code: customer, route_code: route },
+                        data: { recid: recid, shipping_code: shipping, customer_code: customer },
                         success: function (response) {
                             const res = JSON.parse(response);
                             if (res.message === 'success') {

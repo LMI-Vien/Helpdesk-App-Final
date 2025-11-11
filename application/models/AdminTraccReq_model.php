@@ -114,8 +114,8 @@ class AdminTraccReq_model extends CI_Model {
 	}
 
 	// CRF
-	public function update_crf_ticket_remarks($recid, $remarks, $customer, $shipping, $route){
-		$this->db->set(['remarks' => $remarks, 'shipping_code' => $shipping, 'customer_code' => $customer, 'route_code' => $route]);
+	public function update_crf_ticket_remarks($recid, $remarks, $customer, $shipping){
+		$this->db->set(['remarks' => $remarks, 'shipping_code' => $shipping, 'customer_code' => $customer]);
 		$this->db->where('recid', $recid); 
 		return $this->db->update('tracc_req_customer_req_form');
 	}

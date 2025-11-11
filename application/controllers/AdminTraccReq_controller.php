@@ -348,9 +348,8 @@ class AdminTraccReq_controller extends CI_Controller {
 		$recid = $this->input->post('recid');
 		$customerCode = $this->input->post('customer_code');
 		$shippingCode = $this->input->post('shipping_code');
-		$routeCode = $this->input->post('route_code');
 
-		$result = $this->AdminTraccReq_model->update_crf_ticket_remarks($recid, 'Done', $customerCode, $shippingCode, $routeCode); 
+		$result = $this->AdminTraccReq_model->update_crf_ticket_remarks($recid, 'Done', $customerCode, $shippingCode); 
 	
 		if ($result) {
 			echo json_encode(['message' => 'success']);
