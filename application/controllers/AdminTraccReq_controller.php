@@ -1218,9 +1218,8 @@ class AdminTraccReq_controller extends CI_Controller {
 		$recid = $this->input->post('recid');
 		$customer_code = $this->input->post('customer_code');
 		$shipping_code = $this->input->post('shipping_code');
-		$route_code = $this->input->post('route_code');
 
-		$process = $this->AdminTraccReq_model->approve_crf($approved_by, $recid, $customer_code, $shipping_code, $route_code);
+		$process = $this->AdminTraccReq_model->approve_crf($approved_by, $recid, $customer_code, $shipping_code);
 		
 		if (isset($process[0]) && $process[0] == 1) {
 			$this->session->set_flashdata('success', "It's Approved");

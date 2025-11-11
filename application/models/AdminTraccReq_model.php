@@ -298,13 +298,13 @@ class AdminTraccReq_model extends CI_Model {
 	// ----------------------------------- Approving of Form ----------------------------------- //
 
 	// Approve Customer Request Form
-	public function approve_crf($approved_by, $recid, $customer_code, $shipping_code, $route_code){
+	public function approve_crf($approved_by, $recid, $customer_code, $shipping_code){
 		$data = [
 			'customer_code'		=> $customer_code,
 			'shipping_code'		=> $shipping_code,
-			'route_code'		=> $route_code,
 			'approved_by' 		=> $approved_by,
-			'approved_date' 	=> date('Y-m-d H:i:s')
+			'approved_date' 	=> date('Y-m-d H:i:s'),
+			'remarks'			=> 'Approved'
 		];
 
 		$this->db->where('recid', $recid);
