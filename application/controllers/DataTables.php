@@ -1522,21 +1522,27 @@ class DataTables extends CI_Controller {
                                 service_request_tracc_concern.reported_date,
                                 service_request_tracc_concern.resolved_by,
                                 service_request_tracc_concern.resolved_date,
-                                service_request_tracc_concern.status');
+                                service_request_tracc_concern.status,
+                                filled_by_mis.system_error,
+                                filled_by_mis.user_error');
             $this->db->from('service_request_tracc_concern');
             $this->db->join('filled_by_mis', 'filled_by_mis.control_number = service_request_tracc_concern.control_number', 'left');
             $this->db->where('filled_by_mis.system_error = 1');
         } else {
-            $this->db->select('control_number,
-                                module_affected,
-                                tcr_details,
-                                reported_by,
-                                department,
-                                reported_date,
-                                resolved_by,
-                                resolved_date,
-                                status');
+            $this->db->select('service_request_tracc_concern.control_number,
+                                service_request_tracc_concern.module_affected,
+                                service_request_tracc_concern.tcr_details,
+                                service_request_tracc_concern.reported_by,
+                                service_request_tracc_concern.department,
+                                service_request_tracc_concern.reported_date,
+                                service_request_tracc_concern.resolved_by,
+                                service_request_tracc_concern.resolved_date,
+                                service_request_tracc_concern.status,
+                                filled_by_mis.system_error,
+                                filled_by_mis.user_error
+                            ');
             $this->db->from('service_request_tracc_concern');
+            $this->db->join('filled_by_mis', 'filled_by_mis.control_number = service_request_tracc_concern.control_number', 'left');
         }
 
         if($status) {
@@ -1567,6 +1573,14 @@ class DataTables extends CI_Controller {
             } else {
                 $row['reported_date'] = date('M j, Y', strtotime($row['reported_date']));
                 $row['resolved_date'] = date('M j, Y', strtotime($row['resolved_date']));
+            }
+
+            if($row['system_error'] == 1) {
+                $row['category'] = 'System Error';
+            } else if($row['user_error'] == 1) {
+                $row['category'] = 'User Error';
+            } else {
+                $row['category'] = "";
             }
 
             // Store the formated information inside an array.

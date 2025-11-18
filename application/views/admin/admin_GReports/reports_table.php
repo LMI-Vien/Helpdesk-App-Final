@@ -155,6 +155,7 @@
                                 <th>Resolved Date</th>
                                 <th>Resolved By</th>
                                 <th>Status</th>
+                                <th>Category</th>
                             </tr>
                         </thead>
                     </table>
@@ -438,6 +439,7 @@
                     { "data": "resolved_date" },
                     { "data": "resolved_by" },
                     { "data": "status" },
+                    { "data": "category" },
                 ],
                 "responsive": true,
                 "autoWidth": false,
@@ -492,6 +494,7 @@
                                     6: { cellWidth: 25 },   // reseolved date
                                     7: { cellWidth: 25 },   // resolved by
                                     8: { cellWidth: 28 },   // status
+                                    9: { cellWidth: 28 },   // status
                                 },
                                 margin: {
                                     top: 30
