@@ -132,6 +132,7 @@
                                                         <option value="Resolved"<?php if ($tracc_con['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Resolved</option>
                                                         <option value="Closed"<?php if ($tracc_con['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
                                                         <option value="For Monitoring"<?php if ($tracc_con['it_approval_status'] == 'For Monitoring') echo ' selected'; ?>>For Monitoring</option>
+                                                        <option value="For LSTV Concern"<?php if ($tracc_con['it_approval_status'] == 'For LSTV Concern') echo ' selected'; ?>>For LSTV Concern</option>
                                                     </select>       
                                                 </div>
                                             </div>

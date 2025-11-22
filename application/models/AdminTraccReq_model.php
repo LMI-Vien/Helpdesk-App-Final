@@ -51,6 +51,9 @@ class AdminTraccReq_model extends CI_Model {
 			} else if ($it_approval_stat == 'Closed'){
 				$this->db->set('it_approval_status', 'Closed');
 				$this->db->set('status', 'Closed');
+			} else if ($it_approval_stat == 'For LSTV Concern') {
+				$this->db->set('it_approval_status', 'For LSTV Concern');
+				$this->db->set('status', 'For LSTV Concern');
 			}
 
 			$this->db->set('accomplished_by', $accomplished_by);

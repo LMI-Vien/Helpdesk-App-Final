@@ -60,6 +60,9 @@ class AdminTraccCon_model extends CI_Model {
 			} else if ($it_approval_stat == 'For Monitoring') {
 				$this->db->set('it_approval_status', 'For Monitoring');
 				$this->db->set('status', 'For Monitoring');
+			} else if ($it_approval_stat == 'For LSTV Concern') {
+				$this->db->set('it_approval_status', 'For LSTV Concern');
+				$this->db->set('status', 'For LSTV Concern');
 			}
 
 			// if ($priority == 'Low') {

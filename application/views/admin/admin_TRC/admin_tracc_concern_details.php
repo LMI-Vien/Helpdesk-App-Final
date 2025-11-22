@@ -2,19 +2,14 @@
     $sess_login_data = $this->session->userdata('login_data');
     $role = $sess_login_data['role'];
     $department_id = $sess_login_data['dept_id'];
-    // print_r($sess_login_data);
     $disabled = "";
     $readonly = "";
     $btn_label = "Submit Ticket";
     if ($role === "L2") {
         $department_head_status = $tracc_con['approval_status'];    
         $status_tcf = $tracc_con['status'];
-        // print_r($status_tcf);
-        // die();
 
-        if(($status_tcf === "In Progress" || $status_tcf === 'Approved' || $status_tcf === 'Done' || $status_tcf === 'Rejected')) {
-            // echo "try";
-            // die();
+        if(($status_tcf === "In Progress" || $status_tcf === 'Approved' || $status_tcf === 'Done' || $status_tcf === 'Rejected' || $status_tcf === 'For Monitoring' || $status_tcf === 'For LSTV Concern')) {
             $disabled = "disabled";
             $readonly = "readonly";
         } else {
@@ -156,6 +151,8 @@
                                                         <option value="Rejected"<?php if ($tracc_con['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
                                                         <option value="Resolved"<?php if ($tracc_con['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Resolved</option>
                                                         <option value="Closed"<?php if ($tracc_con['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
+                                                        <option value="For Monitoring"<?php if ($tracc_con['it_approval_status'] == 'For Monitoring') echo ' selected'; ?>>For Monitoring</option>
+                                                        <option value="For LSTV Concern"<?php if ($tracc_con['it_approval_status'] == 'For LSTV Concern') echo ' selected'; ?>>For LSTV Concern</option>
 
                                                     </select>       
                                                 </div>

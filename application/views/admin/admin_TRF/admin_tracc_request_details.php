@@ -2,7 +2,6 @@
     $sess_login_data = $this->session->userdata('login_data');
     $role = $sess_login_data['role'];
     $department_id = $sess_login_data['dept_id'];
-    // print_r($sess_login_data);
     $disabled = "";
     $readonly = "";
     $btn_label = "Submit Ticket";
@@ -10,12 +9,8 @@
         $department_head_status = $trf['approval_status'];
         
         $status_trf = $trf['status'];
-        // print_r($status_trf);
-        // die();
 
-        if(($status_trf === "In Progress" || $status_trf === 'Approved' || $status_trf === 'Resolved')) {
-            // echo "try";
-            // die();
+        if(($status_trf === "In Progress" || $status_trf === 'Approved' || $status_trf === 'Resolved' || $status_trf === 'For LSTV Concern')) {
             $disabled = "disabled";
             $readonly = "readonly";
         } else {

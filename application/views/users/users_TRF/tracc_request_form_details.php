@@ -2,7 +2,6 @@
     $sess_login_data = $this->session->userdata('login_data');
     $role = $sess_login_data['role'];
     $department_id = $sess_login_data['dept_id'];
-    // print_r($sess_login_data);
     $disabled = "";
     $readonly = "";
     $btn_label = "Submit Ticket";
@@ -10,12 +9,8 @@
         $department_head_status = $trf['approval_status'];
         
         $status_trf = $trf['status'];
-        // print_r($status_trf);
-        // die();
 
-        if(($status_trf === "In Progress" || $status_trf === 'Approved' || $status_trf === 'Resolved' || $status_trf === 'Rejected' || $status_trf === 'Closed')) {
-            // echo "try";
-            // die();
+        if(($status_trf === "In Progress" || $status_trf === 'Approved' || $status_trf === 'Resolved' || $status_trf === 'Rejected' || $status_trf === 'Closed' || $status_trf === 'For LSTV Concern')) {
             $disabled = "disabled";
             $readonly = "readonly";
         } else {
@@ -23,7 +18,6 @@
             $readonly = "";
             $btn_label = "Update Ticket";
         }
-        // $open_disabled = ($status_trf === "Open") ? "disabled" : "";
         $open_disabled = in_array($status_trf, ['Open', 'Returned'], true) ? 'disabled' : '';
     }
     // if($role === "L1" && $department_id === "1"){
@@ -419,6 +413,7 @@
                                                         <option value="Rejected"<?php if ($trf['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
                                                         <option value="Resolved"<?php if ($trf['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Resolved</option>
                                                         <option value="Closed"<?php if ($trf['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
+                                                        <option value="For LSTV Concern"<?php if ($trf['it_approval_status'] == 'For LSTV Concern') echo ' selected'; ?>>For LSTV Concern</option>
 
                                                     </select>       
                                                 </div>

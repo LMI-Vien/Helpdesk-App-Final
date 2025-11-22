@@ -12,7 +12,7 @@
         // print_r($status_tcf);
         // die();
 
-        if(($status_tcf === "In Progress" || $status_tcf === 'Approved' || $status_tcf === 'Done' || $status_tcf === 'Rejected' || $status_tcf === 'Closed')) {
+        if(($status_tcf === "In Progress" || $status_tcf === 'Approved' || $status_tcf === 'Done' || $status_tcf === 'Rejected' || $status_tcf === 'Closed' || $status_tcf === 'For Monitoring' || $status_tcf === 'For LSTV Concern')) {
             // echo "try";
             // die();
             $disabled = "disabled";
@@ -157,6 +157,8 @@
                                                         <option value="Rejected"<?php if ($tracc_con['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
                                                         <option value="Resolved"<?php if ($tracc_con['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Resolved</option>
                                                         <option value="Closed"<?php if ($tracc_con['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
+                                                        <option value="For Monitoring"<?php if ($tracc_con['it_approval_status'] == 'For Monitoring') echo ' selected'; ?>>For Monitoring</option>
+                                                        <option value="For LSTV Concern"<?php if ($tracc_con['it_approval_status'] == 'For LSTV Concern') echo ' selected'; ?>>For LSTV Concern</option>
 
                                                     </select>       
                                                 </div>

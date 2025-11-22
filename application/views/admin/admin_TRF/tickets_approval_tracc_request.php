@@ -396,6 +396,7 @@
                                                         <option value="Rejected"<?php if ($trf['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
                                                         <option value="Resolved"<?php if ($trf['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Resolved</option>
                                                         <option value="Closed"<?php if ($trf['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
+                                                        <option value="For LSTV Concern"<?php if ($trf['it_approval_status'] == 'For LSTV Concern') echo ' selected'; ?>>For LSTV Concern</option>
                                                     </select>       
                                                 </div>
                                             </div>
