@@ -85,7 +85,7 @@ class UsersTraccCon_model extends CI_Model {
 		$this->db->update('service_request_tracc_concern', $data);
 
 		if ($this->db->affected_rows() > 0) {
-			$this->session->set_flashdata('success', 'Ticket ' . $control_number . ' is acknolwedge as resolved.');
+			$this->session->set_flashdata('success', 'Ticket ' . $control_number . ' is acknowledge as resolved.');
 		} else {
 			$this->session->set_flashdata('error', 'Error acknowledging ticket as resolved.');
 		}
