@@ -39,6 +39,14 @@
                                     <label for="email" class="form-label">Email &nbsp;<span style="font-size: smaller; color: red;">*</span></label>
                                     <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
+                                <div class="form-group">
+								<label>Role</label>
+								<select name="role" id="role" class="form-control" required>
+                                    <option value="" disabled selected>Please choose the designated role</option>
+									<option value="L1">Regular Employees</option>
+									<option value="L2">(Supervisor/Dept. Head)</option>
+                                </select>
+							</div>
                             </div>
                             <!-- Right Column -->
                             <div class="col-md-6">
@@ -170,18 +178,5 @@
                 e.preventDefault();
             }
         });
-
-        // $('#employee_id').on('keydown', function (e) {
-        //     if (
-        //         !(e.key >= '0' && e.key <= '9') && 
-        //         e.key !== '-' &&          
-        //         e.key !== 'Backspace' &&     
-        //         e.key !== 'Shift' &&       
-        //         e.key !== '*'
-        //     ) {
-        //         e.preventDefault();
-        //     }
-        // });
-
     });
 </script>

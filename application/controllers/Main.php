@@ -112,9 +112,10 @@ class Main extends CI_Controller {
 			$lastname = htmlentities($this->input->post('lastname', TRUE));
 			$email = htmlentities($this->input->post('email', TRUE));
 			$position = htmlentities($this->input->post('position', TRUE));
+			$role = $this->input->post('role');
 	
 			// Process the registration through the model
-			$process = $this->Main_model->user_registration($employee_id, $username, $password, $conpassword, $dept_id, $firstname, $middlename, $lastname, $email, $position);
+			$process = $this->Main_model->user_registration($employee_id, $username, $password, $conpassword, $dept_id, $firstname, $middlename, $lastname, $email, $position, $role);
 	
 			if ($process['status'] === 'success') {
 				$response = array(

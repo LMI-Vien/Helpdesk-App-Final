@@ -75,7 +75,7 @@ class Main_model extends CI_Model {
 				"username" 						=> $this->input->post('username'),
 				"password" 						=> $hashed_password,
 				"api_password" 					=> $hashed_password,
-				"role" 							=> 'L1',
+				"role" 							=> $this->input->post('role'),
 				'status' 						=> -2,
 				'failed_attempts' 				=> 1,
 				'active'						=> 1,
