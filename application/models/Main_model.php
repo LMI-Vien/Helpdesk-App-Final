@@ -173,7 +173,7 @@ class Main_model extends CI_Model {
 		// pending approval?
 		if ($status_flag === -2) {
 			return array(
-				'status'  => 0,
+				'status'  => -2,
 				'message' => 'Your registration has been submitted to ICT Helpdesk. Please wait for ICT approval. Thank you.',
 				'attempts_remaining' => null
 			);
