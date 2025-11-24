@@ -667,7 +667,7 @@ class DataTables extends CI_Controller {
                         $label_class = 'label-primary';
                         break;
                     case 'For LSTV Concern':
-                        $label_class = 'label-warning';
+                        $label_class = 'label-primary';
                         break;
                 }
                 $status_label[] = '<span class="label ' . $label_class . '">' . $rows->status . '</span>';
@@ -727,7 +727,7 @@ class DataTables extends CI_Controller {
                         $it_stat_class = 'label-primary';
                         break;
                     case 'For LSTV Concern':
-                        $it_stat_class = 'label-warning';
+                        $it_stat_class = 'label-primary';
                         break;  
                 }
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
@@ -914,7 +914,7 @@ class DataTables extends CI_Controller {
                         $label_class = 'label-primary';
                         break;
                     case 'For LSTV Concern':
-                        $label_class = 'label-warning';
+                        $label_class = 'label-primary';
                         break;
                 }
     
@@ -978,7 +978,7 @@ class DataTables extends CI_Controller {
                         $it_stat_class = 'label-primary';
                         break;
                     case 'For LSTV Concern':
-                        $it_stat_class = 'label-warning';
+                        $it_stat_class = 'label-primary';
                         break;
                    
                 }
@@ -1149,7 +1149,7 @@ class DataTables extends CI_Controller {
                         $label_class = 'label-info';
                         break;
                     case 'For LSTV Concern':
-                        $label_class = 'label-warning';
+                        $label_class = 'label-primary';
                         break;
                 }
                 $status_label[] = '<span class="label ' . $label_class . '">' . $rows->status . '</span>';
@@ -1191,7 +1191,7 @@ class DataTables extends CI_Controller {
                         $it_stat_class = 'label-info';
                         break; 
                     case 'For LSTV Concern':
-                        $it_stat_class = 'label-warning';
+                        $it_stat_class = 'label-primary';
                         break;    
                 }
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
@@ -1351,7 +1351,7 @@ class DataTables extends CI_Controller {
                         $label_class = 'label-success';
                         break;
                     case 'For LSTV Concern':
-                        $label_class = 'label-warning';
+                        $label_class = 'label-primary';
                         break;
                 }
                 $status_label[] = '<span class="label ' . $label_class . '">' . $rows->status . '</span>';
@@ -1391,7 +1391,7 @@ class DataTables extends CI_Controller {
                         $it_stat_class = 'label-info';
                         break;
                     case 'For LSTV Concern':
-                        $it_stat_class = 'label-warning';
+                        $it_stat_class = 'label-primary';
                         break;
                 }
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
@@ -1772,6 +1772,7 @@ class DataTables extends CI_Controller {
             switch ($row['status']) {
                 case 'Open':
                 case 'For Monitoring':
+                case 'For LSTV Concern':
                     $label_class = 'label-primary';
                     break;
                 case 'In Progress':
@@ -1839,6 +1840,7 @@ class DataTables extends CI_Controller {
             $row['ticket_id'] = "<a href='" . base_url() . "users/details/concern/tracc_request/" . $row['ticket_id'] . "'>" . $row['ticket_id'] . "</a>";
             switch ($row['status']) {
                 case 'Open':
+                case 'For LSTV Concern':
                     $label_class = 'label-primary';
                     break;
                 case 'In Progress':
@@ -2727,7 +2729,7 @@ class DataTables extends CI_Controller {
                         $label_class = 'label-primary';
                         break;
                     case 'For LSTV Concern':
-                        $label_class = 'label-warning';
+                        $label_class = 'label-primary';
                         break;
                 }
                 $status_label[] = '<span class="label ' . $label_class . '">' . $rows->status . '</span>';
@@ -2787,7 +2789,7 @@ class DataTables extends CI_Controller {
                         $it_stat_class = 'label-primary';
                         break;
                     case 'For LSTV Concern':
-                        $it_stat_class = 'label-warning';
+                        $it_stat_class = 'label-primary';
                         break;
                 }
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
@@ -2926,7 +2928,7 @@ class DataTables extends CI_Controller {
                         $label_class = 'label-info';
                         break;
                     case 'For LSTV Concern':
-                        $label_class = 'label-warning';
+                        $label_class = 'label-primary';
                         break;
                 }
                 $status_label[] = '<span class="label ' . $label_class . '">' . $rows->status . '</span>';
@@ -2968,7 +2970,7 @@ class DataTables extends CI_Controller {
                         $it_stat_class = 'label-info';
                         break;   
                     case 'For LSTV Concern':
-                        $it_stat_class = 'label-warning';
+                        $it_stat_class = 'label-primary';
                         break; 
                 }
                 $it_stat_label[] = '<span class="label ' . $it_stat_class . '">' . $rows->it_approval_status . '</span>';
