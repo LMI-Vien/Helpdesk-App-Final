@@ -40,7 +40,7 @@ class AdminMSRF_model extends CI_Model {
 				$fields_to_update = true;
 			} else if ($approval_stat == 'Approved') {
 				$this->db->set('approval_status', 'Approved');
-				$this->db->set('status', 'In Progress');
+				$this->db->set('status', 'Approved');
 				$this->db->set('approval_date', $approvalDate); 
 				$fields_to_update = true;
 			} else if ($approval_stat == 'Returned') {

@@ -146,6 +146,17 @@
                                                     </select>       
                                                 </div>
                                             </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Approval Date</label>
+                                                    <?php if($tracc_con['approval_date']): ?>
+                                                        <input type="datetime-local" class="form-control">
+                                                    <?php else: ?>
+                                                        <input type="text" value="Pending" class="form-control" disabled>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
                                             
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -161,6 +172,17 @@
                                                         <option value="For LSTV Concern"<?php if ($tracc_con['it_approval_status'] == 'For LSTV Concern') echo ' selected'; ?>>For LSTV Concern</option>
 
                                                     </select>       
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>ICT Approval Date</label>
+                                                    <?php if($tracc_con['ict_approval_date']): ?>
+                                                        <input type="datetime-local" class="form-control" disabled>
+                                                    <?php else: ?>
+                                                        <input type="text" value="Pending" class="form-control" disabled>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
 
@@ -231,7 +253,7 @@
                                                         <?php foreach($ict_dept as $ict): ?>
                                                             <option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $tracc_con['resolved_by'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
                                                         <?php endforeach; ?>
-                                                    </select>  
+                                                        </select>
                                                 </div>
                                             </div>
 

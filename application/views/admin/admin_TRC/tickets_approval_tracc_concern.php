@@ -124,6 +124,20 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
+                                                    <label>Approval Date</label>
+                                                    <?php if($tracc_con['approval_date']): ?>
+                                                        <?php
+                                                            $dt = date('Y-m-d\TH:i', strtotime($tracc_con['approval_date']));
+                                                        ?>
+                                                        <input type="datetime-local" class="form-control" value=<?= $dt ?> disabled>
+                                                    <?php else: ?>
+                                                        <input type="text" value="Pending" class="form-control" disabled>
+                                                    <?php endif; ?>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
                                                     <label>ICT Approval Status</label>
                                                     <select class="form-control select2" name="it_app_stat" id="it_app_stat" <?= $disabled; ?>>
                                                         <option value=""disabled selected>ICT Approval Status</option>
@@ -134,6 +148,20 @@
                                                         <option value="For Monitoring"<?php if ($tracc_con['it_approval_status'] == 'For Monitoring') echo ' selected'; ?>>For Monitoring</option>
                                                         <option value="For LSTV Concern"<?php if ($tracc_con['it_approval_status'] == 'For LSTV Concern') echo ' selected'; ?>>For LSTV Concern</option>
                                                     </select>       
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Approval Date</label>
+                                                    <?php if($tracc_con['ict_approval_date']): ?>
+                                                        <?php
+                                                            $it = date('Y-m-d\TH:i', strtotime($tracc_con['ict_approval_date']));
+                                                        ?>
+                                                        <input type="datetime-local" class="form-control" value=<?= $it ?> disabled>
+                                                    <?php else: ?>
+                                                        <input type="text" value="Pending" class="form-control" disabled>
+                                                    <?php endif; ?>
                                                 </div>
                                             </div>
 

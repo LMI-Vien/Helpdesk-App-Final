@@ -23,6 +23,10 @@ class AdminTraccCon_model extends CI_Model {
 		$received_by_lst = $this->input->post('received_by_lst', true);
 		$date_lst = $this->input->post('date_lst', true);
 		$ictAssigned = $this->input->post('ictAssigned', true);
+
+		date_default_timezone_set('Asia/Manila');
+
+		$approvalDate = date('Y-m-d H:i:s');
 	
 		$this->db->trans_start();
 	
@@ -35,33 +39,42 @@ class AdminTraccCon_model extends CI_Model {
 			
 			if ($approval_stat == 'Rejected') {
 				$this->db->set('approval_status', 'Rejected');
+				$this->db->set('approval_date', $approvalDate);
 				$this->db->set('status', 'Rejected');  
 			} else if ($approval_stat == 'Approved') {
 				$this->db->set('approval_status', 'Approved');
+				$this->db->set('approval_date', $approvalDate);
 				$this->db->set('status', 'Approved'); 
 			} else if ($approval_stat == 'Returned') {
 				$this->db->set('approval_status', 'Returned');
-				$this->db->set('status', 'Returned'); 
+				$this->db->set('status', 'Returned');
+				$this->db->set('approval_date', $approvalDate);
 				$this->db->set('returned_ticket_reason', $returnedTicket);
 			}
 	
 			if ($it_approval_stat == 'Resolved') {
 				$this->db->set('it_approval_status', 'Resolved');
+				$this->db->set('ict_approval_date', $approvalDate);
 				$this->db->set('status', 'Done'); 
 			} else if ($it_approval_stat == 'Closed') {
 				$this->db->set('it_approval_status', 'Closed');
+				$this->db->set('ict_approval_date', $approvalDate);
 				$this->db->set('status', 'Closed');
 			} else if ($it_approval_stat == 'Rejected') {
 				$this->db->set('it_approval_status', 'Rejected');
+				$this->db->set('ict_approval_date', $approvalDate);
 				$this->db->set('status', 'Rejected');
 			} else if ($it_approval_stat == 'Approved') {
 				$this->db->set('it_approval_status', 'Approved');
+				$this->db->set('ict_approval_date', $approvalDate);
 				$this->db->set('status', 'In Progress');
 			} else if ($it_approval_stat == 'For Monitoring') {
 				$this->db->set('it_approval_status', 'For Monitoring');
+				$this->db->set('ict_approval_date', $approvalDate);
 				$this->db->set('status', 'For Monitoring');
 			} else if ($it_approval_stat == 'For LSTV Concern') {
 				$this->db->set('it_approval_status', 'For LSTV Concern');
+				$this->db->set('ict_approval_date', $approvalDate);
 				$this->db->set('status', 'For LSTV Concern');
 			}
 

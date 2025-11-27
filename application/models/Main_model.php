@@ -420,16 +420,23 @@ class Main_model extends CI_Model {
 
 
 	public function update_department_status($data_module, $id, $data_remarks, $data_status) {
-	    $id = (int) $id;  
+	    $id = (int) $id;
+		
+		date_default_timezone_set('Asia/Manila');
+
+		$approval_date = date('Y-m-d H:i:s');
 	    
 	    if($data_status === "Rejected"){
 	    	$this->db->set('approval_status', 'Rejected');
+			$this->db->set('approval_date', $approval_date);
 	    	$this->db->set('status', 'Rejected');
 	    }else if($data_status === "Approved"){
 	    	$this->db->set('approval_status', 'Approved');
+			$this->db->set('approval_date', $approval_date);
 	    	$this->db->set('status', 'Approved');
 	    }else{
 	    	$this->db->set('approval_status', 'Returned');
+			$this->db->set('approval_date', $approval_date);
 	    	$this->db->set('status', 'Returned');
 	    }
 	    $this->db->where('recid', $id); 
