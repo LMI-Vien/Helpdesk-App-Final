@@ -34,6 +34,7 @@
 			                    			<input type="text" name="msrf_number" id="msrf_number" value="<?php echo $msrf['ticket_id']; ?>" class="form-control" readonly>
 			                    		</div>
 			                    	</div>
+									<!-- <?= print_r($user_details) ?> -->
 			                    	<div class="col-md-6">
 			                            <div class="form-group">
 			                                <label>Requestor</label>
@@ -106,7 +107,7 @@
                                         </div>
                                     </div>                          
 
-									<div class="col-md-12">
+									<div class="col-md-6">
 			                            <div class="form-group">
 			                                <label>Dept. Head Approval Status</label>											
 											<select class="form-control select2" name="approval_stat" id="approval_stat" style="width: 100%;" <?php if ($msrf['approval_status'] == 'Approved' || $msrf['approval_status'] == 'Rejected') echo 'disabled'; ?> <?= $is_disabled ?>>
@@ -117,11 +118,24 @@
 											</select>
 			                            </div>
 			                        </div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Dept. Head Approval Date</label>
+											<?php if($msrf['approval_date']): ?>
+												<?php
+													$dt = date('Y-m-d\TH:i', strtotime($msrf['approval_date']));
+												?>
+												<input type="datetime-local" class="form-control" id="approval_date" value=<?= $dt ?> disabled>
+											<?php else: ?>
+												<input type="text" class="form-control" value="Pending" disabled>
+											<?php endif; ?>
+										</div>
+									</div>
 									<!-- Add a hidden input field to store the current approval status -->
 									<!-- <input type="hidden" name="approval_stat" value="<?php echo $msrf['approval_status']; ?>"> -->
  
 
-									<div class="col-md-12">
+									<div class="col-md-6">
 										<div class="form-group">
 											<label>ICT Approval Status</label>
 											<select class="form-control select2" name="it_approval_stat" id="it_approval_stat" style="width: 100%;" <?php if ($msrf['it_approval_status'] == 'Approved'); ?> <?= $is_disable ?>>
@@ -131,7 +145,20 @@
 												<option value="Resolved" <?php if ($msrf['it_approval_status'] == 'Resolved') echo 'selected'; ?>>Resolved</option>
 											</select>
 										</div>
-									</div>		   
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>ICT Approval Date</label>
+											<?php if($msrf['ict_approval_date']): ?>
+												<?php
+													$it = date('Y-m-d\TH:i', strtotime($msrf['ict_approval_date']));
+												?>
+												<input type="datetime-local" id="ict_approval_date" class="form-control" value=<?= $it ?> disabled>
+											<?php else: ?>
+												<input type="text" value="Pending" class="form-control" disabled>
+											<?php endif; ?>
+										</div>
+									</div>
 
 									<div class="col-md-12" id="ictassign" style="display:none;">
 										<div class="form-group">

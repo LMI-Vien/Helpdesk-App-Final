@@ -145,31 +145,49 @@
                                                 </div>
                                             </div> 
 
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>Approval Status</label>
-                                                    <select class="form-control select2" name="approval_stat" id="approval_stat" style="width: 100%;" <?php if ($msrf['approval_status'] == 'Approved' || $msrf['approval_status'] == 'Rejected') echo 'disabled'; ?>  disabled>
-                                                        <option value=""disabled selected>Approval Status</option>
-                                                        <option value="Approved"<?php if ($msrf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-                                                        <option value="Pending"<?php if ($msrf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
-                                                        <option value="Rejected"<?php if ($msrf['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
-                                                        <option value="Returned"<?php if ($msrf['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
-                                                    </select>
-                                                </div>
+                                            <div class="col-md-6">
+                                                <label>Approval Status</label>
+                                                <select class="form-control select2" name="approval_stat" id="approval_stat" style="width: 100%;" <?php if ($msrf['approval_status'] == 'Approved' || $msrf['approval_status'] == 'Rejected') echo 'disabled'; ?>  disabled>
+                                                    <option value=""disabled selected>Approval Status</option>
+                                                    <option value="Approved"<?php if ($msrf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
+                                                    <option value="Pending"<?php if ($msrf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
+                                                    <option value="Rejected"<?php if ($msrf['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+                                                    <option value="Returned"<?php if ($msrf['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>Approval Date</label>
+                                                <?php if($msrf['approval_date']): ?>
+                                                    <?php
+                                                        $dt = date('Y-m-d\TH:i', strtotime($msrf['approval_date']));
+                                                    ?>
+                                                    <input type="datetime-local" class="form-control" id="approval_date" value=<?= $dt ?> disabled>
+                                                <?php else: ?>
+                                                    <input type="text" class="form-control" value="Pending" disabled>
+                                                <?php endif; ?>
                                             </div>
 
                                         
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label>ICT Approval Status</label>
-                                                    <select name="it_approval_stat" id="it_approval_stat" class="form-control select2" disabled>
-                                                        <option value=""disabled selected></option>
-                                                        <option value="Approved"<?php if ($msrf['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-                                                        <option value="Pending"<?php if ($msrf['it_approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
-                                                        <option value="Rejected"<?php if ($msrf['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
-                                                        <option value="Returned"<?php if ($msrf['it_approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
-                                                    </select>
-                                                </div>
+                                            <div class="col-md-6">
+                                                <label>ICT Approval Status</label>
+                                                <select name="it_approval_stat" id="it_approval_stat" class="form-control select2" disabled>
+                                                    <option value=""disabled selected></option>
+                                                    <option value="Approved"<?php if ($msrf['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
+                                                    <option value="Pending"<?php if ($msrf['it_approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
+                                                    <option value="Rejected"<?php if ($msrf['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+                                                    <option value="Returned"<?php if ($msrf['it_approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label>ICT Approval Date</label>
+                                                <?php if($msrf['ict_approval_date']): ?>
+                                                    <?php
+                                                        $it = date('Y-m-d\TH:i', strtotime($msrf['ict_approval_date']));
+                                                    ?>
+                                                    <input type="datetime-local" class="form-control" id="ict_approval_date" value=<?= $it ?> disabled>
+                                                <?php else: ?>
+                                                    <input type="text" class="form-control" value="Pending" disabled>
+                                                <?php endif; ?>
                                             </div>
 
                                             <div class="col-md-12" id="ictassign" style="display:none;">

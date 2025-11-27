@@ -14,6 +14,11 @@ class AdminMSRF_model extends CI_Model {
 		$approval_stat = $this->input->post('approval_stat', true);
 		$reject_reason = $this->input->post('rejecttix', true);
 		$returnedReason = $this->input->post('returnedReason', true);
+		
+
+
+		date_default_timezone_set('Asia/Manila');
+		$approvalDate = date('Y-m-d H:i:s');
 
 		// print_r($returnedReason);
 		// die();
@@ -30,32 +35,38 @@ class AdminMSRF_model extends CI_Model {
 			if ($approval_stat == 'Rejected') {
 				$this->db->set('approval_status', 'Rejected');
 				$this->db->set('status', 'Rejected'); 
-				$this->db->set('remarks_ict', $reject_reason); 
+				$this->db->set('remarks_ict', $reject_reason);
+				$this->db->set('approval_date', $approvalDate);
 				$fields_to_update = true;
 			} else if ($approval_stat == 'Approved') {
 				$this->db->set('approval_status', 'Approved');
-				$this->db->set('status', 'Approved'); 
+				$this->db->set('status', 'In Progress');
+				$this->db->set('approval_date', $approvalDate); 
 				$fields_to_update = true;
 			} else if ($approval_stat == 'Returned') {
 				$this->db->set('approval_status', 'Returned');
 				$this->db->set('status', 'Returned');
 				$this->db->set('returned_ticket_reason', $returnedReason);
+				$this->db->set('approval_date', $approvalDate); 
 				$fields_to_update = true;
 			}
 	
 			
 			if ($it_approval_stat == 'Resolved') {
 				$this->db->set('it_approval_status', 'Resolved');
-				$this->db->set('status', 'Closed'); 
+				$this->db->set('status', 'Closed');
+				$this->db->set('ict_approval_date', $approvalDate); 
 				$fields_to_update = true;
 			} else if ($it_approval_stat == 'Rejected') {
 				$this->db->set('it_approval_status', 'Rejected');
 				$this->db->set('remarks_ict', $reject_reason); 
 				$this->db->set('status', 'Rejected'); 
+				$this->db->set('ict_approval_date', $approvalDate); 
 				$fields_to_update = true;
 			} else if ($it_approval_stat == 'Approved') {
 				$this->db->set('it_approval_status', 'Approved');
-				$this->db->set('status', 'In Progress'); 
+				$this->db->set('status', 'In Progress');
+				$this->db->set('ict_approval_date', $approvalDate); 
 				$fields_to_update = true;
 			}
 	
