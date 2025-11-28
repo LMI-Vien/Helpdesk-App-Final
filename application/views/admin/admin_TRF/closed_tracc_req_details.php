@@ -396,30 +396,36 @@
 			                                </div>
 
                                             <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Approval Status <span style = "color:red;">*</span></label>
-                                                    <select class="form-control select2" name="app_stat" id="app_stat" disabled readonly>
-                                                        <option value=""disabled selected>Approval Status</option>
-                                                        <option value="Approved"<?php if ($trf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-                                                        <option value="Pending"<?php if ($trf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
-                                                        <option value="Rejected"<?php if ($trf['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
-                                                        <option value="Returned"<?php if ($trf['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
-                                                    </select>       
-                                                </div>
+                                                <label>Approval Status <span style = "color:red;">*</span></label>
+                                                <select class="form-control select2" name="app_stat" id="app_stat" disabled readonly>
+                                                    <option value=""disabled selected>Approval Status</option>
+                                                    <option value="Approved"<?php if ($trf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
+                                                    <option value="Pending"<?php if ($trf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
+                                                    <option value="Rejected"<?php if ($trf['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+                                                    <option value="Returned"<?php if ($trf['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
+                                                </select>
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>ICT Approval Status <span style = "color:red;">*</span></label>
-                                                    <select class="form-control select2" name="it_app_stat" id="it_app_stat" disabled readonly>
-                                                        <option value=""disabled selected>ICT Approval Status</option>
-                                                        <option value="Approved"<?php if ($trf['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-                                                        <option value="Pending"<?php if ($trf['it_approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
-                                                        <option value="Rejected"<?php if ($trf['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
-                                                        <option value="Resolved"<?php if ($trf['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Resolved</option>
-                                                        <option value="Closed"<?php if ($trf['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
-                                                    </select>       
-                                                </div>
+                                                <label>Approval Date</label>
+                                                <input type="datetime-local" value=<?= date('Y-m-d\TH:i', strtotime($trf['approval_date'])) ?> class="form-control" disabled />
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label>ICT Approval Status <span style = "color:red;">*</span></label>
+                                                <select class="form-control select2" name="it_app_stat" id="it_app_stat" disabled readonly>
+                                                    <option value=""disabled selected>ICT Approval Status</option>
+                                                    <option value="Approved"<?php if ($trf['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
+                                                    <option value="Pending"<?php if ($trf['it_approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
+                                                    <option value="Rejected"<?php if ($trf['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+                                                    <option value="Resolved"<?php if ($trf['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Resolved</option>
+                                                    <option value="Closed"<?php if ($trf['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label>ICT Approval Date</label>
+                                                <input type="datetime-local" class="form-control" value=<?= date('Y-m-d\TH:i', strtotime($trf['ict_approval_date'])); ?> disabled />
                                             </div>
 
                                             <div class="col-md-12" id="reason_rejected_ticket">

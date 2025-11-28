@@ -43,7 +43,7 @@
 			                        <div class="col-md-6">
 			                            <div class="form-group">
 			                                <label>Date Requested</label>
-			                                <input type="date" name="date_req" id="date_req" class="form-control select2" value="<?php echo $msrf['date_requested']; ?>" style="width: 100%;" readonly>
+			                                <input type="date" name="date_req" id="date_req" class="form-control select2" value="<?= date('Y-m-d', strtotime($msrf['date_requested'])) ?>" style="width: 100%;" readonly>
 			                            </div>
 			                            <div class="form-group">
 			                                <label>Date Needed</label>
@@ -100,23 +100,29 @@
                                         </div>
                                     </div>                          
 
-									<div class="col-md-12">
-			                            <div class="form-group">
-			                                <label>Dept. Head Approval Status</label>											
-											<select class="form-control select2" name="approval_stat" id="approval_stat" style="width: 100%;" <?php if ($msrf['approval_status'] == 'Approved' || $msrf['approval_status'] == 'Rejected') echo 'disabled'; ?> readonly>
-												<option value="" disabled selected>Select Approval</option>
-												<option value="Approved"<?php if ($msrf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-												<option value="Pending"<?php if ($msrf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
-												<option value="Rejected"<?php if ($msrf['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
-												<option value="Returned"<?php if ($msrf['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
-											</select>
-			                            </div>
+									<div class="col-md-6">
+										<label>Dept. Head Approval Status</label>											
+										<select class="form-control select2" name="approval_stat" id="approval_stat" style="width: 100%;" <?php if ($msrf['approval_status'] == 'Approved' || $msrf['approval_status'] == 'Rejected') echo 'disabled'; ?> readonly>
+											<option value="" disabled selected>Select Approval</option>
+											<option value="Approved"<?php if ($msrf['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
+											<option value="Pending"<?php if ($msrf['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
+											<option value="Rejected"<?php if ($msrf['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+											<option value="Returned"<?php if ($msrf['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
+										</select>
 			                        </div>
+
+									<div class="col-md-6">
+										<label>Dept. Head Approval Date</label>
+										<?php
+											$dt = date('Y-m-d\TH:i', strtotime($msrf['approval_date']));
+										?>
+										<input type="datetime-local" class="form-control" value=<?= $dt ?> disabled />
+									</div>
 									<!-- Add a hidden input field to store the current approval status -->
 									<!-- <input type="hidden" name="approval_stat" value="<?php echo $msrf['approval_status']; ?>"> -->
  
 
-									<div class="col-md-12">
+									<div class="col-md-6">
 										<div class="form-group">
 											<label>ICT Approval Status</label>
 											<select class="form-control select2" name="it_approval_stat" id="it_approval_stat" style="width: 100%;" disabled readonly>
@@ -126,7 +132,15 @@
 												<option value="Resolved" <?php if ($msrf['it_approval_status'] == 'Resolved') echo 'selected'; ?>>Resolved</option>
 											</select>
 										</div>
-									</div>		   
+									</div>
+									
+									<div class="col-md-6">
+										<label>ICT Approval Date</label>
+										<?php
+											$it = date('Y-m-d\TH:i', strtotime($msrf['ict_approval_date']));
+										?>
+										<input type="datetime-local" value=<?= $it ?> class="form-control" disabled />
+									</div>
 
 									<div class="col-md-12" id="ictassign">
 										<div class="form-group">

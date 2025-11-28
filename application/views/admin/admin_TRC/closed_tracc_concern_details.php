@@ -93,36 +93,48 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Date Reported</label>
-                                                    <input type="date" name="date_rep" id="date_rep" class="form-control select2" value="<?= $trc['reported_date']; ?>" style="width: 100%;" readonly>
+                                                    <input type="date" name="date_rep" id="date_rep" class="form-control select2" value="<?= date('Y-m-d', strtotime($trc['reported_date'])); ?>" style="width: 100%;" readonly>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Approval Status</label>
-                                                    <select class="form-control select2" name="app_stat" id="app_stat"  disabled readobly>
-                                                    <?php if ($trc['approval_status'] == 'Approved' || $trc['approval_status'] == 'Rejected') echo 'disabled'; ?>
-                                                        <option value=""disabled selected>Approval Status</option>
-                                                        <option value="Approved"<?php if ($trc['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-                                                        <option value="Pending"<?php if ($trc['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
-                                                        <option value="Rejected"<?php if ($trc['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
-                                                        <option value="Returned"<?php if ($trc['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
-                                                    </select>       
-                                                </div>
+                                                <label>Approval Status</label>
+                                                <select class="form-control select2" name="app_stat" id="app_stat"  disabled readobly>
+                                                <?php if ($trc['approval_status'] == 'Approved' || $trc['approval_status'] == 'Rejected') echo 'disabled'; ?>
+                                                    <option value=""disabled selected>Approval Status</option>
+                                                    <option value="Approved"<?php if ($trc['approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
+                                                    <option value="Pending"<?php if ($trc['approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
+                                                    <option value="Rejected"<?php if ($trc['approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+                                                    <option value="Returned"<?php if ($trc['approval_status'] == 'Returned') echo ' selected'; ?>>Returned</option>
+                                                </select>
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>ICT Approval Status</label>
-                                                    <select class="form-control select2" name="it_app_stat" id="it_app_stat" disabled readonly>
-                                                        <option value=""disabled selected>ICT Approval Status</option>
-                                                        <option value="Approved"<?php if ($trc['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
-                                                        <option value="Pending"<?php if ($trc['it_approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
-                                                        <option value="Rejected"<?php if ($trc['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
-                                                        <option value="Resolved"<?php if ($trc['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Done</option>
-                                                        <option value="Closed"<?php if ($trc['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
-                                                    </select>       
-                                                </div>
+                                                <label>Approval Date</label>
+                                                <?php
+                                                    $dt = date('Y-m-d\TH:i', strtotime($trc['approval_date']));
+                                                ?>
+                                                <input type="datetime-local" class="form-control" value=<?= $dt ?> disabled />
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label>ICT Approval Status</label>
+                                                <select class="form-control select2" name="it_app_stat" id="it_app_stat" disabled readonly>
+                                                    <option value=""disabled selected>ICT Approval Status</option>
+                                                    <option value="Approved"<?php if ($trc['it_approval_status'] == 'Approved') echo ' selected'; ?>>Approved</option>
+                                                    <option value="Pending"<?php if ($trc['it_approval_status'] == 'Pending') echo ' selected'; ?>>Pending</option>
+                                                    <option value="Rejected"<?php if ($trc['it_approval_status'] == 'Rejected') echo ' selected'; ?>>Rejected</option>
+                                                    <option value="Resolved"<?php if ($trc['it_approval_status'] == 'Resolved') echo ' selected'; ?>>Done</option>
+                                                    <option value="Closed"<?php if ($trc['it_approval_status'] == 'Closed') echo ' selected'; ?>>Closed</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <label>ICT Approval Date</label>
+                                                <?php
+                                                    $it = date('Y-m-d\TH:i', strtotime($trc['ict_approval_date']));
+                                                ?>
+                                                <input type="datetime-local" class="form-control" value=<?= $it ?> disabled />
                                             </div>
 
                                             <div class="col-md-12" id="reason_rejected_ticket" style="display: none;">

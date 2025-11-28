@@ -105,7 +105,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label>Date Reported</label>
-                                                    <input type="date" name="date_rep" id="date_rep" class="form-control select2" value="<?= $tracc_con['reported_date']; ?>" style="width: 100%;" readonly>
+                                                    <input type="date" name="date_rep" id="date_rep" class="form-control select2" value="<?= date('Y-m-d', strtotime($tracc_con['reported_date'])); ?>" style="width: 100%;" readonly>
                                                 </div>
                                             </div>
 

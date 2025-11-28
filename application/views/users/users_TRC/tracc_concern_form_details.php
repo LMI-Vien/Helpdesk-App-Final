@@ -151,7 +151,10 @@
                                                 <div class="form-group">
                                                     <label>Approval Date</label>
                                                     <?php if($tracc_con['approval_date']): ?>
-                                                        <input type="datetime-local" class="form-control">
+                                                        <?php
+                                                            $dt = date('Y-m-d\TH:i', strtotime($tracc_con['approval_date']));
+                                                        ?>
+                                                        <input type="datetime-local" value=<?= $dt ?> class="form-control" disabled>
                                                     <?php else: ?>
                                                         <input type="text" value="Pending" class="form-control" disabled>
                                                     <?php endif; ?>
@@ -179,7 +182,11 @@
                                                 <div class="form-group">
                                                     <label>ICT Approval Date</label>
                                                     <?php if($tracc_con['ict_approval_date']): ?>
-                                                        <input type="datetime-local" class="form-control" disabled>
+                                                        <?php
+                                                            // echo $tracc_con['ict_approval_date'];
+                                                            $it = date('Y-m-d\TH:i', strtotime($tracc_con['ict_approval_date']))
+                                                        ?>
+                                                        <input type="datetime-local" class="form-control" value=<?= $it ?> disabled>
                                                     <?php else: ?>
                                                         <input type="text" value="Pending" class="form-control" disabled>
                                                     <?php endif; ?>
@@ -197,30 +204,6 @@
                                                 <div class="form-group">
                                                     <label>Reason for Returned Ticket</label>
                                                     <textarea class="form-control" id="returnedReason" name="returnedReason" placeholder="Place the reason here" style="width: 100%; height: 40px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px; resize: vertical;" <?= $disabled;?>><?= isset($tracc_con['returned_ticket_reason']) ? htmlspecialchars($tracc_con['returned_ticket_reason']) : ''; ?></textarea>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Resolved by</label>
-                                                    <select class="form-control select2" name="resolved_by" id="resolved_by" disabled>
-                                                        <option value=""disabled selected>Resolved By</option>
-                                                        <?php foreach($ict_dept as $ict): ?>
-                                                            <option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $tracc_con['resolved_by'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
-                                                        <?php endforeach; ?>
-                                                    </select>  
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label>Resolved by</label>
-                                                    <select class="form-control select2" name="resolved_by" id="resolved_by" disabled>
-                                                        <option value=""disabled selected>Resolved By</option>
-                                                        <?php foreach($ict_dept as $ict): ?>
-                                                            <option value="<?= $ict['full_name']; ?>" <?= $ict['full_name'] == $tracc_con['resolved_by'] ? 'selected' : ''; ?>><?= $ict['full_name']; ?></option>
-                                                        <?php endforeach; ?>
-                                                    </select>  
                                                 </div>
                                             </div>
                                            

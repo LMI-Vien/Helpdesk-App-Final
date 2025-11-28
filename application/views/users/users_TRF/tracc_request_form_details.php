@@ -408,7 +408,7 @@
                                                     <label>Approval Date</label>
                                                     <?php if($trf['approval_date']): ?>
                                                         <?php
-                                                            $dt = date('Y-m-d\TH:i', strtotime($trf['approval_status']));
+                                                            $dt = date('Y-m-d\TH:i', strtotime($trf['approval_date']));
                                                         ?>
                                                         <input type="datetime-local" class="form-control" value=<?= $dt ?> disabled>
                                                     <?php else: ?>
@@ -438,9 +438,9 @@
                                                     <label>ICT Approval Date</label>
                                                     <?php if($trf['ict_approval_date']): ?>
                                                         <?php
-                                                            $dt = date('Y-m-d\TH:i', strtotime($trf['ict_approval_status']));
+                                                            $it = date('Y-m-d\TH:i', strtotime($trf['ict_approval_date']));
                                                         ?>
-                                                        <input type="datetime-local" class="form-control" value=<?= $dt ?> disabled>
+                                                        <input type="datetime-local" class="form-control" value=<?= $it ?> disabled>
                                                     <?php else: ?>
                                                         <input type="text" value="Pending" class="form-control" disabled>
                                                     <?php endif; ?>
