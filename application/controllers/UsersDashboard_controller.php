@@ -35,6 +35,7 @@ class UsersDashboard_controller extends CI_Controller {
 				$data['requests'] = $traccRequests;
 				$data['cutofftime'] = $cutofftime;
 				$data['ticketopen'] = $ticketopen;
+				$data['unviewedPatchnotes'] = $this->Main_model->get_patchnotes();
 
 				$this->load->view('users/header', $data);
 				$this->load->view('users/dashboard', $data);

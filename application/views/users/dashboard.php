@@ -315,6 +315,74 @@
 
 <script src="<?= base_url(); ?>/assets/dist/dist/js/external/jquery/jquery.js"></script>
 <script type="text/javascript">
+let patchnotes = <?= json_encode($unviewedPatchnotes) ?>;
+	
+	$(document).ready(function() {
+		let enhancements = [];
+		let fixes = [];
+		let unviewedPatches = [];
+		
+		let user = <?= json_encode($user_details) ?>;
+		
+		
+		if(patchnotes.length > 0) {			
+			for(const patch of patchnotes) {
+				let patchArray = patch.enhancements ? JSON.parse(patch.enhancements) : null;
+				let patchArray2 = patch.fixes ? JSON.parse(patch.fixes) : null;
+				
+				if(patchArray) {					
+					for(const enhancement of patchArray) {
+						enhancements.push(enhancement);
+					}
+				}
+				console.log(patchArray);
+				
+				if(patchArray2) {					
+					for(const fix of patchArray2) {
+						fixes.push(fix);
+					}
+				}
+				console.log(patchArray2);
+				
+				unviewedPatches.push(patch.id);
+			}
+			
+			Swal.fire({
+				title: "Patch Updates!",
+				html: `
+					<div style="text-align: left">
+					${enhancements.length > 0 ? `
+						<strong>Enhancements:</strong>
+						<ol style="text-align: left; padding-left: 20px">
+							${enhancements.map(e => `<li>${e}</li>`).join('')}
+						</ol>
+						</div>
+					` : ''}
+					
+					${fixes.length > 0 ? `
+						<div style="text-align: left">
+						<strong>Fixes:</strong>
+						<ol style="text-align: left; padding-left: 20px;">
+							${fixes.map(f => `<li>${f}</li>`).join('')}
+						</ol>
+						</div>
+					` : ''}
+				`
+			}).then(() => {
+				console.log(unviewedPatches);
+				$.ajax({
+					method: "POST",
+					url: "<?= site_url('Main/updatePatchViews'); ?>",
+					data: {patches: unviewedPatches, user_id: user['recid']},
+					success: function(response) {
+						console.log(response);
+					}
+				})
+			})
+		}
+		
+	});
+	
 	$('#filterMsrf').click(function() {
 		status = $('#msrfStatus').val();
 		$('#tblMsrf').DataTable().ajax.reload();

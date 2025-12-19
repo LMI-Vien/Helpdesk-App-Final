@@ -781,5 +781,12 @@ class Main extends CI_Controller {
 			}
 		}
 	}
+	
+	public function updatePatchViews() {
+		$patches = $this->input->post('patches');
+		$user = $this->input->post('user_id');
+		
+		$this->Main_model->update_patchnotes_views($patches, $user);
+	}
 
 }

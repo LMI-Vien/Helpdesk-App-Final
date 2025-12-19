@@ -26,7 +26,7 @@ class AdminDashboard_controller extends CI_Controller {
 				$data['unopenedMSRF'] = $this->Main_model->get_unopened_msrf_tickets();
 				$data['unopenedTraccConcern'] = $this->Main_model->get_unopened_tracc_concerns();
 				$data['unopenedTraccRequest'] = $this->Main_model->get_unopened_tracc_request();
-
+				$data['unviewedPatchnotes'] = $this->Main_model->get_patchnotes();
 				// Fetch total users count
 				$data['total_users'] = $this->AdminDashboard_model->get_total_users();
 				// Fetch total msrf ticket count
@@ -88,7 +88,5 @@ class AdminDashboard_controller extends CI_Controller {
 			$this->session->set_flashdata('upload_alert', 'The total upload size exceeds the limit!');
 		}
 	}
-
-
 }
 ?>

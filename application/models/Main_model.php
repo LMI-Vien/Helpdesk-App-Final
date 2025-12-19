@@ -1100,5 +1100,30 @@ class Main_model extends CI_Model {
 	}
 	// AND TIMESTAMPDIFF(MINUTE, accomplished_by_date, NOW()) >= 1
 	// AND TIMESTAMPDIFF(HOUR, accomplished_by_date, NOW()) >= 24
+	
+	public function get_patchnotes() {
+		$user = $this->session->userdata('login_data');
+		
+		$user_patchnotes = $this->db->select('patchnote')->from('patchnotes_views')->where('user_id', $user['user_id'])->get()->result_array();
+		
+		if(count($user_patchnotes) > 0) {
+			$patchnotes = $this->db->from('patchnotes')->where_not_in('id', array_column($user_patchnotes, 'patchnote'))->get()->result();
+		} else {			
+			$patchnotes = $this->db->from('patchnotes')->get()->result();
+		}
+		
+		return $patchnotes;
+	}
+	
+	public function update_patchnotes_views($patches, $user_id) {
+		foreach($patches AS $patch) {
+			$data = [
+				"user_id" => $user_id,
+				"patchnote" => $patch
+			];
+			
+			$this->db->insert('patchnotes_views', $data);
+		}
+	}
 }
 ?>
