@@ -110,6 +110,16 @@
             const route    = $panel.find('[name="route_code"]').val() || $panel.find('#route_code').val();
             const customer = $panel.find('[name="customer_code"]').val() || $panel.find('#customer_code').val();
 
+                if (!customer || !shipping) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Required Fields Missing',
+                        text: 'Customer Code and Shipping Code are required before closing this ticket.',
+                        confirmButtonColor: '#3085d6'
+                    });
+                    return;
+                }
+
                 Swal.fire({
                     title: 'Are you Done?',
                     text: "You won't be able to undo this action!",

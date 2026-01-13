@@ -104,6 +104,16 @@
 			const shipping_code = $('#shipping_code').val();
 			const route_code = $('#route_code').val();
 
+                if (!shipping_code || shipping_code == "-") {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Required Fields Missing',
+                        text: 'Shipping Code is required before closing this ticket.',
+                        confirmButtonColor: '#3085d6'
+                    });
+                    return;
+                }
+
                 Swal.fire({
                     title: 'Are you Done?',
                     text: "You won't be able to undo this action!",
